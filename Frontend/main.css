@@ -2,11 +2,20 @@ body {
     text-align: center;
 }
 
+li {
+    margin: 10px 0;
+}
+
 .button {
-    background-color: rgb(17, 17, 194);
+    background-color: rgb(3, 77, 152);
     border: 2px solid black;
     color: white;
     padding: 12px 25px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.button:hover {
+    background-color: white;
+    color:rgb(3, 77, 152);
 }
