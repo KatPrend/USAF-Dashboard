@@ -1,17 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+class Open extends React.Component {
+
+  render() {
+    return (
+      <body>
+        <img src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250" />
+        <h1>Welcome to the USAF Project Management Dashbaord</h1>
+        <ul>
+            <li><button className="button">Login</button></li>
+            <li><button className="button">Create Account</button></li>
+        </ul>
+      </body>
+    );
+  }
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Open />,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
