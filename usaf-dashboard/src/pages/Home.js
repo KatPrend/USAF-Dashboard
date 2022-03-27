@@ -5,12 +5,12 @@ import './home.css';
 function Home() {
     return (
         <body>
-            <img src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250" />
+            <img class="center" src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
             <h1>Welcome to the USAF Project Management Dashbaord</h1>
-            <ul>
-                <li><button className="button"><Link to="/login" className="link">Login</Link></button></li>
-                <li><button className="button"><Link to="/signup" className="link">Sign up</Link></button></li>
-            </ul>
+                
+            <Link to="/login" className="link"><button className="button">Login</button></Link>
+            <br></br>
+            <Link to="/signup" className="link"><button className="button">Sign up</button></Link>
         </body>
     );
 }

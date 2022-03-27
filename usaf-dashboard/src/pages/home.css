@@ -10,6 +10,12 @@ li {
   margin: 10px 0;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .link {
   color: white;
 }
@@ -22,11 +28,16 @@ li {
   background-color: rgb(3, 77, 152);
   border: 2px solid black;
   color: white;
-  padding: 12px 25px;
+  width: 256px;
+  height: auto;
+  padding: 12px 24px;
+  margin: 18px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 15px;
   box-shadow: rgba(99, 104, 109, 0.2) 0px 8px 24px;
+  transition-duration: 0.3s;
+  text-align: center;
 }
 
 .button:hover {
