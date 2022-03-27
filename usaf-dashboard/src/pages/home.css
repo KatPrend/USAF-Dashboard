@@ -10,6 +10,14 @@ li {
   margin: 10px 0;
 }
 
+.link {
+  color: white;
+}
+
+.link:hover {
+  color:rgb(3, 77, 152);
+}
+
 .button {
   background-color: rgb(3, 77, 152);
   border: 2px solid black;
