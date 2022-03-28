@@ -1,15 +1,15 @@
 CREATE TABLE Admin{
     admin_id int NOT NULL,
-    admin_user_name varchar(20),
-    email varchar(20) NOT NULL,
+    admin_user_name varchar(40),
+    email varchar(60) NOT NULL,
     password varchar(12) NOT NULL,
     PRIMARY KEY(admin_id)
 }
 
 CREATE TABLE Contractor_User{
     con_user_id int NOT NULL,
-    con_user_name varchar(20) NOT NULL,
-    email varchar(20) NOT NULL,
+    con_user_name varchar(40) NOT NULL,
+    email varchar(60) NOT NULL,
     password varchar(12),
     PRIMARY KEY(con_user_id)
 }
@@ -17,16 +17,16 @@ CREATE TABLE Contractor_User{
 CREATE TABLE Contractor{
     con_id int NOT NULL, 
     con_user_id int NOT NULL, 
-    con_name varchar(50) NOT NULL,
+    con_name varchar(80) NOT NULL,
     PRIMARY KEY(con_id),
     FOREIGN KEY(con_user_id) REFERENCES Contractor_User(con_user_id)
 }
 
 CREATE TABLE Mil_Personel{
     mil_id int PRIMARY KEY,
-    mil_user_name varchar(20) NOT NULL,
+    mil_user_name varchar(40) NOT NULL,
     job_title varchar(50) NOT NULL,
-    email varchar(20) NOT NULL,
+    email varchar(60) NOT NULL,
     password varchar(12) NOT NULL,
     PRIMARY KEY(mil_id)
 }
@@ -34,7 +34,7 @@ CREATE TABLE Mil_Personel{
 CREATE TABLE MIPR{
     MIPR_id int NOT NULL,
     mil_id int NOT NULL, 
-    MIPR_name varchar(50),
+    MIPR_name varchar(80),
     PRIMARY KEY(MIPR_id),
     FOREIGN KEY(mil_id) REFERENCES Mil_Personel(mil_id)
 }
@@ -44,13 +44,13 @@ CREATE TABLE Project{
     con_id int,
     mil_id int NOT NULL,
     MIPR_id int, 
-    project_name varchar(50) NOT NULL,
+    project_name varchar(80) NOT NULL,
     contract_num int NOT NULL,
     contract_status varchar(20) NOT NULL,
-    branch varchar(40) NOT NULL,
+    branch varchar(60) NOT NULL,
     requirement_type int NOT NULL,
     summary TEXT,
-    ipt_member varchar(50) NOT NULL,
+    ipt_member varchar(60) NOT NULL,
     CLIN_num int,
     PRIMARY KEY(project_id),
     FOREIGN KEY(con_id) REFERENCES Contractor(con_id),
@@ -75,7 +75,7 @@ CREATE TABLE Messages{
 -- Need looking at since 2 FK's Need to find a way to make it the main key
 CREATE TABLE Contract_Award{
     contract_num int NOT NULL,
-    contract_status varchar(10) NOT NULL,
+    contract_status varchar(20) NOT NULL,
     requirement_plan DATE NOT NULL,
     draft_rfp_released DATE NOT NULL,
     approved_by_acb DATE NOT NULL,
@@ -94,10 +94,10 @@ CREATE TABLE Funding{
     indepen_cost_est money NOT NULL,
     projected_contract_value money NOT NULL,
     approved_funding money,
-    approved_funding_type varchar(10),
-    approved_funding_fiscal_year varchar(10),
-    projected_oblig_plan_type varchar(10),
-    projected_oblig_plan_year varchar(10),
+    approved_funding_type varchar(20),
+    approved_funding_fiscal_year varchar(20),
+    projected_oblig_plan_type varchar(20),
+    projected_oblig_plan_year varchar(20),
     PRIMARY KEY(funding_doc_num),
     FOREIGN KEY(project_id) REFERENCES Project(project_id)
 }
