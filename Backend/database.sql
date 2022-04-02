@@ -126,17 +126,34 @@ VALUES(01, "test_mil_user", "Project Manager", "mil_user@milemail.us", "password
 INSERT INTO MIPR(MIPR_id, mil_id, MIPR_name)
 VALUES(01, 01, "mil_mipr");
 
+-- Test Mil Project
 INSERT INTO Project{project_id, con_id, mil_id, MIPR_id, project_name, contract_num,
  contract_status, branch, requirement_type, summary, ipt_member, CLIN_num)
- VALUES(01, NULL, 01, 01, "test_project", 01, "Pre-Approved", "test_branch", 0101, "test summary", 
+ VALUES(01, NULL, 01, 01, "test_mil_project", 01, "Pre-Approved", "test_branch", 0101, "test summary", 
         "THIS IS WRONG IM SURE", 01);
 
+-- Test Contractor Project
+INSERT INTO Project{project_id, con_id, mil_id, MIPR_id, project_name, contract_num,
+ contract_status, branch, requirement_type, summary, ipt_member, CLIN_num)
+ VALUES(02, 01, NULL, NULL, "test_con_project", 02, "Pre-Approved", "test_branch", 0101, "test summary", 
+        "THIS IS WRONG IM SURE p2", 01);
+
+-- Messages from a Military Personal
 INSERT INTO Messages(mess_id, project_id, mil_id, con_user_id, user_message, date_posted, time_posted)
-VALUES(01, 01, 01, NULL, "test message", 01/01/2022, 23:00:00);
+VALUES(01, 01, 01, NULL, "test mil message", 01/01/2022, 23:00:00);
+
+-- Message from a Contractor User
+INSERT INTO Messages(mess_id, project_id, mil_id, con_user_id, user_message, date_posted, time_posted)
+VALUES(02, 01, NULL, 01, "test con message", 01/01/2022, 23:00:00);
 
 INSERT INTO Contract_Award(contract_num, contract_status, requirement_plan, draft_rfp_released,
  approved_by_acb, rfp_released, proposal_received, tech_eval_comp, nego_comp, awarded)
  VALUES(01, "Pre-Awarded", 01/01/2022, 01/02/2022, 01/03/2022, 01/04/2022, 01/05/2022,
+        01/06/2022, 01/07/2022, 01/08/2022);
+
+INSERT INTO Contract_Award(contract_num, contract_status, requirement_plan, draft_rfp_released,
+ approved_by_acb, rfp_released, proposal_received, tech_eval_comp, nego_comp, awarded)
+ VALUES(02, "Pre-Awarded", 01/01/2022, 01/02/2022, 01/03/2022, 01/04/2022, 01/05/2022,
         01/06/2022, 01/07/2022, 01/08/2022);
 
 INSERT INTO Funding(funding_doc_num, project_id, indepen_cost_est, 
