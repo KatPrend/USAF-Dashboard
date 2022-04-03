@@ -1,5 +1,7 @@
 body {
   text-align: center;
+  margin: 0%;
+  height: 100vh;
 }
 
 ul {
@@ -16,6 +18,38 @@ li {
   margin-right: auto;
 }
 
+.lightBlue {
+  background-color: #00539b20;
+}
+
+.login {  
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 15px;
+  width: 35%;
+  height: 40%;
+  margin: auto;
+  margin-top: 5%;
+  padding: 1%;
+  }
+
+  .loginLabel{
+    float: left;
+    width: 30%;
+    text-align: right;
+    margin: 3%;
+    padding: 1%;
+}
+  .loginInput {
+    float: left;
+    margin: 3%;
+    padding: 1%;
+    text-align: left;
+    width: 50%;
+  }
+
 .link {
   color: white;
 }
@@ -24,7 +58,7 @@ li {
   color:rgb(3, 77, 152);
 }
 
-.button {
+.button, input[type=submit] {
   background-color: rgb(3, 77, 152);
   border: 2px solid black;
   color: white;
