@@ -23,32 +23,47 @@ li {
 }
 
 .login {  
+
+  width: 45%;
+  margin: auto;
+  margin-top: 5%;
+  padding: 1%;
+}
+
+.inputWrapper {
   background-color: white;
   border-color: black;
   border-style: solid;
   border-width: thin;
   border-radius: 15px;
-  width: 35%;
-  height: 40%;
-  margin: auto;
-  margin-top: 5%;
-  padding: 1%;
-  }
-
-  .loginLabel{
-    float: left;
-    width: 30%;
-    text-align: right;
-    margin: 3%;
-    padding: 1%;
+  height: auto;
 }
-  .loginInput {
-    float: left;
-    margin: 3%;
-    padding: 1%;
-    text-align: left;
-    width: 50%;
-  }
+
+.loginHeader {
+  text-align: left;
+  font-size: large;
+  color: black;
+}
+
+.loginHeader .accent {
+  color: grey;
+}
+
+.loginLabel {
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+  margin: 3%;
+  padding: 1%;
+}
+
+.loginInput {
+  display: inline-block;
+  margin: 3%;
+  padding: 1%;
+  text-align: left;
+  width: 60%;
+}
 
 .link {
   color: white;
