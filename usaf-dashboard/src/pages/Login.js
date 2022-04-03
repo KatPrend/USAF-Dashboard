@@ -5,40 +5,42 @@ function Login() {
     return (
         <body class="lightBlue">
             <br />
-            <form class="login">
-                <label class="loginLabel" for="email">Email:</label>
+                <form class="login">
+                    <p class="loginHeader">Login<span class="accent">/Create account</span></p>
+                    <div class="inputWrapper">
+                        <label class="loginLabel" for="email">Email:</label>
 
-                    <input
-                        class="loginInput"
-                        type="text"
-                        name="email"
-                        id="email"
+                            <input
+                                class="loginInput"
+                                type="text"
+                                name="email"
+                                id="email"
 
-                    />
-                <br />
-                <label class="loginLabel" for="password">Password:</label>
-                    <input
-                        class="loginInput"
-                        type="password"
-                        name="password"
-                        id="password"
-                    />
+                            />
+                        <label class="loginLabel" for="password">Password:</label>
+                            <input
+                                class="loginInput"
+                                type="password"
+                                name="password"
+                                id="password"
+                            />
 
-                <input
-                    type="submit"
-                    value="Login"   
-                />
-            </form>
+                        <input
+                            type="submit"
+                            value="Login"   
+                        />
+                    </div>
+                    <p>
+                        Don't have an account? <Link to="/signup"> Sign up</Link> 
+                        <br />
+                        Go back <Link to="/">Home</Link>
+                    </p>                
+                </form>
 
-            <br />
 
-            <span>
-                Don't have an account? 
-                <Link to="/signup"> Sign up</Link>
-            </span>
-            <br />
-            <span>Go back <Link to="/">Home</Link></span>
-        </ body>
+
+        </body>
+
     );
 }
 
