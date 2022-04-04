@@ -1,5 +1,7 @@
 body {
   text-align: center;
+  margin: 0%;
+  height: 100vh;
 }
 
 ul {
@@ -16,6 +18,53 @@ li {
   margin-right: auto;
 }
 
+.lightBlue {
+  background-color: #00539b20;
+}
+
+.login {  
+
+  width: 45%;
+  margin: auto;
+  margin-top: 5%;
+  padding: 1%;
+}
+
+.inputWrapper {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 15px;
+  height: auto;
+}
+
+.loginHeader {
+  text-align: left;
+  font-size: large;
+  color: black;
+}
+
+.loginHeader .accent {
+  color: grey;
+}
+
+.loginLabel {
+  display: inline-block;
+  width: 10%;
+  text-align: right;
+  margin: 3%;
+  padding: 1%;
+}
+
+.loginInput {
+  display: inline-block;
+  margin: 3%;
+  padding: 1%;
+  text-align: left;
+  width: 60%;
+}
+
 .link {
   color: white;
 }
@@ -24,7 +73,7 @@ li {
   color:rgb(3, 77, 152);
 }
 
-.button {
+.button, input[type=submit] {
   background-color: rgb(3, 77, 152);
   border: 2px solid black;
   color: white;
@@ -40,7 +89,7 @@ li {
   text-align: center;
 }
 
-.button:hover {
+.button:hover, input[type=submit]:hover {
   background-color: white;
   color:rgb(3, 77, 152);
 }
