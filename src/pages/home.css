@@ -5,11 +5,22 @@ body {
 }
 
 ul {
-  list-style-type: none;
+  list-style-type: disc;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
 }
 
 li {
-  margin: 10px 0;
+  margin: 0;
+  text-align: left;
+}
+
+.passwordRequirementText {
+  text-align: left;
+  margin-left: 30%;
+  margin-top: 2%;
+  margin-bottom: 0%;
 }
 
 .center {
@@ -27,6 +38,14 @@ li {
   width: 45%;
   margin: auto;
   margin-top: 5%;
+  padding: 1%;
+}
+
+.signup {  
+
+  width: 45%;
+  margin: auto;
+  margin-top: 3%;
   padding: 1%;
 }
 
@@ -57,9 +76,25 @@ li {
   padding: 1%;
 }
 
+.signupLabel {
+  display: inline-block;
+  width: 20%;
+  text-align: right;
+  margin: 2%;
+  padding: 1%;
+}
+
 .loginInput {
   display: inline-block;
   margin: 3%;
+  padding: 1%;
+  text-align: left;
+  width: 60%;
+}
+
+.signupInput {
+  display: inline-block;
+  margin: 2%;
   padding: 1%;
   text-align: left;
   width: 60%;
