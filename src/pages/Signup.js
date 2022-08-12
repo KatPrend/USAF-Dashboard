@@ -41,11 +41,11 @@ function Signup() {
                     </p>
 
                     <label class="signupLabel" for="password">Password:</label>
-                    <input class="signupInput" type="text" >
+                    <input class="signupInput" type="password" >
                     </input>
 
                     <label class="signupLabel" for="password">Confirm Password:</label>
-                    <input class="signupInput" type="text" >
+                    <input class="signupInput" type="password" >
                     </input>
 
                     <input type="submit" value="Create Account">
@@ -53,6 +53,11 @@ function Signup() {
                     </input>
 
                 </div>
+
+                <p>
+                    Go back <Link to="/">Home</Link>
+                </p>
+
             </form>
 
 

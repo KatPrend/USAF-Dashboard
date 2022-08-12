@@ -6,7 +6,11 @@ function Login() {
         <body class="lightBlue">
             <br />
                 <form class="login">
-                    <p class="loginHeader">Login<span class="accent">/Create account</span></p>
+                    <p class="loginHeader">
+                        <span class="accent"> Login /</span>
+                        <Link to="/signup"> Create Account </Link>
+                    </p>
+
                     <div class="inputWrapper">
                         <label class="loginLabel" for="email">Email:</label>
 
@@ -30,11 +34,11 @@ function Login() {
                             value="Login"   
                         />
                     </div>
+
                     <p>
-                        Don't have an account? <Link to="/signup"> Sign up</Link> 
-                        <br />
                         Go back <Link to="/">Home</Link>
-                    </p>                
+                    </p>  
+                                  
                 </form>
 
 
