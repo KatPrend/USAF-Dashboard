@@ -6,11 +6,12 @@ function Home() {
     return (
         <body>
             <img class="center" src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
-            <h1>Welcome to the USAF Project Management Dashbaord</h1>
-                
-            <Link to="/login" className="link"><button className="button">Login</button></Link>
-            <br></br>
-            <Link to="/signup" className="link"><button className="button">Sign up</button></Link>
+            <h1 class="text-center">Welcome to the USAF Project Management Dashbaord</h1>
+            <div class="mx-auto w-50">   
+            <Link to="/login" className="link"><button className="button w-100">Login</button></Link>
+            
+            <Link to="/signup" className="link"><button className="button w-100">Sign up</button></Link>
+            </div>
         </body>
     );
 }

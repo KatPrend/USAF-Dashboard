@@ -47,10 +47,10 @@ function Signup() {
                     <label class="signupLabel" for="password">Confirm Password:</label>
                     <input class="signupInput" type="password" >
                     </input>
-
-                    <input type="submit" value="Create Account">
-
-                    </input>
+                    <div class="text-center">
+                        <input type="submit" value="Create Account">
+                        </input>
+                    </div>
 
                 </div>
 

@@ -12,32 +12,38 @@ function Login() {
                     </p>
 
                     <div class="inputWrapper">
-                        <label class="loginLabel" for="email">Email:</label>
+                        <label class="loginLabel w-20" for="email">Email:</label>
 
                             <input
-                                class="loginInput"
+                                class="loginInput w-75"
                                 type="text"
                                 name="email"
                                 id="email"
 
                             />
-                        <label class="loginLabel" for="password">Password:</label>
+                        <label class="loginLabel w-20" for="password">Password:</label>
                             <input
-                                class="loginInput"
+                                class="loginInput w-75"
                                 type="password"
                                 name="password"
                                 id="password"
                             />
-
+                        <div class="text-center">
                         <input
+                            class="text-center"
                             type="submit"
                             value="Login"   
                         />
+                        </div>
                     </div>
 
                     <p>
                         Go back <Link to="/">Home</Link>
                     </p>  
+                    {/* Rember to remove the below link to the main page!!!! */}
+                    <p>
+                        SHORTCUT TO  <Link to="/main">Main</Link>
+                    </p>
                                   
                 </form>
 
