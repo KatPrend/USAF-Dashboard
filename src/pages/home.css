@@ -108,7 +108,7 @@ li {
   color:rgb(3, 77, 152);
 }
 
-.button, input[type=submit] {
+.button, .butt , input[type=submit] {
   background-color: rgb(3, 77, 152);
   border: 2px solid black;
   color: white;
@@ -124,7 +124,7 @@ li {
   text-align: center;
 }
 
-.button:hover, input[type=submit]:hover {
+.button:hover, .butt:hover, input[type=submit]:hover {
   background-color: white;
   color:rgb(3, 77, 152);
 }
