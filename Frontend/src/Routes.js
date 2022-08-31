@@ -9,7 +9,7 @@ function Routes() {
     return (
         <Switch>
             <Route exact path="/">
-                <Home />
+                <Main />
             </Route>
             <Route exact path="/login">
                 <Login />
@@ -17,9 +17,7 @@ function Routes() {
             <Route exact path="/signup">
                 <Signup />
             </Route>
-            <Route exact path="/main">
-                <Main />
-            </Route>
+            
         </Switch>
     );
 }

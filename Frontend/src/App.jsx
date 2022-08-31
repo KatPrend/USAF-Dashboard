@@ -4,8 +4,11 @@ import { loginRequest } from "./authConfig";
 import { PageLayout } from "./components/PageLayout";
 import { ProfileData } from "./components/ProfileData";
 import { callMsGraph } from "./graph";
+
+import Home from "./pages/Home";
 import Button from "react-bootstrap/Button";
 import "./styles/App.css";
+import Routes from "./Routes";
 
 /**
  * Renders information about the signed-in user or a button to retrieve data about the user
@@ -43,11 +46,11 @@ const MainContent = () => {
     return (
         <div className="App">
             <AuthenticatedTemplate>
-                <ProfileContent />
+                <Routes></Routes>
             </AuthenticatedTemplate>
 
             <UnauthenticatedTemplate>
-                <h5 className="card-title">Please sign-in to see your profile information.</h5>
+                <Home></Home> 
             </UnauthenticatedTemplate>
         </div>
     );
@@ -56,7 +59,8 @@ const MainContent = () => {
 export default function App() {
     return (
         <PageLayout>
-            <MainContent />
+            <MainContent></MainContent>
         </PageLayout>
+       
     );
 }
