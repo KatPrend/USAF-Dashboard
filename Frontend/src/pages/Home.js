@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './home.css';
 
 import { SignInButton } from '../components/SignInButton';
@@ -8,14 +7,15 @@ function Home() {
     return (
         <body>
             <img class="center" src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
-            <h1 class="text-center">Welcome to the USAF Project Management Dashbaord</h1>
+            <h1 class="text-center">
+                <br></br>
+                Welcome to the USAF Project Management Dashbaord
+                <br></br>
+            </h1>
             <div class="mx-auto w-50">   
-            
-            <SignInButton/ >
-            
-            <Link to="/login" className="link"><button className="button w-100">Login</button></Link>
-            
-            <Link to="/signup" className="link"><button className="button w-100">Sign up</button></Link>
+                <br></br>
+                <SignInButton/ >
+                <br></br>
             </div>
         </body>
     );
