@@ -34,7 +34,7 @@ function PreAwardProject(){
                 <br />
                 <Row>
                     <Col>
-                        <Card class="card">
+                        <Card class="no-bot-pad">
                             <Card.Header class = "text-center cardHead">Contract Status</Card.Header>
                             <Table striped bordered hover className="bg-light">
                                 <thead>
