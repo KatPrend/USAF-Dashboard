@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Main from './pages/Main';
+import Clin from './pages/Clin'
 
 function Routes() {
     return (
@@ -16,6 +17,9 @@ function Routes() {
             </Route>
             <Route exact path="/signup">
                 <Signup />
+            </Route>
+            <Route exact path="/clin">
+                <Clin />
             </Route>
             
         </Switch>

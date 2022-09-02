@@ -13,7 +13,6 @@ function Login() {
 
                     <div class="inputWrapper">
                         <label class="loginLabel w-20" for="email">Email:</label>
-
                             <input
                                 class="loginInput w-75"
                                 type="text"
