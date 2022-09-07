@@ -6,7 +6,7 @@ import { SignInButton } from '../components/SignInButton';
 function Home() {
     return (
         <body>
-            <img class="center" src={require('./AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
+            <img class="center" src={require('../images/AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
             <h1 class="text-center">
                 <br></br>
                 Welcome to the USAF Project Management Dashbaord
