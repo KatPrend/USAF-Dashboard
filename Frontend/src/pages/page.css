@@ -13,6 +13,10 @@
   border: steelblue;
 }
 
+.no-bot-pad {
+  padding-bottom: 0%;
+}
+
 .cardHead {
   background-color: steelblue;
   color: seashell;
