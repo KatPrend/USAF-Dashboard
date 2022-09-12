@@ -2,7 +2,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Clin from './pages/Clin';
-import TestPage from './pages/TestPage';
+import GetExample from './pages/GetExample';
+import PostExample from './pages/PostExample';
 import PreAwardProject from './pages/PreAwardProject'
 
 function Routes() {
@@ -18,7 +19,10 @@ function Routes() {
                 <PreAwardProject />
             </Route>
             <Route exact path="/projects">
-                <TestPage />
+                <GetExample />
+            </Route>
+            <Route exact path="/newProject">
+                <PostExample />
             </Route>
 
         </Switch>
