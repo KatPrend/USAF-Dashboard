@@ -5,6 +5,7 @@ import Clin from './pages/Clin';
 import GetExample from './pages/GetExample';
 import PostExample from './pages/PostExample';
 import PreAwardProject from './pages/PreAwardProject'
+import AwardedProject from './pages/AwardedProject'
 
 function Routes() {
     return (
@@ -18,11 +19,8 @@ function Routes() {
             <Route exact path="/preawardproject">
                 <PreAwardProject />
             </Route>
-            <Route exact path="/projects">
-                <GetExample />
-            </Route>
-            <Route exact path="/newProject">
-                <PostExample />
+            <Route exact path="/awardedproject">
+                <AwardedProject />
             </Route>
 
         </Switch>

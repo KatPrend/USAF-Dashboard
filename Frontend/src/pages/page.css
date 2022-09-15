@@ -23,3 +23,43 @@
   font-weight: bold;
 }
 
+.badge {
+  width : 8%;
+  height: 80%;
+  background-color: rgb(70, 180, 90);
+}
+
+.tableTitle {
+  font-weight: bold;
+  text-align: left;
+}
+
+.Button {
+  background-color: white;
+  border-color: black;
+  color: steelblue;  
+}
+
+.Button:hover {
+  background-color: steelblue;
+  border-color: black;
+  color: white;
+}
+
+.Button:focus {
+  background-color: steelblue;
+  border-color: black;
+  outline: none;
+  box-shadow: none;
+}
+
+.CLIN-and-File-buttongroup{
+  width: 80%;
+  background-color: white;
+  border-color: black;
+  color: steelblue;
+}
+
+.alignLeft {
+  text-align: left;
+}
