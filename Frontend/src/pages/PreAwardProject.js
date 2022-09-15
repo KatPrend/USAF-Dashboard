@@ -1,28 +1,55 @@
 import React from 'react';
 import './page.css';
-import { Card, Col, Container, Row, Table } from 'react-bootstrap';
+import { Card, Col, Container, Row, Table, Button, ButtonGroup } from 'react-bootstrap';
+
 
 
 function PreAwardProject(){
 
     return(
-        <body class="lightBlue">
-            <Container class="lightBlue">
+        <body className="lightBlue">
+            <Container>
                 <Row>
                     <Col>
-                        <Card class="card">
-                            <Card.Header class = "text-center cardHead">Project Data</Card.Header>
+                        <Card className="card">
+                            <Card.Header className = "cardHead">
+                                <Container>
+                                    <Row>
+                                        <Col style={{textAlign: 'left'}}>
+                                            <span>Project Data</span>
+                                        </Col>
+                                        <Col style={{textAlign: 'right'}}>
+                                            <span><Button className='Button'>Edit</Button></span>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     placeholder text
                                 </Card.Text>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button'>See CLIN Data</Button>
+                                    <Button className='Button'>Inport File</Button>
+                                </ButtonGroup>
                             </Card.Body>
                         </Card>
                     </Col>
 
                     <Col>
-                        <Card class="card">
-                            <Card.Header class = "text-center cardHead">Project IPT</Card.Header>
+                        <Card className="card">
+                            <Card.Header className = "cardHead">
+                                <Container>
+                                    <Row>
+                                        <Col style={{textAlign: 'left'}}>
+                                            <span>Project IPT</span>
+                                        </Col>
+                                        <Col style={{textAlign: 'right'}}>
+                                            <span><Button className='Button'>Edit</Button></span>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     placeholder text
@@ -34,8 +61,20 @@ function PreAwardProject(){
                 <br />
                 <Row>
                     <Col>
-                        <Card class="no-bot-pad">
-                            <Card.Header class = "text-center cardHead">Contract Status</Card.Header>
+                        <Card className="card no-bot-pad">
+                            <Card.Header className = "cardHead">
+                                <Container>
+                                    <Row>
+                                        <Col style={{textAlign: 'left'}}>
+                                            <span>Contract Status</span>
+                                        </Col>
+                                        <Col style={{textAlign: 'right'}}>
+                                            <span><Button className='Button'>Edit</Button></span>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </Card.Header>
+                            {/*TODO: Remake table when API can retreve data*/}
                             <Table striped bordered hover className="bg-light">
                                 <thead>
                                     <tr>
@@ -81,12 +120,57 @@ function PreAwardProject(){
                 <br />
                 <Row>
                     <Col>
-                        <Card class="card">
-                            <Card.Header class = "text-center cardHead">Funding Data</Card.Header>
+                        <Card className="card">
+                            <Card.Header className = "cardHead">
+                                <Container>
+                                    <Row>
+                                        <Col style={{textAlign: 'left'}}>
+                                            <span>Funding Data</span>
+                                        </Col>
+                                        <Col style={{textAlign: 'right'}}>
+                                            <span><Button className='Button'>Edit</Button></span>
+                                        </Col>
+                                    </Row>
+                                </Container> 
+                                </Card.Header>
                             <Card.Body>
-                                <Card.Text>
-                                    placeholder text
-                                </Card.Text>
+                                <Container>
+                                    <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
+                                        <Col>
+                                            <span>
+                                                Independent Cost Estimate:
+                                            </span>
+                                        </Col>
+                                        <Col>
+                                            <span>
+                                                Projected Contract Value:
+                                            </span>
+                                        </Col>
+                                        <Col>
+                                            <div class='badge'> </div>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col className="tableTitle">
+                                            Approved Funding:
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            {/*TODO: Create table when API can retreve data*/}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col className="tableTitle">
+                                            Projected Obligation Plan:
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col>
+                                            {/*TODO: Create table when API can retreve data*/}
+                                        </Col>
+                                    </Row>
+                                </Container>
                             </Card.Body>
                         </Card>
                     </Col>
