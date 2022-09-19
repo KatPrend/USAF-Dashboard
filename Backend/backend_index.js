@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    port: 8889,
+    port: 3306,
     database: "USAFTest",
     multipleStatements: true
 });
@@ -35,6 +35,6 @@ app.get("/", (req, res) => {
   });
 
 
-app.listen('3000', () => {
+app.listen('3001', () => {
     console.log('Server started');
 })
