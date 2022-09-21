@@ -20,7 +20,7 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    port: 8889,
+    port: 3306,
     database: "USAFTest",
     multipleStatements: true
 });
@@ -84,7 +84,6 @@ app.get('/createproject', (req, res) => {
   });
 });
 
-
 app.get('/getproject', (req, res) => {
   let sql = 'SELECT * FROM Project'
   let query = db.query(sql, (err, results) =>{
@@ -93,6 +92,7 @@ app.get('/getproject', (req, res) => {
       }
       res.send(results)
   })
+
 })
   
 let nodeServer = app.listen(4000, function () {
