@@ -9,10 +9,6 @@ CREATE TABLE if not exists project(
 	summary text NOT NULL,
 	ccar_num varchar(60) NOT NULL, 
     PRIMARY KEY(project_id)
-
-    -- Want this to be in this table or contract_award table
-    -- FOREIGN KEY(contract_num) REFERENCES contract_award(contract_num),
-    -- FOREIGN KEY(contract_status) REFERENCES contract_award(contract_status)
 );
 
 CREATE TABLE if not exists users(
@@ -42,14 +38,12 @@ CREATE TABLE if not exists clin_data(
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 
--- CREATE TABLE if not exists clin_pro_pricer();
-
 CREATE TABLE if not exists task_resource_table(
     task_resource_id int AUTO_INCREMENT,
 	project_id int,
     clin_id int,
 	task_description varchar(80) NOT NULL,
-	month varchar(20) NOT NULL, -- can use DATA type [YYYY-MM-DD]
+	month varchar(20) NOT NULL, -- can use DATA type DATE [YYYY-MM-DD]
 	wbs varchar(20) NOT NULL,
 	clin_num int NOT NULL,
 	source_type varchar(40) NOT NULL,
@@ -116,8 +110,6 @@ CREATE TABLE if not exists contract_award(
     nego_comp DATE NOT NULL, 
     awarded DATE NOT NULL,
     PRIMARY KEY(contract_award_id),
-
-    -- Want this here or in project table
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 
@@ -152,3 +144,8 @@ CREATE TABLE if not exists project_funding_data(
     PRIMARY KEY(proj_funding_id),
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
+
+-- Insert Functions 
+
+-- INSERT INTO project(project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num)
+-- VALUES("test project", )

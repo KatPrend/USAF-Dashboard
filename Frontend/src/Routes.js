@@ -22,6 +22,12 @@ function Routes() {
             <Route exact path="/awardedproject">
                 <AwardedProject />
             </Route>
+            <Route exact path="/projects">
+                <GetExample />
+            </Route>
+            <Route exact path="/newProject">
+                <PostExample />
+            </Route>
 
         </Switch>
     );
