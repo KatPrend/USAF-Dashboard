@@ -4,7 +4,10 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "backend_index.js",
   "scripts": {
-    "start": "node Backend/backend_index.js"
+    "start": "cd Frontend/ && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",

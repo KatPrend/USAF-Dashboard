@@ -2,9 +2,9 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path')
 const bodyparser = require('body-parser')
-const readXlsxFile = require('read-excel-file/node')
+// const readXlsxFile = require('read-excel-file/node')
 const mysql = require('mysql')
-const multer = require('multer')
+// const multer = require('multer')
 const app = express()
 app.use(express.static('./public'))
 app.use(bodyparser.json())

@@ -20,7 +20,7 @@ function PostExample() {
       projectDuration: projectDuration,
     };
    try{
-    const add = await fetch("/help", {
+    const add = await fetch("/newProject", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
