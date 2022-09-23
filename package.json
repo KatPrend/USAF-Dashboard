@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/KatPrend/USAF-Dashboard/issues"
   },
-  "homepage": "https://github.com/KatPrend/USAF-Dashboard#readme"
+  "homepage": "https://github.com/KatPrend/USAF-Dashboard#readme",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
 }

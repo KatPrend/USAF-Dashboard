@@ -2,6 +2,8 @@ import React from 'react';
 import './page.css';
 import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { PowerBIEmbed } from 'powerbi-client-react';
+import { models } from 'powerbi-client';
 
 function Main() {
     return (
@@ -129,6 +131,9 @@ function Main() {
             </div>
         </body>
     );
+
+    
+    
 }
 
 export default Main;

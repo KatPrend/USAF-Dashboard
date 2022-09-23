@@ -4,6 +4,8 @@ import { loginRequest } from "./authConfig";
 import { PageLayout } from "./components/PageLayout";
 import { ProfileData } from "./components/ProfileData";
 import { callMsGraph } from "./graph";
+import { PowerBIEmbed } from 'powerbi-client-react';
+import { models } from 'powerbi-client';
 
 import Home from "./pages/Home";
 import Button from "react-bootstrap/Button";
