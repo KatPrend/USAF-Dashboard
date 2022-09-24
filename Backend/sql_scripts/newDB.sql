@@ -5,7 +5,7 @@ CREATE TABLE if not exists project(
 	contract_status ENUM('Pre-Award', 'Awarded', 'Closed') NOT NULL,
 	branch varchar(80) NOT NULL,
 	contract_num varchar(80),
-	requirement_type varchar(80) NOT NULL,
+	requirement_type ENUM('CDD', 'CPD', '1067', 'UON/JUONs') NOT NULL,
 	summary text NOT NULL,
 	ccar_num varchar(60) NOT NULL, 
     PRIMARY KEY(project_id)
@@ -13,15 +13,16 @@ CREATE TABLE if not exists project(
 
 CREATE TABLE if not exists users(
     user_id int NOT NULL AUTO_INCREMENT,
-    project_id int NOT NULL,
     contractor_company varchar(80),
+    userName varchar(80),
+    userRole ENUM('Contractor', 'IPT Memeber', 'Admin') NOT NULL,
+    userEmail varchar(80),
     mil_id int UNIQUE,
     mil_job_title varchar(80),
-    PRIMARY KEY(user_id),
-    FOREIGN KEY(project_id) REFERENCES project(project_id)
+    PRIMARY KEY(user_id)
 );
 
-CREATE TABLE if not exists user_project_list(
+CREATE TABLE if not exists user_project_link(
     user_id int,
     project_id int,
     FOREIGN KEY(user_id) REFERENCES users(user_id),
@@ -85,7 +86,7 @@ CREATE TABLE if not exists project_information(
 );
 
 CREATE TABLE if not exists messages(
-    mess_id int NOT NULL,
+    mess_id int AUTO_INCREMENT,
     project_id int NOT NULL,
     user_id int,
     user_message text NOT NULL,
@@ -114,10 +115,11 @@ CREATE TABLE if not exists contract_award(
 );
 
 CREATE TABLE if not exists mipr_contracts(
+    mipr_contract_id AUTO_INCREMENT,
     mipr_contract_num int,
     project_id int,
     mipr_contract_status ENUM('Pre-Award', 'Awarded', 'Closed') NOT NULL,
-    PRIMARY KEY(mipr_contract_num),
+    PRIMARY KEY(mipr_contract_id),
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 
@@ -147,5 +149,46 @@ CREATE TABLE if not exists project_funding_data(
 
 -- Insert Functions 
 
--- INSERT INTO project(project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num)
--- VALUES("test project", )
+INSERT INTO project(project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num)
+VALUES("test project", 1, 1, "Modernization", "FA8620-18-C-2001", "CDD", "This is a test project that should have the project_type of Contract and contract_status of Pre-Awarded", "C12312-2");
+
+INSERT INTO project(project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num)
+VALUES("test project", 2, 2, "Modernization", "FA8620-18-C-2001", "1067", "This is a test project that should have the project_type of MIPR and contract_status of Awarded", "C23476-9");
+
+INSERT INTO users(contractor_company, userName, userRole, userEmail, mil_id, mil_job_title)
+VALUES(NULL, "Jamieson", 3, "ja12321@us.af.mil", NULL, NULL);
+
+INSERT INTO users(contractor_company, userName, userRole, userEmail, mil_id, mil_job_title)
+VALUES(NULL, "Daniel Couch", 2, "dcouch1997@gmail.com", 123123123, "Project Manager");
+
+-- Linking User 1 to 2 projects
+INSERT INTO user_project_link(user_id, project_id)
+VALUES(1, 1);
+
+INSERT INTO user_project_link(user_id, project_id)
+VALUES(1, 2);
+
+--  Clin Data
+INSERT INTO clin_data(clin_num, project_id, clin_type, clin_scope)
+VALUES(1001, 1, 2, "this is a test Clin");
+
+INSERT INTO task_resource_table(project_id, clin_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price)
+VALUES(1, 1, "PDR Support", "Oct-21", "1.6.1.1.1", 1001, "Direct", "PE-03", "Senior Project Engineer", "Labor", 77.19, 165, NULL, 12736.35, 12736.35, 12736.35, 12736.35);
+
+INSERT INTO project_information(project_id, wbs, task_name, duration, startDate, finishDate, successors, resource_names)
+VALUES(1, NULL, "Sustain-a-Box", "186 days", 2023-06-01, 2023-06-11, NULL, NULL);
+
+INSERT INTO messages(project_id, user_id, user_message, date_posted, time_posted)
+VALUES(1, 1, "this is a test message", 2022-06-02, 15:00:00);
+
+INSERT INTO contract_award(project_id, contract_num, contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, nego_comp, awarded)
+VALUES(1, "FA8620-18-C-2001", 1, 2022-06-01, 2022-07-01, 2022-08-01, 2022-09-01, 2022-10-01, 2022-11-01, 2022-12-01, 2023-01-01);
+
+INSERT INTO mipr_contracts(mipr_contract_num, project_id, mipr_contract_status)
+VALUES(234234, 2, 1);
+
+INSERT INTO project_schedule(event_name, event_startDate, event_endDate, successor)
+VALUES("test event", 2022-06-01, 2023-01-01, NULL);
+
+INSERT INTO project_funding_data(project_id, proj_funding_type, proj_current_date, curr_obli_planned, curr_obli_actual, curr_exp_planned, curr_exp_actual, project_funding_startDate, project_funding_endDate)
+VALUES(1, "3600", 2022-06-01, 1500000.00, 1500000.00, 144672.10, 135421.22, 2022-07-01, 2023-01-01);

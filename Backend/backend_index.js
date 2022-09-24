@@ -92,7 +92,16 @@ app.get('/getproject', (req, res) => {
       }
       res.send(results)
   })
+})
 
+app.get('/getprojectbyuser/:userEmail', (req, res) => {
+  let sql = 'SELECT * FROM `users` u inner join user_project_link upl on upl.user_id = u.user_id inner join project p on p.project_id = upl.project_id WHERE upl.userEmail = ${req.params.userEmail}'
+  let query = db.query(sql, (err, results) =>{
+      if(err){
+          throw err
+      }
+      res.send(results)
+  })
 })
   
 let nodeServer = app.listen(4000, function () {

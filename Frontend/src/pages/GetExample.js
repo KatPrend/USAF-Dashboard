@@ -40,11 +40,17 @@ function GetExample(){
       )}
       <ul>
         {data &&
-          data.map(({ project_id, project_name, contract_status }) => (
-            <li key={project_id}>
+          data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
+              <li key={project_id}>
               <h3>ID:{project_id}  <br></br>
               Name: {project_name}  <br></br>
-              Status: {contract_status} <br></br>
+              Project Type: {project_type} <br></br>
+              Contract Status: {contract_status} <br></br>
+              Branch: {branch} <br></br>
+              Contract Number: {contract_num} <br></br>
+              Requirement Type: {requirement_type} <br></br>
+              Summary: {summary} <br></br>
+              CCAR Number: {ccar_num} <br></br>
               </h3>
             </li>
           ))}
