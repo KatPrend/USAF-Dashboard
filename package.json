@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/KatPrend/USAF-Dashboard/issues"
   },
-  "homepage": "https://github.com/KatPrend/USAF-Dashboard#readme"
+  "homepage": "https://github.com/KatPrend/USAF-Dashboard#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "http-proxy-middleware": "^2.0.6",
+    "nodemon": "^2.0.20"
+  }
 }

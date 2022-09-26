@@ -14,6 +14,11 @@ app.use(
     }),
     )    
     
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
+
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 
 // Server name: usaf-dashboard-server
@@ -100,7 +105,7 @@ app.get('/createproject', (req, res) => {
   });
 });
 
-app.get('/getproject', (req, res) => {
+app.get('/api/getproject', (req, res) => {
   let sql = 'SELECT * FROM Project'
   let query = db.query(sql, (err, results) =>{
       if(err){
@@ -119,20 +124,11 @@ app.get('/getprojectbyuser/:userEmail', (req, res) => {
       res.send(results)
   })
 })
+
+
   
 let nodeServer = app.listen(4000, function () {
   let port = nodeServer.address().port
   let host = nodeServer.address().address
   console.log('App working on: ', host, port)
 })
-
-
-
-
-
-
-
-
-// app.listen('3000', () => {
-//     console.log('Server started');
-// })

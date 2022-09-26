@@ -7,7 +7,7 @@ function GetExample(){
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`/getproject`)
+    fetch(`/api/getproject`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(

@@ -53,7 +53,7 @@ function Main() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(`/getprojectbyuser/${accounts[0].username}`)
+        fetch(`/api/getprojectbyuser/${accounts[0].username}`)
 
         .then((response) => {
             if (!response.ok) {
