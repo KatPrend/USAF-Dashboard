@@ -66,8 +66,7 @@ CREATE TABLE if not exists task_resource_table(
 CREATE TABLE if not exists task_depend_link(
     task_resource_id_parent int, 
     successor varchar(20),
-    task_resource_id_child int,
-    FOREIGN KEY(task_resource_id) REFERENCES task_resource_table(task_resource_id)
+    task_resource_id_child int
 );
 
 CREATE TABLE if not exists project_information(
@@ -113,7 +112,7 @@ CREATE TABLE if not exists contract_award(
 );
 
 CREATE TABLE if not exists mipr_contracts(
-    mipr_contract_id AUTO_INCREMENT,
+    mipr_contract_id int AUTO_INCREMENT,
     mipr_contract_num int,
     project_id int,
     mipr_contract_status ENUM('Pre-Award', 'Awarded', 'Closed') NOT NULL,
