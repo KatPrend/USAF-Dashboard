@@ -11,6 +11,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.0",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.6",
     "react-dom": "^17.0.2",
@@ -25,7 +26,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:4000",
   "eslintConfig": {
     "extends": [
       "react-app",

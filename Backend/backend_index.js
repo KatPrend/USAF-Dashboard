@@ -14,16 +14,32 @@ app.use(
     }),
     )    
     
-const dataSql = fs.readFileSync('./Backend/sql_scripts/createDatabaseTables.sql').toString();
+const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    port: 8889,
-    database: "USAFTest",
+// Server name: usaf-dashboard-server
+// Azure MySQL admin login
+// usaf_admin
+// Thisisourdatatbase21.
+
+// Connecting to Azure MySQL
+var db=mysql.createConnection({
+    host:"usaf-dashboard-server.mysql.database.azure.com", 
+    user:"usaf_admin", 
+    password:"Thisisourdatatbase21.", 
+    database:"usaf-dash", 
+    port:3306, 
     multipleStatements: true
-});
+  });
+
+// Localhost
+// const db = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "root",
+//     port: 8889,
+//     database: "USAFTest",
+//     multipleStatements: true
+// });
 
 db.connect(function (err) {
     if (err) {
