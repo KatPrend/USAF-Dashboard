@@ -171,17 +171,17 @@ function Main() {
                     </thead>
                     <tbody>
                     {
-                        data.map((item) => (
-                            <tr key={item.project_id}>
-                                <td>{item.contract_num}</td>
-                                <td>{item.contract_status}</td>
-                                <td>{item.branch}</td>
-                                <td>Pending Contract Value</td>
-                                <td>Pending Dependency Status</td>
-                                <td>Pending Financial Status</td>
-                                <td>Pending Schedule Status</td>
-                            </tr>
-                        ))
+                        // data.map((item) => (
+                        //     <tr key={item.project_id}>
+                        //         <td>{item.contract_num}</td>
+                        //         <td>{item.contract_status}</td>
+                        //         <td>{item.branch}</td>
+                        //         <td>Pending Contract Value</td>
+                        //         <td>Pending Dependency Status</td>
+                        //         <td>Pending Financial Status</td>
+                        //         <td>Pending Schedule Status</td>
+                        //     </tr>
+                        // ))
                     }
                     
                     </tbody>
