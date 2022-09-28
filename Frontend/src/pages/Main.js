@@ -12,8 +12,6 @@ const ProjectContent = () => {
     const [data, setData] = useState();
 
     useEffect(() => {
-        console.debug("After mount! Let's load data from API...");
-
         axios.get(`/api/getprojectbyuser/${accounts[0].username}`).then(response => {
             setData(response.data);
             setLoading(false);
@@ -21,7 +19,7 @@ const ProjectContent = () => {
 
     }, []);
 
-    if (isLoading) 
+    if (isLoading) {
         return <div className="App">Loading...</div>;
     }
 
