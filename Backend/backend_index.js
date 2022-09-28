@@ -1,50 +1,23 @@
+const { endpoint, port, host, user, password, db_port, db_name } = require('../Backend/config');
 const express = require('express');
 const fs = require('fs');
-const path = require('path')
-const bodyparser = require('body-parser')
-// const readXlsxFile = require('read-excel-file/node')
 const mysql = require('mysql')
-// const multer = require('multer')
 const app = express()
-app.use(express.static('./public'))
-app.use(bodyparser.json())
-app.use(
-    bodyparser.urlencoded({
-        extended: true,
-    }),
-    )    
-    
 const cors = require('cors');
 app.use(cors({
   origin: 'http://localhost:3000'
 }));
-
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 
-// Server name: usaf-dashboard-server
-// Azure MySQL admin login
-// usaf_admin
-// Thisisourdatatbase21.
-
-// Connecting to Azure MySQL
+// Connecting to Azure MySQL Database
 var db=mysql.createConnection({
-    host:"usaf-dashboard-server.mysql.database.azure.com", 
-    user:"usaf_admin", 
-    password:"Thisisourdatatbase21.", 
-    database:"usaf-dash", 
-    port:3306, 
+    host:host, 
+    user:user, 
+    password:password, 
+    database:db_name,
+    port:db_port, 
     multipleStatements: true
   });
-
-// Localhost
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     port: 8889,
-//     database: "USAFTest",
-//     multipleStatements: true
-// });
 
 db.connect(function (err) {
     if (err) {
@@ -53,44 +26,12 @@ db.connect(function (err) {
     console.log('Database connected.')
   })
 
-//   const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//       cb(null, __dirname + '/uploads/')
-//     },
-//     filename: (req, file, cb) => {
-//       cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
-//     },
-//   })
-//   const uploadFile = multer({ storage: storage })
-//   app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/index.html')
-//   })
-//   app.post('/import-excel', uploadFile.single('import-excel'), (req, res) => {
-//     importFileToDb(__dirname + '/uploads/' + req.file.filename)
-//     console.log(res)
-//   })
-
-//   function importFileToDb(exFile) {
-//     readXlsxFile(exFile).then((rows) => {
-//       rows.shift()
-      
-//         let query = 'INSERT INTO project_info_import (`TASK ID`, `Task Description`,  `Month`,  `WBS`, `CLIN`, `Source Type`, `Resource`, `Resource Description`, `Resource Type`, `Rate`, `Hours`, `Units`, `Cost`, `Base Cost`, `Direct Cost`, `Total Price`) VALUES ?'
-//         db.query(query, [rows], (error, response) => {
-//         console.log(error || response)
-//         })
-        
-//     })
-//   }
-
 app.get('/', (req, res) => {
-     console.log("This works?");
+     console.log("This works");
  })
 
 app.post("/newProject", (req, res) => {
   const {email, password} = req.body;
-  
-  
-  
 
 });
 
@@ -124,10 +65,8 @@ app.get('/api/getprojectbyuser/:userEmail', (req, res) => {
       res.send(results)
   })
 })
-
-
   
-let nodeServer = app.listen(4000, function () {
+let nodeServer = app.listen(port, function () {
   let port = nodeServer.address().port
   let host = nodeServer.address().address
   console.log('App working on: ', host, port)

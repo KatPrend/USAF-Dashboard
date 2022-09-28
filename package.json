@@ -20,6 +20,7 @@
   "homepage": "https://github.com/KatPrend/USAF-Dashboard#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
     "http-proxy-middleware": "^2.0.6",
     "nodemon": "^2.0.20"
   }

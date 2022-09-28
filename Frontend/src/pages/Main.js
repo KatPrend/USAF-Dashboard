@@ -20,7 +20,7 @@ const ProjectContent = () => {
     }, []);
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <div className="mx-auto w-75">Loading...</div>;
     }
 
     return (

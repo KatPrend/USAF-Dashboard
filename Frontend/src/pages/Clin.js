@@ -1,7 +1,6 @@
 import React from 'react';
 import './page.css';
-import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Table } from 'react-bootstrap';
 
 function Clin() {
     return (
