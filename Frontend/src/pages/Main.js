@@ -2,63 +2,26 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
 import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
-import { ProfileData } from "../components/ProfileData";
-import { callMsGraph } from "../graph";
-import { loginRequest } from "../authConfig";
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react";
 /**
- * Renders information about the signed-in user or a button to retrieve data about the user
+ * Renders information about projects assigned to the current user
  */
- const ProfileContent = () => {
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
-
-    function RequestProfileData() {
-        // Silently acquires an access token which is then attached to a request for MS Graph data
-        instance.acquireTokenSilent({
-            ...loginRequest,
-            account: accounts[0]
-        }).then((response) => {
-            callMsGraph(response.accessToken).then(response => setGraphData(response));
-        });
-    }
-
-    return (
-        <div>
-            <h5 className="card-title">Welcome {accounts[0].name} and {accounts[0].username}</h5>
-            {graphData ? 
-                <ProfileData graphData={graphData} />
-                :
-                <Button variant="secondary" onClick={RequestProfileData}>Request Profile Information</Button>
-            }
-        </div>
-    );
-};
-
 const ProjectContent = () => {
-    const { instance, accounts } = useMsal();
+    const {accounts} = useMsal();
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
-
-    console.debug(
-        `isLoading is ${isLoading}`
-    );
 
     useEffect(() => {
         console.debug("After mount! Let's load data from API...");
 
         axios.get(`/api/getprojectbyuser/${accounts[0].username}`).then(response => {
-            console.debug("Hurray! We have Pokemon data, let's update our state");
-            console.debug("Calling setPokemon...");
             setData(response.data);
-            console.debug("Calling setLoading...");
             setLoading(false);
         });
 
     }, []);
 
-    if (isLoading) {
-        console.debug("renders: Loading...");
+    if (isLoading) 
         return <div className="App">Loading...</div>;
     }
 
