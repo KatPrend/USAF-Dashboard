@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 function Clin() {
     return (
-        <body class="lightBlue">
-            <div class="d-flex justify-content-between p-2">
+        <body className="lightBlue">
+            <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
                 <Button>Add Project</Button>
             </div>

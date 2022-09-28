@@ -7,30 +7,30 @@ function Signup() {
 
 
     return (
-        <body class="lightBlue">
+        <body className="lightBlue">
             <br />
-            <form class="signup">
+            <form className="signup">
 
-                <p class="loginHeader">
+                <p className="loginHeader">
                     <Link to="/login"> Login </Link>
-                    <span class="accent">/ Create Account</span>
+                    <span className="accent">/ Create Account</span>
                 </p>
 
-                <div class="inputWrapper">
+                <div className="inputWrapper">
 
-                    <label class="signupLabel" for="firstName">First Name:</label>
-                    <input class="signupInput" type="text" >
+                    <label className="signupLabel" for="firstName">First Name:</label>
+                    <input className="signupInput" type="text" >
                     </input>
 
-                    <label class="signupLabel" for="lastName">Last Name:</label>
-                    <input class="signupInput" type="text" >
+                    <label className="signupLabel" for="lastName">Last Name:</label>
+                    <input className="signupInput" type="text" >
                     </input>
 
-                    <label class="signupLabel" for="email">Email:</label>
-                    <input class="signupInput" type="text" >
+                    <label className="signupLabel" for="email">Email:</label>
+                    <input className="signupInput" type="text" >
                     </input>
 
-                    <p class="passwordRequirementText">
+                    <p className="passwordRequirementText">
                         Password must include:
                         <ul>
                             <li>a lowercase letter</li>
@@ -40,14 +40,14 @@ function Signup() {
                         </ul>
                     </p>
 
-                    <label class="signupLabel" for="password">Password:</label>
-                    <input class="signupInput" type="password" >
+                    <label className="signupLabel" for="password">Password:</label>
+                    <input className="signupInput" type="password" >
                     </input>
 
-                    <label class="signupLabel" for="password">Confirm Password:</label>
-                    <input class="signupInput" type="password" >
+                    <label className="signupLabel" for="password">Confirm Password:</label>
+                    <input className="signupInput" type="password" >
                     </input>
-                    <div class="text-center">
+                    <div className="text-center">
                         <input type="submit" value="Create Account">
                         </input>
                     </div>

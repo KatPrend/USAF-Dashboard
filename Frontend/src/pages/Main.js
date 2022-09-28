@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import './page.css';
 import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { ProfileData } from "../components/ProfileData";
@@ -34,71 +35,91 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/
     );
 };
 
+const ProjectContent = () => {
+    const { instance, accounts } = useMsal();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
 
+    console.debug(
+        `isLoading is ${isLoading}`
+    );
+
+    useEffect(() => {
+        console.debug("After mount! Let's load data from API...");
+
+        axios.get(`/api/getprojectbyuser/${accounts[0].username}`).then(response => {
+            console.debug("Hurray! We have Pokemon data, let's update our state");
+            console.debug("Calling setPokemon...");
+            setData(response.data);
+            console.debug("Calling setLoading...");
+            setLoading(false);
+        });
+
+    }, []);
+
+    if (isLoading) {
+        console.debug("renders: Loading...");
+        return <div className="App">Loading...</div>;
+    }
+
+    return (
+        <div className="mx-auto w-75">
+            <h2>Projects: <Button>Add Project</Button></h2>
+            <Table striped bordered hover className="bg-light">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Contract Number</th>
+                        <th>Contract Status</th>
+                        <th>Org/Branch</th>
+                        <th>Contract Value</th>
+                        <th>Dependency Status</th>
+                        <th>Financial Status</th>
+                        <th>Schedule Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {
+                    data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
+                        <tr key={project_id}>
+                            <td>{project_name}</td>
+                            <td>{contract_num}</td>
+                            <td>{contract_status}</td>
+                            <td>{branch}</td>
+                            <td>Pending Contract Value</td>
+                            <td>Pending Dependency Status</td>
+                            <td>Pending Financial Status</td>
+                            <td>Pending Schedule Status</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </Table>
+        </div>        
+    );
+}
 
 function Main() {
 
-    const { instance, accounts } = useMsal();
-    const [graphData, setGraphData] = useState(null);
-
-    instance.acquireTokenSilent({
-        ...loginRequest,
-        account: accounts[0]
-    }).then((response) => {
-        callMsGraph(response.accessToken).then(response => setGraphData(response));
-    });
-
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetch(`/api/getprojectbyuser/${accounts[0].username}`)
-
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(
-                    `This is an HTTP error: The status is ${response.status}`
-                );
-            }
-            return response.json();
-        })
-
-        .then((actualData) => {
-            setData(actualData);
-            setError(null);
-        })
-
-        .catch((err) => {
-            setError(err.message);
-            setData(null);
-        })
-
-        .finally(() => {
-                setLoading(false);
-        });
-    }, []);
-
     return (
-        <body class="lightBlue">
-            <Container class="lightblue">
+        <div className="lightBlue">
+            <Container className="lightblue">
                 <Row>
                     {/*1*/}
                     <Col>
-                        <ProfileContent />
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Dependency Summary</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Dependency Summary</Card.Header>
                             <Card.Body>
                                 <Card.Text>
-                                    Placeholder text lives here!{accounts[0].username}
+                                    Placeholder text lives here!
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
                     {/*2*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Financial Summary</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Financial Summary</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -108,8 +129,8 @@ function Main() {
                     </Col>
                     {/*3*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Schedule Summary</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Schedule Summary</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -121,8 +142,8 @@ function Main() {
                <Row>
                     {/*1*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -132,8 +153,8 @@ function Main() {
                     </Col>
                     {/*2*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -143,8 +164,8 @@ function Main() {
                     </Col>
                     {/*3*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -152,42 +173,12 @@ function Main() {
                             </Card.Body>
                         </Card>
                     </Col>
-               </Row>
+               </Row>   
             </Container>
-            <div class="mx-auto w-75">
-                <h2>Projects: <Button>Add Project</Button></h2>
-                <Table striped bordered hover className="bg-light">
-                    <thead>
-                        <tr>
-                            <th>Project Name</th>
-                            <th>Contract Number</th>
-                            <th>Contract Status</th>
-                            <th>Org/Branch</th>
-                            <th>Contract Value</th>
-                            <th>Dependency Status</th>
-                            <th>Financial Status</th>
-                            <th>Schedule Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        // data.map((item) => (
-                        //     <tr key={item.project_id}>
-                        //         <td>{item.contract_num}</td>
-                        //         <td>{item.contract_status}</td>
-                        //         <td>{item.branch}</td>
-                        //         <td>Pending Contract Value</td>
-                        //         <td>Pending Dependency Status</td>
-                        //         <td>Pending Financial Status</td>
-                        //         <td>Pending Schedule Status</td>
-                        //     </tr>
-                        // ))
-                    }
-                    
-                    </tbody>
-                </Table>
-            </div>
-        </body>
+               
+            <ProjectContent/>
+
+        </div>
     );
 }
 

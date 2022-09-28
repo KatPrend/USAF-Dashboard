@@ -69,10 +69,10 @@ export const PageLayout = (props) => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>home</a>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>account_circle</a>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>settings</a>
-                            <a onClick={() => (isAuthenticated ? handleLogout("redirect") : handleLogin("redirect"))} class="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{isAuthenticated ? "logout" : "login"}</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>account_circle</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>settings</a>
+                            <a onClick={() => (isAuthenticated ? handleLogout("redirect") : handleLogin("redirect"))} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{isAuthenticated ? "logout" : "login"}</a>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
