@@ -1,18 +1,22 @@
 const express = require('express');
 const fs = require('fs');
-const path = require('path')
-const bodyparser = require('body-parser')
+const path = require('path');
+const bodyparser = require('body-parser');
 // const readXlsxFile = require('read-excel-file/node')
-const mysql = require('mysql')
+const mysql = require('mysql');
 // const multer = require('multer')
-const app = express()
-app.use(express.static('./public'))
+const app = express();
+
+const PORT = process.env.PORT || 4000;
+
+// app.use(express.static('./public'))
+app.use(express.static(path.resolve(__dirname, '../Frontend/build')));
 app.use(bodyparser.json())
 app.use(
-    bodyparser.urlencoded({
-        extended: true,
-    }),
-    )    
+  bodyparser.urlencoded({
+    extended: true,
+  }),
+);
     
 const cors = require('cors');
 app.use(cors({
@@ -47,11 +51,11 @@ var db=mysql.createConnection({
 // });
 
 db.connect(function (err) {
-    if (err) {
-      return console.error('error: ' + err.message)
-    }
-    console.log('Database connected.')
-  })
+  if (err) {
+    return console.error('error: ' + err.message)
+  }
+  console.log('Database connected.')
+});
 
 //   const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
@@ -84,14 +88,10 @@ db.connect(function (err) {
 
 app.get('/', (req, res) => {
      console.log("This works?");
- })
+ });
 
 app.post("/newProject", (req, res) => {
   const {email, password} = req.body;
-  
-  
-  
-
 });
 
 app.get('/createproject', (req, res) => {
@@ -113,7 +113,7 @@ app.get('/api/getproject', (req, res) => {
       }
       res.send(results)
   })
-})
+});
 
 app.get('/api/getprojectbyuser/:userEmail', (req, res) => {
   let sql = 'SELECT * FROM `users` u inner join user_project_link upl on upl.user_id = u.user_id inner join project p on p.project_id = upl.project_id WHERE u.userEmail =' + '"' + req.params.userEmail + '"';
@@ -122,13 +122,16 @@ app.get('/api/getprojectbyuser/:userEmail', (req, res) => {
           throw err
       }
       res.send(results)
-  })
-})
+  });
+});
 
+// All other GET requests not handled before will return our React app
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
+});
 
-  
-let nodeServer = app.listen(4000, function () {
+let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port
   let host = nodeServer.address().address
   console.log('App working on: ', host, port)
-})
+});

@@ -80,8 +80,8 @@ function Main() {
     }, []);
 
     return (
-        <body class="lightBlue">
-            <Container class="lightblue">
+        <body className="lightBlue">
+            <Container className="lightblue top-Padding">
                 <Row>
                     {/*1*/}
                     <Col>
@@ -97,8 +97,8 @@ function Main() {
                     </Col>
                     {/*2*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Financial Summary</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Financial Summary</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -108,8 +108,8 @@ function Main() {
                     </Col>
                     {/*3*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Schedule Summary</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Schedule Summary</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -121,8 +121,8 @@ function Main() {
                <Row>
                     {/*1*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -132,8 +132,8 @@ function Main() {
                     </Col>
                     {/*2*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -143,8 +143,8 @@ function Main() {
                     </Col>
                     {/*3*/}
                     <Col>
-                        <Card class='card'>
-                            <Card.Header class="text-center cardHead">Future Expansion</Card.Header>
+                        <Card className='card'>
+                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
                             <Card.Body>
                                 <Card.Text>
                                     Placeholder text lives here!
@@ -154,7 +154,7 @@ function Main() {
                     </Col>
                </Row>
             </Container>
-            <div class="mx-auto w-75">
+            <div className="mx-auto w-75">
                 <h2>Projects: <Button>Add Project</Button></h2>
                 <Table striped bordered hover className="bg-light">
                     <thead>

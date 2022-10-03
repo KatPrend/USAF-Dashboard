@@ -6,7 +6,7 @@ function AwardedProject(){
 
     return(
         <body className="lightBlue">
-            <Container>
+            <Container className='top-Padding'>
                 <Row>
                     <Col>
                         <Card className="card">
