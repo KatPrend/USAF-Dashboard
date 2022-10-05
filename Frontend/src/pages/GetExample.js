@@ -29,8 +29,6 @@ function GetExample(){
     });
   }, []);
 
-  console.log("anything");
-
   return (
     <div className="App">
       <h1>Projects</h1>

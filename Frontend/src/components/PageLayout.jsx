@@ -8,8 +8,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
 import { useIsAuthenticated } from "@azure/msal-react";
-import { SignInButton } from "./SignInButton";
-import { SignOutButton } from "./SignOutButton";
 import { Container } from "react-bootstrap";
 import { useMsal } from "@azure/msal-react";
 import { loginRequest } from "../authConfig";
@@ -69,10 +67,10 @@ export const PageLayout = (props) => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>home</a>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>account_circle</a>
-                            <a href="/" class="material-icons mx-3" style={navStyle}>settings</a>
-                            <a onClick={() => (isAuthenticated ? handleLogout("redirect") : handleLogin("redirect"))} class="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{isAuthenticated ? "logout" : "login"}</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>account_circle</a>
+                            <a href="/" className="material-icons mx-3" style={navStyle}>settings</a>
+                            <a href="/" onClick={() => (isAuthenticated ? handleLogout("redirect") : handleLogin("redirect"))} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{isAuthenticated ? "logout" : "login"}</a>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

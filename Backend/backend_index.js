@@ -1,3 +1,4 @@
+const { endpoint, port, host, user, password, db_port, db_name } = require('../Backend/config');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,6 +8,7 @@ const mysql = require('mysql');
 // const multer = require('multer')
 const app = express();
 
+// Possibly remove
 const PORT = process.env.PORT || 4000;
 
 // app.use(express.static('./public'))
@@ -19,36 +21,21 @@ app.use(
 );
     
 const cors = require('cors');
+
 app.use(cors({
   origin: 'http://localhost:3000'
 }));
-
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 
-// Server name: usaf-dashboard-server
-// Azure MySQL admin login
-// usaf_admin
-// Thisisourdatatbase21.
-
-// Connecting to Azure MySQL
+// Connecting to Azure MySQL Database
 var db=mysql.createConnection({
-    host:"usaf-dashboard-server.mysql.database.azure.com", 
-    user:"usaf_admin", 
-    password:"Thisisourdatatbase21.", 
-    database:"usaf-dash", 
-    port:3306, 
+    host:host, 
+    user:user, 
+    password:password, 
+    database:db_name,
+    port:db_port, 
     multipleStatements: true
   });
-
-// Localhost
-// const db = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     port: 8889,
-//     database: "USAFTest",
-//     multipleStatements: true
-// });
 
 db.connect(function (err) {
   if (err) {
