@@ -147,7 +147,7 @@ function PreAwardProject(){
                                             </span>
                                         </Col>
                                         <Col>
-                                            <div class='badge'> </div>
+                                            <div className='badge'> </div>
                                         </Col>
                                     </Row>
                                     <Row>

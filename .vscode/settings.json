@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/55c086b6-5aff-4645-a572-99cd2daa11a7/resourceGroups/DashboardApp-rg/providers/Microsoft.Web/sites/metisprojectmanagement",
-    "appService.deploySubpath": "."
-}

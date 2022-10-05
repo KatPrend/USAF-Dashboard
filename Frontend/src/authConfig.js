@@ -37,7 +37,9 @@ export const msalConfig = {
                         console.debug(message);		
                         return;		
                     case LogLevel.Warning:		
-                        console.warn(message);		
+                        console.warn(message);
+                        return;
+                    default:
                         return;		
                 }	
             }	
