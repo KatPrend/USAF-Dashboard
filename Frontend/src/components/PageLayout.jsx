@@ -77,8 +77,6 @@ export const PageLayout = (props) => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <br />
-            <br />
             {props.children}
         </>
     );
