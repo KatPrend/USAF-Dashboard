@@ -102,6 +102,16 @@ app.get('/api/getproject', (req, res) => {
   })
 });
 
+app.get('/api/getclin/:project_id', (req, res) => {
+  let sql = 'SELECT * FROM clin_data WHERE project_id =' + '"' + req.params.project_id + '"';
+  let query = db.query(sql, (err, results) =>{
+      if(err){
+          throw err
+      }
+      res.send(results)
+  });
+});
+
 app.get('/api/getprojectbyuser/:userEmail', (req, res) => {
   let sql = 'SELECT * FROM `users` u inner join user_project_link upl on upl.user_id = u.user_id inner join project p on p.project_id = upl.project_id WHERE u.userEmail =' + '"' + req.params.userEmail + '"';
   let query = db.query(sql, (err, results) =>{
@@ -113,9 +123,9 @@ app.get('/api/getprojectbyuser/:userEmail', (req, res) => {
 });
 
 // All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
+// });
 
 let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port
