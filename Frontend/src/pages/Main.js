@@ -130,10 +130,7 @@ function Main() {
                 </Table>
             </div>
         </body>
-    );
-
-    
-    
+    );   
 }
 
 export default Main;
