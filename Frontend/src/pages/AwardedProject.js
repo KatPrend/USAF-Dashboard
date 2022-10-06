@@ -1,11 +1,13 @@
 import React from 'react';
 import { Container, Card, Col, Row, Button, ButtonGroup } from 'react-bootstrap';
+import { NavB } from '../components/NavB';
 import './page.css';
 
 function AwardedProject(){
 
     return(
         <body className="lightBlue">
+            <NavB />
             <Container className='top-Padding'>
                 <Row>
                     <Col>

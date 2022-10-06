@@ -1,6 +1,7 @@
 import React from 'react';
 import './page.css';
 import { Card, Col, Container, Row, Table, Button, ButtonGroup } from 'react-bootstrap';
+import { NavB } from '../components/NavB';
 
 
 
@@ -8,6 +9,7 @@ function PreAwardProject(){
 
     return(
         <body className="lightBlue">
+            <NavB />
             <Container className='top-Padding'>
                 <Row>
                     <Col>
