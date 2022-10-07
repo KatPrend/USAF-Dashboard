@@ -9,6 +9,7 @@ import Nav from "react-bootstrap/Nav";
 
 import { Container } from "react-bootstrap";
 import { useMsal } from "@azure/msal-react";
+import "./navB.css";
 
 const navStyle = { color: "white", fontSize: "48px", textDecoration: "none"};
 
@@ -27,7 +28,7 @@ export const NavB = () => {
 
             <Navbar bg="primary" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                         <img
                         alt=""
                         src={require('../images/AirForceLogoWhite.png')}
@@ -41,7 +42,7 @@ export const NavB = () => {
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
                             <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
-                            <a href="/" className="material-icons mx-3" style={navStyle}>account_circle</a>
+                            <button className="material-icons mx-3" style={navStyle}>account_circle</button>
                             <a href="/" className="material-icons mx-3" style={navStyle}>settings</a>
                             <a href="/" onClick={() => handleLogout(instance)} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{"logout"}</a>
                         </Nav>

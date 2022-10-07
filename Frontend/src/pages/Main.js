@@ -4,6 +4,9 @@ import './page.css';
 import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
+import { DepSum } from '../components/DepSum';
+import { FinSum } from '../components/FinSum';
+import { SchedSum } from '../components/SchedSum';
 /**
  * Renders information about projects assigned to the current user
  */
@@ -69,77 +72,21 @@ function Main() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Dependency Summary</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <DepSum />
                     </Col>
                     {/*2*/}
                     <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Financial Summary</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <FinSum />
                     </Col>
                     {/*3*/}
                     <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Schedule Summary</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <SchedSum />
                     </Col>
-               </Row>
-               <Row>
-                    {/*1*/}
-                    <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    {/*2*/}
-                    <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    {/*3*/}
-                    <Col>
-                        <Card className='card'>
-                            <Card.Header className="text-center cardHead">Future Expansion</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Placeholder text lives here!
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-               </Row>   
+               </Row>  
             </Container>
-               
+            <br />
             <ProjectContent/>
-
+            
         </div>
     );
 }
