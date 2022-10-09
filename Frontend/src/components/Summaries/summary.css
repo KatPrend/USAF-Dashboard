@@ -1,0 +1,40 @@
+.box {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+}
+
+.box.green {
+    background-color: rgb(56, 212, 56);
+}
+
+.box.yellow {
+    background-color: yellow;
+}
+
+.box.red {
+    background-color: red;
+}
+
+.category {
+    font-size: 75%;
+    font-weight: 700;
+}
+
+.value {
+    font-size: 150%;
+}
+
+.finTitle {
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 75%;
+}
+
+.finInfo {
+    font-size: 75%;
+}

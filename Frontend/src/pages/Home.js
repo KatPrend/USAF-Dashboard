@@ -5,7 +5,7 @@ import { SignInButton } from '../components/SignInButton';
 
 function Home() {
     return (
-        <body>
+        <body style={{padding: "5%"}}>
             <img className="center" src={require('../images/AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
             <h1 className="text-center">
                 <br></br>
