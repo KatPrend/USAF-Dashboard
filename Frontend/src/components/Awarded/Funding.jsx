@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
+import BarGraph from '../BarGraph';
+import LineGraph from '../LineGraph';
+import { FinanciaData } from '../../pages/DummyData';
 
 export const Funding = () => {
     return (
@@ -18,6 +21,24 @@ export const Funding = () => {
             </Card.Header>
             <Card.Body>
                 <Container>
+                <Row>
+                    <Col>
+                    <Tabs className="Tabs">
+                        <Tab className="Tab" eventKey="obligationBar" title="Obligation Bar Chart">
+                            <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        </Tab>
+                        <Tab className="Tab" eventKey="obligationLine" title="Obligation Line Chart">
+                            <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        </Tab>
+                        <Tab className="Tab" eventKey="ExpenditureBar" title="Expenditure Bar Chart">
+                            <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        </Tab>
+                        <Tab className="Tab" eventKey="ExpenditureLine" title="Expenditure Line Chart">
+                            <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        </Tab>
+                    </Tabs>
+                    </Col>
+                </Row>
                     <Row>
                         <Col className="tableTitle">
                             Projected Obligation Plan:
