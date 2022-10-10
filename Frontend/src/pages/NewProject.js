@@ -47,7 +47,7 @@ function PostExample() {
     e.preventDefault();
     alert("Project Added")
 
-      axios.post('/api/newProject', {
+      axios.post('/project', {
         project_name: projectName,
         project_type: projectType,
         contract_status: contractStatus,

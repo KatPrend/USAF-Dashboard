@@ -16,7 +16,7 @@ const ProjectContent = () => {
     const [data, setData] = useState();
 
     useEffect(() => {
-        axios.get(`/api/getprojectbyuser/${accounts[0].username}`).then(response => {
+        axios.get(`/project/userEmail/${accounts[0].username}`).then(response => {
             setData(response.data);
             setLoading(false);
         });

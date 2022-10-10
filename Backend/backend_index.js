@@ -9,6 +9,9 @@ const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 const PORT = process.env.PORT || 4000;
 // const readXlsxFile = require('read-excel-file/node')
 // const multer = require('multer')
+app.use(cors({
+  origin: 'http://localhost:3000' 
+}));
 
 // app.use(express.static('./public'))
 app.use(express.static(path.resolve(__dirname, '../Frontend/build')));
@@ -19,7 +22,6 @@ app.use(
   }),
 );    
 
-app.use(cors({ origin: 'http://localhost:3000' }));
 
 var db = require('./database');
 db.connect(function (err) {
@@ -27,18 +29,19 @@ db.connect(function (err) {
     return console.error('error: ' + err.message)
   }
   console.log('Database connected.')
-  });
-
+});
 
 const projectRoute = require('./routes/project');
 const clinRoute = require('./routes/clin');
 const wbsRoute = require('./routes/wbs');
 const userRoute = require('./routes/user');
+const fundsRoute = require('./routes/funds');
 
 app.use('/project', projectRoute);
 app.use('/clin', clinRoute);
 app.use('/wbs', wbsRoute);
 app.use('/user', userRoute);
+app.use('/funds', userRoute);
 
 app.get('/', (req, res) => {
      console.log("This works?");
@@ -59,9 +62,9 @@ app.get('/', (req, res) => {
 
 
 //All other GET requests not handled before will return our React app
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
+// });
 
 let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port
