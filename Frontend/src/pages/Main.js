@@ -47,7 +47,7 @@ const ProjectContent = () => {
                 {
                     data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
                         <tr key={project_id}>
-                            <td><a href={`/clin/${project_id}`}>{project_name}</a></td>
+                            <td><a href='/clin'>{project_name}</a></td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
