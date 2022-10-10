@@ -3,9 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import Main from './pages/Main';
 import Clin from './pages/Clin';
 import GetExample from './pages/GetExample';
-import PostExample from './pages/PostExample';
-import PreAwardProject from './pages/PreAwardProject'
-import AwardedProject from './pages/AwardedProject'
+import NewProject from './pages/NewProject';
+import PreAwardProject from './pages/PreAwardProject';
+import AwardedProject from './pages/AwardedProject';
 
 function Routes() {
     return (
@@ -26,9 +26,8 @@ function Routes() {
                 <GetExample />
             </Route>
             <Route exact path="/newProject">
-                <PostExample />
+                <NewProject />
             </Route>
-
         </Switch>
     );
 }

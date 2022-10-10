@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './page.css';
 import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
+import { NavB } from '../components/NavB';
 
 const ClinData = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
     useEffect(() => {
-        axios.get(`/api/getclin/2`).then(response =>{
+        axios.get(`/clin/2`).then(response =>{
             setData(response.data);
             setLoading(false);
         });
@@ -47,6 +48,7 @@ const ClinData = () => {
 function Clin() {
     return (
         <div className="lightBlue">
+            <NavB />
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
                 <Button>Add Project</Button>

@@ -1,60 +1,39 @@
 import React from 'react';
-import { Container, Card, Col, Row, Button, ButtonGroup, Tabs, Tab } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
+import { Dependencies } from '../components/Awarded/Dependencies';
+import { Documents } from '../components/Awarded/Documents';
+import { FinManagement } from '../components/Awarded/FinManagement';
+import { Funding } from '../components/Awarded/Funding';
+import { IPT } from '../components/Awarded/IPT';
+import { ProjectData } from '../components/Awarded/ProjectData';
+import { ProjectSchedule } from '../components/Awarded/ProjectSchedule';
+import { NavB } from '../components/NavB';
 import './page.css';
 import BarGraph from '../components/BarGraph';
 import LineGraph from '../components/LineGraph';
 import { FinanciaData } from './DummyData';
 
+
+
+//Move this ish to the component
+
 function AwardedProject(){
 
     return(
         <body className="lightBlue">
+            <NavB />
+
+
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <Card className="card">
-                            <Card.Header className = "cardHead">
-                                <Container>
-                                    <Row>
-                                        <Col style={{textAlign: 'left'}}>
-                                            <span>Project Data</span>
-                                        </Col>
-                                        <Col style={{textAlign: 'right'}}>
-                                            <span><Button className='Button'>Edit</Button></span>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    placeholder text
-                                </Card.Text>
-                                <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button'>See CLIN Data</Button>
-                                    <Button className='Button'>Inport File</Button>
-                                </ButtonGroup>
-                            </Card.Body>
-                        </Card>
+                        <ProjectData />
                     </Col>
                     <Col>
-                        <Card className="card">
-                            <Card.Header className = "cardHead">Project Documents</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    placeholder text
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <Documents />
                     </Col>
                     <Col>
-                        <Card className="card">
-                            <Card.Header className = "cardHead">Project Schedule</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    placeholder text
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <ProjectSchedule />
                     </Col>
                 </Row>
                 <br/>
@@ -63,73 +42,19 @@ function AwardedProject(){
                         <Container>
                             <Row>
                                 <Col>
-                                    <Card className="card">
-                                        <Card.Header className = "cardHead">
-                                            <Container>
-                                                <Row>
-                                                    <Col style={{textAlign: 'left'}}>
-                                                        <span>Project IPT</span>
-                                                    </Col>
-                                                    <Col style={{textAlign: 'right'}}>
-                                                        <span><Button className='Button'>Edit</Button></span>
-                                                    </Col>
-                                                </Row>
-                                            </Container>
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <Card.Text>
-                                                placeholder text
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
+                                    <IPT />
                                 </Col>
                             </Row>
                             <br/>
                             <Row>
                                 <Col>
-                                    <Card className="card">
-                                        <Card.Header className = "cardHead">
-                                            <Container>
-                                                <Row>
-                                                    <Col style={{textAlign: 'left'}}>
-                                                        <span>Project Dependencies</span>
-                                                    </Col>
-                                                    <Col style={{textAlign: 'right'}}>
-                                                        <span><Button className='Button'>Edit</Button></span>
-                                                    </Col>
-                                                </Row>
-                                            </Container>
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <Card.Text>
-                                                placeholder text
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
+                                    <Dependencies />
                                 </Col>
                             </Row>
                         </Container>
                     </Col>
                     <Col>
-                        <Card className="card">
-                            <Card.Header className = "cardHead">
-                                <Container>
-                                    <Row>
-                                        <Col style={{textAlign: 'left'}}>
-                                            <span>Project Financial Managment</span>
-                                        </Col>
-                                        <Col style={{textAlign: 'right'}}>
-                                            <span><Button className='Button'>Edit</Button></span>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    placeholder text
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
+                        <FinManagement />
                     </Col>
                 </Row>
                 <br/>
@@ -211,11 +136,13 @@ function AwardedProject(){
                                 </Container>
                             </Card.Body>
                         </Card>
+
+                        <Funding />
                     </Col>
                 </Row>
             </Container>
         </body>
-    )
+    );
 }
 
 export default AwardedProject;

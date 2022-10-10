@@ -1,6 +1,5 @@
 import React from "react";
 import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
-import { PageLayout } from "./components/PageLayout";
 import Home from "./pages/Home";
 import "./styles/App.css";
 import Routes from "./Routes";
@@ -24,9 +23,6 @@ const MainContent = () => {
 
 export default function App() {
     return (
-        <PageLayout>
-            <MainContent></MainContent>
-        </PageLayout>
-       
+        <MainContent></MainContent>
     );
 }
