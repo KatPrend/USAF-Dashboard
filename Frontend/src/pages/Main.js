@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
-import { Card, Col, Container, Button, Row, Table } from 'react-bootstrap';
+import { Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
-import { DepSum } from '../components/DepSum';
-import { FinSum } from '../components/FinSum';
-import { SchedSum } from '../components/SchedSum';
+import { DepSum } from '../components/Summaries/DepSum';
+import { FinSum } from '../components/Summaries/FinSum';
+import { SchedSum } from '../components/Summaries/SchedSum';
 /**
  * Renders information about projects assigned to the current user
  */

@@ -1,14 +1,15 @@
-// const path = require('path')
-// const bodyparser = require('body-parser')
-// app.use(express.static('./public'))
-// app.use(bodyparser.json())
-// app.use(
-//     bodyparser.urlencoded({
-//         extended: true,
-//     }),
-//     )    
-// const readXlsxFile = require('read-excel-file/node')
-// const multer = require('multer')  
+const path = require('path')
+const fs = require('fs');
+const bodyparser = require('body-parser')
+app.use(express.static('./public'))
+app.use(bodyparser.json())
+app.use(
+    bodyparser.urlencoded({
+        extended: true,
+    }),
+    )    
+const readXlsxFile = require('read-excel-file/node')
+const multer = require('multer')  
   
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
