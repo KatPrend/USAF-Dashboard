@@ -67,3 +67,13 @@
 .alignLeft {
   text-align: left;
 }
+
+.Tabs {
+  width: auto;
+  border-color: black;
+  margin-bottom: 2%;
+}
+
+.Tab{
+  border-color: black;
+}

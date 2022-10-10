@@ -1,6 +1,9 @@
 import React from 'react';
-import { Container, Card, Col, Row, Button, ButtonGroup } from 'react-bootstrap';
+import { Container, Card, Col, Row, Button, ButtonGroup, Tabs, Tab } from 'react-bootstrap';
 import './page.css';
+import BarGraph from '../components/BarGraph';
+import LineGraph from '../components/LineGraph';
+import { FinanciaData } from './DummyData';
 
 function AwardedProject(){
 
@@ -147,6 +150,24 @@ function AwardedProject(){
                             </Card.Header>
                             <Card.Body>
                                 <Container>
+                                    <Row>
+                                        <Col>
+                                        <Tabs className="Tabs">
+                                            <Tab className="Tab" eventKey="obligationBar" title="Obligation Bar Chart">
+                                                <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                                            </Tab>
+                                            <Tab className="Tab" eventKey="obligationLine" title="Obligation Line Chart">
+                                                <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                                            </Tab>
+                                            <Tab className="Tab" eventKey="ExpenditureBar" title="Expenditure Bar Chart">
+                                                <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                                            </Tab>
+                                            <Tab className="Tab" eventKey="ExpenditureLine" title="Expenditure Line Chart">
+                                                <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                                            </Tab>
+                                        </Tabs>
+                                        </Col>
+                                    </Row>
                                     <Row>
                                         <Col className="tableTitle">
                                             Projected Obligation Plan:
