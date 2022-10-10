@@ -7,6 +7,7 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
 import { SchedSum } from '../components/Summaries/SchedSum';
+import { ProfileData } from '../components/ProfileData';
 /**
  * Renders information about projects assigned to the current user
  */
@@ -16,7 +17,7 @@ const ProjectContent = () => {
     const [data, setData] = useState();
 
     useEffect(() => {
-        axios.get(`/project/userEmail/${accounts[0].username}`).then(response => {
+        axios.get(`/api/project/userEmail/${accounts[0].username}`).then(response => {
             setData(response.data);
             setLoading(false);
         });
@@ -46,7 +47,7 @@ const ProjectContent = () => {
                 {
                     data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
                         <tr key={project_id}>
-                            <td><a href='/clin'>{project_name}</a></td>
+                            <td><a href={`/clin/${project_id}`}>{project_name}</a></td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>

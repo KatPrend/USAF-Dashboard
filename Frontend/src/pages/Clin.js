@@ -9,7 +9,7 @@ const ClinData = () => {
     const [data, setData] = useState();
 
     useEffect(() => {
-        axios.get(`/clin/2`).then(response =>{
+        axios.get(`/api/clin/2`).then(response =>{
             setData(response.data);
             setLoading(false);
         });

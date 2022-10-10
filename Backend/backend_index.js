@@ -31,17 +31,17 @@ db.connect(function (err) {
   console.log('Database connected.')
 });
 
-const projectRoute = require('./routes/project');
-const clinRoute = require('./routes/clin');
-const wbsRoute = require('./routes/wbs');
-const userRoute = require('./routes/user');
-const fundsRoute = require('./routes/funds');
+const projectRoute = require('./routes/project_route');
+const clinRoute = require('./routes/clin_route');
+const wbsRoute = require('./routes/wbs_route');
+const userRoute = require('./routes/user_route');
+const fundsRoute = require('./routes/funds_route');
 
-app.use('/project', projectRoute);
-app.use('/clin', clinRoute);
-app.use('/wbs', wbsRoute);
-app.use('/user', userRoute);
-app.use('/funds', userRoute);
+app.use('/api/project', projectRoute);
+app.use('/api/clin', clinRoute);
+app.use('/api/wbs', wbsRoute);
+app.use('/api/user', userRoute);
+app.use('/api/funds', userRoute);
 
 app.get('/', (req, res) => {
      console.log("This works?");
