@@ -7,7 +7,6 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
 import { SchedSum } from '../components/Summaries/SchedSum';
-import { ProfileData } from '../components/ProfileData';
 /**
  * Renders information about projects assigned to the current user
  */
