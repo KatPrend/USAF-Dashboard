@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
+import {Link} from 'react-router-dom';
 import { Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
 import { SchedSum } from '../components/Summaries/SchedSum';
-import { ProfileData } from '../components/ProfileData';
+
+
+function renderContent(contractStatus, projectId, projectName) {
+    if(contractStatus === "Awarded"){
+        return <Link to={{ 
+            pathname: "/awardedproject", 
+            state: {id:projectId} // your data array of objects
+        }}
+      >{projectName}</Link>
+    }
+    else if (contractStatus === "Pre-Award"){
+        return <Link to={{ 
+            pathname: "/preawardproject", 
+            state: {id:projectId} // your data array of objects
+        }}
+      >{projectName}</Link>
+    }
+};
 /**
  * Renders information about projects assigned to the current user
  */
@@ -47,7 +65,7 @@ const ProjectContent = () => {
                 {
                     data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
                         <tr key={project_id}>
-                            <td><a href='/clin'>{project_name}</a></td>
+                            <td> {renderContent(contract_status,project_id,project_name)}</td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
