@@ -19,5 +19,12 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete wbs endpoint"})
 })
 
+router.get('project/:project_id', (req, res) => {
+    res.send({message:"TODO: Make an get wbs endpoint"})
+});
+
+router.get('project/:project_id/clin/:clin_id', (req, res) => {
+    res.send({message:"TODO: Make an get wbs endpoint"})
+});
 
 module.exports = router;
