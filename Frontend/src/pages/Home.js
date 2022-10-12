@@ -5,7 +5,11 @@ import { SignInButton } from '../components/SignInButton';
 
 function Home() {
     return (
+<<<<<<< Updated upstream
         <body>
+=======
+        <div style={{padding: "5%"}}>
+>>>>>>> Stashed changes
             <img className="center" src={require('../images/AirForce.jpg')} alt="Air Force logo" width="280" height="250"/>
             <h1 className="text-center">
                 <br></br>
@@ -17,7 +21,7 @@ function Home() {
                 <SignInButton/ >
                 <br></br>
             </div>
-        </body>
+        </div>
     );
 }
 
