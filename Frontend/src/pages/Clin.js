@@ -3,13 +3,17 @@ import './page.css';
 import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
+import { useLocation } from 'react-router-dom';
 
-const ClinData = () => {
+const ClinData = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
+    const location = useLocation();
+    const {id} =location.state;
+
     useEffect(() => {
-        axios.get(`/api/clin/2`).then(response =>{
+        axios.get(`/api/clin/${id.project_id}`).then(response =>{
             setData(response.data);
             setLoading(false);
         });
@@ -51,7 +55,7 @@ function Clin() {
             <NavB />
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
-                <Button>Add Project</Button>
+                <Button>Edit</Button>
             </div>
             <ClinData/>
         </div>
