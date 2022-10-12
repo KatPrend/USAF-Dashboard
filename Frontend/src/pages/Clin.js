@@ -55,7 +55,7 @@ function Clin() {
             <NavB />
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
-                <Button>Add Project</Button>
+                <Button>Edit</Button>
             </div>
             <ClinData/>
         </div>
