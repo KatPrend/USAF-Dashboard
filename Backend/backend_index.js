@@ -41,7 +41,7 @@ app.use('/api/project', projectRoute);
 app.use('/api/clin', clinRoute);
 app.use('/api/wbs', wbsRoute);
 app.use('/api/user', userRoute);
-app.use('/api/funds', userRoute);
+app.use('/api/funds', fundsRoute);
 
 app.get('/', (req, res) => {
      console.log("This works?");
