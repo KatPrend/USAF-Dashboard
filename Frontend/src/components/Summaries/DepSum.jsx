@@ -10,7 +10,7 @@ export const DepSum = () => {
                     <Container>
                         <Row>
                             <Col>
-                                <div className="box green">
+                                <div className="box green" style={{width: 30%}}>
                                     <p className="category">Tracked Dependencies With {">5"} Days Schedule Margin</p>
                                     <p className="value">#</p>
                                 </div>

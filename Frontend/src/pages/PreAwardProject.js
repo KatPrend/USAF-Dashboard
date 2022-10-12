@@ -7,12 +7,8 @@ import { Card, Col, Container, Row, Table, Button, ButtonGroup } from 'react-boo
 function PreAwardProject(){
 
     return(
-<<<<<<< Updated upstream
-        <body className="lightBlue">
-=======
         <div className="lightBlue">
             <NavB />
->>>>>>> Stashed changes
             <Container className='top-Padding'>
                 <Row>
                     <Col>
