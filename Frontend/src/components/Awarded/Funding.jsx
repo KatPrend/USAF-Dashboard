@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
 import BarGraph from '../BarGraph';
 import LineGraph from '../LineGraph';
-import { FinanciaData } from '../../pages/DummyData';
+import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
 
 export const Funding = () => {
     return (
@@ -24,24 +24,24 @@ export const Funding = () => {
                 <Row>
                     <Col>
                     <Tabs className="Tabs">
-                        <Tab className="Tab" eventKey="obligationBar" title="Obligation Bar Chart">
-                            <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
+                            <BarGraph data={AwardedProjectFundingDataObligation} dataKey1="Projected" dataKey2="Actual"/>
                         </Tab>
-                        <Tab className="Tab" eventKey="obligationLine" title="Obligation Line Chart">
-                            <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
+                            <LineGraph data={AwardedProjectFundingDataObligation} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
-                        <Tab className="Tab" eventKey="ExpenditureBar" title="Expenditure Bar Chart">
-                            <BarGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
+                            <BarGraph data={AwardedProjectFundingDataExpenditure} dataKey1="Projected" dataKey2="Actual"/>
                         </Tab>
-                        <Tab className="Tab" eventKey="ExpenditureLine" title="Expenditure Line Chart">
-                            <LineGraph data={FinanciaData} dataKey1="expected" dataKey2="actual"/>
+                        <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
+                            <LineGraph data={AwardedProjectFundingDataExpenditure} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
                     </Tabs>
                     </Col>
                 </Row>
                     <Row>
                         <Col className="tableTitle">
-                            Projected Obligation Plan:
+                            Obligation Plan:
                         </Col>
                     </Row>
                     <Row>
@@ -51,27 +51,7 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col className="tableTitle">
-                            Actual Obligation Plan:
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {/*TODO: Create table when API can retreve data*/}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="tableTitle">
-                            Projected Expenditure Plan:
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            {/*TODO: Create table when API can retreve data*/}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className="tableTitle">
-                            Actual Expenditure Plan:
+                            Expenditure Plan:
                         </Col>
                     </Row>
                     <Row>
