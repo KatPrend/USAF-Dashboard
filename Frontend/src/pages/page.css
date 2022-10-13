@@ -92,15 +92,3 @@
   font-size: 16px;
   margin-top: 10px;
 }
-
-.submit-new-project {
-  background-color: rgb(0, 48, 143); /* Green */
-  border: black solid;
-  color: white;
-  padding: 5px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-}
