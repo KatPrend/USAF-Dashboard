@@ -63,8 +63,6 @@ app.use('/api/contract', contractRoute);
   });
 });
 
-<<<<<<< HEAD
-=======
 
 // const express = require('express');
 // const path = require('path')
@@ -106,7 +104,6 @@ function importFileToDb(exFile) {
   })
 }
 
->>>>>>> 9e8a59e99606bb47c23e97c2c4491b54dc74777b
 //All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
