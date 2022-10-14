@@ -11,26 +11,26 @@ import { useLocation } from 'react-router-dom';
 function PreAwardProject(){
     const location = useLocation();
     const {id} = location.state;
-    console.log("on preawardedpage" + id.project_id);
+    console.log("on preawardedpage" + id);
     return(
         <body className="lightBlue">
             <NavB />
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData />
+                        <ProjectData data={id}/>
                     </Col>
 
                     <Col>
                     {/* Do I have to do something here to send project_id to IPT page */}
                         
-                        <IPT data={id.project_id}/>
+                        <IPT data={id}/>
                     </Col>
                 </Row>
                 <br />
                 <Row>
                     <Col>
-                        <ContractStatus />
+                        <ContractStatus data={id}/>
                     </Col>
                 </Row>
                 <br />

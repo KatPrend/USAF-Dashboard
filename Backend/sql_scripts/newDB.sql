@@ -15,9 +15,9 @@ CREATE TABLE if not exists users(
     user_id int NOT NULL AUTO_INCREMENT,
     contractor_company varchar(80),
     userName varchar(80),
-    userRole ENUM('Contractor', 'IPT Memeber', 'Admin') NOT NULL,
+    userRole ENUM('Contractor','IPT Memeber','Admin') NOT NULL,
     userEmail varchar(80),
-    mil_job_title varchar(80),
+    mil_job_title ENUM('Project Manager','Primary Engineer','Primary Logistics','GFE/GFP POC','Contracting','Financial Analyst','Cost Analyst','Reviewing Supervisor/PM','Secondary Engineer','Det 3','Configuration/Data Management','IPMR/IMS','Test','Cybersecurity'),
     PRIMARY KEY(user_id)
 );
 

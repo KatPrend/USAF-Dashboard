@@ -66,11 +66,7 @@ const ProjectContent = () => {
                 {
                     data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
                         <tr key={project_id}>
-                            <td> <Link to={{ 
-                                        pathname: "/preawardproject", 
-                                        state: {id:project_id} // your data array of objects
-                                    }}
-                                >{project_name}</Link></td>
+                            <td> {renderContent(contract_status,project_id,project_name)}</td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>

@@ -27,4 +27,14 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete contract endpoint"})
 })
 
+router.get('/contractaward/:project_id', (req, res) => {
+    let sql = `SELECT * FROM contract_award WHERE project_id = ${req.params.project_id}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+})
+
 module.exports = router;

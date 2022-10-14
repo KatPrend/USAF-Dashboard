@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
+import axios from 'axios';
 
 
-export const ContractStatus = () => {
+
+export const ContractStatus = (props) => {
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        axios.get(`/api/contract/contractaward/${props.data}`).then(response =>{
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if(isLoading){
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
+
     return (
         <Card className="card no-bot-pad">
             <Card.Header className = "cardHead">
@@ -33,28 +49,36 @@ export const ContractStatus = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Planed</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
-                    <tr>
-                        <td>Actual</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
+                    {
+                        data.map(({contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, nego_comp, awarded})=> (
+                            <tr>
+                                <td>{contract_status}</td>
+                                <td>{requirement_plan}</td>
+                                <td>{draft_rfp_released}</td>
+                                <td>{approved_by_acb}</td>
+                                <td>{rfp_released}</td>
+                                <td>{proposal_received}</td>
+                                <td>{tech_eval_comp}</td>
+                                <td>{nego_comp}</td>
+                                <td>{awarded}</td>
+                            </tr>
+                        ))
+                    }
+                    {/* {
+                        data.map(({})=>(
+                            <tr>
+                                <td>Actual</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                        ))
+                    } */}
                 </tbody>
             </Table>
         </Card>
