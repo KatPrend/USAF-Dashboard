@@ -143,6 +143,32 @@ CREATE TABLE if not exists project_funding_data(
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 
+CREATE TABLE if not exists obligation_funding_data(
+    obli_funding_data_id int AUTO_INCREMENT,
+    project_id int, 
+    obli_funding_date DATE NOT NULL,
+    obli_fiscal_year varchar(20) NOT NULL,
+    obli_projected DECIMAL(13,2) NOT NULL,
+    obli_proj_total DECIMAL(13,2) NOT NULL,
+    obli_actual DECIMAL(13,2) NOT NULL,
+    obli_actual_total DECIMAL(13,2) NOT NULL,
+    PRIMARY KEY(obli_funding_data_id),
+    FOREIGN KEY(project_id) REFERENCES project(project_id)
+);
+
+CREATE TABLE if not exists expenditure_funding_data(
+    expen_funding_data_id int AUTO_INCREMENT,
+    project_id int, 
+    expen_funding_date DATE NOT NULL,
+    expen_fiscal_year varchar(20) NOT NULL,
+    expen_projected DECIMAL(13,2) NOT NULL,
+    expen_proj_total DECIMAL(13,2) NOT NULL,
+    expen_actual DECIMAL(13,2) NOT NULL,
+    expen_actual_total DECIMAL(13,2) NOT NULL,
+    PRIMARY KEY(expen_funding_data_id),
+    FOREIGN KEY(project_id) REFERENCES project(project_id)
+);
+
 -- Insert Functions 
 
 INSERT INTO project(project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num)
