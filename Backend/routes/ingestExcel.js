@@ -21,9 +21,9 @@ const storage = multer.diskStorage({
 
 const uploadFile = multer({ storage: storage })
 
-router.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-})
+// router.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/index.html')
+// })
   
 router.post('/uploadfile', uploadFile.single('uploadfile'), (req, res) => {
   importFileToDb(__dirname + '/uploads/' + req.file.filename)
@@ -38,13 +38,11 @@ function importFileToDb(exFile) {
     console.log(rows);
     rows.shift()
     
-      let query = 'INSERT INTO project_info_import (`TASK ID`, `Task Description`,  `Month`,  `WBS`, `CLIN`, `Source Type`, `Resource`, `Resource Description`, `Resource Type`, `Rate`, `Hours`, `Units`, `Cost`, `Base Cost`, `Direct Cost`, `Total Price`) VALUES ?'
-      db.query(query, [rows], (error, response) => {
-      console.log(error || response)
-      })
+      // let query = 'INSERT INTO project_info_import (`TASK ID`, `Task Description`,  `Month`,  `WBS`, `CLIN`, `Source Type`, `Resource`, `Resource Description`, `Resource Type`, `Rate`, `Hours`, `Units`, `Cost`, `Base Cost`, `Direct Cost`, `Total Price`) VALUES ?'
+      // db.query(query, [rows], (error, response) => {
+      // console.log(error || response)
+      // })
   })
-
-
 }
 
 module.exports = router;

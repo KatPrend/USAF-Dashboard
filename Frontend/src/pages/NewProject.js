@@ -13,7 +13,10 @@ function PostExample() {
         <AddProject />
       </div>
       <br />
-      <FileUpload />
+      <div>
+        WBS ProPricer table: 
+        <FileUpload name={'uploadfile'}/>
+      </div>
     </div>
   );
 }
