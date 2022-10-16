@@ -11,6 +11,7 @@ import { SchedSum } from '../components/Summaries/SchedSum';
 
 
 function renderContent(contractStatus, projectId, projectName) {
+    console.log(contractStatus, projectId, projectName);
     if(contractStatus === "Awarded"){
         return <Link to={{ 
             pathname: "/awardedproject", 

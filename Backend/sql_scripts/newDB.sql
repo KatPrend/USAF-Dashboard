@@ -15,9 +15,9 @@ CREATE TABLE if not exists users(
     user_id int NOT NULL AUTO_INCREMENT,
     contractor_company varchar(80),
     userName varchar(80),
-    userRole ENUM('Contractor', 'IPT Memeber', 'Admin') NOT NULL,
+    userRole ENUM('Contractor','IPT Memeber','Admin') NOT NULL,
     userEmail varchar(80),
-    mil_job_title varchar(80),
+    mil_job_title ENUM('Project Manager','Primary Engineer','Primary Logistics','GFE/GFP POC','Contracting','Financial Analyst','Cost Analyst','Reviewing Supervisor/PM','Secondary Engineer','Det 3','Configuration/Data Management','IPMR/IMS','Test','Cybersecurity'),
     PRIMARY KEY(user_id)
 );
 
@@ -140,6 +140,32 @@ CREATE TABLE if not exists project_funding_data(
 	project_funding_startDate DATE NOT NULL,
 	project_funding_endDate DATE NOT NULL,
     PRIMARY KEY(proj_funding_id),
+    FOREIGN KEY(project_id) REFERENCES project(project_id)
+);
+
+CREATE TABLE if not exists obligation_funding_data(
+    obli_funding_data_id int AUTO_INCREMENT,
+    project_id int, 
+    obli_funding_date DATE NOT NULL,
+    obli_fiscal_year varchar(20) NOT NULL,
+    obli_projected DECIMAL(13,2) NOT NULL,
+    obli_proj_total DECIMAL(13,2) NOT NULL,
+    obli_actual DECIMAL(13,2) NOT NULL,
+    obli_actual_total DECIMAL(13,2) NOT NULL,
+    PRIMARY KEY(obli_funding_data_id),
+    FOREIGN KEY(project_id) REFERENCES project(project_id)
+);
+
+CREATE TABLE if not exists expenditure_funding_data(
+    expen_funding_data_id int AUTO_INCREMENT,
+    project_id int, 
+    expen_funding_date DATE NOT NULL,
+    expen_fiscal_year varchar(20) NOT NULL,
+    expen_projected DECIMAL(13,2) NOT NULL,
+    expen_proj_total DECIMAL(13,2) NOT NULL,
+    expen_actual DECIMAL(13,2) NOT NULL,
+    expen_actual_total DECIMAL(13,2) NOT NULL,
+    PRIMARY KEY(expen_funding_data_id),
     FOREIGN KEY(project_id) REFERENCES project(project_id)
 );
 

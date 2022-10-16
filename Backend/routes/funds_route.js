@@ -19,5 +19,25 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete funds endpoint"})
 })
 
+router.get('/gettotal/:project_id', (req, res) => {
+    let sql = `SELECT SUM(curr_obli_actual) FROM project_funding_data WHERE project_id = ${project_id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+})
+
+router.get('/obligation/:project_id', (req, res) => {
+    let sql = `SELECT * FROM project_funding_data WHERE project_id=${req.params.project_id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 
 module.exports = router;

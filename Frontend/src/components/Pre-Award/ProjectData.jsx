@@ -1,7 +1,15 @@
 import React from 'react';
 import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap";
+import { propTypes } from 'react-bootstrap/esm/Image';
+import { Link, useHistory } from 'react-router-dom';
 
-export const ProjectData = () => {
+export const ProjectData = (props) => {
+    const history = useHistory();
+
+    const routeChange = () => {
+        history.push('/clin');
+    };
+
     return (
         <Card className="card">
             <Card.Header className = "cardHead">
@@ -21,8 +29,13 @@ export const ProjectData = () => {
                     placeholder text
                 </Card.Text>
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                    <Button className='Button'>See CLIN Data</Button>
-                    <Button className='Button'>Inport File</Button>
+                    <Link to={{
+                        pathname: '/clin',
+                        state: {id:props.data}
+                    }}>
+                        <Button onClick={routeChange} className='Button'>See CLIN Data for {props.data}</Button>
+                    </Link>
+                    <Button className='Button'>Import File</Button>
                 </ButtonGroup>
             </Card.Body>
         </Card>
