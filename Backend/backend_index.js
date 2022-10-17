@@ -63,7 +63,6 @@ app.use('/api/upload', uploadRoute);
   });
 });
 
-
 //All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
