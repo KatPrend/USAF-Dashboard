@@ -8,6 +8,7 @@
   background-color: #00539b20;
   width: 100%;
   height: 100%;
+  overflow: auto;
 }
 
 .top-Padding {

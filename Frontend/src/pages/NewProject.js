@@ -56,7 +56,7 @@ function renderIPT(projectName) {
   }
 };
 
-function PostExample() {
+function NewProject() {
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState(0);
 
@@ -85,4 +85,4 @@ function PostExample() {
   );
 }
 
-export default PostExample;
+export default NewProject;
