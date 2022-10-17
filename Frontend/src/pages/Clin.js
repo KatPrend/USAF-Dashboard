@@ -56,6 +56,7 @@ function Clin() {
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
                 <Button>Edit</Button>
+                <Button>Back</Button>
             </div>
             <ClinData/>
         </div>
