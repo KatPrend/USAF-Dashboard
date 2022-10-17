@@ -27,31 +27,16 @@ function AwardedProject(){
                         <ProjectData />
                     </Col>
                     <Col>
-                        <Documents />
+                        <IPT />
                     </Col>
                     <Col>
-                        <ProjectSchedule />
+                        <Dependencies />
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <IPT />
-                                </Col>
-                            </Row>
-                            <br/>
-                            <Row>
-                                <Col>
-                                    <Dependencies />
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Col>
-                    <Col>
-                        <FinManagement />
+                        <ProjectSchedule />
                     </Col>
                 </Row>
                 <br/>
