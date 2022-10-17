@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
 import BarGraph from '../BarGraph';
 import LineGraph from '../LineGraph';
+import FundingDataTable from './FundingDataTable';
 import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
 
 export const Funding = () => {
@@ -46,7 +47,7 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <FundingDataTable data={AwardedProjectFundingDataObligation}/>
                         </Col>
                     </Row>
                     <Row>
@@ -56,7 +57,7 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <FundingDataTable data={AwardedProjectFundingDataExpenditure}/>
                         </Col>
                     </Row>
                 </Container>
