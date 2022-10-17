@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Button, Col, Form, Row} from 'react-bootstrap';
 
 export const FileUpload = (props) => {
     const [selectedFile, setSelectedFile] = useState();
@@ -11,6 +12,7 @@ export const FileUpload = (props) => {
     };
 
     const handleSubmission = async (e) => {
+        e.preventDefault();
         const formData = new FormData();
         formData.append(props.name, selectedFile);
 
@@ -23,12 +25,15 @@ export const FileUpload = (props) => {
     }
 
     return (
-        <div>
-            <input type="file" name={props.name} onChange={changeHandler} />
-            <div>
-                <button className="submit-new-project" onClick={handleSubmission}>Upload</button>
-            </div>
-        </div>
+        <>
+            <Form.Group as={Row} controlId="formFile" className="mb-3">
+                <Form.Label column xs="auto">{props.label}:</Form.Label>
+                <Col xs="auto">
+                    <Form.Control type="file" name={props.name} onChange={changeHandler} />
+                    <Button className="submit-new-project" onClick={handleSubmission}>Upload File</Button>
+                </Col>
+            </Form.Group>
+        </>
     );
 }
 
