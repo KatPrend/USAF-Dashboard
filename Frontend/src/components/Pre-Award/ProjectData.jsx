@@ -22,7 +22,7 @@ export const ProjectData = () => {
                 </Card.Text>
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                     <Button className='Button'>See CLIN Data</Button>
-                    <Button className='Button'>Inport File</Button>
+                    <Button className='Button'>Import File</Button>
                 </ButtonGroup>
             </Card.Body>
         </Card>
