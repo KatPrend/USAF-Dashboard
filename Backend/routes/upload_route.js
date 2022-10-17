@@ -25,7 +25,9 @@ const uploadFile = multer({ storage: storage })
 //   res.sendFile(__dirname + '/index.html')
 // })
   
-router.post('/uploadfile', uploadFile.single('uploadfile'), (req, res) => {
+router.post('/uploadfile/', uploadFile.single('uploadfile'), (req, res) => {
+  //console.log(req.params.uploadType);
+
   importFileToDb(__dirname + '/uploads/' + req.file.filename)
   console.log(res)
 
@@ -33,15 +35,20 @@ router.post('/uploadfile', uploadFile.single('uploadfile'), (req, res) => {
 })
 
 function importFileToDb(exFile) {
+  let createTempTable = 'CREATE TEMPORARY TABLE temp_propricer_table SELECT task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price FROM task_resource_table LIMIT 0;'
+  db.query(createTempTable, function(error, response){
+    console.log(error || response);
+  });
+
   readXlsxFile(exFile).then((rows) => {
 
     console.log(rows);
     rows.shift()
     
-      // let query = 'INSERT INTO project_info_import (`TASK ID`, `Task Description`,  `Month`,  `WBS`, `CLIN`, `Source Type`, `Resource`, `Resource Description`, `Resource Type`, `Rate`, `Hours`, `Units`, `Cost`, `Base Cost`, `Direct Cost`, `Total Price`) VALUES ?'
-      // db.query(query, [rows], (error, response) => {
-      // console.log(error || response)
-      // })
+      let query = 'INSERT INTO temp_propricer_table(`task_id`,`task_description`,`month`,`wbs`, `clin_num`, `source_type`, `resource_code`, `resource_description`, `resource_type`, `rate`, `hours_worked`, `units`, `cost`, `base_cost`, `direct_cost`, `total_price`) VALUES ?'
+      db.query(query, [rows], (error, response) => {
+        console.log(error || response)
+      })
   })
 }
 

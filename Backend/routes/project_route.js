@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-router.put("/", (req, res)=>{
+router.put('/', (req, res)=>{
     res.send({message:"TODO: Make an update project endpoint"})
 })
 
