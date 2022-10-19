@@ -17,7 +17,7 @@ export const FileUpload = (props) => {
         formData.append(props.name, selectedFile);
 
         // TODO: Make post request to send file to backend
-        axios.post('/api/upload/' + props.name, formData, {
+        axios.post('/api/upload/' + props.name + '/' + props.projectId, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

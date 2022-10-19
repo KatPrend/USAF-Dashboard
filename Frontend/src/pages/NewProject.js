@@ -5,7 +5,7 @@ import { AddProject } from "../components/NewProject/AddProject";
 import { FileUpload } from "../components/NewProject/FileUpload";
 import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
-import "../components/NewProject/newProject.css";
+import "../components/NewProject/newProject.css"
 
 function renderDates(projectName) {
   console.log("project name: " + projectName);
@@ -24,7 +24,7 @@ function renderDates(projectName) {
   }
 };
 
-function renderProPricerUpload(projectName) {
+function renderProPricerUpload(projectName, projectId) {
   console.log("project name: " + projectName);
 
   if (projectName === "") {
@@ -34,7 +34,7 @@ function renderProPricerUpload(projectName) {
       <br />
       <br />
       <div className="project-element">
-        <FileUpload label={'WBS ProPricer table'} name={'uploadfile'}/>
+        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/>
       </div>
     </>
   }
@@ -56,7 +56,7 @@ function renderIPT(projectName) {
   }
 };
 
-function PostExample() {
+function NewProject() {
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState(0);
 
@@ -79,10 +79,10 @@ function PostExample() {
       <br />
       <h2>{projectId}: {projectName} Project Information</h2>
       {renderDates(projectName)}
-      {renderProPricerUpload(projectName)}
+      {renderProPricerUpload(projectName, projectId)}
       {renderIPT(projectName)}
     </div>
   );
 }
 
-export default PostExample;
+export default NewProject;
