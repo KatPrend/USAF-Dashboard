@@ -94,7 +94,8 @@ export const AddProject = ({getProjectName}) => {
                 placeholder=" Enter projectType"
                 type="projectType"
                 onChange={handleProjectType}>
-
+                
+                <option value="0"></option>
                 <option value="1">Contract</option>
                 <option value="2">MIPR</option>
               </Form.Control>
@@ -109,6 +110,7 @@ export const AddProject = ({getProjectName}) => {
                 type="contractStatus"
                 onChange={handleContractStatus}>
 
+                <option value="0"></option>
                 <option value="1">Pre-Awarded</option>
                 <option value="2">Awarded</option>
               </Form.Control>
@@ -142,7 +144,8 @@ export const AddProject = ({getProjectName}) => {
                 placeholder=" Enter RequirementType"
                 type="RequirementType"
                 onChange={handleRequirementType}>
-
+                
+                <option value="0"></option>
                 <option value="1">CDD</option>
                 <option value="2">CPD</option>
                 <option value="3">1067</option>

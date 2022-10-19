@@ -92,3 +92,7 @@
   display: inline-block;
   font-size: 16px;
 }
+
+.submit-new-project.main {
+  margin-left: 10%;
+}
