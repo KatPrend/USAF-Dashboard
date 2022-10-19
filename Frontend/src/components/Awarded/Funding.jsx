@@ -4,6 +4,7 @@ import BarGraph from '../BarGraph';
 import LineGraph from '../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import FundingDataTable from './FundingDataTable';
 import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
 
 export const Funding = () => {
@@ -82,7 +83,7 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <FundingDataTable data={AwardedProjectFundingDataObligation}/>
                         </Col>
                     </Row>
                     <Row>
@@ -92,7 +93,7 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <FundingDataTable data={AwardedProjectFundingDataExpenditure}/>
                         </Col>
                     </Row>
                 </Container>
