@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
+import { format } from 'date-fns';
 
 
 
@@ -50,17 +51,17 @@ export const ContractStatus = (props) => {
                 </thead>
                 <tbody>
                     {
-                        data.map(({contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, nego_comp, awarded})=> (
+                        data.map(({contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
                             <tr>
                                 <td>{contract_status}</td>
-                                <td>{requirement_plan}</td>
-                                <td>{draft_rfp_released}</td>
-                                <td>{approved_by_acb}</td>
-                                <td>{rfp_released}</td>
-                                <td>{proposal_received}</td>
-                                <td>{tech_eval_comp}</td>
-                                <td>{nego_comp}</td>
-                                <td>{awarded}</td>
+                                <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>
+                                <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>
                             </tr>
                         ))
                     }

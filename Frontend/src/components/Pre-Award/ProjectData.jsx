@@ -33,7 +33,7 @@ export const ProjectData = (props) => {
                         pathname: '/clin',
                         state: {id:props.data}
                     }}>
-                        <Button onClick={routeChange} className='Button'>See CLIN Data for {props.data}</Button>
+                        <Button onClick={routeChange} className='Button'>See CLIN Data</Button>
                     </Link>
                     <Button className='Button'>Import File</Button>
                 </ButtonGroup>

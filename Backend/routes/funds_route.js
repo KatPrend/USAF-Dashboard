@@ -30,7 +30,7 @@ router.get('/gettotal/:project_id', (req, res) => {
 })
 
 router.get('/obligation/:project_id', (req, res) => {
-    let sql = `SELECT * FROM project_funding_data WHERE project_id=${req.params.project_id}`;
+    let sql = `SELECT * FROM expenditure_funding_data WHERE project_id=${req.params.project_id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
