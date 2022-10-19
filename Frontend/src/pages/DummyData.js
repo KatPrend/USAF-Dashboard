@@ -126,6 +126,49 @@ export const AwardedProjectFundingDataExpenditure = [
     },
 ]
 
+export const TimeLineData = [
+
+    {
+        "ID": "1",
+        "Name": "1",
+        "Duration": "1",
+        "Start": "1",
+        "Finish": "1",
+        "Predecessors": "1",
+        "WBS": "1",
+    },
+
+    {
+        "ID": "1",
+        "Name": "1",
+        "Duration": "1",
+        "Start": "1",
+        "Finish": "1",
+        "Predecessors": "1",
+        "WBS": "1",
+    },
+
+    {
+        "ID": "1",
+        "Name": "1",
+        "Duration": "1",
+        "Start": "1",
+        "Finish": "1",
+        "Predecessors": "1",
+        "WBS": "1",
+    },
+
+    {
+        "ID": "1",
+        "Name": "1",
+        "Duration": "1",
+        "Start": "1",
+        "Finish": "1",
+        "Predecessors": "1",
+        "WBS": "1",
+    },
+]
+
 //ignor till we know all the funding types
 export const ApprovedFundingData = [
     {
