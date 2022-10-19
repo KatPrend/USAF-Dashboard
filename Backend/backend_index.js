@@ -5,10 +5,10 @@ const path = require('path');
 const bodyparser = require('body-parser');
 const app = express();
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
+
+
 // Possibly remove
 const PORT = process.env.PORT || 4000;
-// const readXlsxFile = require('read-excel-file/node')
-// const multer = require('multer')
 app.use(cors({
   origin: 'http://localhost:3000' 
 }));
@@ -36,6 +36,7 @@ const wbsRoute = require('./routes/wbs_route');
 const userRoute = require('./routes/user_route');
 const fundsRoute = require('./routes/funds_route');
 const contractRoute = require('./routes/contract_route');
+const uploadRoute = require('./routes/upload_route')
 
 app.use('/api/project', projectRoute);
 app.use('/api/clin', clinRoute);
@@ -43,11 +44,12 @@ app.use('/api/wbs', wbsRoute);
 app.use('/api/user', userRoute);
 app.use('/api/funds', fundsRoute);
 app.use('/api/contract', contractRoute);
+app.use('/api/upload', uploadRoute);
 
-app.get('/', (req, res) => {
-     console.log("This works?");
-     res.json({message:"Backend is Working!"})
- });
+// app.get('/', (req, res) => {
+//      console.log("This works?");
+//      res.json({message:"Backend is Working!"})
+//  });
 
  // Create Database
  app.get('/db', (req, res) => {
@@ -70,4 +72,5 @@ let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port
   let host = nodeServer.address().address
   console.log('App working on: ', host, port)
+  console.log(__dirname);
 });

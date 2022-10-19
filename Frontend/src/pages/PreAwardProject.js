@@ -6,26 +6,31 @@ import { ProjectData } from '../components/Pre-Award/ProjectData';
 import { IPT } from '../components/Pre-Award/IPT';
 import { ContractStatus } from '../components/Pre-Award/ContractStatus';
 import { FundingData } from '../components/Pre-Award/FundingData';
+import { useLocation } from 'react-router-dom';
 
 function PreAwardProject(){
-
+    const location = useLocation();
+    const {id} = location.state;
+    
     return(
         <body className="lightBlue">
             <NavB />
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData />
+                        <ProjectData data={id}/>
                     </Col>
 
                     <Col>
-                        <IPT />
+                    {/* Do I have to do something here to send project_id to IPT page */}
+                        
+                        <IPT data={id}/>
                     </Col>
                 </Row>
                 <br />
                 <Row>
                     <Col>
-                        <ContractStatus />
+                        <ContractStatus data={id}/>
                     </Col>
                 </Row>
                 <br />

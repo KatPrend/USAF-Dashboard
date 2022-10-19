@@ -32,7 +32,6 @@ function Routes() {
             <Route exact path="/dependency">
                 <Dependency />
             </Route>
-
         </Switch>
     );
 }

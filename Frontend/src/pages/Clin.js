@@ -13,7 +13,8 @@ const ClinData = (props) => {
     const {id} =location.state;
 
     useEffect(() => {
-        axios.get(`/api/clin/${id.project_id}`).then(response =>{
+        // id.project_id
+        axios.get(`/api/clin/${id}`).then(response =>{
             setData(response.data);
             setLoading(false);
         });
