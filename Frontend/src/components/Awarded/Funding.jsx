@@ -8,6 +8,7 @@ import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligati
 
 export const Funding = () => {
     const [isLoading, setLoading] = useState(true);
+    const [expen_data, setExpenData] = useState();
     const [data, setData] = useState();
 
     const location = useLocation();
@@ -15,6 +16,11 @@ export const Funding = () => {
 
     useEffect(() => {
         // id.project_id
+        axios.get(`/api/funds/expenditure/${id}`).then(response =>{
+            setExpenData(response.data);
+            setLoading(false);
+        });
+
         axios.get(`/api/funds/obligation/${id}`).then(response =>{
             setData(response.data);
             setLoading(false);
@@ -54,14 +60,17 @@ export const Funding = () => {
                             {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
                             <BarGraph data={data} dataKey1="Projected" dataKey2="Actual"/>
                         </Tab>
+                        {/* AwardedProjectFundingDataObligation */}
                         <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
-                            <LineGraph data={AwardedProjectFundingDataObligation} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                            <LineGraph data={data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
+                        {/* AwardedProjectFundingDataExpenditure */}
                         <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
-                            <BarGraph data={AwardedProjectFundingDataExpenditure} dataKey1="Projected" dataKey2="Actual"/>
+                            <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
                         </Tab>
+                        {/* AwardedProjectFundingDataExpenditure */}
                         <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
-                            <LineGraph data={AwardedProjectFundingDataExpenditure} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                            <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
                     </Tabs>
                     </Col>
