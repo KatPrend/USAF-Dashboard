@@ -4,11 +4,25 @@ const router = express.Router()
 var db = require('../database');
 
 router.get('/', (req, res) => {
-    res.send({message:"TODO: Make an get user endpoint"})
+    let sql = 'SELECT * FROM users'
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
 });
 
 router.post('/', (req, res) => {
-    res.send({message:"TODO: Make an post user endpoint endpoint"})
+    const {contractor_company, userName, userRole, userEmail, mil_job_title} = req.body;
+    let sql = `INSERT INTO users (contractor_company,userName,userRole,userEmail,mil_job_title) VALUES ("${contractor_company}","${userName}","${userRole}", "${userEmail}", "${mil_job_title}")`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+    console.log(req.body);
 });
 
 router.put("/", (req, res)=>{

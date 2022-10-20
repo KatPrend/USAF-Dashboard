@@ -49,7 +49,7 @@ export const AddProject = ({getProjectName}) => {
         e.preventDefault();
         alert("Project Added");
 
-        let projectId = -1
+        let projectId = -1;
 
         axios.post('/api/project', {
             project_name: projectName,
