@@ -39,13 +39,13 @@ function AwardedProject(){
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule />
+                        <Funding />
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <Funding />
+                        <ProjectSchedule />
                     </Col>
                 </Row>
             </Container>
