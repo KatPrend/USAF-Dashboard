@@ -5,7 +5,7 @@ import { AddProject } from "../components/NewProject/AddProject";
 import { FileUpload } from "../components/NewProject/FileUpload";
 import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
-import "../components/NewProject/newProject.css";s
+import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
 function renderInfo(projectName, projectId) {

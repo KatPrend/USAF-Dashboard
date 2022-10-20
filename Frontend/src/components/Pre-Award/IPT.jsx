@@ -23,7 +23,7 @@ export const IPT = (props) => {
                 <Container>
                     <Row>
                         <Col style={{textAlign: 'left'}}>
-                            <span>Project IPT {props.data}</span>
+                            <span>Project IPT</span>
                         </Col>
                         <Col style={{textAlign: 'right'}}>
                             <span><Button className='Button'>Edit</Button></span>

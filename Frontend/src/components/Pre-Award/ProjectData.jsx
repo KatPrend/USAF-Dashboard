@@ -9,20 +9,22 @@ export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
-    const routeChange = () => {
-        history.push('/clin');
-    };
-
     useEffect(() => {
         axios.get(`/api/project/${props.data}`).then(response => {
             setData(response.data);
             setLoading(false);
+
+            console.log(props.data);
         });
     }, []);
 
     if (isLoading) {
         return <div className="mx-auto w-75">Loading...</div>;
     }
+
+    const routeChange = () => {
+        history.push('/clin');
+    };
 
     return (
         <Card className="card">
@@ -39,9 +41,19 @@ export const ProjectData = (props) => {
                 </Container>
             </Card.Header>
             <Card.Body>
-                <Card.Text>
-                    { data.project_name }
-                </Card.Text>
+                {
+                    data.map(({project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                        <div>
+                            <p>Project Name: {project_name}</p>
+                            <p>Contract Number: {contract_num}</p>
+                            <p>Contract Status: {contract_status}</p>
+                            <p>Contractor: {contractor_name}</p>
+                            <p>Branch: {branch}</p>
+                            <p>Requirement Type: {requirement_type}</p>
+                            <p>Capability Summary: {summary}</p>
+                        </div>
+                    ))
+                }
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                     <Link to={{
                         pathname: '/clin',
