@@ -46,5 +46,16 @@ router.get('/userEmail/:userEmail', (req, res) => {
     });
 });
 
+// Grabbing all of the project information
+router.get('/schedule/:projectID', (req, res) => {
+    let sql = `SELECT project_information_id as ID, task_name as "Name", duration as "Duration", DATE_FORMAT(startDate,'%y-%m-%d') as "Start", DATE_FORMAT(finishDate,'%y-%m-%d') as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;
   

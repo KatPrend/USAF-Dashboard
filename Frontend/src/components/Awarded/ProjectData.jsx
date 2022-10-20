@@ -28,13 +28,13 @@ export const ProjectData = (props) => {
                     placeholder text
                 </Card.Text>
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                    <Link to={{
+                <Link to={{
                         pathname: '/clin',
                         state: {id:props.data}
                     }}>
                         <Button onClick={routeChange} className='Button'>See CLIN Data</Button>
                     </Link>
-                    <Button className='Button'>Inport File</Button>
+                    <Button className='Button'>Import File</Button>
                 </ButtonGroup>
             </Card.Body>
         </Card>

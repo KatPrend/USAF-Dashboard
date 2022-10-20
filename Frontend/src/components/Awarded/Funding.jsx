@@ -83,7 +83,8 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            <FundingDataTable data={AwardedProjectFundingDataObligation}/>
+                            {/* AwardedProjectFundingDataObligation */}
+                            <FundingDataTable data={data}/>
                         </Col>
                     </Row>
                     <Row>
@@ -93,7 +94,8 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            <FundingDataTable data={AwardedProjectFundingDataExpenditure}/>
+                            {/* AwardedProjectFundingDataExpenditure */}
+                            <FundingDataTable data={expen_data}/>
                         </Col>
                     </Row>
                 </Container>

@@ -45,7 +45,7 @@ function AwardedProject(){
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule />
+                        <ProjectSchedule data={id}/>
                     </Col>
                 </Row>
             </Container>

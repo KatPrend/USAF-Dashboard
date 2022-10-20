@@ -65,16 +65,16 @@ const ProjectContent = () => {
                 </thead>
                 <tbody>
                 {
-                    data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num }) => (
+                    data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num, }) => (
                         <tr key={project_id}>
                             <td> {renderContent(contract_status,project_id,project_name)}</td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
-                            <td>Pending Contract Value</td>
-                            <td>Pending Dependency Status</td>
-                            <td>Pending Financial Status</td>
-                            <td>Pending Schedule Status</td>
+                            <td>On track</td>
+                            <td>On track</td>
+                            <td>On track</td>
+                            <td>On track</td>
                         </tr>
                     ))
                 }
