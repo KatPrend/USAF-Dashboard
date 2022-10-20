@@ -6,8 +6,9 @@ import { FileUpload } from "../components/NewProject/FileUpload";
 import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css";
+import { Predecessors } from "../components/NewProject/Predecessors";
 
-function renderDates(projectName) {
+function renderInfo(projectName) {
   console.log("project name: " + projectName);
 
   if (projectName === "") {
@@ -20,37 +21,22 @@ function renderDates(projectName) {
       <div className="project-element">
         <ProjectDates />
       </div>
-    </>
-  }
-};
-
-function renderProPricerUpload(projectName) {
-  console.log("project name: " + projectName);
-
-  if (projectName === "") {
-    return <></>
-  } else {
-    return <>
       <br />
       <br />
       <div className="project-element">
         <FileUpload label={'WBS ProPricer table'} name={'uploadfile'}/>
       </div>
-    </>
-  }
-};
-
-function renderIPT(projectName) {
-  console.log("project name: " + projectName);
-
-  if (projectName === "") {
-    return <></>
-  } else {
-    return <>
       <br />
       <h4>IPT Members:</h4>
       <div className="project-element">
         <AddIPT />
+      </div>
+      <br />
+      <br />
+      <h4>Dependencies</h4>
+      <p>What projects does this project depend on?</p>
+      <div className="project-element">
+        <Predecessors />
       </div>
     </>
   }
@@ -77,10 +63,8 @@ function NewProject() {
       </div>
       <br />
       <br />
-      <h2>{projectId}: {projectName} Project Information</h2>
-      {renderDates(projectName)}
-      {renderProPricerUpload(projectName)}
-      {renderIPT(projectName)}
+      <h2>{projectName} Project Information</h2>
+      {renderInfo(projectName)}
     </div>
   );
 }
