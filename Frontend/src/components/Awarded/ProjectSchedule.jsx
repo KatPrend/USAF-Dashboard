@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 import {Chart} from "react-google-charts";
+import axios from 'axios';
 import {TimeLineData, TimeLineData2} from '../../pages/DummyData'
 
 const columns = [
@@ -13,7 +14,7 @@ const columns = [
     { type: "string", label: "Dependencies" },
   ];
 
-  function GanttChartDataFormat(JsonData){
+function GanttChartDataFormat(JsonData){
 
     var Rows = [];
 
@@ -32,19 +33,33 @@ const columns = [
     const data = [columns, ...Rows];
 
     return (data);
-  }
+}
 
-  const options = {
+const options = {
     gantt: {
-      criticalPathEnabled: true,
-      criticalPathStyle: {
-        stroke: "#e64a19",
-      },
+        criticalPathEnabled: true,
+        criticalPathStyle: {
+            stroke: "#e64a19",
+        },
     },
-  };
+};
 
   
-export const ProjectSchedule = () => {
+export const ProjectSchedule = (props) => {
+    const [isLoading, setLoading] = useState(true);
+    const [infoData, setInfoData] = useState();
+
+    useEffect(() => {
+        axios.get(`/api/project/schedule/${props.data}`).then(response =>{
+            setInfoData(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if(isLoading){
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
+
     return (
         <Card className="card">
             <Card.Header className = "cardHead">
@@ -76,18 +91,19 @@ export const ProjectSchedule = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {TimeLineData2.map( (data) => (
-                                        <tr>
-                                            <td>{data.ID}</td>
-                                            <td>{data.Name}</td>
-                                            <td>{data.Duration}</td>
-                                            <td>{data.Start}</td>
-                                            <td>{data.End}</td>
-                                            <td>{data.Predecessors}</td>
-                                            <td>{data.WBS}</td>
-                                        </tr>
-
-                                    ))}
+                                    {
+                                        infoData.map(({ID, Name, Duration, Start, End, Predecessors, WBS}) => (
+                                            <tr key={ID}>
+                                                <td>{ID}</td>
+                                                <td>{Name}</td>
+                                                <td>{Duration}</td>
+                                                <td>{Start}</td>
+                                                <td>{End}</td>
+                                                <td>{Predecessors}</td>
+                                                <td>{WBS}</td>
+                                            </tr>
+                                        ))
+                                    }
                                 </tbody>
                             </Table>
                         </Col>
@@ -99,6 +115,7 @@ export const ProjectSchedule = () => {
                             width="100%" 
                             height="50%"
                             options={options}
+                            // TimeLineData2
                             data={GanttChartDataFormat(TimeLineData2)}
                             />
                         </Col>

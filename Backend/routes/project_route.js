@@ -46,6 +46,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
     });
 });
 
+
 router.get('/:projectid', (req, res) => {
     let sql = `SELECT p.project_name, c.contractor_name, ca.contract_num, p.contract_status, p.branch, p.requirement_type, p.summary FROM project p INNER JOIN contract_award ca ON ca.project_id = p.project_id INNER JOIN contractor c ON c.id = p.contractor_id WHERE p.project_id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
@@ -53,8 +54,23 @@ router.get('/:projectid', (req, res) => {
             throw err
         }
         res.send(results)
-    })
+
+    });
+
 });
+
+// Grabbing all of the project information
+router.get('/schedule/:projectID', (req, res) => {
+    let sql = `SELECT project_information_id as ID, task_name as "Name", duration as "Duration", DATE_FORMAT(startDate,'%y-%m-%d') as "Start", DATE_FORMAT(finishDate,'%y-%m-%d') as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
 
 module.exports = router;
   
