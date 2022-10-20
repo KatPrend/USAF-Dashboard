@@ -113,6 +113,7 @@ export const AddProject = ({getProjectName}) => {
                 <option value="0"></option>
                 <option value="1">Pre-Awarded</option>
                 <option value="2">Awarded</option>
+                <option value="3">Closed</option>
               </Form.Control>
             </Col>
           </Form.Group>

@@ -20,7 +20,7 @@ router.delete("/", (req, res)=>{
 })
 
 router.get('/iptmembers/:project_id', (req, res) => {
-    let sql = `SELECT u.mil_job_title, u.userName FROM users u inner join user_project_link upl on upl.user_id = u.user_id WHERE upl.project_id = ${req.params.project_id}`;
+    let sql = `SELECT u.mil_job_title, u.userName FROM users u inner join user_project_link upl on upl.user_id = u.user_id WHERE upl.project_id = ${req.params.project_id}  AND u.userRole ='IPT Member' AND u.userRole != 'Admin'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

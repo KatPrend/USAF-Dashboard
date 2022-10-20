@@ -5,7 +5,7 @@ import { AddProject } from "../components/NewProject/AddProject";
 import { FileUpload } from "../components/NewProject/FileUpload";
 import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
-import "../components/NewProject/newProject.css";
+import "../components/NewProject/newProject.css"
 import { Predecessors } from "../components/NewProject/Predecessors";
 
 function renderInfo(projectName) {
@@ -24,7 +24,7 @@ function renderInfo(projectName) {
       <br />
       <br />
       <div className="project-element">
-        <FileUpload label={'WBS ProPricer table'} name={'uploadfile'}/>
+        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/>
       </div>
       <br />
       <h4>IPT Members:</h4>

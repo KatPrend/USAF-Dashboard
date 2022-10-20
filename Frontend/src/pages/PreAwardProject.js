@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 function PreAwardProject(){
     const location = useLocation();
     const {id} = location.state;
-    console.log("on preawardedpage" + id);
+    
     return(
         <body className="lightBlue">
             <NavB />
