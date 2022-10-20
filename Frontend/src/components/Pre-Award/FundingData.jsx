@@ -1,5 +1,8 @@
 import React from "react";
 import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../pages/DummyData";
+import ApprovedFundingTable from "../ApprovedFundingTable";
+import FundingDataTable from "./FundingDataTable";
 
 
 export const FundingData = () => {
@@ -41,7 +44,7 @@ export const FundingData = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <ApprovedFundingTable data={ApprovedFundingData}/>
                         </Col>
                     </Row>
                     <Row>
@@ -51,7 +54,7 @@ export const FundingData = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/*TODO: Create table when API can retreve data*/}
+                            <FundingDataTable data={AwardedProjectFundingDataObligation}/>
                         </Col>
                     </Row>
                 </Container>

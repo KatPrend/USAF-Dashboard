@@ -7,7 +7,7 @@ export const Documents = () => {
             <Card.Header className = "cardHead">Project Documents</Card.Header>
             <Card.Body>
                 <Card.Text>
-                    placeholder text
+                    THIS MAY BE DELETED
                 </Card.Text>
             </Card.Body>
         </Card>

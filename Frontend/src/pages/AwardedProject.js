@@ -9,12 +9,15 @@ import { ProjectData } from '../components/Awarded/ProjectData';
 import { ProjectSchedule } from '../components/Awarded/ProjectSchedule';
 import { NavB } from '../components/NavB';
 import './page.css';
+import { useLocation } from 'react-router-dom';
 
 
 
 //Move this ish to the component
 
 function AwardedProject(){
+    const location = useLocation();
+    const {id} = location.state;
 
     return(
         <body className="lightBlue">
@@ -24,34 +27,19 @@ function AwardedProject(){
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData />
+                        <ProjectData data={id}/>
                     </Col>
                     <Col>
-                        <Documents />
+                        <IPT data={id}/>
                     </Col>
                     <Col>
-                        <ProjectSchedule />
+                        <Dependencies />
                     </Col>
                 </Row>
                 <br/>
                 <Row>
                     <Col>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <IPT />
-                                </Col>
-                            </Row>
-                            <br/>
-                            <Row>
-                                <Col>
-                                    <Dependencies />
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Col>
-                    <Col>
-                        <FinManagement />
+                        <ProjectSchedule />
                     </Col>
                 </Row>
                 <br/>
