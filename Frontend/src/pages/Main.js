@@ -47,7 +47,9 @@ const ProjectContent = () => {
 
     return (
         <div className="mx-auto w-75">
-            <h2>Projects: <Button>Add Project</Button></h2>
+            <br />
+            <br />
+            <h2>Projects: <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link></h2>
             <Table striped bordered hover className="bg-light">
                 <thead>
                     <tr>
@@ -102,10 +104,11 @@ function Main() {
                         <SchedSum />
                     </Col>
                </Row>  
+               <Row>
+                    <ProjectContent/>
+               </Row>
             </Container>
             <br />
-            <ProjectContent/>
-            
         </div>
     );
 }

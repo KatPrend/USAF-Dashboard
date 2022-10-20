@@ -148,25 +148,40 @@ export const TimeLineData = [
         "WBS": "1",
     },
 
+]
+
+export const TimeLineData2 = [
+
     {
         "ID": "1",
-        "Name": "1",
+        "Name": "temp1",
         "Duration": "1",
-        "Start": "1",
-        "Finish": "1",
+        "Start": "1/1/2015",
+        "End": "1/5/2015",
+        "Predecessors": "",
+        "WBS": "1",
+    },
+
+    {
+        "ID": "2",
+        "Name": "temp2",
+        "Duration": "1",
+        "Start": "1/5/2015",
+        "End": "1/7/2015",
         "Predecessors": "1",
         "WBS": "1",
     },
 
     {
-        "ID": "1",
-        "Name": "1",
+        "ID": "3",
+        "Name": "temp2",
         "Duration": "1",
-        "Start": "1",
-        "Finish": "1",
-        "Predecessors": "1",
+        "Start": "1/8/2015",
+        "End": "1/10/2015",
+        "Predecessors": "1, 2",
         "WBS": "1",
     },
+
 ]
 
 //ignor till we know all the funding types
