@@ -46,5 +46,15 @@ router.get('/userEmail/:userEmail', (req, res) => {
     });
 });
 
+router.get('/:projectid', (req, res) => {
+    let sql = `SELECT p.project_name, c.contractor_name, ca.contract_num, p.contract_status, p.branch, p.requirement_type, p.summary FROM project p INNER JOIN contract_award ca ON ca.project_id = p.project_id INNER JOIN contractor c ON c.id = p.contractor_id WHERE p.project_id = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+});
+
 module.exports = router;
   
