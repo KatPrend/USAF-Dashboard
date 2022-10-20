@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap";
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link, useHistory } from 'react-router-dom';
 
 export const ProjectData = (props) => {
     const history = useHistory();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
 
     const routeChange = () => {
         history.push('/clin');
     };
+
+    useEffect(() => {
+        axios.get(`/api/project/${props.data}`).then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     return (
         <Card className="card">
@@ -26,7 +40,7 @@ export const ProjectData = (props) => {
             </Card.Header>
             <Card.Body>
                 <Card.Text>
-                    placeholder text
+                    { data.project_name }
                 </Card.Text>
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                     <Link to={{
