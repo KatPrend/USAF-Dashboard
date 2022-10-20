@@ -8,7 +8,7 @@ import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css"
 import { Predecessors } from "../components/NewProject/Predecessors";
 
-function renderInfo(projectName) {
+function renderInfo(projectName, projectId) {
   console.log("project name: " + projectName);
 
   if (projectName === "") {
@@ -64,7 +64,7 @@ function NewProject() {
       <br />
       <br />
       <h2>{projectName} Project Information</h2>
-      {renderInfo(projectName)}
+      {renderInfo(projectName, projectId)}
     </div>
   );
 }
