@@ -8,7 +8,8 @@ import FundingDataTable from './FundingDataTable';
 import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
 
 export const Funding = () => {
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading1, setLoading1] = useState(true);
+    const [isLoading2, setLoading2] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [data, setData] = useState();
 
@@ -19,16 +20,20 @@ export const Funding = () => {
         // id.project_id
         axios.get(`/api/funds/expenditure/${id}`).then(response =>{
             setExpenData(response.data);
-            setLoading(false);
+            setLoading1(false);
         });
 
         axios.get(`/api/funds/obligation/${id}`).then(response =>{
             setData(response.data);
-            setLoading(false);
+            setLoading2(false);
         });
     }, []);
 
-    if(isLoading){
+    if(isLoading1){
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
+
+    if(isLoading2){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
