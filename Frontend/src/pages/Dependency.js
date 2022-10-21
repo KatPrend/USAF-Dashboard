@@ -4,6 +4,7 @@ import './page.css';
 import { Col, Container, Button, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { useMsal } from "@azure/msal-react";
+import { NavB } from '../components/NavB';
 /**
  * Renders information about projects assigned to the current user
  */
@@ -64,6 +65,7 @@ function Dependency() {
 
     return (
         <div className="lightBlue">
+            <NavB />
             <Container className="lightblue top-Padding">
                 <Row>
                     {/*1*/}

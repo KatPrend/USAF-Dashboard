@@ -36,7 +36,7 @@ export const IPT = (props) => {
                 {
                     data.map(({id, mil_job_title, userName}) => (
                         <div key = {id}>
-                            <p>{id}: {mil_job_title}: {userName}</p>
+                            <p>{mil_job_title}: {userName}</p>
                         </div>
                     ))
                 }
