@@ -21,17 +21,6 @@ const storage = multer.diskStorage({
 
 const uploadFile = multer({ storage: storage })
 
-// router.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/index.html')
-// })
-
-
-router.get('/propricerUpload/:projectId', uploadFile.single('propricerUpload'), (req, res) => {
-
-  res.send(`{message:${req.params.projectId}}`);
-
-});
-
 router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'), (req, res) => {
 
   let createTempTable = 'CREATE TEMPORARY TABLE temp_propricer_table SELECT task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price FROM task_resource_table LIMIT 0;';
@@ -41,7 +30,7 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 
   importProPricerToDb(__dirname + '/uploads/' + req.file.filename, req.params.projectId);
   
-  let trtInsert = `INSERT INTO task_resource_table (project_id,clin_id,task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price ) SELECT p.project_id, c.clin_id, tpt.* FROM project p INNER JOIN temp_propricer_table tpt INNER JOIN clin_data c ON c.project_id = p.project_id AND c.clin_num = tpt.clin_num WHERE p.project_id = "${projectId}"`;
+  let trtInsert = `INSERT INTO task_resource_table (project_id,clin_id,task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price ) SELECT p.project_id, c.clin_id, tpt.* FROM project p INNER JOIN temp_propricer_table tpt INNER JOIN clin_data c ON c.project_id = p.id AND c.clin_num = tpt.clin_num WHERE p.id = "${projectId}"`;
   db.query(trtInsert, (error, response) => {
     console.log(error || response)
   })
@@ -55,15 +44,6 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
   console.log(res);
 
 });
-
-// router.post('/propricerSubmit/:project_id', (req, res) => {
-
-//   let query = `INSERT INTO task_resource_table (project_id,clin_id,task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_description, resource_type, rate, hours_worked, units, cost, base_cost, direct_cost, total_price ) SELECT p.project_id, c.clin_id, tpt.* FROM project p INNER JOIN temp_propricer_table tpt INNER JOIN clin_data c ON c.project_id = p.project_id AND c.clin_num = tpt.clin_num WHERE p.project_id = "${req.params.project_id}"`;
-//   db.query(query, [rows], (error, response) => {
-//     console.log(error || response)
-//   })
-
-// });
 
 function importProPricerToDb(exFile, projectId) {
 
