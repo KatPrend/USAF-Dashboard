@@ -33,9 +33,7 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete project endpoint"})
 })
 
-// Grabbing roles
-// router.get('/')
-
+// Get a Project with user email
 router.get('/userEmail/:userEmail', (req, res) => {
     let sql = `SELECT p.id, p.project_name, ca.contract_num, p.contract_status, p.branch, ca.contract_value, p.dependency_status, p.financial_status, p.schedule_status FROM users u inner join user_project_link upl on upl.user_id = u.id inner join project p on p.id = upl.project_id left join contract_award ca on ca.id = p.contract_id WHERE u.userEmail = '${req.params.userEmail}'`;
     let query = db.query(sql, (err, results) =>{
@@ -46,9 +44,9 @@ router.get('/userEmail/:userEmail', (req, res) => {
     });
 });
 
-
+// Get a project with Project ID
 router.get('/:projectid', (req, res) => {
-    let sql = `SELECT p.project_name, c.contractor_name, ca.contract_num, p.contract_status, p.branch, p.requirement_type, p.summary FROM project p INNER JOIN contract_award ca ON ca.project_id = p.id INNER JOIN contractor c ON c.id = p.contractor_id WHERE p.id = ${req.params.projectid}`;
+    let sql = `SELECT p.id, p.project_name, c.contractor_name, ca.contract_num, p.contract_status, p.branch, p.requirement_type, p.summary FROM project p INNER JOIN contract_award ca ON ca.project_id = p.id INNER JOIN contractor c ON c.id = p.contractor_id WHERE p.id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -61,7 +59,7 @@ router.get('/:projectid', (req, res) => {
 
 // Grabbing all of the project information
 router.get('/schedule/:projectid', (req, res) => {
-    let sql = `SELECT project_information_id as ID, task_name as "Name", duration as "Duration", DATE_FORMAT(startDate,'%y-%m-%d') as "Start", DATE_FORMAT(finishDate,'%y-%m-%d') as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectid}`;
+    let sql = `SELECT id as ID, task_name as "Name", duration as "Duration", DATE_FORMAT(startDate,'%y-%m-%d') as "Start", DATE_FORMAT(finishDate,'%y-%m-%d') as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

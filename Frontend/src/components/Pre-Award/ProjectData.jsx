@@ -13,8 +13,6 @@ export const ProjectData = (props) => {
         axios.get(`/api/project/${props.data}`).then(response => {
             setData(response.data);
             setLoading(false);
-
-            console.log(props.data);
         });
     }, []);
 
@@ -42,8 +40,8 @@ export const ProjectData = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
-                        <div>
+                    data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                        <div key = {id}>
                             <p>Project Name: {project_name}</p>
                             <p>Contract Number: {contract_num}</p>
                             <p>Contract Status: {contract_status}</p>

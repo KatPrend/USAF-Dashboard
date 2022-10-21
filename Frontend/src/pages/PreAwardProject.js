@@ -13,7 +13,7 @@ function PreAwardProject(){
     const {id} = location.state;
     
     return(
-        <body className="lightBlue">
+        <div className="lightBlue">
             <NavB />
             <Container className='top-Padding'>
                 <Row>
@@ -21,9 +21,7 @@ function PreAwardProject(){
                         <ProjectData data={id}/>
                     </Col>
 
-                    <Col>
-                    {/* Do I have to do something here to send project_id to IPT page */}
-                        
+                    <Col>                      
                         <IPT data={id}/>
                     </Col>
                 </Row>
@@ -40,7 +38,7 @@ function PreAwardProject(){
                     </Col>
                 </Row>
             </Container>
-        </body>
+        </div>
     );
 }
 

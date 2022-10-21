@@ -9,27 +9,27 @@ export default function ApprovedFundingTable({data}){
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
-                        <td>Funding Type</td>
+                        <td key = "1" >Funding Type</td>
                         {data.map( (info) => (
-                            <td>{info.FiscalYear}</td>
+                            <td key = {info.FiscalYear}>{info.FiscalYear}</td>
                         ))}
                     </tr>
                     <tr>
-                        <td>3600</td>
+                        <td key = "2">3600</td>
                         {data.map( (info) => (
-                            <td>{info.data}</td>
+                            <td key = {info.FiscalYear}>{info.data}</td>
                         ))}
                     </tr>
                     <tr>
-                        <td>3080 BP10</td>
+                        <td key = "3">3080 BP10</td>
                         {data.map( (info) => (
-                            <td>{info.d}</td>
+                            <td key = {info.FiscalYear}>{info.d}</td>
                         ))}
                     </tr>
                     <tr>
-                        <td>3080 BP16</td>
+                        <td key = "4" >3080 BP16</td>
                         {data.map( (info) => (
-                            <td>{info.Projected}</td>
+                            <td key = {info.FiscalYear}>{info.Projected}</td>
                         ))}
                     </tr>
                 </tbody>

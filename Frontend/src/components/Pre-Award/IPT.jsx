@@ -13,6 +13,7 @@ export const IPT = (props) => {
         });
     }, []);
 
+
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
     }
@@ -33,9 +34,9 @@ export const IPT = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({mil_job_title, userName}) => (
-                        <div>
-                            <p>{mil_job_title}: {userName}</p>
+                    data.map(({id, mil_job_title, userName}) => (
+                        <div key = {id}>
+                            <p>{id}: {mil_job_title}: {userName}</p>
                         </div>
                     ))
                 }

@@ -58,7 +58,7 @@ export const Predecessors = () => {
                         <Form.Control as="select" type="text" name="projectName" placeholder="" onChange={e => handleChange(predInd, e)}>
                             <option key={0} value={0}></option>
                             {data.map((element, index) => (
-                                <option key={element.project_id} value={[element.project_id, element.project_name]}>{element.project_name}</option>
+                                <option key={index} value={[element.project_id, element.project_name]}>{element.project_name}</option>
                             ))}
                         </Form.Control>
                     </Col>

@@ -20,7 +20,7 @@ function AwardedProject(){
     const {id} = location.state;
 
     return(
-        <body className="lightBlue">
+        <div className="lightBlue">
             <NavB />
 
 
@@ -49,7 +49,7 @@ function AwardedProject(){
                     </Col>
                 </Row>
             </Container>
-        </body>
+        </div>
     );
 }
 
