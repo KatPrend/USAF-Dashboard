@@ -9,7 +9,8 @@ import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligati
 
 export const Funding = () => {
     const [isLoading1, setLoading1] = useState(true);
-    const [isLoading2, setLoading2] = useState(true);
+    const [isLoading21, setLoading1] = useState(true);
+    const [isLoading2, setLoading22] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
 
@@ -20,7 +21,7 @@ export const Funding = () => {
         // id.project_id
         axios.get(`/api/funds/expenditure/${id}`).then(response =>{
             setExpenData(response.data);
-            setLoading1(false);
+            setLoading11(false);
         });
         return () => {
             setExpenData({}); // This worked for me
