@@ -59,7 +59,7 @@ router.get('/:projectid', (req, res) => {
 
 // Grabbing all of the project information
 router.get('/schedule/:projectid', (req, res) => {
-    let sql = `SELECT id as ID, task_name as "Name", duration as "Duration", DATE_FORMAT(startDate,'%y-%m-%d') as "Start", DATE_FORMAT(finishDate,'%y-%m-%d') as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectid}`;
+    let sql = `SELECT id as ID, task_name as "Name", duration as "Duration", startDate as "Start", finishDate as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -69,6 +69,28 @@ router.get('/schedule/:projectid', (req, res) => {
     });
 });
 
+
+router.get('/grabDepend/:projectid', (req, res) => {
+    let sql = `SELECT dependency FROM dependency_table WHERE successor = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+router.get('/grabSuccesor/:projectid', (req, res) => {
+    let sql = `SELECT successor FROM dependency_table WHERE dependency = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
 
 module.exports = router;
   
