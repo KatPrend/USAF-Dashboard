@@ -12,7 +12,7 @@ function DisplayFundingType(data){
 
     return(
     arr.map( (key) => (
-        <tr>
+        <tr key={key}>
             <td>{key}</td>
             {data.map( (info) => (
                 <td key = {info[key]}>{info[key]}</td>
