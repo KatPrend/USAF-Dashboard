@@ -16,7 +16,7 @@ const WbsData = (props) => {
     console.log(clinNum)
     // TODO: update request w/ backend
     useEffect(() => {
-        axios.get(`/api/wbs/id`).then(response =>{
+        axios.get(`/api/wbs/project/${projectID}/clin/${clinNum}`).then(response =>{
             setData(response.data);
             setLoading(false);
         });
@@ -33,7 +33,6 @@ const WbsData = (props) => {
                     <th>Task ID</th>
                     <th>Task Description</th>
                     <th>Month</th>
-                    <th>WBS</th>
                     <th>CLIN</th>
                     <th>Source Type</th>
                     <th>Resource</th>
@@ -50,17 +49,18 @@ const WbsData = (props) => {
             </thead>
             <tbody>
                 {
-                    data.map(({task_resource_id, task_id, task_description, month, wbs, clin, source_type, resource, resource_type, rate, hours, units, cost, base_cost, direct_cost, total_price}) => (
-                        <tr key={task_resource_id}>
+                    data.map(({id, task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_type, resource_description, rate, hours_worked, units, cost, base_cost, direct_cost, total_price}) => (
+                        <tr key={id}>
                             <td>{task_id}</td>
                             <td>{task_description}</td>
                             <td>{month}</td>
-                            <td>{clin}</td>
+                            <td>{clin_num}</td>
                             <td>{source_type}</td>
-                            <td>{resource}</td>
+                            <td>{resource_code}</td>
+                            <td>{resource_description}</td>
                             <td>{resource_type}</td>
                             <td>{rate}</td>
-                            <td>{hours}</td>
+                            <td>{hours_worked}</td>
                             <td>{units}</td>
                             <td>{cost}</td>
                             <td>{base_cost}</td>
