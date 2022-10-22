@@ -36,7 +36,10 @@ router.delete("/", (req, res)=>{
 
 // Get Clin by projectid
 router.get('/:project_id', (req, res) => {
-    let sql = `SELECT * FROM clin_data WHERE project_id = "${req.params.project_id}"`;
+    let sql = `
+    SELECT * 
+    FROM clin_data 
+    WHERE project_id = "${req.params.project_id}"`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -44,5 +47,34 @@ router.get('/:project_id', (req, res) => {
         res.send(results)
     });
   });
+
+
+router.get('/grabDepend/:projectid', (req, res) => {
+    let sql = `
+    SELECT dependency 
+    FROM dependency_table 
+    WHERE successor = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+router.get('/grabSuccesor/:projectid', (req, res) => {
+    let sql = `
+    SELECT successor 
+    FROM dependency_table 
+    WHERE dependency = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
 
 module.exports = router;

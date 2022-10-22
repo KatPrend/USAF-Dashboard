@@ -15,7 +15,28 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const {project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num} = req.body;
-    let sql = `INSERT INTO project (project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num) VALUES ("${project_name}","${project_type}","${contract_status}", "${branch}", "${contract_num}", "${requirement_type}", "${summary}", "${ccar_num}")`;
+    let sql = `
+    INSERT INTO project (
+        project_name, 
+        project_type,
+        contract_status, 
+        branch, contract_num, 
+        requirement_type, summary, 
+        ccar_num,
+        start_date,
+        end_date) 
+    VALUES (
+        "${project_name}",
+        "${project_type}",
+        "${contract_status}", 
+        "${branch}", 
+        "${contract_num}", 
+        "${requirement_type}", 
+        "${summary}", 
+        "${ccar_num}",
+        "${start_date}",
+        "${end_date}"
+        )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -35,7 +56,26 @@ router.delete("/", (req, res)=>{
 
 // Get a Project with user email
 router.get('/userEmail/:userEmail', (req, res) => {
-    let sql = `SELECT p.id, p.project_name, ca.contract_num, p.contract_status, p.branch, ca.contract_value, p.dependency_status, p.financial_status, p.schedule_status FROM users u inner join user_project_link upl on upl.user_id = u.id inner join project p on p.id = upl.project_id left join contract_award ca on ca.id = p.contract_id WHERE u.userEmail = '${req.params.userEmail}'`;
+    let sql = `
+    SELECT 
+        p.id, 
+        p.project_name, 
+        ca.contract_num, 
+        p.contract_status, 
+        p.branch, 
+        ca.contract_value, 
+        p.dependency_status, 
+        p.financial_status, 
+        p.schedule_status 
+    FROM users u 
+    INNER JOIN 
+        user_project_link upl on upl.user_id = u.id 
+    INNER JOIN 
+        project p on p.id = upl.project_id 
+    LEFT JOIN
+        contract_award ca on ca.id = p.contract_id 
+    WHERE 
+        u.userEmail = '${req.params.userEmail}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -46,7 +86,24 @@ router.get('/userEmail/:userEmail', (req, res) => {
 
 // Get a project with Project ID
 router.get('/:projectid', (req, res) => {
-    let sql = `SELECT p.id, p.project_name, c.contractor_name, ca.contract_num, p.contract_status, p.branch, p.requirement_type, p.summary FROM project p INNER JOIN contract_award ca ON ca.project_id = p.id INNER JOIN contractor c ON c.id = p.contractor_id WHERE p.id = ${req.params.projectid}`;
+    let sql = `
+    SELECT 
+        p.id, 
+        p.project_name, 
+        c.contractor_name, 
+        ca.contract_num, 
+        p.contract_status, 
+        p.branch, 
+        p.requirement_type, 
+        p.summary 
+    FROM 
+        project p 
+    INNER JOIN 
+        contract_award ca ON ca.project_id = p.id 
+    INNER JOIN 
+        contractor c ON c.id = p.contractor_id 
+    WHERE 
+        p.id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -59,7 +116,19 @@ router.get('/:projectid', (req, res) => {
 
 // Grabbing all of the project information
 router.get('/schedule/:projectid', (req, res) => {
-    let sql = `SELECT id as ID, task_name as "Name", duration as "Duration", startDate as "Start", finishDate as "End", resource_names as "Predecessors",wbs as "WBS" FROM project_information WHERE project_id = ${req.params.projectid}`;
+    let sql = `
+    SELECT 
+        id as ID, 
+        task_name as "Name", 
+        duration as "Duration", 
+        startDate as "Start", 
+        finishDate as "End", 
+        resource_names as "Predecessors",
+        wbs as "WBS" 
+    FROM 
+        project_information 
+    WHERE 
+        project_id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -69,28 +138,6 @@ router.get('/schedule/:projectid', (req, res) => {
     });
 });
 
-
-router.get('/grabDepend/:projectid', (req, res) => {
-    let sql = `SELECT dependency FROM dependency_table WHERE successor = ${req.params.projectid}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
-});
-
-router.get('/grabSuccesor/:projectid', (req, res) => {
-    let sql = `SELECT successor FROM dependency_table WHERE dependency = ${req.params.projectid}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
-});
 
 module.exports = router;
   
