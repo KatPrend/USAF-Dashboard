@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap";
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link, useHistory } from 'react-router-dom';
+import "./projectData.css"
 
 export const ProjectData = (props) => {
     const history = useHistory();
@@ -42,13 +43,13 @@ export const ProjectData = (props) => {
                 {
                     data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
                         <div key = {id}>
-                            <p>Project Name: {project_name}</p>
-                            <p>Contract Number: {contract_num}</p>
-                            <p>Contract Status: {contract_status}</p>
-                            <p>Contractor: {contractor_name}</p>
-                            <p>Branch: {branch}</p>
-                            <p>Requirement Type: {requirement_type}</p>
-                            <p>Capability Summary: {summary}</p>
+                            <p className='project-data'><span>Project Name:</span> {project_name}</p>
+                            <p className='project-data'><span>Contract Number:</span> {contract_num}</p>
+                            <p className='project-data'><span>Contract Status:</span> {contract_status}</p>
+                            <p className='project-data'><span>Contractor:</span> {contractor_name}</p>
+                            <p className='project-data'><span>Branch:</span> {branch}</p>
+                            <p className='project-data'><span>Requirement Type:</span> {requirement_type}</p>
+                            <p className='project-data'><span>Capability Summary:</span> {summary}</p>
                         </div>
                     ))
                 }
@@ -59,7 +60,6 @@ export const ProjectData = (props) => {
                     }}>
                         <Button onClick={routeChange} className='Button'>See CLIN Data</Button>
                     </Link>
-                    <Button className='Button'>Import File</Button>
                 </ButtonGroup>
             </Card.Body>
         </Card>
