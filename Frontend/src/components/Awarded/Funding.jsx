@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import FundingDataTable from './FundingDataTable';
 import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
 
-export const Funding = () => {
+export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
     const [expen_data, setExpenData] = useState();
@@ -18,7 +18,7 @@ export const Funding = () => {
 
     useEffect(() => {
         // id.project_id
-        axios.get(`/api/funds/expenditure/${id}`).then(response =>{
+        axios.get(`/api/funds/expenditure/${props.data}`).then(response =>{
             setExpenData(response.data);
             setLoading1(false);
         });
@@ -28,7 +28,7 @@ export const Funding = () => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/funds/obligation/${id}`).then(response =>{
+        axios.get(`/api/funds/obligation/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });

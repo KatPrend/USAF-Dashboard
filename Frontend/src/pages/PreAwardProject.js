@@ -34,7 +34,7 @@ function PreAwardProject(){
                 <br />
                 <Row>
                     <Col>
-                        <FundingData />
+                        <FundingData data={id}/>
                     </Col>
                 </Row>
             </Container>
