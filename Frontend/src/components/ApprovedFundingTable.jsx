@@ -2,6 +2,27 @@ import React from "react";
 import { Table } from 'react-bootstrap';
 
 
+function DisplayFundingType(data){
+
+    let arr = Object.keys(data[0])
+
+    let index = arr.indexOf("FiscalYear")
+
+    arr.splice(index, 1)
+
+    return(
+    arr.map( (key) => (
+        <tr>
+            <td>{key}</td>
+            {data.map( (info) => (
+                <td key = {info[key]}>{info[key]}</td>
+            ))}
+        </tr>
+    ))
+    
+    )
+}
+
 export default function ApprovedFundingTable({data}){
 
     return(
@@ -14,24 +35,7 @@ export default function ApprovedFundingTable({data}){
                             <td key = {info.FiscalYear}>{info.FiscalYear}</td>
                         ))}
                     </tr>
-                    <tr>
-                        <td key = "2">3600</td>
-                        {data.map( (info) => (
-                            <td key = {info.FiscalYear}>{info.data}</td>
-                        ))}
-                    </tr>
-                    <tr>
-                        <td key = "3">3080 BP10</td>
-                        {data.map( (info) => (
-                            <td key = {info.FiscalYear}>{info.d}</td>
-                        ))}
-                    </tr>
-                    <tr>
-                        <td key = "4" >3080 BP16</td>
-                        {data.map( (info) => (
-                            <td key = {info.FiscalYear}>{info.Projected}</td>
-                        ))}
-                    </tr>
+                    {DisplayFundingType(data)}
                 </tbody>
             </Table>
         </div>
