@@ -10,11 +10,13 @@ const WbsData = (props) => {
     const [data, setData] = useState();
 
     const location = useLocation();
-    const {id} =location.state;
+    const {projectID, clinNum} = location.state;
 
-    // TODO: update w/ backend
+    console.log(projectID)
+    console.log(clinNum)
+    // TODO: update request w/ backend
     useEffect(() => {
-        axios.get(`/api/wbs/${id.project_id}`).then(response =>{
+        axios.get(`/api/wbs/id`).then(response =>{
             setData(response.data);
             setLoading(false);
         });
@@ -72,7 +74,7 @@ const WbsData = (props) => {
     );
 }
 
-function Clin() {
+function WBS() {
     return (
         <div className="lightBlue">
             <NavB />
@@ -86,4 +88,4 @@ function Clin() {
     );
 }
 
-export default Clin;
+export default WBS;
