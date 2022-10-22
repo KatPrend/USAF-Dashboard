@@ -50,7 +50,7 @@ const ProjectContent = () => {
             <br />
             <br />
             <h2>Projects: <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link></h2>
-            <Table striped bordered hover className="bg-light">
+            <Table responsive striped bordered hover className="bg-light">
                 <thead>
                     <tr>
                     <th>Project Id</th>
