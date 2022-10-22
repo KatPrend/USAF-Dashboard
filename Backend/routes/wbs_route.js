@@ -28,7 +28,7 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete wbs endpoint"})
 })
 
-router.get('project/:project_id', (req, res) => {
+router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT *
     FROM task_resource_table
@@ -42,7 +42,7 @@ router.get('project/:project_id', (req, res) => {
     });
 });
 
-router.get('project/:project_id/clin/:clin_id', (req, res) => {
+router.get('/project/:project_id/clin/:clin_id', (req, res) => {
     let sql = `
     SELECT *
     FROM task_resource_table
