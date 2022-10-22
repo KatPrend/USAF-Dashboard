@@ -16,11 +16,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num} = req.body;
+    const {project_name, project_type, contractor_id, contract_status, branch, contract_num, requirement_type, summary, ccar_num, start_date, end_date} = req.body;
     let sql = `
     INSERT INTO project (
         project_name, 
         project_type,
+        contractor_id,
         contract_status, 
         branch, contract_num, 
         requirement_type, summary, 
@@ -30,6 +31,7 @@ router.post('/', (req, res) => {
     VALUES (
         "${project_name}",
         "${project_type}",
+        "${contractor_id}",
         "${contract_status}", 
         "${branch}", 
         "${contract_num}", 

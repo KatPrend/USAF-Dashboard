@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
@@ -6,6 +6,7 @@ export const AddProject = ({getProjectName}) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("");
+    const [contractor, setContractor] = useState("");
     const [contractStatus, setContractStatus] = useState("");
     const [branch, setBranch] = useState("");
     const [contractNum, setContractNum] = useState("");
@@ -15,6 +16,20 @@ export const AddProject = ({getProjectName}) => {
     const [projectStart, setProjectStart] = useState("");
     const [projectEnd, setProjectEnd] = useState("");
 
+    const [isLoading, setLoading] = useState(true);
+    const [contractors, setContractors] = useState();
+
+    useEffect(() => {
+        axios.get('/api/contract').then(response => {
+            setContractors(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
+
     const handleProjectName = (e) => {
         setProjectName(e.target.value);
     };
@@ -22,6 +37,11 @@ export const AddProject = ({getProjectName}) => {
     const handleProjectType = (e) => {
         setProjectType(e.target.value);
     };
+
+    const handleContractor = (e) => {
+      setContractor(e.target.value);
+      console.log(e.target.value);
+  };
 
     const handleContractStatus = (e) => {
         setContractStatus(e.target.value);
@@ -64,6 +84,7 @@ export const AddProject = ({getProjectName}) => {
         axios.post('/api/project', {
             project_name: projectName,
             project_type: projectType,
+            contractor_id: contractor,
             contract_status: contractStatus,
             branch: branch,
             contract_num: contractNum,
@@ -110,6 +131,22 @@ export const AddProject = ({getProjectName}) => {
                 <option value="0"></option>
                 <option value="1">Contract</option>
                 <option value="2">MIPR</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Contractor:</Form.Label>
+            <Col sm={7}>
+              <Form.Control 
+                as="select"
+                placeholder=" Enter Contractor"
+                type="contractor"
+                onChange={handleContractor}>
+                
+                <option value="0"></option>
+                {contractors.map((element, index) => (
+                  <option key={index} value={element.id}>{element.contractor_name}</option>
+                ))}
               </Form.Control>
             </Col>
           </Form.Group>
