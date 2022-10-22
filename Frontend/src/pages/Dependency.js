@@ -85,12 +85,12 @@ function renderContent(contractStatus, projectId, projectName) {
 
 /*
 <th>Project Name</th>
-<th>Dependent Milestone</th>
-<th>Date</th>
+<th>Dependent Milestone</th> 
+<th>Date</th> 
 <th>Leading Project</th>
 <th>Leading Milestone</th>
 <th>Date</th>
-<th>Status</th>
+<th>Status</th> Dependency
 <th>Impact</th>
 */
 

@@ -51,8 +51,8 @@ export const ContractStatus = (props) => {
                 </thead>
                 <tbody>
                     {
-                        data.map(({contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
-                            <tr>
+                        data.map(({id, contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
+                            <tr key = {id}>
                                 <td>{contract_status}</td>
                                 <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>
                                 <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>

@@ -36,8 +36,8 @@ const ClinData = (props) => {
             </thead>
             <tbody>
                 {
-                    data.map(({clin_id, clin_num, project_id, clin_type, clin_scope, proj_clin_value}) => (
-                        <tr key={clin_id}>
+                    data.map(({id, clin_num, project_id, clin_type, clin_scope, proj_clin_value}) => (
+                        <tr key={id}>
                             <td>{clin_num}</td>
                             <td>{clin_type}</td>
                             <td>{clin_scope}</td>

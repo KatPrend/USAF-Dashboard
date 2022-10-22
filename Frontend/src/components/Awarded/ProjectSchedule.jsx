@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
+import { format } from 'date-fns';
 import {TimeLineData, TimeLineData2} from '../../pages/DummyData'
 
 const columns = [
@@ -20,10 +21,12 @@ function GanttChartDataFormat(JsonData){
 
     JsonData.map( (data) => (
         Rows.push([
-            data.ID, 
+            (data.ID).toString(),
             data.Name, 
-            new Date(data.Start), 
-            new Date(data.End), 
+            // format(new Date(data.Start), 'MM/dd/yyyy'), 
+            // format(new Date(data.End), 'MM/dd/yyyy'), 
+            new Date(data.Start),
+            new Date(data.End),
             data.Duration, 
             null,
             data.Predecessors
@@ -31,6 +34,8 @@ function GanttChartDataFormat(JsonData){
     ))
 
     const data = [columns, ...Rows];
+
+    console.log(data);
 
     return (data);
 }
@@ -97,8 +102,8 @@ export const ProjectSchedule = (props) => {
                                                 <td>{ID}</td>
                                                 <td>{Name}</td>
                                                 <td>{Duration}</td>
-                                                <td>{Start}</td>
-                                                <td>{End}</td>
+                                                <td>{format(new Date(Start), 'MM/dd/yyyy')}</td>
+                                                <td>{format(new Date(End), 'MM/dd/yyyy')}</td>
                                                 <td>{Predecessors}</td>
                                                 <td>{WBS}</td>
                                             </tr>
@@ -116,7 +121,7 @@ export const ProjectSchedule = (props) => {
                             height="50%"
                             options={options}
                             // TimeLineData2
-                            data={GanttChartDataFormat(TimeLineData2)}
+                            data={GanttChartDataFormat(infoData)}
                             />
                         </Col>
                     </Row>

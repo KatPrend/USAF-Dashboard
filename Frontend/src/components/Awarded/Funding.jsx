@@ -11,7 +11,7 @@ export const Funding = () => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
     const [expen_data, setExpenData] = useState();
-    const [data, setData] = useState();
+    const [obligation_data, setObligationData] = useState();
 
     const location = useLocation();
     const {id} =location.state;
@@ -22,18 +22,22 @@ export const Funding = () => {
             setExpenData(response.data);
             setLoading1(false);
         });
-
-        axios.get(`/api/funds/obligation/${id}`).then(response =>{
-            setData(response.data);
-            setLoading2(false);
-        });
+        return () => {
+            setExpenData({}); // This worked for me
+          };
     }, []);
 
-    if(isLoading1){
-        return <div className="mx-auto w-75">Loading...</div>;
-    }
-
-    if(isLoading2){
+    useEffect(() => {
+        axios.get(`/api/funds/obligation/${id}`).then(response =>{
+            setObligationData(response.data);
+            setLoading2(false);
+        });
+        return () => {
+            setObligationData({}); // This worked for me
+          };
+    }, []);
+    
+    if(isLoading1 || isLoading2){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -60,15 +64,16 @@ export const Funding = () => {
                 <Container>
                 <Row>
                     <Col>
+                    
                     <Tabs className="Tabs">
                         <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
                             {/* AwardedProjectFundingDataObligation */}
                             {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
-                            <BarGraph data={data} dataKey1="Projected" dataKey2="Actual"/>
+                            <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
                         </Tab>
                         {/* AwardedProjectFundingDataObligation */}
                         <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
-                            <LineGraph data={data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                            <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
                         {/* AwardedProjectFundingDataExpenditure */}
                         <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
@@ -79,6 +84,7 @@ export const Funding = () => {
                             <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                         </Tab>
                     </Tabs>
+                    
                     </Col>
                 </Row>
                     <Row>
@@ -88,8 +94,8 @@ export const Funding = () => {
                     </Row>
                     <Row>
                         <Col>
-                            {/* AwardedProjectFundingDataObligation */}
-                            <FundingDataTable data={data}/>
+                            {/*AwardedProjectFundingDataObligation */}
+                            <FundingDataTable data={obligation_data}/>
                         </Col>
                     </Row>
                     <Row>

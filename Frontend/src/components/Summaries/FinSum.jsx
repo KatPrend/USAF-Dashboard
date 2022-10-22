@@ -7,7 +7,6 @@ export const FinSum = () => {
         <Card className='card'>
             <Card.Header className="text-center cardHead">Financial Summary</Card.Header>
             <Card.Body>
-                <Card.Text>
                     <Container>
                         <Row>
                             <Col>
@@ -30,7 +29,6 @@ export const FinSum = () => {
                             </Col>
                         </Row>
                     </Container>
-                </Card.Text>
             </Card.Body>
         </Card>
     );

@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import "./page.css"
+import "./page.css";
 import { NavB } from "../components/NavB";
 import { AddProject } from "../components/NewProject/AddProject";
 import { FileUpload } from "../components/NewProject/FileUpload";
 import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
-import "../components/NewProject/newProject.css"
+import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
 function renderInfo(projectName, projectId) {
   console.log("project name: " + projectName);
 
-  if (projectName === "") {
-    return <></>
-  } else {
+  // if (projectName === "") {
+  //   return <></>
+  // } else {
     return <>
+     <h2>{projectId}: {projectName} Project Information</h2>
       <br />
       <br />
       <br />
@@ -39,7 +40,7 @@ function renderInfo(projectName, projectId) {
         <Predecessors />
       </div>
     </>
-  }
+ // }
 };
 
 function NewProject() {

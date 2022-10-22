@@ -46,23 +46,6 @@ app.use('/api/funds', fundsRoute);
 app.use('/api/contract', contractRoute);
 app.use('/api/upload', uploadRoute);
 
-// app.get('/', (req, res) => {
-//      console.log("This works?");
-//      res.json({message:"Backend is Working!"})
-//  });
-
- // Create Database
- app.get('/db', (req, res) => {
-  db.query(dataSql, function(err, results, fields){
-      if(err){
-          console.log(err.message);
-          res.json({error:err.message});
-      }else{
-          res.json({message:"Tables Created Succesfully"});
-      }
-  });
-});
-
 //All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));

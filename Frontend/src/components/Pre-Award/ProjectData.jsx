@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap";
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link, useHistory } from 'react-router-dom';
 
 export const ProjectData = (props) => {
     const history = useHistory();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        axios.get(`/api/project/${props.data}`).then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     const routeChange = () => {
         history.push('/clin');
@@ -25,9 +39,19 @@ export const ProjectData = (props) => {
                 </Container>
             </Card.Header>
             <Card.Body>
-                <Card.Text>
-                    placeholder text
-                </Card.Text>
+                {
+                    data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                        <div key = {id}>
+                            <p>Project Name: {project_name}</p>
+                            <p>Contract Number: {contract_num}</p>
+                            <p>Contract Status: {contract_status}</p>
+                            <p>Contractor: {contractor_name}</p>
+                            <p>Branch: {branch}</p>
+                            <p>Requirement Type: {requirement_type}</p>
+                            <p>Capability Summary: {summary}</p>
+                        </div>
+                    ))
+                }
                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                     <Link to={{
                         pathname: '/clin',
