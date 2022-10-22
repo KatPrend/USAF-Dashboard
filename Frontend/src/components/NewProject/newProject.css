@@ -1,8 +1,13 @@
 .project-element {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
-.project-element {
-    margin-bottom: 10px;
+.upload {
+    width: auto;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
@@ -6,12 +6,29 @@ export const AddProject = ({getProjectName}) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("");
+    const [contractor, setContractor] = useState("");
     const [contractStatus, setContractStatus] = useState("");
     const [branch, setBranch] = useState("");
     const [contractNum, setContractNum] = useState("");
     const [requirementType, setRequirementType] = useState("");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
+    const [projectStart, setProjectStart] = useState("");
+    const [projectEnd, setProjectEnd] = useState("");
+
+    const [isLoading, setLoading] = useState(true);
+    const [contractors, setContractors] = useState();
+
+    useEffect(() => {
+        axios.get('/api/contract').then(response => {
+            setContractors(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     const handleProjectName = (e) => {
         setProjectName(e.target.value);
@@ -20,6 +37,11 @@ export const AddProject = ({getProjectName}) => {
     const handleProjectType = (e) => {
         setProjectType(e.target.value);
     };
+
+    const handleContractor = (e) => {
+      setContractor(e.target.value);
+      console.log(e.target.value);
+  };
 
     const handleContractStatus = (e) => {
         setContractStatus(e.target.value);
@@ -45,6 +67,14 @@ export const AddProject = ({getProjectName}) => {
         setCcar(e.target.value);
     };
 
+    const handleProjectStart = (e) => {
+      setProjectStart(e.target.value);
+    };
+    
+    const handleProjectEnd = (e) => {
+        setProjectEnd(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         alert("Project Added");
@@ -54,12 +84,15 @@ export const AddProject = ({getProjectName}) => {
         axios.post('/api/project', {
             project_name: projectName,
             project_type: projectType,
+            contractor_id: contractor,
             contract_status: contractStatus,
             branch: branch,
             contract_num: contractNum,
             requirement_type: requirementType,
             summary: summary,
-            ccar_num: ccarNum
+            ccar_num: ccarNum,
+            start_date: projectStart,
+            end_date: projectEnd
         })
         .then(function(res){
             console.log(res);
@@ -98,6 +131,22 @@ export const AddProject = ({getProjectName}) => {
                 <option value="0"></option>
                 <option value="1">Contract</option>
                 <option value="2">MIPR</option>
+              </Form.Control>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm={3}>Contractor:</Form.Label>
+            <Col sm={7}>
+              <Form.Control 
+                as="select"
+                placeholder=" Enter Contractor"
+                type="contractor"
+                onChange={handleContractor}>
+                
+                <option value="0"></option>
+                {contractors.map((element, index) => (
+                  <option key={index} value={element.id}>{element.contractor_name}</option>
+                ))}
               </Form.Control>
             </Col>
           </Form.Group>
@@ -172,6 +221,27 @@ export const AddProject = ({getProjectName}) => {
                 placeholder=" Enter Ccar Number"
                 type="Ccar"
                 onChange={handleCcar}
+              />
+            </Col>
+          </Form.Group>
+          <br />
+          <Form.Group as={Row} className='project-element'>
+            <Form.Label column xs="auto">Start Date:</Form.Label>
+            <Col xs="auto">
+              <Form.Control
+                placeholder="Start Date"
+                type="date"
+                value={projectStart}
+                onChange={handleProjectStart}
+              />
+            </Col>
+            <Form.Label column xs="auto">End Date:</Form.Label>
+            <Col xs="auto">
+              <Form.Control
+                placeholder="End Date"
+                type="date"
+                value={projectEnd}
+                onChange={handleProjectEnd}
               />
             </Col>
           </Form.Group>

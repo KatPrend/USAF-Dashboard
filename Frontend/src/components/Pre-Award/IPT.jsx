@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import axios from 'axios';
+import "./projectData.css"
 
 export const IPT = (props) => {
     const [isLoading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ export const IPT = (props) => {
                 {
                     data.map(({id, mil_job_title, userName}) => (
                         <div key = {id}>
-                            <p>{mil_job_title}: {userName}</p>
+                            <p className='project-data'><span>{mil_job_title}:</span> {userName}</p>
                         </div>
                     ))
                 }

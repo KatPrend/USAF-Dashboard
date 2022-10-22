@@ -3,7 +3,6 @@ import "./page.css";
 import { NavB } from "../components/NavB";
 import { AddProject } from "../components/NewProject/AddProject";
 import { FileUpload } from "../components/NewProject/FileUpload";
-import { ProjectDates } from "../components/NewProject/ProjectDates";
 import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
@@ -11,22 +10,16 @@ import { Predecessors } from "../components/NewProject/Predecessors";
 function renderInfo(projectName, projectId) {
   console.log("project name: " + projectName);
 
-  // if (projectName === "") {
-  //   return <></>
-  // } else {
+  if (projectName === "") {
+    return <></>
+  } else {
     return <>
-     <h2>{projectId}: {projectName} Project Information</h2>
+     <h2>{projectName} Project Information</h2>
       <br />
       <br />
-      <br />
-      <div className="project-element">
-        <ProjectDates />
-      </div>
-      <br />
-      <br />
-      <div className="project-element">
-        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/>
-      </div>
+      <h4>Upload Files:</h4>
+      <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
+      <div className='upload'><FileUpload label={'Contract Award Timeline'} name={'contractAwardUpload'} projectId={projectId} /></div>
       <br />
       <h4>IPT Members:</h4>
       <div className="project-element">
@@ -40,7 +33,7 @@ function renderInfo(projectName, projectId) {
         <Predecessors />
       </div>
     </>
- // }
+  }
 };
 
 function NewProject() {
@@ -64,7 +57,6 @@ function NewProject() {
       </div>
       <br />
       <br />
-      <h2>{projectName} Project Information</h2>
       {renderInfo(projectName, projectId)}
     </div>
   );
