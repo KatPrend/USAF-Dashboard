@@ -36,7 +36,8 @@ const wbsRoute = require('./routes/wbs_route');
 const userRoute = require('./routes/user_route');
 const fundsRoute = require('./routes/funds_route');
 const contractRoute = require('./routes/contract_route');
-const uploadRoute = require('./routes/upload_route')
+const uploadRoute = require('./routes/upload_route');
+const dependencyRoute = require('./routes/dependency_route')
 
 app.use('/api/project', projectRoute);
 app.use('/api/clin', clinRoute);
@@ -45,6 +46,7 @@ app.use('/api/user', userRoute);
 app.use('/api/funds', fundsRoute);
 app.use('/api/contract', contractRoute);
 app.use('/api/upload', uploadRoute);
+app.use('/api/dependency', dependencyRoute);
 
 //All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {

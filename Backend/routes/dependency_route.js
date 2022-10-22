@@ -4,7 +4,9 @@ const router = express.Router()
 var db = require('../database');
 
 router.get('/', (req, res) => {
-    let sql = 'SELECT * FROM dependency'
+    let sql = `
+    SELECT * 
+    FROM dependency`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
