@@ -20,8 +20,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const {clin_num, project_id, clin_type, clin_scope, proj_clin_value} = req.body;
-    let sql = 
-    `INSERT INTO clin_data 
+    let sql = `
+    INSERT INTO clin_data 
         (clin_num, 
         project_id, 
         clin_type, 
@@ -84,5 +84,7 @@ router.get('/:project_id', (req, res) => {
         res.send(results)
     });
   });
+
+
 
 module.exports = router;

@@ -23,8 +23,10 @@ router.post('/', (req, res) => {
         project_type,
         contractor_id,
         contract_status, 
-        branch, contract_num, 
-        requirement_type, summary, 
+        branch, 
+        contract_num, 
+        requirement_type, 
+        summary, 
         ccar_num,
         start_date,
         end_date) 
@@ -65,7 +67,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
         p.id, 
         p.project_name, 
         ca.contract_num, 
-        p.contract_status, 
+        ca.contract_status, 
         p.branch, 
         ca.contract_value, 
         p.dependency_status, 
@@ -77,7 +79,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
     INNER JOIN 
         project p on p.id = upl.project_id 
     LEFT JOIN
-        contract_award ca on ca.id = p.contract_id 
+        contract_award ca on ca.project_id = p.id 
     WHERE 
         u.userEmail = '${req.params.userEmail}'`;
     let query = db.query(sql, (err, results) =>{
@@ -96,7 +98,7 @@ router.get('/:projectid', (req, res) => {
         p.project_name, 
         c.contractor_name, 
         ca.contract_num, 
-        p.contract_status, 
+        ca.contract_status, 
         p.branch, 
         p.requirement_type, 
         p.summary 
@@ -127,8 +129,7 @@ router.get('/schedule/:projectid', (req, res) => {
         duration as "Duration", 
         startDate as "Start", 
         finishDate as "End", 
-        resource_names as "Predecessors",
-        wbs as "WBS" 
+        predecessors as "Predecessors"
     FROM 
         project_information 
     WHERE 
@@ -141,6 +142,8 @@ router.get('/schedule/:projectid', (req, res) => {
 
     });
 });
+
+
 
 
 module.exports = router;

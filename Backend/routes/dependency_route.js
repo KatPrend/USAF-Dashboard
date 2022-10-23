@@ -16,15 +16,22 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // const {project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num} = req.body;
-    // let sql = `INSERT INTO project (project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num) VALUES ("${project_name}","${project_type}","${contract_status}", "${branch}", "${contract_num}", "${requirement_type}", "${summary}", "${ccar_num}")`;
-    // //let sql = `INSERT INTO project (project_name,project_type,contract_status) VALUES ("${project_name},${project_type},${contract_status}, ${branch}, ${contract_num}, ${requirement_type}, ${summary}, ${ccar_num}")`;
-    // let query = db.query(sql, (err, results) =>{
-    //     if(err){
-    //         throw err
-    //     }
-    //     res.send(results)
-    // })
+    const {successor, dependency} = req.body;
+    let sql = `
+    INSERT INTO dependency_table (
+        successor, 
+        dependency
+        ) 
+    VALUES (
+        "${successor}",
+        "${dependency}"
+        )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
     console.log(req.body);
 });
 
@@ -35,21 +42,6 @@ router.put("/", (req, res)=>{
 router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
 })
-
-// Get Clin by projectid
-router.get('/:project_id', (req, res) => {
-    let sql = `
-    SELECT * 
-    FROM clin_data 
-    WHERE project_id = "${req.params.project_id}"`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-  });
-
 
 router.get('/grabDepend/:projectid', (req, res) => {
     let sql = `
