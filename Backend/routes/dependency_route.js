@@ -30,26 +30,11 @@ router.post('/', (req, res) => {
 
 router.put("/", (req, res)=>{
     res.send({message:"TODO: Make an update clin endpoint"})
-})
+});
 
 router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
-})
-
-// Get Clin by projectid
-router.get('/:project_id', (req, res) => {
-    let sql = `
-    SELECT * 
-    FROM clin_data 
-    WHERE project_id = "${req.params.project_id}"`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-  });
-
+});
 
 router.get('/grabDepend/:projectid', (req, res) => {
     let sql = `
