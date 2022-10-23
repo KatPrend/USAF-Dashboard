@@ -37,11 +37,11 @@ router.post('/', (req, res) => {
 
 router.put("/", (req, res)=>{
     res.send({message:"TODO: Make an update clin endpoint"})
-})
+});
 
 router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
-})
+});
 
 router.get('/grabDepend/:projectid', (req, res) => {
     let sql = `

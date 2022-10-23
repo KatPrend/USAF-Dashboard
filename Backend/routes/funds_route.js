@@ -30,7 +30,7 @@ router.get('/gettotal/:project_id', (req, res) => {
 });
 
 router.get('/expenditure/:project_id', (req, res) => {
-    let sql = `SELECT DATE_FORMAT(expen_funding_date,'%y-%m-%d') as date, expen_funding_type as FundingType, expen_projected as Projected, expen_proj_total as "Projected Total", expen_actual as Actual, expen_actual_total as "Actual Total" FROM expenditure_funding_data WHERE project_id=${req.params.project_id}`;
+    let sql = `SELECT DATE_FORMAT(expen_funding_date,'%y-%m-%d') as date, expen_funding_type as FundingType, expen_fiscal_year as "FiscalYear", expen_projected as Projected, expen_proj_total as "Projected Total", expen_actual as Actual, expen_actual_total as "Actual Total" FROM expenditure_funding_data WHERE project_id=${req.params.project_id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -40,7 +40,7 @@ router.get('/expenditure/:project_id', (req, res) => {
 });
 
 router.get('/obligation/:project_id', (req, res) => {
-    let sql = `SELECT DATE_FORMAT(obli_funding_date,'%y-%m-%d') as date, obli_funding_type as FundingType, obli_projected as Projected, obli_proj_total as "Projected Total", obli_actual as Actual, obli_actual_total as "Actual Total" FROM obligation_funding_data WHERE project_id=${req.params.project_id}`;
+    let sql = `SELECT DATE_FORMAT(obli_funding_date,'%y-%m-%d') as date, obli_funding_type as FundingType, obli_fiscal_year as "FiscalYear", obli_projected as Projected, obli_proj_total as "Projected Total", obli_actual as Actual, obli_actual_total as "Actual Total" FROM obligation_funding_data WHERE project_id=${req.params.project_id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){obli
             throw err
@@ -54,6 +54,7 @@ router.get('/obligation_table/:project_id', (req, res) => {
     SELECT 
         DATE_FORMAT(obli_funding_date,'%m-%d') as date, 
         obli_funding_type as FundingType, 
+        obli_fiscal_year as "FiscalYear",
         obli_projected as Projected, 
         obli_proj_total as "Projected Total",
         obli_actual as "Actual", 
