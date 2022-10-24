@@ -5,12 +5,12 @@ import {Button, Col, Form, Row} from 'react-bootstrap';
 export const AddProject = ({getProjectName}) => {
 
     const [projectName, setProjectName] = useState("");
-    const [projectType, setProjectType] = useState("");
-    const [contractor, setContractor] = useState("");
-    const [contractStatus, setContractStatus] = useState("");
+    const [projectType, setProjectType] = useState("1");
+    const [contractor, setContractor] = useState("-1");
+    const [contractStatus, setContractStatus] = useState("1");
     const [branch, setBranch] = useState("");
     const [contractNum, setContractNum] = useState("");
-    const [requirementType, setRequirementType] = useState("");
+    const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
     const [projectStart, setProjectStart] = useState("");
@@ -40,7 +40,6 @@ export const AddProject = ({getProjectName}) => {
 
     const handleContractor = (e) => {
       setContractor(e.target.value);
-      console.log(e.target.value);
   };
 
     const handleContractStatus = (e) => {
@@ -124,11 +123,10 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter projectType"
+                defaultValue={1}
                 type="projectType"
                 onChange={handleProjectType}>
                 
-                <option value="0"></option>
                 <option value="1">Contract</option>
                 <option value="2">MIPR</option>
               </Form.Control>
@@ -139,11 +137,11 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter Contractor"
                 type="contractor"
-                onChange={handleContractor}>
+                onChange={handleContractor}
+                defaultValue={-1}>
                 
-                <option value="0"></option>
+                <option value={-1}></option>
                 {contractors.map((element, index) => (
                   <option key={index} value={element.id}>{element.contractor_name}</option>
                 ))}
@@ -155,11 +153,10 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter contractStatus"
+                defaultValue={1}
                 type="contractStatus"
                 onChange={handleContractStatus}>
-
-                <option value="0"></option>
+                  
                 <option value="1">Pre-Awarded</option>
                 <option value="2">Awarded</option>
                 <option value="3">Closed</option>
@@ -191,11 +188,10 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter RequirementType"
+                defaultValue={1}
                 type="RequirementType"
                 onChange={handleRequirementType}>
                 
-                <option value="0"></option>
                 <option value="1">CDD</option>
                 <option value="2">CPD</option>
                 <option value="3">1067</option>

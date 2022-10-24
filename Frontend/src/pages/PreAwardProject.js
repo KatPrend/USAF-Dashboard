@@ -1,12 +1,13 @@
 import React from 'react';
 import './page.css';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
 import { ProjectData } from '../components/Pre-Award/ProjectData';
 import { IPT } from '../components/Pre-Award/IPT';
 import { ContractStatus } from '../components/Pre-Award/ContractStatus';
 import { FundingData } from '../components/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
+import { AwardedModal } from '../components/Pre-Award/AwardedModal';
 
 function PreAwardProject(){
     const location = useLocation();
@@ -38,6 +39,7 @@ function PreAwardProject(){
                     </Col>
                 </Row>
             </Container>
+            <Button className='submit-new-project preaward'>Award Project</Button>
         </div>
     );
 }
