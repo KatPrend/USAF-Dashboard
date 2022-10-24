@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export const DepSum = () => {
+export const DepSum = (props) => {
     return (
         <Card className='card'>
             <Card.Header className="text-center cardHead">Dependency Summary</Card.Header>
@@ -28,8 +28,8 @@ export const DepSum = () => {
                             </div>
                         </Col>
                     </Row>
+                    {props.body}
                 </Container>
-                <Link to="/dependency">See Dependencies</Link>
             </Card.Body>
         </Card>
     );

@@ -12,7 +12,6 @@ const WbsData = (props) => {
     const location = useLocation();
     const {projectID, clinNum} = location.state;
 
-    // TODO: update request w/ backend
     useEffect(() => {
         axios.get(`/api/wbs/project/${projectID}/clin/${clinNum}`).then(response =>{
             setData(response.data);
@@ -25,7 +24,7 @@ const WbsData = (props) => {
     }
 
     return(
-        <Table striped bordered hover className="bg-light">
+        <Table responsive striped bordered hover className="bg-light">
             <thead>
                 <tr>
                     <th>Task ID</th>

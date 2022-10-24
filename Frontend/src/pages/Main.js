@@ -95,7 +95,7 @@ function Main() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum />
+                        <DepSum body = {<Link to="/dependency">See Dependencies</Link>}/>
                     </Col>
                     {/*2*/}
                     <Col>
