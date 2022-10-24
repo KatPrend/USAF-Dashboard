@@ -7,9 +7,7 @@ export const AddProject = ({getProjectName}) => {
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("");
     const [contractor, setContractor] = useState("");
-    const [contractStatus, setContractStatus] = useState("");
     const [branch, setBranch] = useState("");
-    const [contractNum, setContractNum] = useState("");
     const [requirementType, setRequirementType] = useState("");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
@@ -20,7 +18,7 @@ export const AddProject = ({getProjectName}) => {
     const [contractors, setContractors] = useState();
 
     useEffect(() => {
-        axios.get('/api/contract').then(response => {
+        axios.get('/api/contractor').then(response => {
             setContractors(response.data);
             setLoading(false);
         });
@@ -40,19 +38,10 @@ export const AddProject = ({getProjectName}) => {
 
     const handleContractor = (e) => {
       setContractor(e.target.value);
-      console.log(e.target.value);
   };
-
-    const handleContractStatus = (e) => {
-        setContractStatus(e.target.value);
-    };
 
     const handleBranch = (e) => {
         setBranch(e.target.value);
-    };
-
-    const handleContractNum = (e) => {
-        setContractNum(e.target.value);
     };
 
     const handleRequirementType = (e) => {
@@ -85,9 +74,7 @@ export const AddProject = ({getProjectName}) => {
             project_name: projectName,
             project_type: projectType,
             contractor_id: contractor,
-            contract_status: contractStatus,
             branch: branch,
-            contract_num: contractNum,
             requirement_type: requirementType,
             summary: summary,
             ccar_num: ccarNum,
@@ -148,32 +135,6 @@ export const AddProject = ({getProjectName}) => {
                   <option key={index} value={element.id}>{element.contractor_name}</option>
                 ))}
               </Form.Control>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm={3}>Contract Status:</Form.Label>
-            <Col sm={7}>
-              <Form.Control 
-                as="select"
-                placeholder=" Enter contractStatus"
-                type="contractStatus"
-                onChange={handleContractStatus}>
-
-                <option value="0"></option>
-                <option value="1">Pre-Awarded</option>
-                <option value="2">Awarded</option>
-                <option value="3">Closed</option>
-              </Form.Control>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm={3}>Contract Number:</Form.Label>
-            <Col sm={7}>
-              <Form.Control
-                placeholder=" Enter contractNum"
-                type="contractNum"
-                onChange={handleContractNum}
-              />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>

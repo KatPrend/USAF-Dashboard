@@ -71,4 +71,76 @@ router.get('/grabSuccesor/:projectid', (req, res) => {
     });
 });
 
+router.get('/successorDates/:projectid', (req, res) => {
+    let sql = `
+    SELECT
+        p.start_date,
+        p.end_date
+    FROM dependency_table d
+    INNER JOIN project p  ON p.id = d.successor
+    WHERE d.dependency = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+router.get('/dependencyDates/:projectid', (req, res) => {
+    let sql = `
+    SELECT
+        p.start_date,
+        p.end_date
+    FROM dependency_table d
+    INNER JOIN project p  ON p.id = d.dependency
+    WHERE d.successor = ${req.params.projectid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+
+router.get('/successorDateDifference/:projectid', (req, res) => {
+    let sql = `
+    SELECT
+        p.project_name as predescessor_name,
+        p.end_date,
+        DATEDIFF((SELECT start_date FROM project where id = ${req.params.projectid}),p.end_date) as date_difference
+    FROM dependency_table d
+    INNER JOIN project p  ON p.id =  d.successor
+    WHERE d.dependency = ${req.params.projectid} `;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+router.get('/dependencyDateDifference/:projectid', (req, res) => {
+    let sql = `
+    SELECT
+        p.project_name as predescessor_name,
+        p.start_date,
+        DATEDIFF(p.start_date, (SELECT start_date FROM project where id = ${req.params.projectid})) as date_difference
+    FROM dependency_table d
+    INNER JOIN project p  ON p.id =  d.dependency
+    WHERE d.successor = ${req.params.projectid} `;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+
 module.exports = router;

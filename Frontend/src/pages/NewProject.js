@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./page.css";
 import { NavB } from "../components/NavB";
 import { AddProject } from "../components/NewProject/AddProject";
+import { AddContract } from "../components/NewProject/AddContract";
 import { FileUpload } from "../components/NewProject/FileUpload";
 import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css";
@@ -19,7 +20,12 @@ function renderInfo(projectName, projectId) {
       <br />
       <h4>Upload Files:</h4>
       <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
-      <div className='upload'><FileUpload label={'Contract Award Timeline'} name={'contractAwardUpload'} projectId={projectId} /></div>
+      <br />
+      <h4>Contract Information:</h4>
+      <div className="project-element">
+        <AddContract />
+      </div>
+      <br />
       <br />
       <h4>IPT Members:</h4>
       <div className="project-element">

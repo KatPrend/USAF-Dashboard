@@ -22,9 +22,7 @@ router.post('/', (req, res) => {
         project_name, 
         project_type,
         contractor_id,
-        contract_status, 
-        branch, 
-        contract_num, 
+        branch,
         requirement_type, 
         summary, 
         ccar_num,
@@ -34,9 +32,7 @@ router.post('/', (req, res) => {
         "${project_name}",
         "${project_type}",
         "${contractor_id}",
-        "${contract_status}", 
-        "${branch}", 
-        "${contract_num}", 
+        "${branch}",
         "${requirement_type}", 
         "${summary}", 
         "${ccar_num}",
@@ -142,9 +138,6 @@ router.get('/schedule/:projectid', (req, res) => {
 
     });
 });
-
-
-
 
 module.exports = router;
   
