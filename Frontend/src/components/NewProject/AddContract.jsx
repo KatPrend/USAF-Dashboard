@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {Button, Col, Form, Row} from 'react-bootstrap';
+import { format } from 'date-fns';
 
 export const AddContract = (props) => {
   const [contractStatus, setContractStatus] = useState("");
@@ -20,7 +21,13 @@ export const AddContract = (props) => {
 
   const handleRequirementPlan = (e) => {
     setRequirementPlan(e.target.value);
-    setDraftRfpReleased(e.target.value);
+    const reqPlan = new Date(e.target.value);
+
+    reqPlan.setDate(reqPlan.getDate() + contractDaysAdded[0].draft_rfp_released);
+
+    setDraftRfpReleased(format(reqPlan, 'yyyy-MM-dd'));
+
+
   };
 
   const handleDraftRfpReleased = (e) => {
@@ -33,10 +40,6 @@ export const AddContract = (props) => {
         setLoading(false);
     });
   }, []);
-
-  console.log("Days Added");
-  console.log(contractDaysAdded);
-  console.log(contractDaysAdded.draft_rfp_released);
 
   if (isLoading) {
     return <div className="mx-auto w-75">Loading...</div>;
@@ -122,6 +125,18 @@ export const AddContract = (props) => {
             </Col>
           </Form.Group>
           <br />
+          <Form.Group as={Row} className='project-element'>
+          <Form.Label column xs="auto">Draft Rfp Released:</Form.Label>
+          <Col xs="auto">
+            <Form.Control
+              placeholder="Draft Rfp Released"
+              type="date"
+              value={draftRfpReleased}
+              onChange={handleDraftRfpReleased}
+            />
+          </Col>
+        </Form.Group>
+        <br />
           <Button type="submit" className="submit-new-project">
             Submit New Project
           </Button>
