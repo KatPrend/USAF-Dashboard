@@ -39,7 +39,6 @@ const WbsData = (props) => {
                 {
                     data.map(({id, clin_num, project_id, clin_type, clin_scope, proj_clin_value}) => (
                         <tr key={id}>
-                            {console.log("clin_num: " + clin_num + " project id: " + project_id)}
                             <td><Link to={{pathname: '/wbs', state: {clinNum:clin_num, projectID:project_id}}}>{clin_num}</Link></td>
                             <td>{clin_type}</td>
                             <td>{clin_scope}</td>

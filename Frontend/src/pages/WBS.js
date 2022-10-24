@@ -12,8 +12,6 @@ const WbsData = (props) => {
     const location = useLocation();
     const {projectID, clinNum} = location.state;
 
-    console.log(projectID)
-    console.log(clinNum)
     // TODO: update request w/ backend
     useEffect(() => {
         axios.get(`/api/wbs/project/${projectID}/clin/${clinNum}`).then(response =>{

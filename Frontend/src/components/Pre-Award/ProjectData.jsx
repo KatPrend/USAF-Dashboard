@@ -12,6 +12,7 @@ export const ProjectData = (props) => {
 
     useEffect(() => {
         axios.get(`/api/project/${props.data}`).then(response => {
+
             setData(response.data);
             setLoading(false);
         });

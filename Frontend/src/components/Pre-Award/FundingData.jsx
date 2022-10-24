@@ -14,8 +14,6 @@ export const FundingData = (props) => {
     const location = useLocation();
     const {id} =location.state;
 
-    console.log(props.data);
-
     useEffect(() => {
         axios.get(`/api/funds/obligation_table/${props.data}`).then(response =>{
             setObligationData(response.data);
@@ -29,8 +27,6 @@ export const FundingData = (props) => {
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
     }
-
-    console.log(obligation_data);
 
     return (
         <Card className="card">
