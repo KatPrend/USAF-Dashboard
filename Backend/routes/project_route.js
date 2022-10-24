@@ -60,7 +60,8 @@ router.delete("/", (req, res)=>{
 router.get('/userEmail/:userEmail', (req, res) => {
     let sql = `
     SELECT 
-        p.id, 
+        u.id as user_id,
+        p.id as project_id, 
         p.project_name, 
         ca.contract_num, 
         ca.contract_status, 

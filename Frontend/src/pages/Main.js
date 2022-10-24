@@ -53,7 +53,7 @@ const ProjectContent = () => {
             <Table responsive striped bordered hover className="bg-light">
                 <thead>
                     <tr>
-                    <th>Project Id</th>
+                        <th>Project Id</th>
                         <th>Project Name</th>
                         <th>Contract Number</th>
                         <th>Contract Status</th>
@@ -66,10 +66,10 @@ const ProjectContent = () => {
                 </thead>
                 <tbody>
                 {
-                    data.map(({ id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status }) => (
-                        <tr key={id}>
-                            <td>{id}</td>
-                            <td> {renderContent(contract_status,id,project_name)}</td>
+                    data.map(({project_id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status }) => (
+                        <tr key={project_id}>
+                            <td>{project_id}</td>
+                            <td> {renderContent(contract_status,project_id,project_name)}</td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
@@ -107,7 +107,7 @@ function Main() {
                     </Col>
                </Row>  
                <Row>
-                    <ProjectContent/>
+                    <ProjectContent />
                </Row>
             </Container>
             <br />
