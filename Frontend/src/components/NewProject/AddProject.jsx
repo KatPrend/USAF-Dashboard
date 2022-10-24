@@ -5,10 +5,10 @@ import {Button, Col, Form, Row} from 'react-bootstrap';
 export const AddProject = ({getProjectName}) => {
 
     const [projectName, setProjectName] = useState("");
-    const [projectType, setProjectType] = useState("");
-    const [contractor, setContractor] = useState("");
+    const [projectType, setProjectType] = useState("1");
+    const [contractor, setContractor] = useState("-1");
     const [branch, setBranch] = useState("");
-    const [requirementType, setRequirementType] = useState("");
+    const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
     const [projectStart, setProjectStart] = useState("");
@@ -111,11 +111,10 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter projectType"
+                defaultValue={1}
                 type="projectType"
                 onChange={handleProjectType}>
                 
-                <option value="0"></option>
                 <option value="1">Contract</option>
                 <option value="2">MIPR</option>
               </Form.Control>
@@ -126,11 +125,11 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter Contractor"
                 type="contractor"
-                onChange={handleContractor}>
+                onChange={handleContractor}
+                defaultValue={-1}>
                 
-                <option value="0"></option>
+                <option value={-1}></option>
                 {contractors.map((element, index) => (
                   <option key={index} value={element.id}>{element.contractor_name}</option>
                 ))}
@@ -152,11 +151,10 @@ export const AddProject = ({getProjectName}) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter RequirementType"
+                defaultValue={1}
                 type="RequirementType"
                 onChange={handleRequirementType}>
                 
-                <option value="0"></option>
                 <option value="1">CDD</option>
                 <option value="2">CPD</option>
                 <option value="3">1067</option>
