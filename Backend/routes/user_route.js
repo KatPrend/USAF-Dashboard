@@ -110,4 +110,18 @@ router.get('/userEmail/:userEmail', (req, res) => {
     });
 });
 
+// Get a user role from user id
+router.get('/userId/:userId', (req, res) => {
+    let sql = `
+    SELECT *
+    FROM users u 
+    WHERE u.id = '${req.params.userId}'`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;

@@ -30,7 +30,7 @@ export const NavB = ({getUserId}) => {
             setData(response.data);
             setLoading(false);
 
-            getUserId(response.data[0].id, response.data[0].user_email);
+            getUserId(response.data[0].id);
         });
     }, []);
 
