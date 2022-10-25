@@ -82,10 +82,10 @@ export const AddProject = ({getProjectName}) => {
             end_date: projectEnd
         })
         .then(function(res){
-            console.log(res);
+            //console.log(res);
 
             projectId = res.data.insertId;
-            console.log("In AddProject, project Id = " + projectId);
+            //console.log("In AddProject, project Id = " + projectId);
 
             getProjectName(projectId, projectName);
         })

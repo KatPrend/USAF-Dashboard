@@ -3,18 +3,17 @@ import './page.css';
 import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 
 const WbsData = (props) => {
+
+
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
     const location = useLocation();
     const {projectID, clinNum} = location.state;
 
-    console.log(projectID)
-    console.log(clinNum)
-    // TODO: update request w/ backend
     useEffect(() => {
         axios.get(`/api/wbs/project/${projectID}/clin/${clinNum}`).then(response =>{
             setData(response.data);
@@ -27,7 +26,7 @@ const WbsData = (props) => {
     }
 
     return(
-        <Table striped bordered hover className="bg-light">
+        <Table responsive striped bordered hover className="bg-light">
             <thead>
                 <tr>
                     <th>Task ID</th>

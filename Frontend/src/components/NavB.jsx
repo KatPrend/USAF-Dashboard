@@ -43,7 +43,7 @@ export const NavB = ({getUserId}) => {
         <>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
 
-            <Navbar className="whole-bar" bg="primary" variant="dark">
+            <Navbar className="whole-bar" bg="primary" variant="dark" style={{height: 'auto'}}>
                 <Container>
                     <Navbar.Brand href="/">
                         <img

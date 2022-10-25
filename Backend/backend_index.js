@@ -6,7 +6,6 @@ const bodyparser = require('body-parser');
 const app = express();
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
 
-
 // Possibly remove
 const PORT = process.env.PORT || 4000;
 app.use(cors({

@@ -9,7 +9,7 @@ import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
 function renderInfo(projectName, projectId) {
-  console.log("project name: " + projectName);
+  //console.log("project name: " + projectName);
 
   // if (projectName === "") {
   //   return <></>
@@ -23,7 +23,7 @@ function renderInfo(projectName, projectId) {
       <br />
       <h4>Contract Information:</h4>
       <div className="project-element">
-        <AddContract />
+        <AddContract  data = {projectId}/>
       </div>
       <br />
       <br />
@@ -48,7 +48,7 @@ function NewProject() {
 
   const getProjectName = (id, name) => {
     setProjectName(name);
-    console.log("In new project - childData: " + id + ", " + name);
+    //console.log("In new project - childData: " + id + ", " + name);
 
     setProjectId(id);
   };

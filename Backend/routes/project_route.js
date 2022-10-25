@@ -124,8 +124,8 @@ router.get('/schedule/:projectid', (req, res) => {
         id as ID, 
         task_name as "Name", 
         duration as "Duration", 
-        startDate as "Start", 
-        finishDate as "End", 
+        start_date as "Start", 
+        finish_date as "End", 
         predecessors as "Predecessors"
     FROM 
         project_information 

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row } from "react-bootstrap";
 import { propTypes } from 'react-bootstrap/esm/Image';
-import { Link, useHistory } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import "./projectData.css"
 
 export const ProjectData = (props) => {
-    const history = useHistory();
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
-
+    
     useEffect(() => {
         axios.get(`/api/project/${props.data}`).then(response => {
+
             setData(response.data);
             setLoading(false);
         });
@@ -20,12 +20,6 @@ export const ProjectData = (props) => {
     if (isLoading) {
         return <div className="mx-auto w-75">Loading...</div>;
     }
-
-    console.log(props.data)
-
-    const routeChange = () => {
-        history.push('/clin');
-    };
 
     return (
         <Card className="card">
@@ -59,8 +53,8 @@ export const ProjectData = (props) => {
                     <Link to={{
                         pathname: '/clin',
                         state: {id:props.data}
-                    }}>
-                        <Button onClick={routeChange} className='Button'>See CLIN Data</Button>
+                    }}> 
+                    <Button className='Button'>See CLIN Data</Button>
                     </Link>
                 </ButtonGroup>
             </Card.Body>
