@@ -16,6 +16,10 @@ const ClinData = (props) => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
+    const [clin_num_search, set_clin_num_search] = useState('');
+    const [clin_type_search, set_clin_type_search] = useState('');
+    const [clin_scope_search, set_clin_scope_search] = useState('');
+    const [projected_clin_value, projected_clin_value_search] = useState('');
 
     const location = useLocation();
     const {id} = location.state;
@@ -32,6 +36,29 @@ const ClinData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    // search
+    // protects from toStrining null or undefined
+    const safeToString = (input) => {
+        if (input === null)
+            return 'null';
+        if (input === undefined)
+            return 'undefined';
+        return input.toString();
+    }
+    // check if should display
+    const shouldDisplay = (clin_num, project_id, clin_type, proj_clin_value) => {
+        // if x does not contain the xSearch and xSearch is not empty
+        if (!(safeToString(clin_num).toLowerCase().includes(clin_num_search.toLowerCase())) && clin_num_search != '')
+            return false;
+        if (!(safeToString(project_id).toLowerCase().includes(clin_type_search.toLowerCase())) && clin_type_search != '')
+            return false;
+        if (!(safeToString(clin_type).toLowerCase().includes(clin_scope_search.toLowerCase())) && clin_scope_search != '')
+            return false;
+        if (!(safeToString(proj_clin_value).toLowerCase().includes(projected_clin_value.toLowerCase())) && projected_clin_value != '')
+            return false;
+        return true;
+    }
+    
     return(
         <Table striped bordered hover className="bg-light">
             <thead>
@@ -43,9 +70,16 @@ const ClinData = (props) => {
                 </tr>
             </thead>
             <tbody>
+                <tr>                  
+                    <td><input placeholder="Filter by #" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_num_search(event.target.value)}} value={clin_num_search}></input></td>
+                    <td><input placeholder="Filter by Type" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_type_search(event.target.value)}} value={clin_type_search}></input></td>
+                    <td><input placeholder="Filter by Scope" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_scope_search(event.target.value)}} value={clin_scope_search}></input></td>
+                    <td><input placeholder="Filter by Value" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {projected_clin_value_search(event.target.value)}} value={projected_clin_value}></input></td>
+                </tr>
+
                 {
                     data.map(({id, clin_num, project_id, clin_type, clin_scope, proj_clin_value}) => (
-                        <tr key={id}>
+                        <tr key={id} style={shouldDisplay(clin_num, clin_type, clin_scope, proj_clin_value) ? {} : {display: 'none'}}>
                             <td><Link to={{pathname: '/wbs', state: {clinNum:clin_num, projectID:project_id}}}>{clin_num}</Link></td>
                             <td>{clin_type}</td>
                             <td>{clin_scope}</td>
@@ -72,4 +106,4 @@ function Clin() {
     );
 }
 
-export default Clin;
+export default Clin
