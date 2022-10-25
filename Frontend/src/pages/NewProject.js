@@ -11,9 +11,9 @@ import { Predecessors } from "../components/NewProject/Predecessors";
 function renderInfo(projectName, projectId) {
   //console.log("project name: " + projectName);
 
-  if (projectName === "") {
-    return <></>
-  } else {
+  // if (projectName === "") {
+  //   return <></>
+  // } else {
     return <>
      <h2>{projectName} Project Information</h2>
       <br />
@@ -39,12 +39,17 @@ function renderInfo(projectName, projectId) {
         <Predecessors />
       </div>
     </>
-  }
+  //}
 };
 
 function NewProject() {
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState(0);
+
+  const [userid, setUserid] = useState(0);
+  const getUserId = (uid) => {
+      setUserid(uid);
+  }
 
   const getProjectName = (id, name) => {
     setProjectName(name);
@@ -55,7 +60,7 @@ function NewProject() {
 
   return (
     <div className="lightBlue">
-      <NavB />
+      <NavB getUserId={getUserId} />
       <h1>Add New Project</h1>
       <br />
       <div className="mx-auto w-75">

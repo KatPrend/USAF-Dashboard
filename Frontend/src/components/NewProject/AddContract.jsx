@@ -160,6 +160,7 @@ export const AddContract = (props) => {
             </Col>
           </Form.Group>
           <br />
+          <h5>Contract Award Timeline</h5>
           <Form.Group as={Row} className='project-element'>
             <Form.Label column xs="auto">Requirement Plan Date:</Form.Label>
             <Col xs="auto">

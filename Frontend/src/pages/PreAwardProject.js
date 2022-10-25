@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './page.css';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
@@ -12,10 +12,15 @@ import { AwardedModal } from '../components/Pre-Award/AwardedModal';
 function PreAwardProject(){
     const location = useLocation();
     const {id} = location.state;
+
+    const [userid, setUserid] = useState(0);
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
     
     return(
         <div className="lightBlue">
-            <NavB />
+            <NavB getUserId={getUserId} />
             <Container className='top-Padding'>
                 <Row>
                     <Col>
