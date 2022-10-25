@@ -65,11 +65,11 @@ router.get('/iptmembers/:project_id', (req, res) => {
     SELECT 
         u.id, 
         u.mil_job_title, 
-        u.userName 
+        u.user_name 
     FROM users u 
     INNER JOIN user_project_link upl on upl.user_id = u.id 
     WHERE upl.project_id = ${req.params.project_id}  
-    AND u.userRole ='IPT Member' AND u.userRole != 'Admin'`;
+    AND u.user_role ='IPT Member' AND u.user_role != 'Admin'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -83,7 +83,7 @@ router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
     SELECT 
         u.id, 
         u.mil_job_title, 
-        u.userName 
+        u.user_name 
     FROM users u 
     INNER JOIN user_project_link upl on upl.user_id = u.id 
     WHERE upl.project_id = ${req.params.project_id} 

@@ -4,15 +4,22 @@ import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
 import { useLocation } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
+const ClinData = (props) => {
 
-const WbsData = (props) => {
+    // const history = useHistory();
+
+    // const routeChange = () => {
+    //     history.push('/wbs');
+    // };
+
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
     const location = useLocation();
     const {id} = location.state;
+
     useEffect(() => {
         // id.project_id
         axios.get(`/api/clin/${id}`).then(response =>{
@@ -60,7 +67,7 @@ function Clin() {
                 <Button>Edit</Button>
                 <Button>Back</Button>
             </div>
-            <WbsData/>
+            <ClinData/>
         </div>
     );
 }

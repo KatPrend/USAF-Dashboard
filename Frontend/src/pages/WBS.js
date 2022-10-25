@@ -3,9 +3,11 @@ import './page.css';
 import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
-import { useLocation } from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 
 const WbsData = (props) => {
+
+
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 

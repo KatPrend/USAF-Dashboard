@@ -78,7 +78,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
     LEFT JOIN
         contract_award ca on ca.project_id = p.id 
     WHERE 
-        u.userEmail = '${req.params.userEmail}'`;
+        u.user_email = '${req.params.userEmail}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -124,8 +124,8 @@ router.get('/schedule/:projectid', (req, res) => {
         id as ID, 
         task_name as "Name", 
         duration as "Duration", 
-        startDate as "Start", 
-        finishDate as "End", 
+        start_date as "Start", 
+        finish_date as "End", 
         predecessors as "Predecessors"
     FROM 
         project_information 

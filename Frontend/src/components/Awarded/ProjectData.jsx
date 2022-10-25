@@ -3,11 +3,6 @@ import { Button, ButtonGroup, Card, Col, Container, Row } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom';
 
 export const ProjectData = (props) => {
-    const history = useHistory();
-
-    const routeChange = () => {
-        history.push('/clin');
-    };
 
     return (
         <Card className="card">
@@ -32,7 +27,7 @@ export const ProjectData = (props) => {
                         pathname: '/clin',
                         state: {id:props.data}
                     }}>
-                        <Button onClick={routeChange} className='Button'>See CLIN Data</Button>
+                        <Button className='Button'>See CLIN Data</Button>
                     </Link>
                     <Button className='Button'>Import File</Button>
                 </ButtonGroup>
