@@ -89,7 +89,7 @@ const ProjectContent = () => {
     if (isLoading) {
         return <div className="mx-auto w-100">Loading...</div>;
     }
-    const searchStyle = {width: '75%'};
+    const searchStyle = {width: '100%'};
     return (
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
             <h2>Projects: <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link></h2>
@@ -109,7 +109,7 @@ const ProjectContent = () => {
                 </thead>    
                 <tbody>
                 <tr>                  
-                    <td><input placeholder="Filter by Id" style={{width: '50%'}} type='text' name='textField' onChange={function (event) {set_project_id_search(event.target.value)}} value={project_id_search}></input></td>
+                    <td><input placeholder="Filter by Id" style={searchStyle} type='text' name='textField' onChange={function (event) {set_project_id_search(event.target.value)}} value={project_id_search}></input></td>
                     <td><input placeholder="Filter by Name" style={searchStyle} type='text' name='textField' onChange={function (event) {set_project_name_search(event.target.value)}} value={project_name_search}></input></td>
                     <td><input placeholder="Filter by Contract #" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_num_search(event.target.value)}} value={contract_num_search}></input></td>
                     <td><input placeholder="Filter by status" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_status_search(event.target.value)}} value={contract_status_search}></input></td>
