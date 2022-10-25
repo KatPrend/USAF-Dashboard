@@ -18,9 +18,9 @@ router.post('/', (req, res) => {
     let sql = `
     INSERT INTO users (
         contractor_company,
-        userName,
-        userRole,
-        userEmail,
+        user_name,
+        user_role,
+        user_email,
         mil_job_title) 
     VALUES (
         "${contractor_company}",
@@ -43,7 +43,7 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
     let sql = `
     UPDATE users 
     SET 
-        userRole = ${req.params.userRole}, 
+        user_role = ${req.params.userRole}, 
         mil_job_title = ${req.params.jobTitle}
     WHERE id = ${req.params.userid} `;
     let query = db.query(sql, (err, results) =>{
