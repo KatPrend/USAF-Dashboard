@@ -20,15 +20,16 @@ function AwardedProject(){
     const {id} = location.state;
 
     const [userid, setUserid] = useState(0);
+    const [userRole, setUserRole] = useState("");
 
-    const getUserId = (uid) => {
+    const getUserInfo = (uid, urole) => {
         setUserid(uid);
+        setUserRole(urole);
     }
 
     return(
         <div className="lightBlue">
-            <NavB getUserId={getUserId}/>
-
+            <NavB getUserInfo={getUserInfo}/>
 
             <Container className='top-Padding'>
                 <Row>
