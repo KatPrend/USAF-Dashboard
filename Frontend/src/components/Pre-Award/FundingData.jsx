@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../pages/DummyData";
-import ApprovedFundingTable from "../ApprovedFundingTable";
+import {ApprovedFundingTable} from "../ApprovedFundingTable";
 import FundingDataTable from "./FundingDataTable";
 
 
