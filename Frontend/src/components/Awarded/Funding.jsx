@@ -72,7 +72,7 @@ export const Funding = (props) => {
                 <ModalBody>
                     <Container>
                         <Row>
-                            <Col>Approved Funding:</Col>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>
                         <Row>
                             <Col>
@@ -80,7 +80,7 @@ export const Funding = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>Obligation Plan:</Col>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Obligation Plan:</Col>
                         </Row>
                         <Row>
                             <Col>
@@ -88,7 +88,7 @@ export const Funding = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>Expenditure Plan</Col>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Expenditure Plan</Col>
                         </Row>
                         <Row>
                             <Col>

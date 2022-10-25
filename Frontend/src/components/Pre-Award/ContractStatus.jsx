@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Table, Modal, ModalBody, ButtonGroup, ModalDialog, } from 'react-bootstrap';
+import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 import { format } from 'date-fns';
 
@@ -8,6 +9,7 @@ import { format } from 'date-fns';
 export const ContractStatus = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
+    const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
@@ -21,6 +23,32 @@ export const ContractStatus = (props) => {
     }
 
     return (
+        <>
+        <ModalDialog scrollable>
+            <Modal show={ModalIsOpen} size='xl' autoFocus={true}>
+                <ModalHeader>
+                    <Container>
+                        <Row>
+                            <Col style={{textAlign: 'left'}}>
+                                <h3>Contract Status Edit</h3>
+                            </Col>
+                            <Col style={{textAlign: 'right'}}>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button'>Save</Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalHeader>
+                <ModalBody>
+                    <Container>
+                    </Container>
+                </ModalBody>
+            </Modal>
+        </ModalDialog>
+
+
         <Card className="card no-bot-pad">
             <Card.Header className = "cardHead">
                 <Container>
@@ -29,7 +57,7 @@ export const ContractStatus = (props) => {
                             <span>Contract Status</span>
                         </Col>
                         <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button'>Edit</Button></span>
+                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                         </Col>
                     </Row>
                 </Container>
@@ -68,5 +96,7 @@ export const ContractStatus = (props) => {
                 </tbody>
             </Table>
         </Card>
+        </>
+        
     );
 }

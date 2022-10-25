@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Button, Table } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, } from 'react-bootstrap';
+import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
 import { format } from 'date-fns';
@@ -67,6 +68,32 @@ export const ProjectSchedule = (props) => {
     }
 
     return (
+        <>
+        <ModalDialog scrollable>
+            <Modal show={ModalIsOpen} size='xl' autoFocus={true}>
+                <ModalHeader>
+                    <Container>
+                        <Row>
+                            <Col style={{textAlign: 'left'}}>
+                                <h3>Project Schedule Edit</h3>
+                            </Col>
+                            <Col style={{textAlign: 'right'}}>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button'>Save</Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalHeader>
+                <ModalBody>
+                    <Container>
+                    </Container>
+                </ModalBody>
+            </Modal>
+        </ModalDialog>
+
+
         <Card className="card">
             <Card.Header className = "cardHead">
                 <Container>
@@ -75,7 +102,7 @@ export const ProjectSchedule = (props) => {
                             <span>Project Schedule</span>
                         </Col>
                         <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button'>Edit</Button></span>
+                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                         </Col>
                     </Row>
                 </Container>
@@ -129,5 +156,8 @@ export const ProjectSchedule = (props) => {
                 </Container>
             </Card.Body>
         </Card>
+        </>
+
+        
     );
 }
