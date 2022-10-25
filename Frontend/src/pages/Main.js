@@ -3,7 +3,6 @@ import axios from "axios";
 import './page.css';
 import {Link} from 'react-router-dom';
 import { Col, Container, Button, Row, Table } from 'react-bootstrap';
-import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
@@ -29,17 +28,19 @@ function renderContent(contractStatus, projectId, projectName) {
 /**
  * Renders information about projects assigned to the current user
  */
-const ProjectContent = () => {
-    const {accounts} = useMsal();
+const ProjectContent = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
 
     useEffect(() => {
-        axios.get(`/api/project/userEmail/${accounts[0].username}`).then(response => {
+        axios.get(`/api/project/userId/${props.userid}`).then(response => {
             setData(response.data);
             setLoading(false);
         });
     }, []);
+
+    console.log(props.userid);
+    console.log(data);
 
     if (isLoading) {
         return <div className="mx-auto w-75">Loading...</div>;
@@ -88,9 +89,15 @@ const ProjectContent = () => {
 
 function Main() {
 
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+
     return (
         <div className="lightBlue">
-            <NavB />
+            <NavB  getUserId={getUserId}/>
             <Container className="lightblue top-Padding">
                 <Row>
                     {/*1*/}
@@ -107,7 +114,7 @@ function Main() {
                     </Col>
                </Row>  
                <Row>
-                    <ProjectContent />
+                    <ProjectContent userid={userid}/>
                </Row>
             </Container>
             <br />

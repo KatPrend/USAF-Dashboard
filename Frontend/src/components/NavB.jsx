@@ -3,15 +3,17 @@
  * Licensed under the MIT License.
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import axios from "axios";
 
 import { Container } from "react-bootstrap";
 import { useMsal } from "@azure/msal-react";
 import "./navB.css";
 
 const navStyle = { color: "white", fontSize: "48px", textDecoration: "none"};
+const adminStyle = { display: "flex", alignItems: "center", color: "white", fontSize: "20px", textDecoration: "none"};
 
 function handleLogout(instance) {
     instance.logoutRedirect().catch(e => {
@@ -19,8 +21,23 @@ function handleLogout(instance) {
     });
 }
 
-export const NavB = () => {
-    const { instance } = useMsal();
+export const NavB = ({getUserId}) => {
+    const { accounts, instance } = useMsal();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        axios.get(`/api/user/userEmail/${accounts[0].username}`).then(response => {
+            setData(response.data);
+            setLoading(false);
+
+            getUserId(response.data[0].id, response.data[0].userEmail);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     return (
         <>
@@ -41,9 +58,8 @@ export const NavB = () => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
+                            {data[0].userRole === "Admin" ? <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a> : null}
                             <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
-                            <button className="material-icons mx-3" style={navStyle}>account_circle</button>
-                            <a href="/" className="material-icons mx-3" style={navStyle}>settings</a>
                             <a href="/" onClick={() => handleLogout(instance)} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{"logout"}</a>
                         </Nav>
                     </Navbar.Collapse>

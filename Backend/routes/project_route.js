@@ -57,7 +57,7 @@ router.delete("/", (req, res)=>{
 })
 
 // Get a Project with user email
-router.get('/userEmail/:userEmail', (req, res) => {
+router.get('/userId/:userId', (req, res) => {
     let sql = `
     SELECT 
         u.id as user_id,
@@ -78,7 +78,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
     LEFT JOIN
         contract_award ca on ca.project_id = p.id 
     WHERE 
-        u.userEmail = '${req.params.userEmail}'`;
+        u.id = ${req.params.userId}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

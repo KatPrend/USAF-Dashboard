@@ -21,6 +21,8 @@ export const ProjectData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    console.log(props.data)
+
     const routeChange = () => {
         history.push('/clin');
     };
@@ -41,7 +43,7 @@ export const ProjectData = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                    data.map(({id, project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
                         <div key = {id}>
                             <p className='project-data'><span>Project Name:</span> {project_name}</p>
                             <p className='project-data'><span>Contract Number:</span> {contract_num}</p>

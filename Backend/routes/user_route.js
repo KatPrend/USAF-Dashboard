@@ -96,4 +96,18 @@ router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
     });
 });
 
+// Get a user role from user email
+router.get('/userEmail/:userEmail', (req, res) => {
+    let sql = `
+    SELECT *
+    FROM users u 
+    WHERE u.user_email = '${req.params.userEmail}'`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;

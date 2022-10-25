@@ -11,9 +11,9 @@ import { Predecessors } from "../components/NewProject/Predecessors";
 function renderInfo(projectName, projectId) {
   console.log("project name: " + projectName);
 
-  if (projectName === "") {
-    return <></>
-  } else {
+  // if (projectName === "") {
+  //   return <></>
+  // } else {
     return <>
      <h2>{projectName} Project Information</h2>
       <br />
@@ -39,7 +39,7 @@ function renderInfo(projectName, projectId) {
         <Predecessors />
       </div>
     </>
-  }
+  //}
 };
 
 function NewProject() {
