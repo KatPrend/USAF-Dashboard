@@ -46,6 +46,11 @@ function NewProject() {
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState(0);
 
+  const [userid, setUserid] = useState(0);
+  const getUserId = (uid) => {
+      setUserid(uid);
+  }
+
   const getProjectName = (id, name) => {
     setProjectName(name);
     //console.log("In new project - childData: " + id + ", " + name);
@@ -55,7 +60,7 @@ function NewProject() {
 
   return (
     <div className="lightBlue">
-      <NavB />
+      <NavB getUserId={getUserId} />
       <h1>Add New Project</h1>
       <br />
       <div className="mx-auto w-75">

@@ -58,6 +58,7 @@ router.delete("/", (req, res)=>{
 
 // Get a Project with user email
 router.get('/userId/:userId', (req, res) => {
+    console.log(req.params.userId);
     let sql = `
     SELECT 
         u.id as user_id,

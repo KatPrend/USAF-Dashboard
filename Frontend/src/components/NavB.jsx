@@ -13,7 +13,6 @@ import { useMsal } from "@azure/msal-react";
 import "./navB.css";
 
 const navStyle = { color: "white", fontSize: "48px", textDecoration: "none"};
-const adminStyle = { display: "flex", alignItems: "center", color: "white", fontSize: "20px", textDecoration: "none"};
 
 function handleLogout(instance) {
     instance.logoutRedirect().catch(e => {
@@ -31,9 +30,11 @@ export const NavB = ({getUserId}) => {
             setData(response.data);
             setLoading(false);
 
-            getUserId(response.data[0].id, response.data[0].userEmail);
+            getUserId(response.data[0].id, response.data[0].user_email);
         });
     }, []);
+
+    console.log(data);
 
     if (isLoading) {
         return <div className="mx-auto w-75">Loading...</div>;
@@ -58,7 +59,7 @@ export const NavB = ({getUserId}) => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
-                            {data[0].userRole === "Admin" ? <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a> : null}
+                            {data[0].user_role === "Admin" ? <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a> : null}
                             <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
                             <a href="/" onClick={() => handleLogout(instance)} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{"logout"}</a>
                         </Nav>

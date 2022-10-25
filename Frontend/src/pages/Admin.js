@@ -7,9 +7,15 @@ import { useLocation } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 
 function Admin() {
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+    
     return (
         <div className="lightBlue">
-            <NavB />
+            <NavB getUserId={getUserId}/>
         </div>
     );
 }

@@ -93,9 +93,16 @@ const ClinData = (props) => {
 }
 
 function Clin() {
+
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+
     return (
         <div className="lightBlue">
-            <NavB />
+            <NavB getUserId={getUserId}/>
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
                 <Button>Edit</Button>

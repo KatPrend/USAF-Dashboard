@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Dependencies } from '../components/Awarded/Dependencies';
 import { Documents } from '../components/Awarded/Documents';
@@ -19,9 +19,15 @@ function AwardedProject(){
     const location = useLocation();
     const {id} = location.state;
 
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+
     return(
         <div className="lightBlue">
-            <NavB />
+            <NavB getUserId={getUserId}/>
 
 
             <Container className='top-Padding'>
