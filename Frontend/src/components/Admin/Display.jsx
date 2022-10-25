@@ -16,7 +16,7 @@ export const Display = (props) => {
         return <div className="mx-auto w-100">Loading...</div>;
     } else if (data[0].user_role == "Admin") {
         return <>
-            Hi Admin!
+            
         </>
     } else {
         return <div>
