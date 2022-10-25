@@ -63,9 +63,9 @@ export const IPT = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({id, mil_job_title, userName}) => (
+                    data.map(({id, mil_job_title, user_name}) => (
                         <div key = {id}>
-                            <p className='project-data'><span>{mil_job_title}:</span> {userName}</p>
+                            <p className='project-data'><span>{mil_job_title}:</span> {user_name}</p>
                         </div>
                     ))
                 }
