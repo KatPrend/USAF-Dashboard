@@ -176,7 +176,7 @@ export const TimeLineData2 = [
         "ID": "3",
         "Name": "temp2",
         "Duration": "1",
-        "Start": "1/8/2015",
+        "Start": "1/7/2015",
         "End": "1/10/2015",
         "Predecessors": "1, 2",
         "WBS": "1",

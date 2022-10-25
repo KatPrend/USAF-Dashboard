@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Row, Tabs, Tab } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Tabs, Tab, Modal, ModalBody, ButtonGroup, ModalDialog, Table } from 'react-bootstrap';
 import BarGraph from '../BarGraph';
 import LineGraph from '../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import FundingDataTable from './FundingDataTable';
-import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation } from '../../pages/DummyData';
+import {FundingDataTable, FundingDataTableEditable} from './FundingDataTable';
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../ApprovedFundingTable';
+import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../pages/DummyData';
+import ModalHeader from 'react-bootstrap/esm/ModalHeader';
+import '../../pages/page.css';
 
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
+    const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     const location = useLocation();
     const {id} =location.state;
@@ -47,6 +51,56 @@ export const Funding = (props) => {
     // });
 
     return (
+        <>
+        <ModalDialog scrollable>
+            <Modal show={ModalIsOpen} size='xl' autoFocus={true}>
+                <ModalHeader>
+                    <Container>
+                        <Row>
+                            <Col style={{textAlign: 'left'}}>
+                                <h3>Funding Data Edit</h3>
+                            </Col>
+                            <Col style={{textAlign: 'right'}}>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button'>Save</Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalHeader>
+                <ModalBody>
+                    <Container>
+                        <Row>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <ApprovedFundingTableEditable data={ApprovedFundingData}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Obligation Plan:</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FundingDataTableEditable data={AwardedProjectFundingDataObligation}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Expenditure Plan</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <FundingDataTableEditable data={AwardedProjectFundingDataExpenditure}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalBody>
+            </Modal>
+        </ModalDialog>
+        
+
         <Card className="card">
             <Card.Header className = "cardHead">
                 <Container>
@@ -55,38 +109,48 @@ export const Funding = (props) => {
                             <span>Funding Data</span>
                         </Col>
                         <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button'>Edit</Button></span>
+                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)} >Edit</Button></span>
                         </Col>
                     </Row>
                 </Container>
             </Card.Header>
             <Card.Body>
                 <Container>
-                <Row>
-                    <Col>
-                    
-                    <Tabs className="Tabs">
-                        <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
+                    <Row>
+                        <Col>
+                        
+                        <Tabs className="Tabs">
+                            <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
+                                {/* AwardedProjectFundingDataObligation */}
+                                {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
+                                <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
+                            </Tab>
                             {/* AwardedProjectFundingDataObligation */}
-                            {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
-                            <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
-                        </Tab>
-                        {/* AwardedProjectFundingDataObligation */}
-                        <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
-                            <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
-                        </Tab>
-                        {/* AwardedProjectFundingDataExpenditure */}
-                        <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
-                            <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
-                        </Tab>
-                        {/* AwardedProjectFundingDataExpenditure */}
-                        <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
-                            <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
-                        </Tab>
-                    </Tabs>
-                    
-                    </Col>
-                </Row>
+                            <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
+                                <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                            </Tab>
+                            {/* AwardedProjectFundingDataExpenditure */}
+                            <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
+                                <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
+                            </Tab>
+                            {/* AwardedProjectFundingDataExpenditure */}
+                            <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
+                                <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                            </Tab>
+                        </Tabs>
+                        
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="tableTitle">
+                            Approved Funding:
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <ApprovedFundingTable data={ApprovedFundingData}/>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col className="tableTitle">
                             Obligation Plan:
@@ -112,5 +176,7 @@ export const Funding = (props) => {
                 </Container>
             </Card.Body>
         </Card>
+        </>
+        
     );
 }

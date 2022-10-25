@@ -1,8 +1,37 @@
-import React from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import React, { useState} from 'react';
+import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, } from 'react-bootstrap';
+import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 
 export const Dependencies = () => {
+    const [ModalIsOpen, setModalIsOpen] = useState(false);
+
     return (
+        <>
+        <ModalDialog scrollable>
+            <Modal show={ModalIsOpen} size='xl' autoFocus={true}>
+                <ModalHeader>
+                    <Container>
+                        <Row>
+                            <Col style={{textAlign: 'left'}}>
+                                <h3>Project Dependencies Edit</h3>
+                            </Col>
+                            <Col style={{textAlign: 'right'}}>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button'>Save</Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalHeader>
+                <ModalBody>
+                    <Container>
+                    </Container>
+                </ModalBody>
+            </Modal>
+        </ModalDialog>
+
+
         <Card className="card">
             <Card.Header className = "cardHead">
                 <Container>
@@ -11,7 +40,7 @@ export const Dependencies = () => {
                             <span>Project Dependencies</span>
                         </Col>
                         <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button'>Edit</Button></span>
+                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                         </Col>
                     </Row>
                 </Container>
@@ -22,5 +51,7 @@ export const Dependencies = () => {
                 </Card.Text>
             </Card.Body>
         </Card>
+        </>
+        
     );
 }

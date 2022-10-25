@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import './page.css';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
-import { ProjectData } from '../components/Pre-Award/ProjectData';
-import { IPT } from '../components/Pre-Award/IPT';
+import { ProjectData } from '../components/ProjectData';
+import { IPT } from '../components/IPT';
+import { ProjectSchedule } from '../components/ProjectSchedule';
 import { ContractStatus } from '../components/Pre-Award/ContractStatus';
 import { FundingData } from '../components/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
@@ -41,6 +42,12 @@ function PreAwardProject(){
                 <Row>
                     <Col>
                         <FundingData data={id}/>
+                    </Col>
+                </Row>
+                <br/>
+                <Row>
+                    <Col>
+                        <ProjectSchedule data={id}/>
                     </Col>
                 </Row>
             </Container>
