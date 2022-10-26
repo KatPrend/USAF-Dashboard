@@ -39,14 +39,16 @@ export const UpdateContractors = () => {
     }
 
     let handleRemove = async () => {
-        // TODO: delete from DB
-        console.log(contractorToRemove);
-
-        axios.delete('/api/contractor', {
-            contractor_id: contractorToRemove
+        
+        axios.delete(`/api/contractor/${contractorToRemove}`, {
         })
         .then(function(res){
             setRemoveContractor(false);
+
+            axios.get('/api/contractor/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
         })
         .catch(function (err){
             console.log(err);
