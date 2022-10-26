@@ -6,9 +6,10 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import axios from "axios";
 
-import { Container } from "react-bootstrap";
+import { Container, Tooltip } from "react-bootstrap";
 import { useMsal } from "@azure/msal-react";
 import "./navB.css";
 
@@ -20,7 +21,7 @@ function handleLogout(instance) {
     });
 }
 
-export const NavB = ({getUserId}) => {
+export const NavB = ({getUserInfo}) => {
     const { accounts, instance } = useMsal();
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
@@ -30,7 +31,7 @@ export const NavB = ({getUserId}) => {
             setData(response.data);
             setLoading(false);
 
-            getUserId(response.data[0].id);
+            getUserInfo(response.data[0].id, response.data[0].user_role);
         });
     }, []);
 
@@ -59,9 +60,18 @@ export const NavB = ({getUserId}) => {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
-                            {data[0].user_role === "Admin" ? <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a> : null}
-                            <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
-                            <a href="/" onClick={() => handleLogout(instance)} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{"logout"}</a>
+                            {data[0].user_role === "Admin" ? 
+                                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Admin Page</Tooltip>}>
+                                    <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a>
+                                </OverlayTrigger>
+                                : null
+                            }
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Home</Tooltip>}>
+                                <a href="/" className="material-icons mx-3" style={navStyle}>home</a>
+                            </OverlayTrigger>
+                            <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Sign Out</Tooltip>}>
+                                <a href="/" onClick={() => handleLogout(instance)} className="material-icons mx-3" style={{color: "white", fontSize: "48px", textDecoration: "none", cursor: "pointer"}}>{"logout"}</a>
+                            </OverlayTrigger>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

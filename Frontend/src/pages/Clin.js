@@ -95,14 +95,16 @@ const ClinData = (props) => {
 function Clin() {
 
     const [userid, setUserid] = useState(0);
+    const [userRole, setUserRole] = useState("");
 
-    const getUserId = (uid) => {
+    const getUserInfo = (uid, urole) => {
         setUserid(uid);
+        setUserRole(urole);
     }
 
     return (
         <div className="lightBlue">
-            <NavB getUserId={getUserId}/>
+            <NavB getUserInfo={getUserInfo}/>
             <div className="d-flex justify-content-between p-2">
                 <h2>Projects:</h2>
                 <Button>Edit</Button>

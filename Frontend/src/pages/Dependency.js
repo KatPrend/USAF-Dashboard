@@ -155,14 +155,16 @@ const data0 = {
 function Dependency() {
 
     const [userid, setUserid] = useState(0);
+    const [userRole, setUserRole] = useState("");
 
-    const getUserId = (uid) => {
+    const getUserInfo = (uid, urole) => {
         setUserid(uid);
+        setUserRole(urole);
     }
 
     return (
         <div className="lightBlue">
-            <NavB getUserId={getUserId}/>
+            <NavB getUserInfo={getUserInfo}/>
             <Container className="lightblue top-Padding" style={{height: '100vh'}}>
                 <Row>
                     {/*1*/}

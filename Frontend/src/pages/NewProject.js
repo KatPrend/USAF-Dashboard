@@ -47,8 +47,11 @@ function NewProject() {
   const [projectId, setProjectId] = useState(0);
 
   const [userid, setUserid] = useState(0);
-  const getUserId = (uid) => {
+  const [userRole, setUserRole] = useState("");
+
+  const getUserInfo = (uid, urole) => {
       setUserid(uid);
+      setUserRole(urole);
   }
 
   const getProjectName = (id, name) => {
@@ -60,7 +63,7 @@ function NewProject() {
 
   return (
     <div className="lightBlue">
-      <NavB getUserId={getUserId} />
+      <NavB getUserInfo={getUserInfo} />
       <h1>Add New Project</h1>
       <br />
       <div className="mx-auto w-75">
