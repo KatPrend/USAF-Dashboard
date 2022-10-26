@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Dependencies } from '../components/Awarded/Dependencies';
 import { Documents } from '../components/Awarded/Documents';
-import { FinManagement } from '../components/Awarded/FinManagement';
 import { Funding } from '../components/Awarded/Funding';
-import { IPT } from '../components/Pre-Award/IPT';
-import { ProjectData } from '../components/Pre-Award/ProjectData';
-import { ProjectSchedule } from '../components/Awarded/ProjectSchedule';
+import { IPT } from '../components/IPT';
+import { ProjectData } from '../components/ProjectData';
+import { ProjectSchedule } from '../components/ProjectSchedule';
 import { NavB } from '../components/NavB';
 import './page.css';
 import { useLocation } from 'react-router-dom';
@@ -19,9 +18,15 @@ function AwardedProject(){
     const location = useLocation();
     const {id} = location.state;
 
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+
     return(
         <div className="lightBlue">
-            <NavB />
+            <NavB getUserId={getUserId}/>
 
 
             <Container className='top-Padding'>

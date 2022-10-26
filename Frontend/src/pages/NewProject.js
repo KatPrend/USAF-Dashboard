@@ -9,11 +9,11 @@ import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
 function renderInfo(projectName, projectId) {
-  console.log("project name: " + projectName);
+  //console.log("project name: " + projectName);
 
-  if (projectName === "") {
-    return <></>
-  } else {
+  // if (projectName === "") {
+  //   return <></>
+  // } else {
     return <>
      <h2>{projectName} Project Information</h2>
       <br />
@@ -23,7 +23,7 @@ function renderInfo(projectName, projectId) {
       <br />
       <h4>Contract Information:</h4>
       <div className="project-element">
-        <AddContract />
+        <AddContract  data = {projectId}/>
       </div>
       <br />
       <br />
@@ -39,23 +39,28 @@ function renderInfo(projectName, projectId) {
         <Predecessors />
       </div>
     </>
-  }
+  //}
 };
 
 function NewProject() {
   const [projectName, setProjectName] = useState("");
   const [projectId, setProjectId] = useState(0);
 
+  const [userid, setUserid] = useState(0);
+  const getUserId = (uid) => {
+      setUserid(uid);
+  }
+
   const getProjectName = (id, name) => {
     setProjectName(name);
-    console.log("In new project - childData: " + id + ", " + name);
+    //console.log("In new project - childData: " + id + ", " + name);
 
     setProjectId(id);
   };
 
   return (
     <div className="lightBlue">
-      <NavB />
+      <NavB getUserId={getUserId} />
       <h1>Add New Project</h1>
       <br />
       <div className="mx-auto w-75">

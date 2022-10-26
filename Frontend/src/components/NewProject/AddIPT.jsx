@@ -25,7 +25,7 @@ export const AddIPT = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(JSON.stringify(members));
+        // console.log(JSON.stringify(members));
 
         // TODO: Add Post request
     };

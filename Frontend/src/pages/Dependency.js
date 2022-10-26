@@ -6,93 +6,65 @@ import { CardGeneric } from '../components/CardGeneric'
 import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
 import { Sankey, Tooltip, Layer, Rectangle } from 'recharts';
-import {Link} from 'react-router-dom';
+import { DepSum } from '../components/Summaries/DepSum';
 
-/*
-function renderContent(contractStatus, projectId, projectName) {
-  if(contractStatus === "Awarded"){
-      return <Link to={{ 
-          pathname: "/awardedproject", 
-          state: {id:projectId} // your data array of objects
-      }}
-    >{projectName}</Link>
-  }
-  else if (contractStatus === "Pre-Award"){
-      return <Link to={{ 
-          pathname: "/preawardproject", 
-          state: {id:projectId} // your data array of objects
-      }}
-    >{projectName}</Link>
-  }
-};
-
- // Renders information about projects assigned to the current user
- 
- const ProjectContent = () => {
-    const {accounts} = useMsal();
-    const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState();
-
-    useEffect(() => {
-        axios.get(`/api/project/userEmail/${accounts[0].username}`).then(response => {
-            setData(response.data);
-            setLoading(false);
-        });
-    }, []);
-
-    if (isLoading) {
-        return <div className="mx-auto w-75">Loading...</div>;
-    }
-
-    return (
-        <div className="mx-auto w-75">
-            <br />
-            <br />
-            <h2>Projects: <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link></h2>
-            <Table striped bordered hover className="bg-light">
-                <thead>
-                    <tr>
-                        <th>Project Name</th>
-                        <th>Contract Number</th>
-                        <th>Contract Status</th>
-                        <th>Org/Branch</th>
-                        <th>Contract Value</th>
-                        <th>Dependency Status</th>
-                        <th>Financial Status</th>
-                        <th>Schedule Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {
-                    data.map(({ project_id, project_name, project_type, contract_status, branch, contract_num, requirement_type, summary, ccar_num, }) => (
-                        <tr key={project_id}>
-                            <td> {renderContent(contract_status,project_id,project_name)}</td>
-                            <td>{contract_num}</td>
-                            <td>{contract_status}</td>
-                            <td>{branch}</td>
-                            <td>On track</td>
-                            <td>On track</td>
-                            <td>On track</td>
-                            <td>On track</td>
-                        </tr>
-                    ))
-                }
-                </tbody>
-            </Table>
-        </div>        
-    );
-}
-
-/*
-<th>Project Name</th>
-<th>Dependent Milestone</th> 
-<th>Date</th> 
-<th>Leading Project</th>
-<th>Leading Milestone</th>
-<th>Date</th>
-<th>Status</th> Dependency
-<th>Impact</th>
+/**
+* Renders information about projects assigned to the current user
 */
+const ProjectContent = () => {
+  const {accounts} = useMsal();
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState();
+
+  // TODO: get backend help
+  useEffect(() => {
+      axios.get(`/api/project/userEmail/${accounts[0].username}`).then(response => {
+          setData(response.data);
+          setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+      return <div className="mx-auto w-75">Loading...</div>;
+  }
+
+  return (
+      <div className="mx-auto w-75">
+          <br />
+          <br />
+          <Table responsive striped bordered hover className="bg-light">
+              <thead>
+                  <tr>
+                    <th>Project Name</th>
+                    <th>Dependent Milestone</th> 
+                    <th>Date</th> 
+                    <th>Leading Project</th>
+                    <th>Leading Milestone</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Impact</th>
+                  </tr>
+              </thead>
+              <tbody>
+              {
+                  data.map(({ id, project_name, dependent_milestone, dependent_milestone_date, leading_project, leading_milestone_date, status, impact }) => (
+                      <tr key={id}>
+                          <td>{id}</td>
+                          <td>{project_name}</td>
+                          <td>{dependent_milestone}</td>
+                          <td>{dependent_milestone_date}</td>
+                          <td>{leading_project}</td>
+                          <td>{leading_milestone_date}</td>
+                          <td>{status}</td>
+                          <td>{impact}</td>
+                      </tr>
+                  ))
+              }
+              </tbody>
+          </Table>
+      </div>        
+  );
+}
 
 const data0 = {
     "nodes": [
@@ -110,6 +82,12 @@ const data0 = {
       },
       {
         "name": "Project 5"
+      },
+      {
+        "name": "Project 6"
+      },
+      {
+        "name": "Project 7"
       }
     ],
     "links": [
@@ -130,10 +108,10 @@ const data0 = {
         "value": 1
       },
       {
-        "source": 1,
-        "target": 4,
-        "value": 1
-      }
+        "source": 5,
+        "target": 6,
+        "value": 1  
+      },
     ]
   };
   
@@ -176,27 +154,33 @@ const data0 = {
 
 function Dependency() {
 
+    const [userid, setUserid] = useState(0);
+
+    const getUserId = (uid) => {
+        setUserid(uid);
+    }
+
     return (
         <div className="lightBlue">
-            <NavB/>
+            <NavB getUserId={getUserId}/>
             <Container className="lightblue top-Padding" style={{height: '100vh'}}>
                 <Row>
                     {/*1*/}
                     <Col>
-                        <CardGeneric Header='Dependency Summary' Body='Placeholder text lives here!'></CardGeneric>
+                        <DepSum/>
                     </Col>
                     {/*2*/}
                     <Col>
                         <CardGeneric Header='Dependency Graph' Body={
                             <Sankey
-                              width={960}
+                              width={500}
                               height={500}
                               data={data0}
                               node={<MyCustomNode />}
                               nodePadding={50}
                               margin={{
-                              left: 200,
-                              right: 200,
+                              left: 100,
+                              right: 100,
                               top: 100,
                               bottom: 100,
                               }}
@@ -204,8 +188,10 @@ function Dependency() {
                             </Sankey>}>
                         </CardGeneric>
                     </Col>
-               </Row>
-
+                </Row>
+                <Row>
+                  <ProjectContent/>
+                </Row>
             </Container>
                
         </div>

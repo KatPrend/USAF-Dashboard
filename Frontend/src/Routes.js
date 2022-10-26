@@ -8,6 +8,7 @@ import PreAwardProject from './pages/PreAwardProject';
 import AwardedProject from './pages/AwardedProject';
 import Dependency from './pages/Dependency';
 import WBS from './pages/WBS'
+import Admin from './pages/Admin';
 
 function Routes() {
     return (
@@ -36,7 +37,9 @@ function Routes() {
             <Route exact path="/wbs">
                 <WBS />
             </Route>
-
+            <Route exact path="/admin">
+                <Admin />
+            </Route>
         </Switch>
     );
 }
