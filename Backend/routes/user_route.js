@@ -56,8 +56,17 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 
 // router.post()
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete user endpoint"})
+router.delete("/deleteUser/:userid", (req, res)=>{
+    let sql = `
+    DELETE 
+    FROM users 
+    WHERE id = ${req.params.userid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
 router.get('/iptmembers/:project_id', (req, res) => {
