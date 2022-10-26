@@ -101,3 +101,13 @@
 .submit-new-project.main {
   margin-left: 10%;
 }
+
+.submit-new-project.admin {
+  margin-top: 2%;
+  margin-bottom: 10%;
+  width: auto;
+}
+
+.submit-new-project.settings {
+  border: none;
+}
