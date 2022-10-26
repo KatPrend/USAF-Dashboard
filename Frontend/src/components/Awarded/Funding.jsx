@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Row, Tabs, Tab, Modal, ModalBody, ButtonGroup, ModalDialog, Table } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Tabs, Tab, Modal, ModalBody, ButtonGroup, ModalDialog, Form } from 'react-bootstrap';
 import BarGraph from '../BarGraph';
 import LineGraph from '../LineGraph';
 import axios from 'axios';
@@ -72,6 +72,20 @@ export const Funding = (props) => {
                 <ModalBody>
                     <Container>
                         <Row>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
+                                Independent Cost Estimate:
+                                <Form>
+                                    <Form.Control defaultValue={"temp"}/>
+                                </Form>
+                            </Col>
+                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
+                                Projected Contract Value:
+                                <Form>
+                                    <Form.Control defaultValue={"temp"}/>
+                                </Form>
+                            </Col>
+                        </Row>
+                        <Row>
                             <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>
                         <Row>
@@ -139,6 +153,18 @@ export const Funding = (props) => {
                             </Tab>
                         </Tabs>
                         
+                        </Col>
+                    </Row>
+                    <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
+                        <Col>
+                            <span>
+                                Independent Cost Estimate:
+                            </span>
+                        </Col>
+                        <Col>
+                            <span>
+                                Projected Contract Value:
+                            </span>
                         </Col>
                     </Row>
                     <Row>

@@ -8,6 +8,7 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
 import { SchedSum } from '../components/Summaries/SchedSum';
+import {SummaryIcon} from '../components/SummaryIcon.jsx';
 
 
 function renderContent(contractStatus, projectId, projectName) {
@@ -128,9 +129,9 @@ const ProjectContent = () => {
                             <td>{contract_status}</td>
                             <td>{branch}</td>
                             <td>{contract_value}</td>
-                            <td>{dependency_status}</td>
-                            <td>{financial_status}</td>
-                            <td>{schedule_status}</td>
+                            <td><SummaryIcon data={dependency_status}/></td>
+                            <td><SummaryIcon data={financial_status}/></td>
+                            <td><SummaryIcon data={schedule_status}/></td>
                         </tr>
                     ))
                 }
