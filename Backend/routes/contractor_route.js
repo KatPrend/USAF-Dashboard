@@ -40,13 +40,11 @@ router.put("/", (req, res)=>{
     res.send({message:"TODO: Make an update clin endpoint"})
 })
 
-router.delete("/", (req, res)=>{
-    const contractor_id = req.body;
-    console.log(contractor_id);
+router.delete("/:contractor_id", (req, res)=>{
 
     let sql = `
     DELETE FROM contractor
-    WHERE id = "${contractor_id}"
+    WHERE id = "${req.params.contractor_id}"
     `;
 
     let query = db.query(sql, (err, results) =>{
@@ -55,7 +53,6 @@ router.delete("/", (req, res)=>{
         }
         res.send(results)
     })
-    console.log(req.body);
 })
 
 
