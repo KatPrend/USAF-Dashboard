@@ -42,12 +42,15 @@ function AwardedProject(){
                         <Dependencies />
                     </Col>
                 </Row>
-                <br/>
-                <Row>
-                    <Col>
-                        <Funding data={id}/>
-                    </Col>
-                </Row>
+                {userRole === "Contractor" ? null : <div>
+                        <br />
+                        <Row>
+                            <Col>
+                                <Funding data={id}/>
+                            </Col>
+                        </Row>
+                    </div>
+                }
                 <br/>
                 <Row>
                     <Col>

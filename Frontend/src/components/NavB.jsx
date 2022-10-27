@@ -8,6 +8,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 import { Container, Tooltip } from "react-bootstrap";
 import { useMsal } from "@azure/msal-react";
@@ -62,7 +63,7 @@ export const NavB = ({getUserInfo}) => {
                         <Nav>
                             {data[0].user_role === "Admin" ? 
                                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Admin Page</Tooltip>}>
-                                    <a href="/admin" style={navStyle} className="material-icons mx-3">edit_square</a>
+                                    <Link to="/admin" style={navStyle} className="material-icons mx-3">edit_square</Link>
                                 </OverlayTrigger>
                                 : null
                             }

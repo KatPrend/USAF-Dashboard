@@ -59,26 +59,12 @@ router.delete("/", (req, res)=>{
 // Get a Project with user email
 router.get('/userId/:userId', (req, res) => {
     let sql = `
-    SELECT 
-        u.id as user_id,
-        p.id as project_id, 
-        p.project_name, 
-        ca.contract_num, 
-        ca.contract_status, 
-        p.branch, 
-        ca.contract_value, 
-        p.dependency_status, 
-        p.financial_status, 
-        p.schedule_status 
-    FROM users u 
-    INNER JOIN 
-        user_project_link upl on upl.user_id = u.id 
-    INNER JOIN 
-        project p on p.id = upl.project_id 
-    LEFT JOIN
-        contract_award ca on ca.project_id = p.id 
-    WHERE 
-        u.id = ${req.params.userId}`;
+    SELECT * 
+    FROM user_project_link upl
+    INNER JOIN view_project vp ON vp.id = upl.project_id
+    WHERE upl.user_id = ${req.params.userId}
+    ORDER BY upl.project_id ASC
+    `;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -90,23 +76,9 @@ router.get('/userId/:userId', (req, res) => {
 // Get a project with Project ID
 router.get('/:projectid', (req, res) => {
     let sql = `
-    SELECT 
-        p.id, 
-        p.project_name, 
-        c.contractor_name, 
-        ca.contract_num, 
-        ca.contract_status, 
-        p.branch, 
-        p.requirement_type, 
-        p.summary 
-    FROM 
-        project p 
-    INNER JOIN 
-        contract_award ca ON ca.project_id = p.id 
-    INNER JOIN 
-        contractor c ON c.id = p.contractor_id 
-    WHERE 
-        p.id = ${req.params.projectid}`;
+    SELECT * 
+    FROM view_project
+    WHERE id = ${req.params.projectid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
