@@ -53,13 +53,6 @@
   color: white;
 }
 
-.Button:focus {
-  background-color: steelblue;
-  border-color: black;
-  outline: none;
-  box-shadow: none;
-}
-
 .CLIN-and-File-buttongroup{
   width: auto;
   background-color: white;
@@ -100,4 +93,14 @@
 
 .submit-new-project.main {
   margin-left: 10%;
+}
+
+.submit-new-project.admin {
+  margin-top: 2%;
+  margin-bottom: 10%;
+  width: auto;
+}
+
+.submit-new-project.settings {
+  border: none;
 }

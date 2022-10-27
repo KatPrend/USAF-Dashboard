@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     const {contractor_name, summary} = req.body;
     let sql = `
     INSERT INTO contractor (
-        name, 
+        contractor_name, 
         summary
         ) 
     VALUES (
@@ -40,8 +40,19 @@ router.put("/", (req, res)=>{
     res.send({message:"TODO: Make an update clin endpoint"})
 })
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete clin endpoint"})
+router.delete("/:contractor_id", (req, res)=>{
+
+    let sql = `
+    DELETE FROM contractor
+    WHERE id = "${req.params.contractor_id}"
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
 })
 
 

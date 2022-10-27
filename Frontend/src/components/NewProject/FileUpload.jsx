@@ -15,8 +15,10 @@ export const FileUpload = (props) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append(props.name, selectedFile);
+        
+       // ${props.projectId}
 
-        axios.post('/api/upload/' + props.name + '/' + props.projectId, formData, {
+        axios.post(`/api/upload/${props.name}/1`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

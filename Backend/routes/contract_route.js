@@ -16,19 +16,47 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {project_id, contract_num, contract_status} = req.body;
-    let contractAward = `
-    INSERT INTO 
-        contract_award (
-            project_id, 
-            contract_num, 
-            contract_status
-            ) 
-        VALUES (
-            "${project_id}",
-            "${contract_num}",
-            "${contract_status}")`;
+    // const {project_id, contract_num, contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+    // let contractAward = `
+    // INSERT INTO 
+    //     contract_award (
+    //         project_id, 
+    //         contract_num, 
+    //         contract_status
+    //         ) 
+    //     VALUES (
+    //         "${project_id}",
+    //         "${contract_num}",
+    //         "${contract_status}")`;
 
+    const {contractAwardID, timelineStatus, requirementPlan, draftRFPRelesased, approvedACB, rfpRelreased, proposalRecived, techEvalComplete, negotationComplete, awarded} = req.body;
+    let contractAward = `
+    INSERT INTO contract_award_timeline(
+        contract_award_id,
+        timeline_status,
+        requirement_plan, 
+        draft_rfp_released,
+        approved_by_acb,
+        rfp_released,
+        proposal_received,
+        tech_eval_comp,
+        negotiation_comp,
+        awarded
+    )
+    VALUES (
+        ${contractAwardID},
+        ${timelineStatus},
+        ${requirementPlan},
+        ${draftRFPRelesased},
+        ${approvedACB},
+        ${rfpRelreased},
+        ${proposalRecived},
+        ${techEvalComplete},
+        ${negotationComplete},
+        ${awarded}
+    )`;
+
+        
     db.query(contractAward, (err, results) =>{
         if(err){
             throw err
@@ -92,8 +120,17 @@ router.post('/contractTimeline', (req, res) => {
 
 });
 
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update contract endpoint"})
+router.put("/updateContract/:contractid/newStatus/:newStatus", (req, res)=>{
+    let sql = `
+    UPDATE contract_award 
+    SET contract_status = ${req.params.newStatus}
+    WHERE id = ${req.params.contractid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
 router.delete("/", (req, res)=>{

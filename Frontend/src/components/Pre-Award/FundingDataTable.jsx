@@ -1,8 +1,8 @@
 import React from "react";
-import { Table } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
 
 
-export default function FundingDataTable({data}){
+export function FundingDataTable({data}){
 
     return(
         <div>
@@ -30,6 +30,59 @@ export default function FundingDataTable({data}){
                         <td>Projected</td>
                         {data.map( (info, index) => (
                             <td key={index}>{info.Projected}</td>
+                        ))}
+                    </tr>
+                </tbody>
+            </Table>
+        </div>
+    )
+}
+
+
+export function FundingDataTableEditable({data}){
+
+    return(
+        <div>
+            <Table responsive striped bordered hover className="bg-light">
+                <tbody>
+                    <tr>
+                        <td key="top"> </td>
+                        {data.map( (info, index) => (
+                            <td key={index}>
+                                <Form>
+                                    <Form.Control defaultValue={info.date}/>
+                                </Form>
+                            </td>
+                        ))}
+                    </tr>
+                    <tr>
+                        <td>Funding Type</td>
+                        {data.map( (info, index) => (
+                            <td key={index}>
+                                <Form>
+                                    <Form.Control defaultValue={info.FundingType}/>
+                                </Form>
+                            </td>
+                        ))}
+                    </tr>
+                    <tr>
+                        <td>Fiscal Year</td>
+                        {data.map( (info, index) => (
+                            <td key={index}>
+                                <Form>
+                                    <Form.Control defaultValue={info.FiscalYear}/>
+                                </Form>
+                            </td>
+                        ))}
+                    </tr>
+                    <tr  >
+                        <td>Projected</td>
+                        {data.map( (info, index) => (
+                            <td key={index}>
+                                <Form>
+                                    <Form.Control defaultValue={info.Projected}/>
+                                </Form>
+                            </td>
                         ))}
                     </tr>
                 </tbody>

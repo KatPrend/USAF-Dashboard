@@ -56,8 +56,17 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 
 // router.post()
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete user endpoint"})
+router.delete("/deleteUser/:userid", (req, res)=>{
+    let sql = `
+    DELETE 
+    FROM users 
+    WHERE id = ${req.params.userid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
 router.get('/iptmembers/:project_id', (req, res) => {
@@ -88,6 +97,34 @@ router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
     INNER JOIN user_project_link upl on upl.user_id = u.id 
     WHERE upl.project_id = ${req.params.project_id} 
     AND u.mil_job_title=${req.params.job_title}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Get a user role from user email
+router.get('/userEmail/:userEmail', (req, res) => {
+    let sql = `
+    SELECT *
+    FROM users u 
+    WHERE u.user_email = '${req.params.userEmail}'`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Get a user role from user id
+router.get('/userId/:userId', (req, res) => {
+    let sql = `
+    SELECT *
+    FROM users u 
+    WHERE u.id = '${req.params.userId}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
