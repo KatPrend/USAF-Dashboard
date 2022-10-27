@@ -6,6 +6,7 @@ import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../
 import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../ApprovedFundingTable";
 import {FundingDataTable, FundingDataTableEditable} from "./FundingDataTable";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
+import { SummaryIcon } from "../SummaryIcon";
 
 
 export const FundingData = (props) => {
@@ -86,6 +87,7 @@ export const FundingData = (props) => {
             </Modal>
         </ModalDialog>
 
+
         <Card className="card">
             <Card.Header className = "cardHead">
                 <Container>
@@ -111,9 +113,6 @@ export const FundingData = (props) => {
                             <span>
                                 Projected Contract Value:
                             </span>
-                        </Col>
-                        <Col>
-                            <div className='badge'> </div>
                         </Col>
                     </Row>
                     <Row>
