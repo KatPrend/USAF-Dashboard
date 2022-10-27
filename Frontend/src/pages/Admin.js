@@ -8,6 +8,7 @@ import '../components/Admin/admin.css';
 import { UpdateRequirements } from '../components/Admin/UpdateRequirements';
 import { UpdateBranches } from '../components/Admin/UpdateBranches';
 import { UpdateTitles } from '../components/Admin/UpdateTitles';
+import { UpdateUsers } from '../components/Admin/UpdateUsers';
 
 function Admin() {
     const [userid, setUserid] = useState(0);
@@ -16,6 +17,7 @@ function Admin() {
     const [showRequirement, setShowRequirement] = useState(false);
     const [showBranch, setShowBranch] = useState(false);
     const [showTitle, setShowTitle] = useState(false);
+    const [showUsers, setShowUsers] = useState(false);
 
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
@@ -27,6 +29,7 @@ function Admin() {
         setShowRequirement(false);
         setShowBranch(false);
         setShowTitle(false);
+        setShowUsers(false);
 
         if (button === "Contractor") {
             setShowContractor(true);
@@ -36,6 +39,8 @@ function Admin() {
             setShowBranch(true);
         } else if (button === "Title") {
             setShowTitle(true);
+        } else if (button === "User") {
+            setShowUsers(true);
         }
     }
     
@@ -52,6 +57,7 @@ function Admin() {
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Requirement")}}>Requirement Types</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Branch")}}>Branches</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Title")}}>Military Job Titles</Button>
+                                <Button className="submit-new-project settings" onClick={() => {handleShow("User")}}>Users</Button>
                             </ButtonGroup></Row>
                         </Col>
                         <Col className="edits">
@@ -60,6 +66,7 @@ function Admin() {
                             <Row>{showRequirement ? <UpdateRequirements /> : null}</Row>
                             <Row>{showBranch ? <UpdateBranches /> : null}</Row>
                             <Row>{showTitle ? <UpdateTitles /> : null}</Row>
+                            <Row>{showUsers ? <UpdateUsers /> : null}</Row>
                         </Col>
                     </Row>
                 </Container>

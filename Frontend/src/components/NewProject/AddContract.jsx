@@ -4,7 +4,7 @@ import {Button, Col, Form, Row} from 'react-bootstrap';
 import { format } from 'date-fns';
 
 export const AddContract = (props) => {
-  const [contractStatus, setContractStatus] = useState("");
+  const [contractStatus, setContractStatus] = useState(1);
   const [contractNum, setContractNum] = useState("");
   const [requirementPlan, setRequirementPlan] = useState("");
   const [draftRfpReleased, setDraftRfpReleased] = useState("");
@@ -138,11 +138,10 @@ export const AddContract = (props) => {
             <Col sm={7}>
               <Form.Control 
                 as="select"
-                placeholder=" Enter contractStatus"
+                defaultValue={1}
                 type="contractStatus"
                 onChange={handleContractStatus}>
 
-                <option value="0"></option>
                 <option value="1">Pre-Awarded</option>
                 <option value="2">Awarded</option>
                 <option value="3">Closed</option>
@@ -257,7 +256,7 @@ export const AddContract = (props) => {
             </Col>
           </Form.Group>
           <br />
-          <Button type="submit" className="submit-new-contract">
+          <Button type="submit" className="submit-new-project">
             Submit New Contract
           </Button>
         </Form>
