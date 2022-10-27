@@ -20,6 +20,7 @@ function renderInfo(projectName, projectId) {
       <br />
       <h4>Upload Files:</h4>
       <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
+      <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={projectId}/></div>
       <br />
       <h4>Contract Information:</h4>
       <div className="project-element">

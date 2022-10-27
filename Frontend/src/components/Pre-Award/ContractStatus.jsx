@@ -80,7 +80,6 @@ export const ContractStatus = (props) => {
                     {
                         data.map(({id, timeline_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
                             <tr key = {id}>
-                                <td>{id}</td>
                                 <td>{timeline_status}</td>
                                 {requirement_plan != null ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
                                 {draft_rfp_released != null ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}

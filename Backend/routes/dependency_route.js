@@ -6,7 +6,7 @@ var db = require('../database');
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
-    FROM dependency`;
+    FROM project_milestone_dependency`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -16,15 +16,19 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {successor, dependency} = req.body;
+    const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
     INSERT INTO dependency_table (
-        successor, 
-        dependency
+        predecessor_project, 
+        predecessor_milestone,
+        successor_project,
+        successor_milestone
         ) 
     VALUES (
-        "${successor}",
-        "${dependency}"
+        "${predecessor_project}",
+        "${predecessor_milestone}",
+        "${successor_project}",
+        "${successor_milestone}"
         )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -43,11 +47,31 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
 });
 
-router.get('/grabDepend/:projectid', (req, res) => {
+router.get('/successor/:projectid', (req, res) => {
     let sql = `
-    SELECT dependency 
-    FROM dependency_table 
-    WHERE successor = ${req.params.projectid}`;
+    SELECT 
+	pmd.predecessor_project,
+	p1.project_name as predecessor_name,
+	pmd.predecessor_milestone,
+	pm1.task_name as predecessor_task_name,
+	pm1.end_date as predecessor_task_end_date,
+	
+	pmd.successor_project,
+	p2.project_name as dep_proj_name,
+	pmd.successor_milestone,
+	pm2.task_name as successor_task_name,
+	pm2.start_date as successor_task_start_date
+	
+FROM project_milestone_dependency pmd
+
+INNER JOIN project p1 ON p1.id = pmd.predecessor_project
+INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
+
+INNER JOIN project p2 ON p2.id = pmd.successor_project
+INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
+
+WHERE pmd.predecessor_project = ${req.params.projectid} 
+AND pmd.predecessor_project != pmd.successor_project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -57,11 +81,31 @@ router.get('/grabDepend/:projectid', (req, res) => {
     });
 });
 
-router.get('/grabSuccesor/:projectid', (req, res) => {
+router.get('/predecessor/:projectid', (req, res) => {
     let sql = `
-    SELECT successor 
-    FROM dependency_table 
-    WHERE dependency = ${req.params.projectid}`;
+    SELECT 
+        pmd.predecessor_project,
+        p1.project_name as predecessor_name,
+        pmd.predecessor_milestone,
+        pm1.task_name as predecessor_task_name,
+        pm1.end_date as predecessor_task_end_date,
+        
+        pmd.successor_project,
+        p2.project_name as dep_proj_name,
+        pmd.successor_milestone,
+        pm2.task_name as successor_task_name,
+        pm2.start_date as successor_task_start_date
+	
+    FROM project_milestone_dependency pmd
+
+    INNER JOIN project p1 ON p1.id = pmd.predecessor_project
+    INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
+
+    INNER JOIN project p2 ON p2.id = pmd.successor_project
+    INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
+
+    WHERE pmd.successor_project = ${req.params.projectid} 
+    AND pmd.predecessor_project != pmd.successor_project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
