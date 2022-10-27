@@ -6,7 +6,7 @@ import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../
 import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../ApprovedFundingTable";
 import {FundingDataTable, FundingDataTableEditable} from "./FundingDataTable";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import { SummaryIcon } from "../SummaryIcon";
+import { SummaryIcon } from "../Summaries/SummaryIcon";
 
 
 export const FundingData = (props) => {

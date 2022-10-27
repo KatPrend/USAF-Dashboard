@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
 import { Col, Container, Button, Row, Table, Form } from 'react-bootstrap';
+import {SummaryIcon} from './SummaryIcon';
 
 function renderContent(contractStatus, projectId, projectName) {
     if(contractStatus === "Awarded"){
@@ -125,9 +126,10 @@ export const ProjectContent = (props) => {
                             <td>{contract_status}</td>
                             <td>{branch}</td>
                             <td>{contract_value}</td>
-                            <td>{dependency_status}</td>
-                            <td>{financial_status}</td>
-                            <td>{schedule_status}</td>
+                            <td><SummaryIcon data={dependency_status}/></td>
+                            <td><SummaryIcon data={financial_status}/></td>
+                            <td><SummaryIcon data={schedule_status}/></td>
+
                         </tr>
                     ))
                 }
