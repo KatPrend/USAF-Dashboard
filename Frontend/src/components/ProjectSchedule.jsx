@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, Form} from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
@@ -24,11 +24,9 @@ function GanttChartDataFormat(JsonData){
         Rows.push([
             (data.ID).toString(),
             data.Name, 
-            // format(new Date(data.Start), 'MM/dd/yyyy'), 
-            // format(new Date(data.End), 'MM/dd/yyyy'), 
             new Date(data.Start),
             new Date(data.End),
-            data.Duration, 
+            null, 
             null,
             data.Predecessors
         ])
@@ -87,8 +85,50 @@ export const ProjectSchedule = (props) => {
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <Container>
-                    </Container>
+                    <Table responsive striped bordered hover className="bg-light">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Predecessors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                infoData.map(({ID, Name, Start, End, Predecessors}) => (
+                                    <tr key={ID}>
+                                        <td>
+                                            <Form>
+                                                <Form.Control defaultValue={ID}/>
+                                            </Form>
+                                        </td>
+                                        <td>
+                                            <Form>
+                                                <Form.Control defaultValue={Name}/>
+                                            </Form>
+                                        </td>
+                                        <td>
+                                            <Form>
+                                                <Form.Control value={format(new Date(Start), 'yyyy-MM-dd')} type='date'/>
+                                            </Form>
+                                        </td>
+                                        <td>
+                                            <Form>
+                                                <Form.Control value={format(new Date(End), 'yyyy-MM-dd')} type='date'/>
+                                            </Form>
+                                        </td>
+                                        <td>
+                                            <Form>
+                                                <Form.Control defaultValue={Predecessors}/>
+                                            </Form>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </Table>
                 </ModalBody>
             </Modal>
         </ModalDialog>
@@ -116,24 +156,20 @@ export const ProjectSchedule = (props) => {
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Duration</th>
                                         <th>Start</th>
                                         <th>End</th>
                                         <th>Predecessors</th>
-                                        <th>WBS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        infoData.map(({ID, Name, Duration, Start, End, Predecessors, WBS}) => (
+                                        infoData.map(({ID, Name, Start, End, Predecessors}) => (
                                             <tr key={ID}>
                                                 <td>{ID}</td>
                                                 <td>{Name}</td>
-                                                <td>{Duration}</td>
                                                 <td>{format(new Date(Start), 'MM/dd/yyyy')}</td>
                                                 <td>{format(new Date(End), 'MM/dd/yyyy')}</td>
                                                 <td>{Predecessors}</td>
-                                                <td>{WBS}</td>
                                             </tr>
                                         ))
                                     }
@@ -146,9 +182,8 @@ export const ProjectSchedule = (props) => {
                             <Chart
                             chartType='Gantt'
                             width="100%" 
-                            height="50%"
+                            height="100%"
                             options={options}
-                            // TimeLineData2
                             data={GanttChartDataFormat(infoData)}
                             />
                         </Col>

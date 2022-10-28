@@ -56,7 +56,7 @@ export function FundingDataTableEditable({data}){
                         {data.map( (info, index) => (
                             <td key={index}>
                                 <Form>
-                                    <Form.Control defaultValue={info.date}/>
+                                    <Form.Control defaultValue={info.date} type='date'/>
                                 </Form>
                             </td>
                         ))}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, Form, } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link} from 'react-router-dom';
@@ -44,8 +44,76 @@ export const ProjectData = (props) => {
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <Container>
-                    </Container>
+                    {
+                        data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                            <Form>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Project Name</Form.Label>
+                                    <Col sm={7}> 
+                                        <Form.Control
+                                            defaultValue={project_name}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contract Number</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            defaultValue={contract_num}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contract Status</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            defaultValue={contract_status}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contractor</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            defaultValue={contractor_name}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Branch</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            defaultValue={branch}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Requirement Type</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            defaultValue={requirement_type}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Capability Summery</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            as="textarea"
+                                            defaultValue={summary}
+                                            type="text"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                            </Form>
+                        ))
+                    }
                 </ModalBody>
             </Modal>
         </ModalDialog>
