@@ -57,9 +57,16 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 // router.post()
 
 router.delete("/deleteUser/:userid", (req, res)=>{
+    // let sql = `
+    // DELETE 
+    // FROM users 
+    // WHERE id = ${req.params.userid}`;
     let sql = `
-    DELETE 
-    FROM users 
+    DELETE FROM user_project_link
+    WHERE user_id = ${req.params.userid};
+    DELETE FROM users
+    WHERE id = ${req.params.userid};
+    DELETE FROM users
     WHERE id = ${req.params.userid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -125,6 +132,46 @@ router.get('/userId/:userId', (req, res) => {
     SELECT *
     FROM users u 
     WHERE u.id = '${req.params.userId}'`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Mil Job Titles
+router.get('/milJobs', (req, res) => {
+    let sql = `
+    SELECT * FROM military_job_titles`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//New Mill Job Title
+router.post('/newMilJob/:newJob', (req, res) => {
+    let sql = `
+    INSERT INTO military_job_titles(
+        mil_job_title
+    ) VALUES (
+        ${req.params.newJob}
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+router.delete('/removeMilJob/:milid', (req, res) => {
+    let sql = `
+    DELETE FROM military_job_titles
+    WHERE id = ${req.params.milid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

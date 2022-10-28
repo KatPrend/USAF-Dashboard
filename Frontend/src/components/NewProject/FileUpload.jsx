@@ -31,7 +31,7 @@ export const FileUpload = (props) => {
                 <Form.Label column xs="auto">{props.label}:</Form.Label>
                 <Col xs="auto">
                     <Form.Control type="file" name={props.name} onChange={changeHandler} />
-                    <Button className="submit-new-project" onClick={handleSubmission}>Upload File</Button>
+                    { isSelected ? <Button className="submit-new-project" onClick={handleSubmission}>Upload File</Button> : null }
                 </Col>
             </Form.Group>
         </>

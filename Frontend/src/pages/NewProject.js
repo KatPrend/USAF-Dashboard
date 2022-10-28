@@ -65,14 +65,17 @@ function NewProject() {
   return (
     <div className="lightBlue">
       <NavB getUserInfo={getUserInfo} />
-      <h1>Add New Project</h1>
-      <br />
-      <div className="mx-auto w-75">
-        <AddProject getProjectName={getProjectName}/>
-      </div>
-      <br />
-      <br />
-      {renderInfo(projectName, projectId)}
+      {userRole != "Admin" ? <div>You do not have access to this page.</div> : <div>
+          <h1>Add New Project</h1>
+          <br />
+          <div className="mx-auto w-75">
+            <AddProject getProjectName={getProjectName}/>
+          </div>
+          <br />
+          <br />
+          {renderInfo(projectName, projectId)}
+        </div>
+    }
     </div>
   );
 }

@@ -41,12 +41,15 @@ function PreAwardProject(){
                         <ContractStatus data={id}/>
                     </Col>
                 </Row>
-                <br />
-                <Row>
-                    <Col>
-                        <FundingData data={id}/>
-                    </Col>
-                </Row>
+                {userRole === "Contractor" ? null : <div>
+                        <br />
+                        <Row>
+                            <Col>
+                                <FundingData data={id}/>
+                            </Col>
+                        </Row>
+                    </div>
+                }
                 <br/>
                 <Row>
                     <Col>
