@@ -5,7 +5,7 @@ import axios from 'axios';
 import { NavB } from '../components/NavB';
 import { UpdateContractors } from '../components/Admin/UpdateContractors';
 import '../components/Admin/admin.css';
-import { UpdateRequirements } from '../components/Admin/UpdateRequirements';
+import { UpdateFunding } from '../components/Admin/UpdateFunding';
 import { UpdateBranches } from '../components/Admin/UpdateBranches';
 import { UpdateTitles } from '../components/Admin/UpdateTitles';
 import { UpdateUsers } from '../components/Admin/UpdateUsers';
@@ -14,7 +14,7 @@ function Admin() {
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
     const [showContractor, setShowContractor] = useState(false);
-    const [showRequirement, setShowRequirement] = useState(false);
+    const [showFunding, setShowFunding] = useState(false);
     const [showBranch, setShowBranch] = useState(false);
     const [showTitle, setShowTitle] = useState(false);
     const [showUsers, setShowUsers] = useState(false);
@@ -26,15 +26,15 @@ function Admin() {
 
     function handleShow(button) {
         setShowContractor(false);
-        setShowRequirement(false);
+        setShowFunding(false);
         setShowBranch(false);
         setShowTitle(false);
         setShowUsers(false);
 
         if (button === "Contractor") {
             setShowContractor(true);
-        } else if (button === "Requirement") {
-            setShowRequirement(true);
+        } else if (button === "Funding") {
+            setShowFunding(true);
         } else if (button === "Branch") {
             setShowBranch(true);
         } else if (button === "Title") {
@@ -54,7 +54,7 @@ function Admin() {
                             <Row><span>Settings</span></Row>
                             <Row><ButtonGroup vertical>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Contractor")}}>Contractors</Button>
-                                <Button className="submit-new-project settings" onClick={() => {handleShow("Requirement")}}>Requirement Types</Button>
+                                <Button className="submit-new-project settings" onClick={() => {handleShow("Funding")}}>Funding Types</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Branch")}}>Branches</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Title")}}>Military Job Titles</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("User")}}>Users</Button>
@@ -63,7 +63,7 @@ function Admin() {
                         <Col className="edits">
                             <Row><span>Edit</span></Row>
                             <Row>{showContractor ? <UpdateContractors /> : null}</Row>
-                            <Row>{showRequirement ? <UpdateRequirements /> : null}</Row>
+                            <Row>{showFunding ? <UpdateFunding /> : null}</Row>
                             <Row>{showBranch ? <UpdateBranches /> : null}</Row>
                             <Row>{showTitle ? <UpdateTitles /> : null}</Row>
                             <Row>{showUsers ? <UpdateUsers /> : null}</Row>

@@ -10,6 +10,7 @@ export const ContractStatus = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+    const [awarded, setAwarded] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
