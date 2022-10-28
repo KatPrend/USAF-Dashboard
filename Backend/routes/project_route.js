@@ -6,7 +6,7 @@ var db = require('../database');
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
-    FROM project`
+    FROM project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -138,6 +138,46 @@ router.get('/schedule/:projectid', (req, res) => {
         res.send(results)
 
     });
+});
+
+//Branch End Points
+router.get('/branches', (req, res) => {
+    let sql = `
+    SELECT * 
+    FROM branches`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+});
+
+router.post('/newBranch/:newbranch', (req, res) => {
+    let sql = `
+    INSERT INTO bracnhes(
+        branch_name
+    ) VALUES(
+        ${req.params.newbranch}
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+});
+
+router.delete('/removeBranch/:branchid', (req, res) => {
+    let sql = `
+    DELETE FROM bracnhes
+    WHERE id = ${req.params.branchid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
 });
 
 module.exports = router;
