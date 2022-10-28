@@ -90,7 +90,10 @@ export const ProjectContent = (props) => {
     const searchStyle = {width: '75%'};
     return (
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
-            <h2>Projects: <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link></h2>
+            <h2>
+                Projects: 
+                {props.userRole != "Admin" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
+            </h2>
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>
                     <tr>
@@ -99,9 +102,9 @@ export const ProjectContent = (props) => {
                         <th>Contract Number</th>
                         <th>Contract Status</th>
                         <th>Org/Branch</th>
-                        <th>Contract Value</th>
+                        {props.userRole === "Contractor" ? null : <th>Contract Value</th>}
                         <th>Dependency Status</th>
-                        <th>Financial Status</th>
+                        {props.userRole === "Contractor" ? null : <th>Financial Status</th>}
                         <th>Schedule Status</th>
                     </tr>
                 </thead>    
@@ -112,9 +115,9 @@ export const ProjectContent = (props) => {
                     <td><input placeholder="Filter by Contract #" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_num_search(event.target.value)}} value={contract_num_search}></input></td>
                     <td><input placeholder="Filter by status" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_status_search(event.target.value)}} value={contract_status_search}></input></td>
                     <td><input placeholder="Filter by branch" style={searchStyle} type='text' name='textField' onChange={function (event) {set_branch_search(event.target.value)}} value={branch_search}></input></td>
-                    <td><input placeholder="Filter by value" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_value_search(event.target.value)}} value={contract_value_search}></input></td>
+                    {props.userRole === "Contractor" ? null : <td><input placeholder="Filter by value" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_value_search(event.target.value)}} value={contract_value_search}></input></td>}
                     <td><input placeholder="Filter by status" style={searchStyle} type='text' name='textField' onChange={function (event) {set_dependency_status_search(event.target.value)}} value={dependency_status_search}></input></td>
-                    <td><input placeholder="Filter by financials" style={searchStyle} type='text' name='textField' onChange={function (event) {set_financial_status_search(event.target.value)}} value={financial_status_search}></input></td>
+                    {props.userRole === "Contractor" ? null : <td><input placeholder="Filter by financials" style={searchStyle} type='text' name='textField' onChange={function (event) {set_financial_status_search(event.target.value)}} value={financial_status_search}></input></td>}
                     <td><input placeholder="Filter by schedule" style={searchStyle} type='text' name='textField' onChange={function (event) {set_schedule_status_search(event.target.value)}} value={schedule_status_search}></input></td>
                 </tr>
                 {
@@ -125,9 +128,9 @@ export const ProjectContent = (props) => {
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
-                            <td>{contract_value}</td>
+                            {props.userRole === "Contractor" ? null : <td>{contract_value}</td>}
                             <td><SummaryIcon data={dependency_status}/></td>
-                            <td><SummaryIcon data={financial_status}/></td>
+                            {props.userRole === "Contractor" ? null : <td><SummaryIcon data={financial_status}/></td>}
                             <td><SummaryIcon data={schedule_status}/></td>
 
                         </tr>

@@ -6,7 +6,7 @@ export const AddProject = ({getProjectName}) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("1");
-    const [contractor, setContractor] = useState("-1");
+    const [contractor, setContractor] = useState("1");
     const [branch, setBranch] = useState("");
     const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
@@ -127,9 +127,8 @@ export const AddProject = ({getProjectName}) => {
                 as="select"
                 type="contractor"
                 onChange={handleContractor}
-                defaultValue={-1}>
+                defaultValue={1}>
                 
-                <option value={-1}></option>
                 {contractors.map((element, index) => (
                   <option key={index} value={element.id}>{element.contractor_name}</option>
                 ))}
