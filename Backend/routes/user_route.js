@@ -80,7 +80,7 @@ router.get('/iptmembers/:project_id', (req, res) => {
     let sql = `
     SELECT 
         u.id, 
-        u.mil_job_title, 
+        u.mil_job_title_id, 
         u.user_name 
     FROM users u 
     INNER JOIN user_project_link upl on upl.user_id = u.id 
@@ -98,12 +98,12 @@ router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
     let sql = `
     SELECT 
         u.id, 
-        u.mil_job_title, 
+        u.mil_job_title_id, 
         u.user_name 
     FROM users u 
     INNER JOIN user_project_link upl on upl.user_id = u.id 
     WHERE upl.project_id = ${req.params.project_id} 
-    AND u.mil_job_title=${req.params.job_title}`;
+    AND u.mil_job_title_id=${req.params.job_title}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
