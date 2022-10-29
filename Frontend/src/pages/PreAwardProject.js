@@ -28,11 +28,11 @@ function PreAwardProject(){
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData data={id}/>
+                        <ProjectData data={id} userRole={userRole} />
                     </Col>
 
                     <Col>                      
-                        <IPT data={id}/>
+                        <IPT data={id} userRole={userRole} />
                     </Col>
                 </Row>
                 <br />

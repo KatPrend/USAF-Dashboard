@@ -126,9 +126,10 @@ export const ProjectData = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Data</span>
                         </Col>
-                        <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
-                        </Col>
+                        { props.userRole !== "Admin" ? null : <Col style={{textAlign: 'right'}}>
+                                <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
+                            </Col>
+                        }
                     </Row>
                 </Container>
             </Card.Header>

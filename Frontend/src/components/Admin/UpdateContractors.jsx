@@ -77,13 +77,17 @@ export const UpdateContractors = () => {
                 <Row>
                     <h5 style={{marginTop:"3%"}}>Add Contractor</h5>
                     <Form>
-                        <Form.Group>
-                            <Form.Label>Contractor:</Form.Label>
-                            <Form.Control type="contractor" placeholder='Contractor' onChange={handleNewContractor} />
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}>Contractor:</Form.Label>
+                            <Col sm={7}>
+                                <Form.Control type="contractor" placeholder='Contractor' onChange={handleNewContractor} />
+                            </Col>
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Summary</Form.Label>
-                            <Form.Control as="textarea" placeholder="Enter Summary" type="summary" onChange={handleSummary} />
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}>Summary</Form.Label>
+                            <Col sm={7}>
+                                <Form.Control as="textarea" placeholder="Enter Summary" type="summary" onChange={handleSummary} />
+                            </Col>
                         </Form.Group>
                     </Form>
                     <Button className='submit-new-project admin mx-auto' onClick={handleAdd}>Submit</Button>

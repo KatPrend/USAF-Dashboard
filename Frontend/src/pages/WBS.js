@@ -52,35 +52,35 @@ const WbsData = (props) => {
     // check if should display
     const shouldDisplay = (task_id, task_description, month, clin_num, source_type, resource_code, resource_type, resource_description, rate, hours_worked, units, cost, base_cost, direct_cost, total_price) => {
         // if x does not contain the xSearch and xSearch is not empty
-        if (!(safeToString(task_id).toLowerCase().includes(task_id_search.toLowerCase())) && task_id_search != '')
+        if (!(safeToString(task_id).toLowerCase().includes(task_id_search.toLowerCase())) && task_id_search !== '')
             return false;
-        if (!(safeToString(task_description).toLowerCase().includes(task_description_search.toLowerCase())) && task_description_search != '')
+        if (!(safeToString(task_description).toLowerCase().includes(task_description_search.toLowerCase())) && task_description_search !== '')
             return false;
-        if (!(safeToString(month).toLowerCase().includes(month_search.toLowerCase())) && month_search != '')
+        if (!(safeToString(month).toLowerCase().includes(month_search.toLowerCase())) && month_search !== '')
             return false;
-        if (!(safeToString(clin_num).toLowerCase().includes(clin_search.toLowerCase())) && clin_search != '')
+        if (!(safeToString(clin_num).toLowerCase().includes(clin_search.toLowerCase())) && clin_search !== '')
             return false;
-        if (!(safeToString(source_type).toLowerCase().includes(source_type_search.toLowerCase())) && source_type_search != '')
+        if (!(safeToString(source_type).toLowerCase().includes(source_type_search.toLowerCase())) && source_type_search !== '')
             return false;
-        if (!(safeToString(resource_code).toLowerCase().includes(resource_search.toLowerCase())) && resource_search != '')
+        if (!(safeToString(resource_code).toLowerCase().includes(resource_search.toLowerCase())) && resource_search !== '')
             return false;
-        if (!(safeToString(resource_type).toLowerCase().includes(resource_type_search.toLowerCase())) && resource_type_search != '')
+        if (!(safeToString(resource_type).toLowerCase().includes(resource_type_search.toLowerCase())) && resource_type_search !== '')
             return false;
-        if (!(safeToString(resource_description).toLowerCase().includes(resource_description_search.toLowerCase())) && resource_description_search != '')
+        if (!(safeToString(resource_description).toLowerCase().includes(resource_description_search.toLowerCase())) && resource_description_search !== '')
             return false;
-        if (!(safeToString(rate).toLowerCase().includes(rate_search.toLowerCase())) && rate_search != '')
+        if (!(safeToString(rate).toLowerCase().includes(rate_search.toLowerCase())) && rate_search !== '')
             return false;
-        if (!(safeToString(hours_worked).toLowerCase().includes(hours_search.toLowerCase())) && hours_search != '')
+        if (!(safeToString(hours_worked).toLowerCase().includes(hours_search.toLowerCase())) && hours_search !== '')
             return false;
-        if (!(safeToString(units).toLowerCase().includes(units_search.toLowerCase())) && units_search != '')
+        if (!(safeToString(units).toLowerCase().includes(units_search.toLowerCase())) && units_search !== '')
             return false;
-        if (!(safeToString(cost).toLowerCase().includes(cost_search.toLowerCase())) && cost_search != '')
+        if (!(safeToString(cost).toLowerCase().includes(cost_search.toLowerCase())) && cost_search !== '')
             return false;
-        if (!(safeToString(base_cost).toLowerCase().includes(base_cost_search.toLowerCase())) && base_cost_search != '')
+        if (!(safeToString(base_cost).toLowerCase().includes(base_cost_search.toLowerCase())) && base_cost_search !== '')
             return false;
-        if (!(safeToString(direct_cost).toLowerCase().includes(direct_cost_search.toLowerCase())) && direct_cost_search != '')
+        if (!(safeToString(direct_cost).toLowerCase().includes(direct_cost_search.toLowerCase())) && direct_cost_search !== '')
             return false;
-        if (!(safeToString(total_price).toLowerCase().includes(total_price_search.toLowerCase())) && total_price_search != '')
+        if (!(safeToString(total_price).toLowerCase().includes(total_price_search.toLowerCase())) && total_price_search !== '')
             return false;
         return true;
     }
