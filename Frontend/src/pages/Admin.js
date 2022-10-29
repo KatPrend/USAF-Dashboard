@@ -47,7 +47,7 @@ function Admin() {
     return (
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
-            {userRole != "Admin" ? <div>You do not have access to this page.</div> : <div className='settings'>
+            {userRole !== "Admin" ? <div>You do not have access to this page.</div> : <div className='settings'>
                 <Container>
                     <Row>
                         <Col xs={3} className="options">

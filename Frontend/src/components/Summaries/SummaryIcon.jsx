@@ -8,17 +8,17 @@ export function SummaryIcon({data}){
         <>
         {(() => {
 
-            if (data == "ONTRACK" || data == "ON-BUDGET") {
+            if (data === "ONTRACK" || data === "ON-BUDGET") {
                 return (
                     <div style={{color: 'green', fontSize: '30px'}} >{'\u25CF'}</div>
                 )
             } 
-            else if (data == "BEHIND" || data == "UNDER") {
+            else if (data === "BEHIND" || data === "UNDER") {
                 return (
                     <div style={{color: 'yellow', fontSize: '30px'}} >{'\u25A0'}</div>
                 )
             } 
-            else if (data == "REALLY-BEHIND" || data == "OVER") {
+            else if (data === "REALLY-BEHIND" || data === "OVER") {
                 return (
                     <div style={{color: 'red', fontSize: '30px'}} >{'\u25B2'}</div>
                 )

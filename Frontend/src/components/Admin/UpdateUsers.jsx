@@ -78,7 +78,7 @@ export const UpdateUsers = () => {
                                 </Form.Control>
                             </Col>
                         </Form.Group>
-                        {userRole == 2 ? 
+                        {userRole === 2 ? 
                             <Form.Group as={Row}>
                                 <Form.Label column sm={3}>Military Job Title:</Form.Label>
                                 <Col sm={7}>
