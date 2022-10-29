@@ -91,18 +91,50 @@ router.get('/:projectid', (req, res) => {
 
 // Grabbing all of the project information
 router.get('/schedule/:projectid', (req, res) => {
+    
     let sql = `
     SELECT 
-        id as ID, 
-        task_name as "Name", 
-        duration as "Duration", 
-        start_date as "Start", 
-        finish_date as "End", 
-        predecessors as "Predecessors"
-    FROM 
-        project_information 
-    WHERE 
-        project_id = ${req.params.projectid}`;
+        pm.id as ID,
+        pm.task_name as "Name",
+        DATEDIFF(pm.end_date,pm.start_date) as "Duration",
+        pm.start_date as "Start",
+        pm.end_date as "End",
+        
+        (
+	        SELECT 
+	        GROUP_CONCAT(predecessor_milestone SEPARATOR ',' ) 
+	        FROM project_milestone_dependency  pmd
+	        WHERE pmd.successor_milestone = pm.id
+	        AND pmd.predecessor_project = pmd.successor_project
+        ) as "Predecessors",
+        (
+	        SELECT 
+	        GROUP_CONCAT(pm1.task_name SEPARATOR ',' ) 
+	        
+	        FROM project_milestone_dependency  pmd
+	        INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
+	        WHERE pmd.successor_milestone = pm.id
+	        AND pmd.predecessor_project = pmd.successor_project
+        ) as "Predecessors_Name"
+        
+	FROM project_milestones pm
+	WHERE pm.project_id = ${req.params.projectid}
+    `
+    
+    
+    // let sql = `
+    // SELECT 
+    //     id as ID, 
+    //     task_name as "Name", 
+    //     duration as "Duration", 
+    //     start_date as "Start", 
+    //     finish_date as "End", 
+    //     predecessors as "Predecessors"
+    // FROM 
+    //     project_information 
+    // WHERE 
+    //     project_id = ${req.params.projectid}`;
+
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

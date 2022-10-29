@@ -28,7 +28,7 @@ function GanttChartDataFormat(JsonData){
             new Date(data.End),
             null, 
             null,
-            data.Predecessors
+            data.Predecessors == null ? null : (data.Predecessors).toString()
         ])
     ))
 
@@ -154,7 +154,6 @@ export const ProjectSchedule = (props) => {
                             <Table responsive striped bordered hover className="bg-light">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Start</th>
                                         <th>End</th>
@@ -163,13 +162,12 @@ export const ProjectSchedule = (props) => {
                                 </thead>
                                 <tbody>
                                     {
-                                        infoData.map(({ID, Name, Start, End, Predecessors}) => (
+                                        infoData.map(({ID, Name, Start, End, Predecessors_Name}) => (
                                             <tr key={ID}>
-                                                <td>{ID}</td>
                                                 <td>{Name}</td>
                                                 <td>{format(new Date(Start), 'MM/dd/yyyy')}</td>
                                                 <td>{format(new Date(End), 'MM/dd/yyyy')}</td>
-                                                <td>{Predecessors}</td>
+                                                <td>{Predecessors_Name}</td>
                                             </tr>
                                         ))
                                     }
