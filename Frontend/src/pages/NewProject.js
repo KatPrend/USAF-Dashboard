@@ -65,7 +65,7 @@ function NewProject() {
   return (
     <div className="lightBlue">
       <NavB getUserInfo={getUserInfo} />
-      {userRole != "Admin" ? <div>You do not have access to this page.</div> : <div>
+      {userRole !== "Admin" ? <div>You do not have access to this page.</div> : <div>
           <h1>Add New Project</h1>
           <br />
           <div className="mx-auto w-75">

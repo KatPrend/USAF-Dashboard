@@ -48,13 +48,13 @@ const ClinData = (props) => {
     // check if should display
     const shouldDisplay = (clin_num, project_id, clin_type, proj_clin_value) => {
         // if x does not contain the xSearch and xSearch is not empty
-        if (!(safeToString(clin_num).toLowerCase().includes(clin_num_search.toLowerCase())) && clin_num_search != '')
+        if (!(safeToString(clin_num).toLowerCase().includes(clin_num_search.toLowerCase())) && clin_num_search !== '')
             return false;
-        if (!(safeToString(project_id).toLowerCase().includes(clin_type_search.toLowerCase())) && clin_type_search != '')
+        if (!(safeToString(project_id).toLowerCase().includes(clin_type_search.toLowerCase())) && clin_type_search !== '')
             return false;
-        if (!(safeToString(clin_type).toLowerCase().includes(clin_scope_search.toLowerCase())) && clin_scope_search != '')
+        if (!(safeToString(clin_type).toLowerCase().includes(clin_scope_search.toLowerCase())) && clin_scope_search !== '')
             return false;
-        if (!(safeToString(proj_clin_value).toLowerCase().includes(projected_clin_value.toLowerCase())) && projected_clin_value != '')
+        if (!(safeToString(proj_clin_value).toLowerCase().includes(projected_clin_value.toLowerCase())) && projected_clin_value !== '')
             return false;
         return true;
     }

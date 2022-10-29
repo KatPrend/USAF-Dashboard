@@ -66,23 +66,23 @@ export const ProjectContent = (props) => {
     // check if should display
     const shouldDisplay = (project_id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status) => {
         // if x does not contain the xSearch and xSearch is not empty
-        if (!(safeToString(project_id).toLowerCase().includes(project_id_search.toLowerCase())) && project_id_search != '')
+        if (!(safeToString(project_id).toLowerCase().includes(project_id_search.toLowerCase())) && project_id_search !== '')
             return false;
-        if (!(safeToString(project_name).toLowerCase().includes(project_name_search.toLowerCase())) && project_name_search != '')
+        if (!(safeToString(project_name).toLowerCase().includes(project_name_search.toLowerCase())) && project_name_search !== '')
             return false;
-        if (!(safeToString(contract_num).toLowerCase().includes(contract_num_search.toLowerCase())) && contract_num_search != '')
+        if (!(safeToString(contract_num).toLowerCase().includes(contract_num_search.toLowerCase())) && contract_num_search !== '')
             return false;
-        if (!(safeToString(contract_status).toLowerCase().includes(contract_status_search.toLowerCase())) && contract_status_search != '')
+        if (!(safeToString(contract_status).toLowerCase().includes(contract_status_search.toLowerCase())) && contract_status_search !== '')
             return false;
-        if (!(safeToString(branch).toLowerCase().includes(branch_search.toLowerCase())) && branch_search != '')
+        if (!(safeToString(branch).toLowerCase().includes(branch_search.toLowerCase())) && branch_search !== '')
             return false;
-        if (!(safeToString(contract_value).toLowerCase().includes(contract_value_search.toLowerCase())) && contract_value_search != '')
+        if (!(safeToString(contract_value).toLowerCase().includes(contract_value_search.toLowerCase())) && contract_value_search !== '')
             return false;
-        if (!(safeToString(dependency_status).toLowerCase().includes(dependency_status_search.toLowerCase())) && dependency_status_search != '')
+        if (!(safeToString(dependency_status).toLowerCase().includes(dependency_status_search.toLowerCase())) && dependency_status_search !== '')
             return false;
-        if (!(safeToString(financial_status).toLowerCase().includes(financial_status_search.toLowerCase())) && financial_status_search != '')
+        if (!(safeToString(financial_status).toLowerCase().includes(financial_status_search.toLowerCase())) && financial_status_search !== '')
             return false;
-        if (!(safeToString(schedule_status).toLowerCase().includes(schedule_status_search.toLowerCase())) && schedule_status_search != '')
+        if (!(safeToString(schedule_status).toLowerCase().includes(schedule_status_search.toLowerCase())) && schedule_status_search !== '')
             return false;
         return true;
     }
@@ -92,7 +92,7 @@ export const ProjectContent = (props) => {
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
             <h2>
                 Projects: 
-                {props.userRole != "Admin" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
+                {props.userRole !== "Admin" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
             </h2>
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>
