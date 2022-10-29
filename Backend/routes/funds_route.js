@@ -62,7 +62,7 @@ router.get('/obligation/:project_id', (req, res) => {
     FROM obligation_funding_data 
     WHERE project_id=${req.params.project_id}`;
     let query = db.query(sql, (err, results)=>{
-        if(err){obli
+        if(err){
             throw err
         }
         res.send(results)
@@ -84,7 +84,49 @@ router.get('/obligation_table/:project_id', (req, res) => {
     WHERE 
         project_id=${req.params.project_id}`;
     let query = db.query(sql, (err, results)=>{
-        if(err){obli
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Funding Data
+
+router.get('/allFundingTypes', (req, res) => {
+    let sql = `
+    SELECT * 
+    FROM funding_types`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+router.post('/postNewFundingType/:project_id/newFundingType/:newfunding', (req, res) => {
+    let sql = `
+    INSERT INTO funding_types(
+        funding_type
+    )
+    VALUES(
+        ${req.params.newfunding}
+    )`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+router.delete('/removeFundingTypes/:fundingid', (req, res) => {
+    let sql = `
+    DELETE FROM funding_types
+    WHERE id = ${req.params.fundingid}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
             throw err
         }
         res.send(results)
