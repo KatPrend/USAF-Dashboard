@@ -56,4 +56,22 @@ router.delete("/:contractor_id", (req, res)=>{
 })
 
 
+router.get('/noproject', (req, res)=>{
+
+    let sql = `
+    SELECT * 
+    FROM contractor c
+    WHERE c.id NOT IN(SELECT DISTINCT(p.contractor_id)
+    FROM project p)
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+
 module.exports = router;

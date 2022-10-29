@@ -50,28 +50,28 @@ router.delete("/", (req, res)=>{
 router.get('/successor/:projectid', (req, res) => {
     let sql = `
     SELECT 
-	pmd.predecessor_project,
-	p1.project_name as predecessor_name,
-	pmd.predecessor_milestone,
-	pm1.task_name as predecessor_task_name,
-	pm1.end_date as predecessor_task_end_date,
+        pmd.predecessor_project,
+        p1.project_name as predecessor_name,
+        pmd.predecessor_milestone,
+        pm1.task_name as predecessor_task_name,
+        pm1.end_date as predecessor_task_end_date,
+        
+        pmd.successor_project,
+        p2.project_name as dep_proj_name,
+        pmd.successor_milestone,
+        pm2.task_name as successor_task_name,
+        pm2.start_date as successor_task_start_date
 	
-	pmd.successor_project,
-	p2.project_name as dep_proj_name,
-	pmd.successor_milestone,
-	pm2.task_name as successor_task_name,
-	pm2.start_date as successor_task_start_date
-	
-FROM project_milestone_dependency pmd
+    FROM project_milestone_dependency pmd
 
-INNER JOIN project p1 ON p1.id = pmd.predecessor_project
-INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
+    INNER JOIN project p1 ON p1.id = pmd.predecessor_project
+    INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
 
-INNER JOIN project p2 ON p2.id = pmd.successor_project
-INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
+    INNER JOIN project p2 ON p2.id = pmd.successor_project
+    INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
 
-WHERE pmd.predecessor_project = ${req.params.projectid} 
-AND pmd.predecessor_project != pmd.successor_project`;
+    WHERE pmd.predecessor_project = ${req.params.projectid} 
+    AND pmd.predecessor_project != pmd.successor_project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
