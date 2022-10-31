@@ -62,7 +62,7 @@ router.get('/noproject', (req, res)=>{
     SELECT * 
     FROM contractor c
     WHERE c.id NOT IN(SELECT DISTINCT(p.contractor_id)
-    FROM project p)
+    FROM project p IS NOT NULL)
     `;
 
     let query = db.query(sql, (err, results) =>{
