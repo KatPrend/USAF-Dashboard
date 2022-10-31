@@ -127,7 +127,7 @@ router.get('/branches', (req, res) => {
 
 router.post('/newBranch/:newbranch', (req, res) => {
     let sql = `
-    INSERT INTO bracnhes(
+    INSERT INTO branches(
         branch_name
     ) VALUES(
         ${req.params.newbranch}
@@ -142,7 +142,7 @@ router.post('/newBranch/:newbranch', (req, res) => {
 
 router.delete('/removeBranch/:branchid', (req, res) => {
     let sql = `
-    DELETE FROM bracnhes
+    DELETE FROM branches
     WHERE id = ${req.params.branchid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){

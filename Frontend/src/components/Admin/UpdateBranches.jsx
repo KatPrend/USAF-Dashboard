@@ -5,33 +5,72 @@ import "./admin.css";
 
 export const UpdateBranches = () => {
 
-    // const [isLoading, setLoading] = useState(true);
-    // const [data, setData] = useState();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
     const [addBranch, setAddBranch] = useState("");
+    const [removeBranch, setRemoveBranch] = useState();
+    const [added, setAdded] = useState(false);
+    const [removed, setRemoved] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get('/api/contractor/').then(response => {
-    //         setData(response.data);
-    //         setLoading(false);
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios.get('/api/branch/').then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
 
-    // if (isLoading) {
-    //     return <div className="mx-auto w-100">Loading...</div>;
-    // }
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
 
     let handleNewBranch = (e) => {
         setAddBranch(e.target.value);
+        setAdded(false);
+        setRemoved(false);
     }
 
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        
+        axios.post(`/api/branch/${addBranch}`, {
+        })
+        .then(function(res){
+            // res.data.insertId
+
+            setAdded(true);
+
+            axios.get('/api/branch/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
+    let handleDropdownSelect = (e) => {
+        setRemoveBranch(e);
+        setAdded(false);
+        setRemoved(false);
+        console.log(e);
     }
 
     let handleRemove = async () => {
+        axios.delete(`/api/branch/${removeBranch}`, {
+        })
+        .then(function(res){
 
+            setRemoved(true);
+
+            axios.get('/api/branch/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     return (
@@ -51,19 +90,28 @@ export const UpdateBranches = () => {
                     <Button className='submit-new-project admin mx-auto' onClick={handleAdd}>Submit</Button>
                 </Row>
                 <Row>
+                    <Col>
+                        {added ? <div style={{marginBottom:"5%"}}>Successfully added.</div> : null}
+                    </Col>
+                </Row>
+                <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Branch:</h5>
                     <Col>
                         <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Branches">
-                            {/* {data.map(({id, contractor_name, summary}) => (
+                            {data.map(({id, branch_name}) => (
                                 <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {contractor_name}
+                                    {branch_name}
                                 </Dropdown.Item>
-                            )) */
-                            }
+                            ))}
                         </DropdownButton> 
                     </Col>
                     <Col>
                         <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {removed ? <div>Successfully Removed.</div> : null}
                     </Col>
                 </Row>
             </Container>
