@@ -177,7 +177,7 @@ router.get('/branches', (req, res) => {
 
 router.post('/newBranch/:newbranch', (req, res) => {
     let sql = `
-    INSERT INTO bracnhes(
+    INSERT INTO branches(
         branch_name
     ) VALUES(
         ${req.params.newbranch}
