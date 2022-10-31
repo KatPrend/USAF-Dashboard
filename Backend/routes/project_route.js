@@ -50,20 +50,30 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-router.put('/', (req, res)=>{
+router.put('/:projectid', (req, res)=>{
+    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
+    
     let sql = `
     UPDATE project
-    SET ContactName = 'Alfred Schmidt', City = 'Frankfurt'
-    WHERE CustomerID = 1;  
+    SET
+        project_name = "${project_name}",
+        project_type = "${project_type}",  
+        contractor_id =  "${contractor_id}",
+        branch_id = "${branch_id}",
+        requirement_type_id = "${requirement_type_id}", 
+        summary = "${summary}",
+        ccar_num = "${ccar_num}",
+        start_date =  "${start_date}",
+        end_date = "${end_date}"
+    WHERE id = ${req.params.projectid};  
     `
-
-})
-let query = db.query(sql, (err, results) =>{
-    if(err){
-        throw err
-    }
-    res.send(results)
-})
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
 
 router.delete("/:projectid", (req, res)=>{
     let sql = `
@@ -78,7 +88,7 @@ router.delete("/:projectid", (req, res)=>{
     });
 })
 
-// Get a Project with user email
+// Get Projects with user Id
 router.get('/userId/:userId', (req, res) => {
     let sql = `
     SELECT * 
