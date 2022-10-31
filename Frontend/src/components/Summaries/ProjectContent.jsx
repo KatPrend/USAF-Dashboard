@@ -78,16 +78,16 @@ export const ProjectContent = (props) => {
             return false;
         if (!(safeToString(contract_value).toLowerCase().includes(contract_value_search.toLowerCase())) && contract_value_search !== '')
             return false;
-        if (!(safeToString(dependency_status).toLowerCase().includes(dependency_status_search.toLowerCase())) && dependency_status_search !== '')
+        if (!(safeToString(dependency_status).toLowerCase() == (dependency_status_search.toLowerCase())) && dependency_status_search !== '')
             return false;
-        if (!(safeToString(financial_status).toLowerCase().includes(financial_status_search.toLowerCase())) && financial_status_search !== '')
+        if (!(safeToString(financial_status).toLowerCase() == (financial_status_search.toLowerCase())) && financial_status_search !== '')
             return false;
-        if (!(safeToString(schedule_status).toLowerCase().includes(schedule_status_search.toLowerCase())) && schedule_status_search !== '')
+        if (!(safeToString(schedule_status).toLowerCase() == (schedule_status_search.toLowerCase())) && schedule_status_search !== '')
             return false;
         return true;
     }
 
-    const searchStyle = {width: '75%'};
+    const searchStyle = {width: '100%'};
     return (
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
             <h2>
@@ -116,9 +116,30 @@ export const ProjectContent = (props) => {
                     <td><input placeholder="Filter by status" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_status_search(event.target.value)}} value={contract_status_search}></input></td>
                     <td><input placeholder="Filter by branch" style={searchStyle} type='text' name='textField' onChange={function (event) {set_branch_search(event.target.value)}} value={branch_search}></input></td>
                     {props.userRole === "Contractor" ? null : <td><input placeholder="Filter by value" style={searchStyle} type='text' name='textField' onChange={function (event) {set_contract_value_search(event.target.value)}} value={contract_value_search}></input></td>}
-                    <td><input placeholder="Filter by status" style={searchStyle} type='text' name='textField' onChange={function (event) {set_dependency_status_search(event.target.value)}} value={dependency_status_search}></input></td>
-                    {props.userRole === "Contractor" ? null : <td><input placeholder="Filter by financials" style={searchStyle} type='text' name='textField' onChange={function (event) {set_financial_status_search(event.target.value)}} value={financial_status_search}></input></td>}
-                    <td><input placeholder="Filter by schedule" style={searchStyle} type='text' name='textField' onChange={function (event) {set_schedule_status_search(event.target.value)}} value={schedule_status_search}></input></td>
+                    <td>
+                        <Form.Control as='select' style={searchStyle} onChange={function (event) {set_dependency_status_search(event.target.value)}}>
+                            <option value="">No Filter</option>
+                            <option value="ONTRACK">On-Track</option>
+                            <option value="BEHIND">Behind</option>
+                            <option value="REALLY-BEHIND">Really-Behind</option>
+                        </Form.Control>
+                    </td>
+                    {props.userRole === "Contractor" ? null :   <td>
+                                                                    <Form.Control as='select' style={searchStyle} onChange={function (event) {set_financial_status_search(event.target.value)}}>
+                                                                        <option value="">No Filter</option>
+                                                                        <option value="ON-BUDGET">On-Budget</option>
+                                                                        <option value="UNDER">Under-Budget</option>
+                                                                        <option value="OVER">Over-Budget</option>
+                                                                    </Form.Control>
+                                                                </td>}
+                    <td>
+                        <Form.Control as='select' style={searchStyle} onChange={function (event) {set_schedule_status_search(event.target.value)}}>
+                            <option value="">No Filter</option>
+                            <option value="ONTRACK">On-Track</option>
+                            <option value="BEHIND">Behind</option>
+                            <option value="REALLY-BEHIND">Really-Behind</option>
+                        </Form.Control>
+                    </td>
                 </tr>
                 {
                     data.map(({ project_id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status }) => (
@@ -129,9 +150,9 @@ export const ProjectContent = (props) => {
                             <td>{contract_status}</td>
                             <td>{branch}</td>
                             {props.userRole === "Contractor" ? null : <td>{contract_value}</td>}
-                            <td><SummaryIcon data={dependency_status}/></td>
-                            {props.userRole === "Contractor" ? null : <td><SummaryIcon data={financial_status}/></td>}
-                            <td><SummaryIcon data={schedule_status}/></td>
+                            <td><SummaryIcon data = {dependency_status} /></td>
+                            {props.userRole === "Contractor" ? null : <td><SummaryIcon data = {financial_status} /></td>}
+                            <td><SummaryIcon data = {schedule_status} /></td>
 
                         </tr>
                     ))
