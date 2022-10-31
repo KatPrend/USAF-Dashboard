@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {Button, Col, Form, Row} from 'react-bootstrap';
 
 export const AddIPT = () => {
 
     const [members, setMembers] = useState([{type: "", first: "", last: "", email: ""}]);
+    const [isLoading, setLoading] = useState(true);
+    const [jobTitles, setJobTitles] = useState();
+
+    useEffect(() => {
+        axios.get('/api/user/milJobs/').then(response => {
+            setJobTitles(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     let handleChange = (i, e) => {
         let newMembers = [...members];
@@ -38,20 +51,9 @@ export const AddIPT = () => {
                         <Form.Label column sm={5}>Member Type:</Form.Label>
                         <Col sm={7}>
                             <Form.Control as="select" type="text" name="type" placeholder="Enter IPT Member Type" onChange={e => handleChange(index, e)}>
-                                <option value="0"></option>
-                                <option value="1">Project Manager</option>
-                                <option value="2">Primary Engineer</option>
-                                <option value="3">Primary Logistics</option>
-                                <option value="4">GFE/GFP POC</option>
-                                <option value="5">Contracting</option>
-                                <option value="6">Financial Analyst</option>
-                                <option value="7">Cost Analyst</option>
-                                <option value="8">Reviewing Supervisor/PM</option>
-                                <option value="9">Secondary Engineer</option>
-                                <option value="10">Det 3</option>
-                                <option value="11">Configuration/Data Management</option>
-                                <option value="12">IPMR/IMS</option>
-                                <option value="13">Cybersecurity</option>
+                                {jobTitles.map((element, index) => (
+                                    <option value={index}>{element.mil_job_title}</option>
+                                ))}
                             </Form.Control>
                         </Col>
                     </Form.Group>

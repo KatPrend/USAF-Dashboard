@@ -5,33 +5,73 @@ import "./admin.css";
 
 export const UpdateFunding = () => {
 
-    // const [isLoading, setLoading] = useState(true);
-    // const [data, setData] = useState();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
     const [addFunding, setAddFunding] = useState("");
+    const [removeFunding, setRemoveFunding] = useState();
+    const [added, setAdded] = useState(false);
+    const [removed, setRemoved] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get('/api/contractor/').then(response => {
-    //         setData(response.data);
-    //         setLoading(false);
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios.get('/api/funds/allFundingTypes/').then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
 
-    // if (isLoading) {
-    //     return <div className="mx-auto w-100">Loading...</div>;
-    // }
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
 
     let handleNewFunding = (e) => {
         setAddFunding(e.target.value);
+
+        setAdded(false);
+        setRemoved(false);
     }
 
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        
+        axios.post(`/api/funds/newFundingType/${addFunding}`, {
+        })
+        .then(function(res){
+            // res.data.insertId
+
+            setAdded(true);
+
+            axios.get('/api/funds/allFundingTypes/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
+    let handleDropdownSelect = (e) => {
+        setRemoveFunding(e);
+        setAdded(false);
+        setRemoved(false);
+        console.log(e);
     }
 
     let handleRemove = async () => {
+        axios.put(`/api/funds/deactivateFundingType/${removeFunding}`, {
+        })
+        .then(function(res){
 
+            setRemoved(true);
+
+            axios.get('/api/funds/allFundingTypes/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     return (
@@ -51,19 +91,28 @@ export const UpdateFunding = () => {
                     <Button className='submit-new-project admin mx-auto' onClick={handleAdd}>Submit</Button>
                 </Row>
                 <Row>
+                    <Col>
+                        {added ? <div style={{marginBottom:"5%"}}>Successfully added.</div> : null}
+                    </Col>
+                </Row>
+                <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Funding Type:</h5>
                     <Col>
                         <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Funding Types">
-                            {/* {data.map(({id, contractor_name, summary}) => (
+                            {data.map(({id, funding_type}) => (
                                 <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {contractor_name}
+                                    {funding_type}
                                 </Dropdown.Item>
-                            )) */
-                            }
+                            ))}
                         </DropdownButton> 
                     </Col>
                     <Col>
                         <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {removed ? <div>Successfully Removed.</div> : null}
                     </Col>
                 </Row>
             </Container>
