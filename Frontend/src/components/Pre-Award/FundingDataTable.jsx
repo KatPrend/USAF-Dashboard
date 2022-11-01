@@ -41,17 +41,22 @@ export function FundingDataTable({data}){
 
 export function FundingDataTableEditable({data}){
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("1");
+    }
+
     return(
-        <div>
+        <Form onSubmit={handleSubmit}>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
+                                <Form.Group>
                                     <Form.Control defaultValue={info.date} type='date'/>
-                                </Form>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -59,9 +64,9 @@ export function FundingDataTableEditable({data}){
                         <td>Funding Type</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
+                                <Form.Group>
                                     <Form.Control defaultValue={info.FundingType}/>
-                                </Form>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -69,9 +74,9 @@ export function FundingDataTableEditable({data}){
                         <td>Fiscal Year</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
+                                <Form.Group>
                                     <Form.Control defaultValue={info.FiscalYear}/>
-                                </Form>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -79,14 +84,15 @@ export function FundingDataTableEditable({data}){
                         <td>Projected</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
+                                <Form.Group>
                                     <Form.Control defaultValue={info.Projected}/>
-                                </Form>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
                 </tbody>
             </Table>
-        </div>
+        </Form>
     )
 }
+
