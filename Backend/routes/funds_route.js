@@ -32,22 +32,7 @@ router.get('/gettotal/:project_id', (req, res) => {
     });
 });
 
-router.get('/expenditure/:project_id', (req, res) => {
-    let sql = `
-    SELECT 
-        DATE_FORMAT(expen_funding_date,'%y-%m-%d') as date, 
-        expen_funding_type as FundingType, expen_fiscal_year as "FiscalYear", 
-        expen_projected as Projected, expen_proj_total as "Projected Total", 
-        expen_actual as Actual, expen_actual_total as "Actual Total" 
-    FROM expenditure_funding_data 
-    WHERE project_id=${req.params.project_id}`;
-    let query = db.query(sql, (err, results)=>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
+// ------------------ Obligation -------------------
 
 router.get('/obligation/:project_id', (req, res) => {
     let sql = `
@@ -91,12 +76,11 @@ router.get('/obligation_table/:project_id', (req, res) => {
     });
 });
 
-//Funding Data
-
 router.get('/allFundingTypes', (req, res) => {
     let sql = `
     SELECT * 
-    FROM funding_types`;
+    FROM funding_types
+    WHERE status = 1`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -105,13 +89,15 @@ router.get('/allFundingTypes', (req, res) => {
     });
 });
 
-router.post('/postNewFundingType/:project_id/newFundingType/:newfunding', (req, res) => {
+router.post('/postNewFundingType', (req, res) => {
+    const {newfunding} = req.body;
     let sql = `
     INSERT INTO funding_types(
-        funding_type
+        funding_type,
+        status
     )
     VALUES(
-        ${req.params.newfunding}
+        ${newfunding}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
@@ -133,5 +119,183 @@ router.delete('/removeFundingTypes/:fundingid', (req, res) => {
     });
 });
 
+router.put('/updateFundingType/:id/newFundingType/:newFunding', (req,res) => {
+    // req.body here?
+    let sql = `
+    `;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// ------------------ Expenditure -------------------
+
+router.get('/expenditure/:project_id', (req, res) => {
+    let sql = `
+    SELECT 
+        DATE_FORMAT(expen_funding_date,'%m/%d/%y') as date, 
+        expen_funding_type as FundingType, expen_fiscal_year as "FiscalYear", 
+        expen_projected as Projected, expen_proj_total as "Projected Total", 
+        expen_actual as Actual, expen_actual_total as "Actual Total" 
+    FROM expenditure_funding_data 
+    WHERE project_id=${req.params.project_id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Update Expenditure
+router.put('/updateExpenditure', (req, res) => {
+    const {expenID, projectID, expen_funding_date, expen_projected, expen_actual} = req.body;
+    let sql = `
+    UPDATE expenditure_funding_data
+    SET
+        project_id = ${projectID},
+        expen_funding_date = ${expen_funding_date},
+        expen_projected = ${expen_projected},
+        expen_actual = ${expen_actual}
+    WHERE id = ${expenID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Post into Expenditure 
+router.post('/newExpenditure', (req, res) => {
+    const {
+        project_id, 
+        expen_funding_date, 
+        expen_funding_type, 
+        expen_fiscal_year, 
+        expen_projected,
+        expen_proj_total,
+        expen_actual,
+        expen_actual_total
+    } = req.body;
+    let sql = `
+    INSERT INTO expenditure_funding_data(
+        project_id,
+        expen_funding_date,
+    -- 	Comment these out when Copper is done with his work on the front end
+        expen_funding_type,
+        expen_fiscal_year,
+    -- 	End of things need to be removed
+        expen_projected,
+        expen_proj_total,
+        expen_actual,
+        expen_actual_total
+    ) VALUES(
+        ${project_id},
+        ${expen_funding_date},
+        ${expen_funding_type},
+        ${expen_fiscal_year},
+        ${expen_projected},
+        ${expen_proj_total},
+        ${expen_actual},
+        ${expen_actual_total}
+    )`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Delete Expenditure
+router.delete('/removeExpenditure/:expenID', (req, res) => {
+    let sql = `
+    DELETE FROM expenditure_funding_data 
+    WHERE id = ${req.params.expenID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+// ------------------ Approved Funding -------------------
+
+//Get Approved Funding for a project
+router.get('/getApprovedFunding/:projectID', (req,res) => {
+    let sql = `
+    SELECT * FROM approved_funding
+    WHERE project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Post into Approved Funding
+router.post('/newApprovedFunding', (req,res) => {
+    const {
+        project_id, 
+        appro_funding_type, 
+        appro_fiscal_year, 
+        approved_amount
+    } = req.body;
+    let sql = `
+    INSERT INTO approved_funding(
+        project_id,
+        appro_funding_type,
+        appro_fiscal_year,
+        approved_amount
+    ) VALUES(
+        ${project_id},
+        ${appro_funding_type},
+        ${appro_fiscal_year},
+        ${approved_amount}
+    )`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Update Approved Funding
+router.put('/updateApprovedFunding', (req, res) => {
+    const {approvedID, projectID, appro_funding_type, appro_fiscal_year, approved_amount} = req.body;
+    let sql = `
+    UPDATE approved_funding
+    SET
+        project_id = ${projectID},
+        appro_funding_type = ${appro_funding_type},
+        appro_fiscal_year = ${appro_fiscal_year},
+        approved_amount = ${approved_amount}
+    WHERE id = ${approvedID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Delete Approved Funding
+router.delete('/removeApprovedFunding/:id', (req,res) => {
+    let sql = `
+    DELETE FROM approved_funding
+    WHERE id = ${req.params.id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
 
 module.exports = router;
