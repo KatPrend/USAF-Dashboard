@@ -89,24 +89,15 @@ router.get('/allFundingTypes', (req, res) => {
     });
 });
 
-<<<<<<< HEAD
 router.post('/postNewFundingType', (req, res) => {
     const {newfunding} = req.body;
-=======
-router.post('/newFundingType/:newfunding', (req, res) => {
->>>>>>> 398364f9bf17373ee2fc59c75c9cb0904ca2e238
     let sql = `
     INSERT INTO funding_types(
         funding_type,
         status
     )
     VALUES(
-<<<<<<< HEAD
         ${newfunding}
-=======
-        '${req.params.newfunding}',
-        '1'
->>>>>>> 398364f9bf17373ee2fc59c75c9cb0904ca2e238
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
