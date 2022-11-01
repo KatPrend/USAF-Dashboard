@@ -104,7 +104,7 @@ export const UpdateUsers = () => {
     }
 
     let handleIPTName = (e) => {
-        setAdminName(e.target.value);
+        setIPTName(e.target.value);
 
         setAddedAdmin(false);
         setAddedIPT(false);
@@ -112,7 +112,7 @@ export const UpdateUsers = () => {
         setRemoved(false);
     }
     let hanldeIPTEmail = (e) => {
-        setAdminEmail(e.target.value);
+        setIPTEmail(e.target.value);
 
         setAddedAdmin(false);
         setAddedIPT(false);
@@ -120,7 +120,7 @@ export const UpdateUsers = () => {
         setRemoved(false);
     }
     let handleIPTTitle = (e) => {
-        setAdminTitle(e.target.value);
+        setIPTTitle(e.target.value);
 
         setAddedAdmin(false);
         setAddedIPT(false);
@@ -130,7 +130,29 @@ export const UpdateUsers = () => {
     let handleAddIPT = async (e) => {
         e.preventDefault();
 
-        setAddedIPT(true);
+        console.log("Name: " + IPTName);
+        console.log("Email: " + IPTEmail);
+        console.log("Title: " + IPTTitle);
+
+        axios.post('/api/user/', {
+            contractor_company: '1',
+            user_name: IPTName,
+            user_role: 'IPT Member',
+            user_email: IPTEmail,
+            mil_job_title: IPTTitle
+        })
+        .then(function(res){
+            //console.log(res);
+            setAddedIPT(true);
+
+            axios.get('/api/user/').then(response => {
+                setUsers(response.data);
+                setLoading2(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     let handleContractorName = (e) => {
@@ -160,7 +182,25 @@ export const UpdateUsers = () => {
     let handleAddContractor = async (e) => {
         e.preventDefault();
 
-        setAddedContractor(true);
+        axios.post('/api/user/', {
+            contractor_company: contractor,
+            user_name: contractorName,
+            user_role: 'Contractor',
+            user_email: contractorEmail,
+            mil_job_title: 'NULL'
+        })
+        .then(function(res){
+            //console.log(res);
+            setAddedContractor(true);
+
+            axios.get('/api/user/').then(response => {
+                setUsers(response.data);
+                setLoading2(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     let handleDropdownSelect = (e) => {
@@ -173,7 +213,20 @@ export const UpdateUsers = () => {
     }
     let handleRemove = async () => {
 
-        setRemoved(true);
+        axios.delete(`/api/user/${removeUser}`, {
+        })
+        .then(function(res){
+
+            setRemoved(true);
+
+            axios.get('/api/user/').then(response => {
+                setUsers(response.data);
+                setLoading2(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     return (
