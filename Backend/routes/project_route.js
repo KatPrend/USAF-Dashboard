@@ -16,24 +16,26 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {project_name, project_type, contractor_id, contract_status, branch, contract_num, requirement_type, summary, ccar_num, start_date, end_date} = req.body;
+    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;
     let sql = `
-    INSERT INTO project (
-        project_name, 
-        project_type,
-        contractor_id,
-        branch,
-        requirement_type, 
+    INSERT INTO project ( 
+        project_name,  
+        project_type,  
+        contractor_id, 
+        branch_id, 
+        requirement_type_id, 
         summary, 
         ccar_num,
-        start_date,
-        end_date) 
+        start_date, 
+        end_date
+        )
+        
     VALUES (
         "${project_name}",
         "${project_type}",
         "${contractor_id}",
-        "${branch}",
-        "${requirement_type}", 
+        "${branch_id}",
+        "${requirement_type_id}", 
         "${summary}", 
         "${ccar_num}",
         "${start_date}",
@@ -48,15 +50,45 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-router.put('/', (req, res)=>{
-    res.send({message:"TODO: Make an update project endpoint"})
+router.put('/:projectid', (req, res)=>{
+    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
+    
+    let sql = `
+    UPDATE project
+    SET
+        project_name = "${project_name}",
+        project_type = "${project_type}",  
+        contractor_id =  "${contractor_id}",
+        branch_id = "${branch_id}",
+        requirement_type_id = "${requirement_type_id}", 
+        summary = "${summary}",
+        ccar_num = "${ccar_num}",
+        start_date =  "${start_date}",
+        end_date = "${end_date}"
+    WHERE id = ${req.params.projectid};  
+    `
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+router.delete("/:projectid", (req, res)=>{
+    let sql = `
+    DELETE FROM project
+    WHERE id = ${req.params.projectid}`;
+
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 })
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete project endpoint"})
-})
-
-// Get a Project with user email
+// Get Projects with user Id
 router.get('/userId/:userId', (req, res) => {
     let sql = `
     SELECT * 
@@ -91,18 +123,36 @@ router.get('/:projectid', (req, res) => {
 
 // Grabbing all of the project information
 router.get('/schedule/:projectid', (req, res) => {
+    
     let sql = `
     SELECT 
-        id as ID, 
-        task_name as "Name", 
-        duration as "Duration", 
-        start_date as "Start", 
-        finish_date as "End", 
-        predecessors as "Predecessors"
-    FROM 
-        project_information 
-    WHERE 
-        project_id = ${req.params.projectid}`;
+        pm.id as ID,
+        pm.task_name as "Name",
+        DATEDIFF(pm.end_date,pm.start_date) as "Duration",
+        pm.start_date as "Start",
+        pm.end_date as "End",
+        
+        (
+	        SELECT 
+	        GROUP_CONCAT(predecessor_milestone SEPARATOR ',' ) 
+	        FROM project_milestone_dependency  pmd
+	        WHERE pmd.successor_milestone = pm.id
+	        AND pmd.predecessor_project = pmd.successor_project
+        ) as "Predecessors",
+        (
+	        SELECT 
+	        GROUP_CONCAT(pm1.task_name SEPARATOR ',' ) 
+	        
+	        FROM project_milestone_dependency  pmd
+	        INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
+	        WHERE pmd.successor_milestone = pm.id
+	        AND pmd.predecessor_project = pmd.successor_project
+        ) as "Predecessors_Name"
+        
+	FROM project_milestones pm
+	WHERE pm.project_id = ${req.params.projectid}
+    `
+
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -110,46 +160,6 @@ router.get('/schedule/:projectid', (req, res) => {
         res.send(results)
 
     });
-});
-
-//Branch End Points
-router.get('/branches', (req, res) => {
-    let sql = `
-    SELECT * 
-    FROM branches`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
-});
-
-router.post('/newBranch/:newbranch', (req, res) => {
-    let sql = `
-    INSERT INTO bracnhes(
-        branch_name
-    ) VALUES(
-        ${req.params.newbranch}
-    )`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
-});
-
-router.delete('/removeBranch/:branchid', (req, res) => {
-    let sql = `
-    DELETE FROM bracnhes
-    WHERE id = ${req.params.branchid}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
 });
 
 module.exports = router;

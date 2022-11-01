@@ -10,9 +10,11 @@ export const UpdateContractors = () => {
     const [contractorToRemove, setContractorToRemove] = useState();
     const [contractorToAdd, setContractorToAdd] = useState("");
     const [summary, setSummary] = useState("");
+    const [added, setAdded] = useState(false);
+    const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/contractor/').then(response => {
+        axios.get('/api/contractor/noproject').then(response => {
             setData(response.data);
             setLoading(false);
         });
@@ -24,6 +26,8 @@ export const UpdateContractors = () => {
 
     let handleDropdownSelect = (e) => {
         setContractorToRemove(e);
+        setAdded(false);
+        setRemoved(false);
         console.log(e);
     }
 
@@ -32,7 +36,10 @@ export const UpdateContractors = () => {
         axios.delete(`/api/contractor/${contractorToRemove}`, {
         })
         .then(function(res){
-            axios.get('/api/contractor/').then(response => {
+
+            setRemoved(true);
+
+            axios.get('/api/contractor/noproject').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
@@ -44,10 +51,14 @@ export const UpdateContractors = () => {
 
     let handleNewContractor = (e) => {
         setContractorToAdd(e.target.value);
+        setAdded(false);
+        setRemoved(false);
     }
 
     let handleSummary = (e) => {
         setSummary(e.target.value);
+        setAdded(false);
+        setRemoved(false);
     }
 
     let handleAdd = async (e) => {
@@ -60,7 +71,9 @@ export const UpdateContractors = () => {
         .then(function(res){
             // res.data.insertId
 
-            axios.get('/api/contractor/').then(response => {
+            setAdded(true);
+
+            axios.get('/api/contractor/noproject').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
@@ -93,6 +106,11 @@ export const UpdateContractors = () => {
                     <Button className='submit-new-project admin mx-auto' onClick={handleAdd}>Submit</Button>
                 </Row>
                 <Row>
+                    <Col>
+                        {added ? <div style={{marginBottom:"5%"}}>Successfully added.</div> : null}
+                    </Col>
+                </Row>
+                <Row>
                     <h5>Remove Contractor</h5>
                     <Col>
                         <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Contractors">
@@ -106,6 +124,11 @@ export const UpdateContractors = () => {
                     </Col>
                     <Col>
                         <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {removed ? <div>Successfully Removed.</div> : null}
                     </Col>
                 </Row>
             </Container>

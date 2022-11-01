@@ -5,33 +5,72 @@ import "./admin.css";
 
 export const UpdateTitles = () => {
 
-    // const [isLoading, setLoading] = useState(true);
-    // const [data, setData] = useState();
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState();
     const [addTitle, setAddTitle] = useState("");
+    const [removeTitle, setRemoveTitle] = useState();
+    const [added, setAdded] = useState(false);
+    const [removed, setRemoved] = useState(false);
 
-    // useEffect(() => {
-    //     axios.get('/api/contractor/').then(response => {
-    //         setData(response.data);
-    //         setLoading(false);
-    //     });
-    // }, []);
+    useEffect(() => {
+        axios.get('/api/user/milJobs/notInUse/').then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+    }, []);
 
-    // if (isLoading) {
-    //     return <div className="mx-auto w-100">Loading...</div>;
-    // }
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
 
     let handleNewTitle = (e) => {
         setAddTitle(e.target.value);
+        setAdded(false);
+        setRemoved(false);
     }
 
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        
+        axios.post(`/api/user/newMilJob/${addTitle}`, {
+        })
+        .then(function(res){
+            // res.data.insertId
+
+            setAdded(true);
+
+            axios.get('/api/user/milJobs/notInUse/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
+    let handleDropdownSelect = (e) => {
+        setRemoveTitle(e);
+        setAdded(false);
+        setRemoved(false);
+        console.log(e);
     }
 
     let handleRemove = async () => {
+        axios.delete(`/api/user/removeMilJob/${removeTitle}`, {
+        })
+        .then(function(res){
 
+            setRemoved(true);
+
+            axios.get('/api/user/milJobs/notInUse/').then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     return (
@@ -51,19 +90,28 @@ export const UpdateTitles = () => {
                     <Button className='submit-new-project admin mx-auto' onClick={handleAdd}>Submit</Button>
                 </Row>
                 <Row>
+                    <Col>
+                        {added ? <div style={{marginBottom:"5%"}}>Successfully added.</div> : null}
+                    </Col>
+                </Row>
+                <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Military Job Title:</h5>
                     <Col>
                         <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Job Titles">
-                            {/* {data.map(({id, contractor_name, summary}) => (
+                            {data.map(({id, mil_job_title}) => (
                                 <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {contractor_name}
+                                    {mil_job_title}
                                 </Dropdown.Item>
-                            )) */
-                            }
+                            ))}
                         </DropdownButton> 
                     </Col>
                     <Col>
                         <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        {removed ? <div>Successfully Removed.</div> : null}
                     </Col>
                 </Row>
             </Container>
