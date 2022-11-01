@@ -119,16 +119,16 @@ router.get('/predecessor/:projectid', (req, res) => {
 // Get Project Successor's from a userID
 router.get('/userSuccessor/:userid', (req, res) => {
     let sql = `
-	SELECT 
+	SELECT
         p.project_name as pred_proj_name,
-        pm.task_name as predecessor_name,
-        pm.start_date as predecessor_start,
-        pm.end_date as predecessor_end,
+        pm.task_name as pred_name,
+        pm.start_date as pred_start,
+        pm.end_date as pred_end,
         
         p2.project_name as succ_proj_name,
-        pm1.task_name as successor_name,
-        pm1.start_date as successor_start,
-        pm1.end_date as successor_end
+        pm1.task_name as succ_name,
+        pm1.start_date as succ_start,
+        pm1.end_date as succ_end
     FROM project p
     INNER JOIN project_milestones pm ON pm.project_id = p.id
     INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    

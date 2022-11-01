@@ -57,7 +57,7 @@ router.put("put/:clinID", (req, res)=>{
     WHERE
         id = ${clinID}
     `;
-    
+
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

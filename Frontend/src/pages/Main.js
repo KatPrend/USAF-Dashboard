@@ -38,11 +38,8 @@ function Main() {
                         <SchedSum />
                     </Col>
                </Row>  
-               <Row>
-                    {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
-               </Row>
             </Container>
-            <br />
+            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
         </div>
     );
 }
