@@ -63,7 +63,7 @@ export const ContractStatus = (props) => {
                     </Row>
                 </Container>
             </Card.Header>
-            <Table striped bordered hover className="bg-light">
+            <Table responsive striped bordered hover className="bg-light">
                 <thead>
                     <tr>
                         <th>Timeline Status</th>

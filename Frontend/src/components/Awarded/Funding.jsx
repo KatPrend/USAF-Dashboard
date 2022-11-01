@@ -71,14 +71,6 @@ export const Funding = (props) => {
                 <ModalBody>
                     <Container>
                         <Row>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Independent Cost Estimate:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>
                         <Row>

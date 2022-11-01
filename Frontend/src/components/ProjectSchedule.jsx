@@ -34,7 +34,6 @@ function GanttChartDataFormat(JsonData){
 
     const data = [columns, ...Rows];
 
-    console.log(data);
 
     return (data);
 }
@@ -52,14 +51,105 @@ const options = {
 export const ProjectSchedule = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [infoData, setInfoData] = useState();
+    const [editData, setEditData] = useState();
+    const [columsEdited, setColumsEdited] = useState([]);
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/project/schedule/${props.data}`).then(response =>{
             setInfoData(response.data);
+            setEditData(response.data);
             setLoading(false);
         });
     }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        editData.map((currRow, index) => (
+            columsEdited.includes(index) === true ? console.log(currRow) : null
+        ))
+
+        setColumsEdited([]);
+
+    }
+
+    const handleName = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.Name = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleStart = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.Start = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleEnd = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.End = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handlePredecessors = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.Predecessors = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
 
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
@@ -78,57 +168,68 @@ export const ProjectSchedule = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <Table responsive striped bordered hover className="bg-light">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Start</th>
-                                <th>End</th>
-                                <th>Predecessors</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                infoData.map(({ID, Name, Start, End, Predecessors}) => (
-                                    <tr key={ID}>
-                                        <td>
-                                            <Form>
-                                                <Form.Control defaultValue={ID}/>
-                                            </Form>
-                                        </td>
-                                        <td>
-                                            <Form>
-                                                <Form.Control defaultValue={Name}/>
-                                            </Form>
-                                        </td>
-                                        <td>
-                                            <Form>
-                                                <Form.Control value={format(new Date(Start), 'yyyy-MM-dd')} type='date'/>
-                                            </Form>
-                                        </td>
-                                        <td>
-                                            <Form>
-                                                <Form.Control value={format(new Date(End), 'yyyy-MM-dd')} type='date'/>
-                                            </Form>
-                                        </td>
-                                        <td>
-                                            <Form>
-                                                <Form.Control defaultValue={Predecessors}/>
-                                            </Form>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </Table>
+                    <Form onSubmit={handleSubmit}>
+                        <Button className='Button' type="submit">Save Schedule Data</Button>
+                        <Table responsive striped bordered hover className="bg-light">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Predecessors</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    infoData.map(({ID, Name, Start, End, Predecessors}, index) => (
+                                        <tr key={ID}>
+                                            <td>
+                                                {ID}
+                                            </td>
+                                            <td>
+                                                <Form.Group key={ID}>
+                                                    <Form.Control 
+                                                    defaultValue={Name}
+                                                    onChange={(e) => handleName(e, index)}/>
+                                                </Form.Group>
+                                            </td>
+                                            <td>
+                                                <Form.Group key={ID}>
+                                                    <Form.Control 
+                                                    value={format(new Date(Start), 'yyyy-MM-dd')} 
+                                                    type='date'
+                                                    onChange={(e) => handleStart(e, index)}/>
+                                                </Form.Group>
+                                            </td>
+                                            <td>
+                                                <Form.Group key={ID}>
+                                                    <Form.Control 
+                                                    value={format(new Date(End), 'yyyy-MM-dd')} 
+                                                    type='date'
+                                                    onChange={(e) => handleEnd(e, index)}/>
+                                                </Form.Group>
+                                            </td>
+                                            <td>
+                                                <Form.Group key={ID}>
+                                                    <Form.Control 
+                                                    defaultValue={Predecessors}
+                                                    onChange={(e) => handlePredecessors(e, index)}/>
+                                                </Form.Group>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                            </tbody>
+                        </Table>
+                    </Form>
+                    
                 </ModalBody>
             </Modal>
         </ModalDialog>
