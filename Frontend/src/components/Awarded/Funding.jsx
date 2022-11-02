@@ -32,7 +32,7 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/obligation/obligation/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });
@@ -91,7 +91,8 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ExpenditureFundingDataTableEditable data={AwardedProjectFundingDataExpenditure}/>
+                                {/* AwardedProjectFundingDataExpenditure */}
+                                <ExpenditureFundingDataTableEditable data={expen_data}/>
                             </Col>
                         </Row>
                     </Container>
