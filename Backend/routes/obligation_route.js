@@ -38,7 +38,8 @@ router.get('/obligation_table/:project_id', (req, res) => {
     FROM 
         obligation_funding_data 
     WHERE 
-        project_id=${req.params.project_id}`;
+        project_id=${req.params.project_id}
+    ORDER BY date`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
