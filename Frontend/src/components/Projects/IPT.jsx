@@ -1,24 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, Form } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 import "./projectData.css"
 
 export const IPT = (props) => {
-    const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState();
+    const [isLoading1, setLoading1] = useState(true);
+    const [ipt, setIpt] = useState();
+    const [isLoading2, setLoading2] = useState(true);
+    const [titles, setTitles] = useState();
+    const [isLoading3, setLoading3] = useState(true);
+    const [users, setUsers] = useState()
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+
+    const [addUsername, setAddUsername] = useState(1);
+    const [addUsertitle, setAddUsertitle] = useState(1);
+    const [removeUser, setRemoveUser] = useState(1);
 
     useEffect(() => {
         axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
-            setData(response.data);
-            setLoading(false);
+            setIpt(response.data);
+            setLoading1(false);
         });
     }, []);
 
+    useEffect(() => {
+        axios.get(`/api/user/milJobs/`).then(response =>{
+            setTitles(response.data);
+            setLoading2(false);
+        });
+    }, []);
 
-    if(isLoading){
+    useEffect(() => {
+        axios.get(`/api/user/`).then(response =>{
+            setUsers(response.data);
+            setLoading3(false);
+        });
+    }, []);
+
+    if(isLoading1 || isLoading2 || isLoading3){
         return <div className="mx-auto w-75">Loading...</div>;
+    }
+
+    let handleUsername = (e) => {
+        setAddUsername(e.target.value);
+    }
+    let handleUserTitle = (e) => {
+        setAddUsertitle(e.target.value);
+    }
+    let handleRemoveUser = (e) => {
+        setRemoveUser(e.target.value);
+    }
+
+    let handleAdd = async (e) => {
+        e.preventDefault();
+
+        console.log("Name: " + addUsername);
+        console.log("Title: " + addUsertitle);
+
+        // post:
+    };
+
+    let handleRemove = async () => {
+        console.log("Remove " + removeUser);
     }
 
     return (
@@ -42,6 +86,52 @@ export const IPT = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
+                        <Row>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Add IPT Member</h4>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Job Title:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select" columns sm="auto" onChange={handleUserTitle}>
+                                            {
+                                                titles.map(({id, mil_job_title}) => (
+                                                    <option value={id} key={id} eventKey={id}>{mil_job_title}</option>
+                                                ))
+                                            }
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm={3}>User:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select" columns sm="auto" onChange={handleUsername}>
+                                            {
+                                                users.map(({id, user_name}) => (
+                                                    <option value={id} key={id} eventKey={id}>{user_name}</option>
+                                                ))
+                                            }
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleAdd}>Add</Button>
+                            </Col>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Remove IPT Member</h4>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm={3}>User:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select" columns sm="auto" onChange={handleRemoveUser}>
+                                            {
+                                                ipt.map(({id, user_name}) => (
+                                                    <option value={id} key={id} eventKey={id}>{user_name}</option>
+                                                ))
+                                            }
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleRemove}>Remove</Button>
+                            </Col>
+                        </Row>
                     </Container>
                 </ModalBody>
             </Modal>
@@ -64,7 +154,7 @@ export const IPT = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({id, mil_job_title, user_name}) => (
+                    ipt.map(({id, mil_job_title, user_name}) => (
                         <div key = {id}>
                             <p className='project-data'><span>{mil_job_title}:</span> {user_name}</p>
                         </div>

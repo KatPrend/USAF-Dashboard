@@ -10,10 +10,6 @@ import { NavB } from '../components/NavB';
 import './page.css';
 import { useLocation } from 'react-router-dom';
 
-
-
-//Move this ish to the component
-
 function AwardedProject(){
     const location = useLocation();
     const {id} = location.state;
