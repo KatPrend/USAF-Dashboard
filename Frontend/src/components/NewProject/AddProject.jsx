@@ -38,7 +38,7 @@ export const AddProject = ({getProjectName}) => {
 
     const handleContractor = (e) => {
       setContractor(e.target.value);
-  };
+    };
 
     const handleBranch = (e) => {
         setBranch(e.target.value);

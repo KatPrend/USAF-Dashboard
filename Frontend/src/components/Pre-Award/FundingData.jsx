@@ -44,7 +44,6 @@ export const FundingData = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -52,20 +51,6 @@ export const FundingData = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
-                        <Row>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Independent Cost Estimate:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Projected Contract Value:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>

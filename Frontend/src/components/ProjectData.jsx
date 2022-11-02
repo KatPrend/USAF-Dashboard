@@ -23,6 +23,11 @@ export const ProjectData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("1");
+    }
+
 
     return (
         <>
@@ -37,7 +42,7 @@ export const ProjectData = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
+                                    <Button className='Button' type='submit' form='ProjectDataEdit'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -46,7 +51,7 @@ export const ProjectData = (props) => {
                 <ModalBody>
                     {
                         data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
-                            <Form>
+                            <Form key={id} id="ProjectDataEdit" onSubmit={handleSubmit}>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm={3}>Project Name</Form.Label>
                                     <Col sm={7}> 

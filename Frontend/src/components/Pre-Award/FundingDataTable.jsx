@@ -1,5 +1,8 @@
 import React from "react";
-import { Table, Form } from 'react-bootstrap';
+import { useEffect } from "react";
+import { useState } from "react";
+import { Table, Form, Button } from 'react-bootstrap';
+import { format } from 'date-fns';
 
 
 export function FundingDataTable({data}){
@@ -41,17 +44,115 @@ export function FundingDataTable({data}){
 
 export function FundingDataTableEditable({data}){
 
+    const [editData, setEditData] = useState();
+    const [columsEdited, setColumsEdited] = useState([]);
+
+    useEffect(() => {
+        setEditData(data);
+    })
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        editData.map((currRow, index) => (
+            columsEdited.includes(index) === true ? console.log(currRow) : null
+        ))
+
+        setColumsEdited([]);
+
+    }
+
+    const handleDate = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.date = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleFundingType = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.FundingType = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleFiscalYear = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.FiscalYear = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleProjected = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.Projected = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
     return(
-        <div>
+        <Form onSubmit={handleSubmit}>
+            <Button className='Button' type="submit">Save Obligation Data</Button>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
-                                    <Form.Control defaultValue={info.date} type='date'/>
-                                </Form>
+                                <Form.Group key={index}>
+                                    <Form.Control 
+                                    value={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    type='date'
+                                    onChange={(e) => handleDate(e, index)}/>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -59,9 +160,11 @@ export function FundingDataTableEditable({data}){
                         <td>Funding Type</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
-                                    <Form.Control defaultValue={info.FundingType}/>
-                                </Form>
+                                <Form.Group key={index}>
+                                    <Form.Control 
+                                    defaultValue={info.FundingType}
+                                    onChange={(e) => handleFundingType(e, index)}/>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -69,9 +172,11 @@ export function FundingDataTableEditable({data}){
                         <td>Fiscal Year</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
-                                    <Form.Control defaultValue={info.FiscalYear}/>
-                                </Form>
+                                <Form.Group key={index}>
+                                    <Form.Control 
+                                    defaultValue={info.FiscalYear}
+                                    onChange={(e) => handleFiscalYear(e, index)}/>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
@@ -79,14 +184,17 @@ export function FundingDataTableEditable({data}){
                         <td>Projected</td>
                         {data.map( (info, index) => (
                             <td key={index}>
-                                <Form>
-                                    <Form.Control defaultValue={info.Projected}/>
-                                </Form>
+                                <Form.Group key={index}>
+                                    <Form.Control 
+                                    defaultValue={info.Projected}
+                                    onChange={(e) => handleProjected(e, index)}/>
+                                </Form.Group>
                             </td>
                         ))}
                     </tr>
                 </tbody>
             </Table>
-        </div>
+        </Form>
     )
 }
+
