@@ -147,17 +147,10 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 });
 
 //Delete User
-router.delete("/deleteUser/:userid", (req, res)=>{
-    // let sql = `
-    // DELETE 
-    // FROM users 
-    // WHERE id = ${req.params.userid}`;
+router.delete("/:userid", (req, res)=>{
     let sql = `
-    DELETE FROM user_project_link
-    WHERE user_id = ${req.params.userid};
-    DELETE FROM users
-    WHERE id = ${req.params.userid};
-    DELETE FROM users
+    DELETE 
+    FROM users 
     WHERE id = ${req.params.userid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){

@@ -3,22 +3,6 @@ const router = express.Router()
 
 var db = require('../database');
 
-router.get('/', (req, res) => {
-    res.send({message:"TODO: Make an get funds endpoint"})
-});
-
-router.post('/', (req, res) => {
-    res.send({message:"TODO: Make an post funds endpoint endpoint"})
-});
-
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update funds endpoint"})
-});
-
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete funds endpoint"})
-});
-
 router.get('/gettotal/:project_id', (req, res) => {
     let sql = `
     SELECT SUM(curr_obli_actual) 
@@ -34,6 +18,7 @@ router.get('/gettotal/:project_id', (req, res) => {
 
 // ------------------ Obligation -------------------
 
+// Get Obligation plan for a project
 router.get('/obligation/:project_id', (req, res) => {
     let sql = `
     SELECT 
@@ -54,6 +39,7 @@ router.get('/obligation/:project_id', (req, res) => {
     });
 });
 
+// Get Obligation Table Plan for a project 
 router.get('/obligation_table/:project_id', (req, res) => {
     let sql = `
     SELECT 
@@ -76,6 +62,7 @@ router.get('/obligation_table/:project_id', (req, res) => {
     });
 });
 
+// Get all Funding Types
 router.get('/allFundingTypes', (req, res) => {
     let sql = `
     SELECT * 
@@ -89,15 +76,15 @@ router.get('/allFundingTypes', (req, res) => {
     });
 });
 
+// Making new Funding Type
 router.post('/postNewFundingType', (req, res) => {
-    const {newfunding} = req.body;
+    const {funding_type} = req.body;
     let sql = `
     INSERT INTO funding_types(
-        funding_type,
-        status
+        funding_type
     )
     VALUES(
-        ${newfunding}
+        "${funding_type}"
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
@@ -107,6 +94,7 @@ router.post('/postNewFundingType', (req, res) => {
     });
 });
 
+//Deactive a Funding Type
 router.put('/deactivateFundingType/:fundingid', (req, res) => {
     let sql = `
     UPDATE funding_types
@@ -121,6 +109,7 @@ router.put('/deactivateFundingType/:fundingid', (req, res) => {
     })
 });
 
+//Deleting a Funding Type
 router.delete('/removeFundingTypes/:fundingid', (req, res) => {
     let sql = `
     DELETE FROM funding_types
@@ -133,10 +122,15 @@ router.delete('/removeFundingTypes/:fundingid', (req, res) => {
     });
 });
 
-router.put('/updateFundingType/:id/newFundingType/:newFunding', (req,res) => {
-    // req.body here?
+//Update a Funding Type
+router.put('/updateFundingType/:id', (req,res) => {
+    const {funding_type, status} = req.body;
     let sql = `
-    `;
+    UPDATE funding_types
+    SET 
+        funding_type = "${funding_type}",
+        status = ${status}
+    WHERE id = ${req.params.id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -147,6 +141,7 @@ router.put('/updateFundingType/:id/newFundingType/:newFunding', (req,res) => {
 
 // ------------------ Expenditure -------------------
 
+// Get Expenditures for a project
 router.get('/expenditure/:project_id', (req, res) => {
     let sql = `
     SELECT 
@@ -171,7 +166,7 @@ router.put('/updateExpenditure', (req, res) => {
     UPDATE expenditure_funding_data
     SET
         project_id = ${projectID},
-        expen_funding_date = ${expen_funding_date},
+        expen_funding_date = "${expen_funding_date}",
         expen_projected = ${expen_projected},
         expen_actual = ${expen_actual}
     WHERE id = ${expenID}`;
@@ -183,7 +178,7 @@ router.put('/updateExpenditure', (req, res) => {
     });
 });
 
-//Post into Expenditure 
+//Make a new Expenditure 
 router.post('/newExpenditure', (req, res) => {
     const {
         project_id, 
@@ -209,9 +204,9 @@ router.post('/newExpenditure', (req, res) => {
         expen_actual_total
     ) VALUES(
         ${project_id},
-        ${expen_funding_date},
-        ${expen_funding_type},
-        ${expen_fiscal_year},
+        "${expen_funding_date}",
+        "${expen_funding_type}",
+        "${expen_fiscal_year}",
         ${expen_projected},
         ${expen_proj_total},
         ${expen_actual},
@@ -268,8 +263,8 @@ router.post('/newApprovedFunding', (req,res) => {
         approved_amount
     ) VALUES(
         ${project_id},
-        ${appro_funding_type},
-        ${appro_fiscal_year},
+        "${appro_funding_type}",
+        "${appro_fiscal_year}",
         ${approved_amount}
     )`;
     let query = db.query(sql, (err, results)=>{
@@ -287,8 +282,8 @@ router.put('/updateApprovedFunding', (req, res) => {
     UPDATE approved_funding
     SET
         project_id = ${projectID},
-        appro_funding_type = ${appro_funding_type},
-        appro_fiscal_year = ${appro_fiscal_year},
+        appro_funding_type = "${appro_funding_type}",
+        appro_fiscal_year = "${appro_fiscal_year}",
         approved_amount = ${approved_amount}
     WHERE id = ${approvedID}`;
     let query = db.query(sql, (err, results)=>{
