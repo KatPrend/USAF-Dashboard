@@ -33,7 +33,7 @@ router.post('/', (req,res) => {
         approved_amount
     ) VALUES(
         ${project_id},
-        ${appro_funding_type},
+        "${appro_funding_type}",
         "${appro_fiscal_year}",
         ${approved_amount}
     )`;

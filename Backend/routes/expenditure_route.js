@@ -45,12 +45,8 @@ router.post('/', (req, res) => {
     const {
         project_id, 
         expen_funding_date, 
-        expen_funding_type, 
-        expen_fiscal_year, 
         expen_projected,
-        expen_proj_total,
-        expen_actual,
-        expen_actual_total
+        expen_actual
     } = req.body;
     let sql = `
     INSERT INTO expenditure_funding_data(
@@ -60,13 +56,9 @@ router.post('/', (req, res) => {
         expen_actual
     ) VALUES(
         ${project_id},
-        "${expen_funding_date}",
-        "${expen_funding_type}",
-        "${expen_fiscal_year}",
+        "${expen_funding_date}"
         ${expen_projected},
-        ${expen_proj_total},
-        ${expen_actual},
-        ${expen_actual_total}
+        ${expen_actual}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
