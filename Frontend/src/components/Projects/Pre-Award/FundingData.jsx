@@ -18,7 +18,7 @@ export const FundingData = (props) => {
     const {id} =location.state;
 
     useEffect(() => {
-        axios.get(`/api/funds/obligation_table/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/obligation_table/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading(false);
         });

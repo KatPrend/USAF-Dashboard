@@ -7,12 +7,14 @@ var db = require('../database');
 router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT 
-        DATE_FORMAT(expen_funding_date,'%m/%d/%y') as date, 
-        expen_funding_type as FundingType, expen_fiscal_year as "FiscalYear", 
-        expen_projected as Projected, expen_proj_total as "Projected Total", 
-        expen_actual as Actual, expen_actual_total as "Actual Total" 
-    FROM expenditure_funding_data 
-    WHERE project_id=${req.params.project_id}`;
+        DATE_FORMAT(expen_funding_date,'%m/%d/%y') as date,
+        expen_projected as Projected, 
+        expen_projected_total as "Projected Total", 
+        expen_actual as Actual, 
+        expen_actual_total as "Actual Total" 
+    FROM view_expenditure 
+    WHERE project_id=${req.params.project_id}
+    ORDER BY date`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -45,12 +47,8 @@ router.post('/', (req, res) => {
     const {
         project_id, 
         expen_funding_date, 
-        expen_funding_type, 
-        expen_fiscal_year, 
         expen_projected,
-        expen_proj_total,
-        expen_actual,
-        expen_actual_total
+        expen_actual
     } = req.body;
     let sql = `
     INSERT INTO expenditure_funding_data(
@@ -60,13 +58,9 @@ router.post('/', (req, res) => {
         expen_actual
     ) VALUES(
         ${project_id},
-        "${expen_funding_date}",
-        "${expen_funding_type}",
-        "${expen_fiscal_year}",
+        "${expen_funding_date}"
         ${expen_projected},
-        ${expen_proj_total},
-        ${expen_actual},
-        ${expen_actual_total}
+        ${expen_actual}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){

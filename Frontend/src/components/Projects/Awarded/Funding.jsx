@@ -22,7 +22,7 @@ export const Funding = (props) => {
 
     useEffect(() => {
         // id.project_id
-        axios.get(`/api/funds/expenditure/${props.data}`).then(response =>{
+        axios.get(`/api/expenditure/${props.data}`).then(response =>{
             setExpenData(response.data);
             setLoading1(false);
         });
@@ -32,7 +32,7 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/funds/obligation/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });
@@ -91,7 +91,8 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ExpenditureFundingDataTableEditable data={AwardedProjectFundingDataExpenditure}/>
+                                {/* AwardedProjectFundingDataExpenditure */}
+                                <ExpenditureFundingDataTableEditable data={expen_data}/>
                             </Col>
                         </Row>
                     </Container>

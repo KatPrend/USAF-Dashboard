@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 });
 
 // Making new Funding Type
-router.post('/postNewFundingType', (req, res) => {
+router.post('/', (req, res) => {
     const {funding_type} = req.body;
     let sql = `
     INSERT INTO funding_types(
@@ -36,7 +36,7 @@ router.post('/postNewFundingType', (req, res) => {
 });
 
 // Deactive a Funding Type
-router.put('deactivate/:fundingid', (req, res) => {
+router.put('/deactivate/:fundingid', (req, res) => {
     let sql = `
     UPDATE funding_types
     SET status = '0'
@@ -65,7 +65,7 @@ router.delete('/:fundingid', (req, res) => {
 
 
 //Update a Funding Type
-router.put('/updateFundingType/:id', (req,res) => {
+router.put('/:id', (req,res) => {
     const {funding_type, status} = req.body;
     let sql = `
     UPDATE funding_types
