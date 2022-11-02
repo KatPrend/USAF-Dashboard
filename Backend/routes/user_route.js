@@ -1,6 +1,5 @@
 const express = require("express");
-const { user } = require("../config");
-const router = express.Router()
+const router = express.Router();
 
 var db = require('../database');
 
@@ -98,10 +97,11 @@ router.post('/newAdmin', (req, res) => {
         user_role,
         user_email
     ) VALUES(
-        ${user_name},
+        "${user_name}",
         3,
-        ${user_email}
-    )`;
+        "${user_email}"
+    );INSERT INTO user_project_link
+    SELECT (SELECT id FROM users WHERE user_name = "${user_name}"), id, NULL FROM project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -128,7 +128,7 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 });
 
 //Delete User
-router.delete("/:userid", (req, res)=>{
+router.delete("/del/:userid", (req, res)=>{
     let sql = `
     DELETE 
     FROM users 
@@ -181,64 +181,6 @@ router.get('/userRole/:userId', (req, res) => {
     SELECT *
     FROM users u 
     WHERE u.id = '${req.params.userId}'`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-// Grabbing all mil job titles
-router.get('/milJobs', (req, res) => {
-    let sql = `
-    SELECT * FROM military_job_titles`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-// get military job titles that are not in use
-router.get('/milJobs/notInUse', (req, res) => {
-    let sql = `
-    SELECT * 
-    FROM military_job_titles m
-    WHERE m.id NOT IN(SELECT DISTINCT(u.mil_job_title_id)
-    FROM users u
-    WHERE u.mil_job_title_id IS NOT NULL);`
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-//New Mill Job Title
-router.post('/newMilJob/:newJob', (req, res) => {
-    let sql = `
-    INSERT INTO military_job_titles(
-        mil_job_title
-    ) VALUES (
-        '${req.params.newJob}'
-    )`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-// Update Mil Job title table
-
-router.delete('/removeMilJob/:milid', (req, res) => {
-    let sql = `
-    DELETE FROM military_job_titles
-    WHERE id = '${req.params.milid}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

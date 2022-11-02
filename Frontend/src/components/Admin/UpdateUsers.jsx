@@ -31,7 +31,7 @@ export const UpdateUsers = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/user/milJobs/').then(response => {
+        axios.get('/api/mjt/milJobs/').then(response => {
             setTitles(response.data);
             setLoading1(false);
         });
@@ -211,7 +211,7 @@ export const UpdateUsers = () => {
     }
     let handleRemove = async () => {
 
-        axios.delete(`/api/user/${removeUser}`, {
+        axios.delete(`/api/user/del/${removeUser}`, {
         })
         .then(function(res){
 

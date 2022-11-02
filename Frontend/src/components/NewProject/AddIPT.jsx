@@ -9,7 +9,7 @@ export const AddIPT = () => {
     const [jobTitles, setJobTitles] = useState();
 
     useEffect(() => {
-        axios.get('/api/user/milJobs/').then(response => {
+        axios.get('/api/mjt/milJobs/').then(response => {
             setJobTitles(response.data);
             setLoading(false);
         });
