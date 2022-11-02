@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import { Dependencies } from '../components/Awarded/Dependencies';
+import { Dependencies } from '../components/Projects/Awarded/Dependencies';
 //import { Documents } from '../components/Awarded/Documents';
-import { Funding } from '../components/Awarded/Funding';
-import { IPT } from '../components/IPT';
-import { ProjectData } from '../components/ProjectData';
-import { ProjectSchedule } from '../components/ProjectSchedule';
+import { Funding } from '../components/Projects/Awarded/Funding';
+import { IPT } from '../components/Projects/IPT';
+import { ProjectData } from '../components/Projects/ProjectData';
+import { ProjectSchedule } from '../components/Projects/ProjectSchedule';
 import { NavB } from '../components/NavB';
 import './page.css';
 import { useLocation } from 'react-router-dom';
-
-
-
-//Move this ish to the component
 
 function AwardedProject(){
     const location = useLocation();
@@ -36,7 +32,7 @@ function AwardedProject(){
                         <ProjectData data={id} userRole={userRole} />
                     </Col>
                     <Col>
-                        <IPT data={id} userRole={userRole} />
+                        <IPT data={id} userid={userid} userRole={userRole} />
                     </Col>
                     <Col>
                         <Dependencies userRole={userRole} />
@@ -54,7 +50,7 @@ function AwardedProject(){
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule data={id}/>
+                        <ProjectSchedule data={id} userRole={userRole}/>
                     </Col>
                 </Row>
             </Container>

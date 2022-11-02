@@ -55,7 +55,7 @@ export const ContractStatus = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Contract Status</span>
                         </Col>
-                        { props.userRole !== "Admin" ? null : <Col style={{textAlign: 'right'}}>
+                        { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                             </Col>
                         }

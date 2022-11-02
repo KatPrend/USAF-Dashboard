@@ -11,8 +11,6 @@ export const AddProject = ({getProjectName}) => {
     const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
-    const [projectStart, setProjectStart] = useState("");
-    const [projectEnd, setProjectEnd] = useState("");
 
     const [isLoading, setLoading] = useState(true);
     const [contractors, setContractors] = useState();
@@ -56,14 +54,6 @@ export const AddProject = ({getProjectName}) => {
         setCcar(e.target.value);
     };
 
-    const handleProjectStart = (e) => {
-      setProjectStart(e.target.value);
-    };
-    
-    const handleProjectEnd = (e) => {
-        setProjectEnd(e.target.value);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         alert("Project Added");
@@ -77,9 +67,7 @@ export const AddProject = ({getProjectName}) => {
             branch: branch,
             requirement_type: requirementType,
             summary: summary,
-            ccar_num: ccarNum,
-            start_date: projectStart,
-            end_date: projectEnd
+            ccar_num: ccarNum
         })
         .then(function(res){
             //console.log(res);
@@ -179,27 +167,6 @@ export const AddProject = ({getProjectName}) => {
                 placeholder=" Enter Ccar Number"
                 type="Ccar"
                 onChange={handleCcar}
-              />
-            </Col>
-          </Form.Group>
-          <br />
-          <Form.Group as={Row} className='project-element'>
-            <Form.Label column xs="auto">Start Date:</Form.Label>
-            <Col xs="auto">
-              <Form.Control
-                placeholder="Start Date"
-                type="date"
-                value={projectStart}
-                onChange={handleProjectStart}
-              />
-            </Col>
-            <Form.Label column xs="auto">End Date:</Form.Label>
-            <Col xs="auto">
-              <Form.Control
-                placeholder="End Date"
-                type="date"
-                value={projectEnd}
-                onChange={handleProjectEnd}
               />
             </Col>
           </Form.Group>
