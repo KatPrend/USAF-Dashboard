@@ -8,7 +8,6 @@ import { ProjectSchedule } from '../components/ProjectSchedule';
 import { ContractStatus } from '../components/Pre-Award/ContractStatus';
 import { FundingData } from '../components/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
-import { AwardedModal } from '../components/Pre-Award/AwardedModal';
 
 function PreAwardProject(){
     const location = useLocation();
@@ -38,7 +37,7 @@ function PreAwardProject(){
                 <br />
                 <Row>
                     <Col>
-                        <ContractStatus data={id}/>
+                        <ContractStatus data={id} userRole={userRole}/>
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>
@@ -53,7 +52,7 @@ function PreAwardProject(){
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule data={id}/>
+                        <ProjectSchedule data={id} userRole={userRole}/>
                     </Col>
                 </Row>
             </Container>

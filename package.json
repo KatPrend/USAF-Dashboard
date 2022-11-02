@@ -19,6 +19,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.20",
+    "postman-to-swagger": "^0.0.9",
     "read-excel-file": "^5.5.1"
   }
 }
