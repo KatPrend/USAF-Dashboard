@@ -146,8 +146,7 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
     })
 });
 
-
-// Delete user
+//Delete User
 router.delete("/:userid", (req, res)=>{
     let sql = `
     DELETE 
