@@ -32,7 +32,7 @@ function AwardedProject(){
                         <ProjectData data={id} userRole={userRole} />
                     </Col>
                     <Col>
-                        <IPT data={id} userRole={userRole} />
+                        <IPT data={id} userid={userid} userRole={userRole} />
                     </Col>
                     <Col>
                         <Dependencies userRole={userRole} />

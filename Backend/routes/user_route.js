@@ -17,20 +17,18 @@ router.get('/', (req, res) => {
 
 //Create New User
 router.post('/', (req, res) => {
-    const {contractor_id, user_name, user_role, user_email, mil_job_title_id} = req.body;
+    const {contractor_id, user_name, user_role, user_email} = req.body;
     let sql = `
     INSERT INTO users (
         contractor_id,
         user_name,
         user_role,
-        user_email,
-        mil_job_title_id) 
+        user_email) 
     VALUES (
         "${contractor_id}",
         "${user_name}",
         "${user_role}", 
-        "${user_email}", 
-        "${mil_job_title_id}"
+        "${user_email}"
         )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -67,18 +65,16 @@ router.post('/newContractor', (req, res) => {
 
 // Adding a IPT Member 
 router.post('/newIPT', (req, res) => {
-    const {user_name, user_email, mil_job_title_id} = req.body;
+    const {user_name, user_email} = req.body;
     let sql = `
     INSERT INTO users(
         user_name,
         user_role,
-        user_email,
-        mil_job_title_id
+        user_email
     ) VALUES(
-        ${user_name},
+        '${user_name}',
         2,
-        ${user_email},
-        ${mil_job_title_id}
+        '${user_email}',
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -98,9 +94,9 @@ router.post('/newAdmin', (req, res) => {
         user_role,
         user_email
     ) VALUES(
-        ${user_name},
+        '${user_name}',
         3,
-        ${user_email}
+        '${user_email}'
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -112,13 +108,12 @@ router.post('/newAdmin', (req, res) => {
 });
 
 //Update User Role
-router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, res)=>{
+router.put("/changeUserRole/:userid/role/:userRole/", (req, res)=>{
     let sql = `
     UPDATE users 
     SET 
-        user_role = ${req.params.userRole}, 
-        mil_job_title = ${req.params.jobTitle}
-    WHERE id = ${req.params.userid} `;
+        user_role = '${req.params.userRole}'
+    WHERE id = '${req.params.userid}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -128,7 +123,7 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 });
 
 //Delete User
-router.delete("/:userid", (req, res)=>{
+router.delete("/del/:userid", (req, res)=>{
     let sql = `
     DELETE 
     FROM users 
@@ -269,11 +264,10 @@ router.post('/addToUPL', (req,res) => {
 });
 
 //Remove IPT Member from UPL
-router.delete('/removeUPL', (req, res) => {
-    const {user_id, project_id} = req.body;
+router.delete('/removeUPL/:userId/:projectId', (req, res) => {
     let sql = `
     DELETE FROM user_project_link
-    WHERE user_id = ${user_id} AND project_id = ${project_id}`;
+    WHERE user_id = ${req.params.userId} AND project_id = ${req.params.projectId}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

@@ -15,11 +15,9 @@ export const UpdateUsers = () => {
 
     const [adminName, setAdminName] = useState("");
     const [adminEmail, setAdminEmail] = useState("");
-    const [adminTitle, setAdminTitle] = useState(1);
 
     const [IPTName, setIPTName] = useState("");
     const [IPTEmail, setIPTEmail] = useState("");
-    const [IPTTitle, setIPTTitle] = useState(1);
 
     const [contractorName, setContractorName] = useState("");
     const [contractorEmail, setContractorEmail] = useState("");
@@ -71,14 +69,6 @@ export const UpdateUsers = () => {
         setAddedContractor(false);
         setRemoved(false);
     }
-    let handleAdminTitle = (e) => {
-        setAdminTitle(e.target.value);
-
-        setAddedAdmin(false);
-        setAddedIPT(false);
-        setAddedContractor(false);
-        setRemoved(false);
-    }
     let handleAddAdmin = async (e) => {
         e.preventDefault();
 
@@ -86,8 +76,7 @@ export const UpdateUsers = () => {
             contractor_id: '1',
             user_name: adminName,
             user_role: 'Admin',
-            user_email: adminEmail,
-            mil_job_title: adminTitle
+            user_email: adminEmail
         })
         .then(function(res){
             //console.log(res);
@@ -119,27 +108,17 @@ export const UpdateUsers = () => {
         setAddedContractor(false);
         setRemoved(false);
     }
-    let handleIPTTitle = (e) => {
-        setIPTTitle(e.target.value);
-
-        setAddedAdmin(false);
-        setAddedIPT(false);
-        setAddedContractor(false);
-        setRemoved(false);
-    }
     let handleAddIPT = async (e) => {
         e.preventDefault();
 
         console.log("Name: " + IPTName);
         console.log("Email: " + IPTEmail);
-        console.log("Title: " + IPTTitle);
 
         axios.post('/api/user/', {
             contractor_id: '1',
             user_name: IPTName,
             user_role: 'IPT Member',
-            user_email: IPTEmail,
-            mil_job_title: IPTTitle
+            user_email: IPTEmail
         })
         .then(function(res){
             //console.log(res);
@@ -211,7 +190,7 @@ export const UpdateUsers = () => {
     }
     let handleRemove = async () => {
 
-        axios.delete(`/api/user/${removeUser}`, {
+        axios.delete(`/api/user/del/${removeUser}`, {
         })
         .then(function(res){
 
@@ -246,16 +225,6 @@ export const UpdateUsers = () => {
                                 <Form.Control type="useremail" placeholder='Email' onChange={handleAdminEmail} />
                             </Col>
                         </Form.Group>
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={3}>Title:</Form.Label>
-                            <Col sm={7}>
-                                <Form.Control as="select" show={true} type="usertitle" placeholder='Tiele' onChange={handleAdminTitle}>
-                                    {titles.map(({id, mil_job_title}) => (
-                                        <option value={id} key={id} eventKey={id}>{mil_job_title}</option>
-                                    ))}
-                                </Form.Control>
-                            </Col>
-                        </Form.Group>
                     </Form>
                     <Button className='submit-new-project admin mx-auto' onClick={handleAddAdmin}>Submit</Button>
                 </Row>
@@ -277,16 +246,6 @@ export const UpdateUsers = () => {
                             <Form.Label column sm={3}>Email:</Form.Label>
                             <Col sm={7}>
                                 <Form.Control type="useremail" placeholder='Email' onChange={hanldeIPTEmail} />
-                            </Col>
-                        </Form.Group>
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={3}>Title:</Form.Label>
-                            <Col sm={7}>
-                                <Form.Control as="select" show={true} type="usertitle" placeholder='Title' onChange={handleIPTTitle}>
-                                    {titles.map(({id, mil_job_title}) => (
-                                        <option value={id} key={id} eventKey={id}>{mil_job_title}</option>
-                                    ))}
-                                </Form.Control>
                             </Col>
                         </Form.Group>
                     </Form>

@@ -55,14 +55,43 @@ export const IPT = (props) => {
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        console.log("Name: " + addUsername);
-        console.log("Title: " + addUsertitle);
+        console.log(props.data);
+        console.log(addUsername);
+        console.log(addUsertitle);
 
-        // post:
+        axios.post('/api/user/addToUPL', {
+            user_id: addUsername,
+            project_id: props.data,
+            mil_job_title_id: addUsertitle
+        })
+        .then(function(res){
+            //console.log(res);
+
+            axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
+                setIpt(response.data);
+                setLoading1(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     };
 
     let handleRemove = async () => {
         console.log("Remove " + removeUser);
+        console.log("project id: " + props.data);
+
+        axios.delete(`/api/user/removeUPL/${removeUser}/${props.data}`, {
+        })
+        .then(function(res){
+            axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
+                setIpt(response.data);
+                setLoading1(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
     }
 
     return (

@@ -31,7 +31,7 @@ function PreAwardProject(){
                     </Col>
 
                     <Col>                      
-                        <IPT data={id} userRole={userRole} />
+                        <IPT data={id} userRole={userRole} userid={userid} />
                     </Col>
                 </Row>
                 <br />
