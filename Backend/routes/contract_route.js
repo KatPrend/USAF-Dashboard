@@ -16,46 +16,21 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    // const {project_id, contract_num, contract_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
-    // let contractAward = `
-    // INSERT INTO 
-    //     contract_award (
-    //         project_id, 
-    //         contract_num, 
-    //         contract_status
-    //         ) 
-    //     VALUES (
-    //         "${project_id}",
-    //         "${contract_num}",
-    //         "${contract_status}")`;
 
-    const {contractAwardID, timelineStatus, requirementPlan, draftRFPRelesased, approvedACB, rfpRelreased, proposalRecived, techEvalComplete, negotationComplete, awarded} = req.body;
+    const {project_id, contract_num, contract_status, indep_cost_est} = req.body;
     let contractAward = `
-    INSERT INTO contract_award_timeline(
-        contract_award_id,
-        timeline_status,
-        requirement_plan, 
-        draft_rfp_released,
-        approved_by_acb,
-        rfp_released,
-        proposal_received,
-        tech_eval_comp,
-        negotiation_comp,
-        awarded
+    INSERT INTO contract_award(
+        project_id,
+        contract_num,
+        contract_status, 
+        indep_cost_est
     )
     VALUES (
-        ${contractAwardID},
-        ${timelineStatus},
-        ${requirementPlan},
-        ${draftRFPRelesased},
-        ${approvedACB},
-        ${rfpRelreased},
-        ${proposalRecived},
-        ${techEvalComplete},
-        ${negotationComplete},
-        ${awarded}
+        "${project_id}",
+        "${contract_num}",
+        "${contract_status}",
+        "${indep_cost_est}"
     )`;
-
         
     db.query(contractAward, (err, results) =>{
         if(err){
@@ -120,11 +95,15 @@ router.post('/contractTimeline', (req, res) => {
 
 });
 
-router.put("/updateContract/:contractid/newStatus/:newStatus", (req, res)=>{
+router.put("/:contractid", (req, res)=>{
+    
+    const {contract_status} = req.body;
+
     let sql = `
     UPDATE contract_award 
-    SET contract_status = ${req.params.newStatus}
+    SET contract_status = ${contract_status}
     WHERE id = ${req.params.contractid}`;
+    
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -138,7 +117,7 @@ router.delete("/", (req, res)=>{
 });
 
 router.get('/contractawardtimeline/:project_id', (req, res) => {
-    // let sql = `SELECT contract_award_id, project_id, contract_num, contract_status, DATE_FORMAT(requirement_plan,'%y-%m-%d'), DATE_FORMAT(draft_rfp_released,'%y-%m-%d'), DATE_FORMAT(approved_by_acb,'%y-%m-%d'), DATE_FORMAT(rfp_released,'%y-%m-%d'), DATE_FORMAT(proposal_received,'%y-%m-%d'), DATE_FORMAT(tech_eval_comp,'%y-%m-%d'), DATE_FORMAT(negotiation_comp,'%y-%m-%d'), DATE_FORMAT(awarded,'%y-%m-%d') FROM contract_award WHERE project_id = ${req.params.project_id}`;
+
     let sql = `
     SELECT 
         cat.id,
@@ -166,7 +145,8 @@ router.get('/contractawardtimeline/:project_id', (req, res) => {
 router.get('/daysAdded', (req, res) => {
     let sql =`
     SELECT *
-    FROM contract_days_added`;
+    FROM contract_days_added
+    `;
 
     db.query(sql, (err, results) => {
         if(err){

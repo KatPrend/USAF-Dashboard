@@ -1,29 +1,17 @@
 import React from "react";
-import { Table, Form } from 'react-bootstrap';
+import { Table, Form, Button } from 'react-bootstrap';
 
 
-function DisplayFundingType(data){
 
-    let arr = Object.keys(data[0])
-
-    let index = arr.indexOf("FiscalYear")
-
-    arr.splice(index, 1)
-
-    return(
-    arr.map( (key) => (
-        <tr key={key}>
-            <td>{key}</td>
-            {data.map( (info) => (
-                <td key = {info[key]}>{info[key]}</td>
-            ))}
-        </tr>
-    ))
-    
-    )
-}
 
 export function ApprovedFundingTable({data}){
+
+    function FormatData(data){
+        let arr = Object.keys(data[0])
+        let index = arr.indexOf("FiscalYear")
+        arr.splice(index, 1)
+        return(arr)
+    }
 
     return(
         <div>
@@ -35,7 +23,14 @@ export function ApprovedFundingTable({data}){
                             <td key = {info.FiscalYear}>{info.FiscalYear}</td>
                         ))}
                     </tr>
-                    {DisplayFundingType(data)}
+                    {FormatData(data).map( (key) => (
+                            <tr key={key}>
+                                <td>{key}</td>
+                                {data.map( (info) => (
+                                    <td key = {info[key]}>{info[key]}</td>
+                                ))}
+                            </tr>
+                        ))}
                 </tbody>
             </Table>
         </div>
@@ -43,51 +38,54 @@ export function ApprovedFundingTable({data}){
 }
 
 
-function DisplayFundingTypeEditable(data){
-
-    let arr = Object.keys(data[0])
-
-    let index = arr.indexOf("FiscalYear")
-
-    arr.splice(index, 1)
-
-    return(
-    arr.map( (key) => (
-        <tr key={key}>
-            <td>{key}</td>
-            {data.map( (info) => (
-                <td key = {info[key]}>
-                    <Form>
-                        <Form.Control defaultValue={info[key]}/>
-                    </Form>
-                </td>
-            ))}
-        </tr>
-    ))
-    
-    )
-}
 
 
 export function ApprovedFundingTableEditable({data}){
 
+    function FormatData(data){
+        let arr = Object.keys(data[0])
+        let index = arr.indexOf("FiscalYear")
+        arr.splice(index, 1)
+        return(arr)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("1");
+    }
+
     return(
         <div>
-            <Table responsive striped bordered hover className="bg-light">
-                <tbody>
-                    <tr>
-                        <td key = "1" >Funding Type</td>
-                        {data.map( (info) => (
-                            <td key = {info.FiscalYear}>
-                                <Form>
-                                    <Form.Control defaultValue={info.FiscalYear}/>
-                                </Form>
-                            </td>
+            <Form onSubmit={handleSubmit}>
+                <Button className='Button' type="submit">Save Approved Funding Data</Button>
+                <Table responsive striped bordered hover className="bg-light">
+                    <tbody>
+                        <tr>
+                            <td key = "1" >Funding Type</td>
+                            {data.map( (info) => (
+                                <td key = {info.FiscalYear}>
+                                    <Form.Group>
+                                        <Form.Control defaultValue={info.FiscalYear}/>
+                                    </Form.Group>
+                                </td>
+                            ))}
+                        </tr>
+                        {FormatData(data).map( (key) => (
+                            <tr key={key}>
+                                <td>{key}</td>
+                                {data.map( (info) => (
+                                    <td key = {info[key]}>
+                                        <Form.Group>
+                                            <Form.Control defaultValue={info[key]}/>
+                                        </Form.Group>
+                                    </td>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                    {DisplayFundingTypeEditable(data)}
-                </tbody>
-            </Table>
+                    </tbody>
+                </Table>
+            </Form>
+            
         </div>
     )
 }
