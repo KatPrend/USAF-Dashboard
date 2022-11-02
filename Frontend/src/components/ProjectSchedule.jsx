@@ -168,14 +168,14 @@ export const ProjectSchedule = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button' type='submit' form='ProjectSchedule'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <Form onSubmit={handleSubmit}>
-                        <Button className='Button' type="submit">Save Schedule Data</Button>
+                    <Form onSubmit={handleSubmit} id="ProjectSchedule">
                         <Table responsive striped bordered hover className="bg-light">
                             <thead>
                                 <tr>
@@ -188,7 +188,7 @@ export const ProjectSchedule = (props) => {
                             </thead>
                             <tbody>
                                 {
-                                    infoData.map(({ID, Name, Start, End, Predecessors}, index) => (
+                                    editData.map(({ID, Name, Start, End, Predecessors}, index) => (
                                         <tr key={ID}>
                                             <td>
                                                 {ID}
