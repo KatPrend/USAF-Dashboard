@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Dependencies } from '../components/Awarded/Dependencies';
-import { Documents } from '../components/Awarded/Documents';
+//import { Documents } from '../components/Awarded/Documents';
 import { Funding } from '../components/Awarded/Funding';
 import { IPT } from '../components/IPT';
 import { ProjectData } from '../components/ProjectData';
@@ -39,7 +39,7 @@ function AwardedProject(){
                         <IPT data={id} userRole={userRole} />
                     </Col>
                     <Col>
-                        <Dependencies />
+                        <Dependencies userRole={userRole} />
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>

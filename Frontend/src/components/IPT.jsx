@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 import "./projectData.css"

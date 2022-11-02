@@ -4,7 +4,7 @@ import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
 import { format } from 'date-fns';
-import {TimeLineData, TimeLineData2} from '../pages/DummyData'
+// import {TimeLineData, TimeLineData2} from '../pages/DummyData'
 
 const columns = [
     { type: "string", label: "Task ID" },
@@ -242,9 +242,10 @@ export const ProjectSchedule = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Schedule</span>
                         </Col>
-                        <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
-                        </Col>
+                        { props.userRole !== "Admin" ? null : <Col style={{textAlign: 'right'}}>
+                                <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
+                            </Col>
+                        }
                     </Row>
                 </Container>
             </Card.Header>
