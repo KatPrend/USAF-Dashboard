@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
-import { Col, Container, Button, Row, Table, Form } from 'react-bootstrap';
+import { Button, Table, Form } from 'react-bootstrap';
 import {SummaryIcon} from './SummaryIcon';
 
 function renderContent(contractStatus, projectId, projectName) {

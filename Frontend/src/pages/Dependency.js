@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
-import { Col, Container, Button, Row, Table } from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
-import { useMsal } from "@azure/msal-react";
 import { NavB } from '../components/NavB';
-import { Sankey, Tooltip, Layer, Rectangle } from 'recharts';
+import { Sankey, Layer, Rectangle } from 'recharts';
 import { DepSum } from '../components/Summaries/DepSum';
+import { format } from 'date-fns';
+import { Chart } from "react-google-charts";
 
 /**
 * Renders information about projects assigned to the current user
 */
-const ProjectContent = () => {
-  const {accounts} = useMsal();
+const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
-
-  // TODO: get backend help
   useEffect(() => {
-      axios.get(`/api/project/userEmail/${accounts[0].username}`).then(response => {
+      axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
           setData(response.data);
+          props.dataSetter(response.data);
           setLoading(false);
       });
   }, []);
@@ -30,33 +29,31 @@ const ProjectContent = () => {
 
   return (
       <div className="mx-auto w-75">
-          <br />
-          <br />
           <Table responsive striped bordered hover className="bg-light">
               <thead>
                   <tr>
-                    <th>Project Name</th>
-                    <th>Dependent Milestone</th> 
-                    <th>Date</th> 
-                    <th>Leading Project</th>
-                    <th>Leading Milestone</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Impact</th>
+                    <th>Predecessor Project</th>
+                    <th>Predecessor Milestone</th> 
+                    <th>Predecessor Start Date</th> 
+                    <th>Predecessor End Date</th>
+                    <th>Successor Project</th>
+                    <th>Successor Milestone</th>
+                    <th>Successor Start Date</th>
+                    <th>Successor End Date</th>
                   </tr>
               </thead>
               <tbody>
               {
-                  data.map(({ id, project_name, dependent_milestone, dependent_milestone_date, leading_project, leading_milestone_date, status, impact }) => (
-                      <tr key={id}>
-                          <td>{id}</td>
-                          <td>{project_name}</td>
-                          <td>{dependent_milestone}</td>
-                          <td>{dependent_milestone_date}</td>
-                          <td>{leading_project}</td>
-                          <td>{leading_milestone_date}</td>
-                          <td>{status}</td>
-                          <td>{impact}</td>
+                  data.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succe_start, succ_end }, index) => (
+                      <tr key={index}>
+                          <td>{pred_proj_name}</td>
+                          <td>{pred_name}</td>
+                          <td>{format(new Date(pred_start), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(pred_end), 'MM/dd/yyyy')}</td>
+                          <td>{succ_proj_name}</td>
+                          <td>{succ_name}</td>
+                          <td>{format(new Date(succe_start), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(succ_end), 'MM/dd/yyyy')}</td>
                       </tr>
                   ))
               }
@@ -66,106 +63,77 @@ const ProjectContent = () => {
   );
 }
 
-const data0 = {
-    "nodes": [
-      {
-        "name": "Project 1"
-      },
-      {
-        "name": "Project 2"
-      },
-      {
-        "name": "Project 3"
-      },
-      {
-        "name": "Project 4"
-      },
-      {
-        "name": "Project 5"
-      },
-      {
-        "name": "Project 6"
-      },
-      {
-        "name": "Project 7"
-      }
-    ],
-    "links": [
-      {
-        "source": 0,
-        "target": 1,
-        "value": 1
-      },
-      {
-        "source": 1,
-        "target": 2,
-        "value": 1
-      },
+function daysToMilliseconds(days) {
+  return days * 24 * 60 * 60 * 1000;
+}
 
-      {
-        "source": 1,
-        "target": 3,
-        "value": 1
-      },
-      {
-        "source": 5,
-        "target": 6,
-        "value": 1  
-      },
-    ]
-  };
-  
-  
-  
-  const MyCustomNode = ({
-    x,  
-    y,
-    width,
-    height,
-    index,
-    payload,
-    containerWidth,
-  }) => {
-    const isOut = x + width + 6 > containerWidth;
-    return (
-      <Layer key={`CustomNode${index}`}>
-        <Rectangle
-          x={x}
-          y={y}
-          width={width}
-          height={height}
-          fill="#5192ca"
-          fillOpacity="1"
-        />
-        <text
-          textAnchor={isOut ? 'end' : 'start'}
-          x={isOut ? x - 6 : x + width + 6}
-          y={y + height / 2}
-          fontSize="14"
-          stroke="#333"
-        >
-          { payload.name }
-        </text>
-      </Layer>
-    );
-  };
-  
-                              
+const columns = [
+  { type: "string", label: "Task ID" },
+  { type: "string", label: "Task Name" },
+  { type: "date", label: "Start Date" },
+  { type: "date", label: "End Date" },
+  { type: "number", label: "Duration" },
+  { type: "number", label: "Percent Complete" },
+  { type: "string", label: "Dependencies" },
+];
+
+function GanttChartDataFormat(JsonData){
+  console.log("Ganttyy");
+  console.log(JsonData);
+  var Rows = [];
+
+  JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succe_start, succ_end }) => {
+      Rows.push([
+        pred_name,
+        pred_name,
+        new Date(pred_start),
+        new Date(pred_end),
+        null,
+        null,
+        null
+      ])
+      Rows.push([
+        succ_name,
+        succ_name,
+        new Date(succe_start),
+        new Date(succ_end),
+        null,
+        null,
+        pred_name
+      ])
+  })
+  console.log("Rows")
+  console.log(Rows)
+
+  const data = [columns, ...Rows];
+  console.log("final DATA for ganttyytrtt")
+  console.log(data);
+
+  return (data);
+}
+
+const options = {
+  gantt: {
+      criticalPathEnabled: false,
+      criticalPathStyle: {
+          stroke: "#e64a19",
+      },  
+  },
+};
 
 function Dependency() {
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
-
+    const [data, setData] = useState(0)
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
     }
-
     return (
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
-            <Container className="lightblue top-Padding" style={{height: '100vh'}}>
+            <Container className="top-Padding" style={{marginBottom: '3%'}}>
                 <Row>
                     {/*1*/}
                     <Col>
@@ -173,29 +141,23 @@ function Dependency() {
                     </Col>
                     {/*2*/}
                     <Col>
-                        <CardGeneric Header='Dependency Graph' Body={
-                            <Sankey
-                              width={500}
-                              height={500}
-                              data={data0}
-                              node={<MyCustomNode />}
-                              nodePadding={50}
-                              margin={{
-                              left: 100,
-                              right: 100,
-                              top: 100,
-                              bottom: 100,
-                              }}
-                              link={{ stroke: '#77c878' }}>
-                            </Sankey>}>
+                        <CardGeneric Header='Dependency Graph' 
+                        Body={ data == 0 ? <></> :
+                            <Chart
+                            chartType='Gantt'
+                            width="100%" 
+                            height="100%"
+                            options={options}
+                            data={GanttChartDataFormat(data)}
+                            />
+                         }>
                         </CardGeneric>
                     </Col>
                 </Row>
-                <Row>
-                  <ProjectContent/>
-                </Row>
             </Container>
-               
+
+            {userid != 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
+
         </div>
     );
 }
