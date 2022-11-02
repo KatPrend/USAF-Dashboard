@@ -44,7 +44,7 @@ const ProjectContent = (props) => {
               </thead>
               <tbody>
               {
-                  data.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succe_start, succ_end }, index) => (
+                  data.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }, index) => (
                       <tr key={index}>
                           <td>{pred_proj_name}</td>
                           <td>{pred_name}</td>
@@ -52,7 +52,7 @@ const ProjectContent = (props) => {
                           <td>{format(new Date(pred_end), 'MM/dd/yyyy')}</td>
                           <td>{succ_proj_name}</td>
                           <td>{succ_name}</td>
-                          <td>{format(new Date(succe_start), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(succ_start), 'MM/dd/yyyy')}</td>
                           <td>{format(new Date(succ_end), 'MM/dd/yyyy')}</td>
                       </tr>
                   ))
@@ -82,7 +82,7 @@ function GanttChartDataFormat(JsonData){
   console.log(JsonData);
   var Rows = [];
 
-  JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succe_start, succ_end }) => {
+  JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }) => {
       Rows.push([
         pred_name,
         pred_name,
@@ -95,7 +95,7 @@ function GanttChartDataFormat(JsonData){
       Rows.push([
         succ_name,
         succ_name,
-        new Date(succe_start),
+        new Date(succ_start),
         new Date(succ_end),
         null,
         null,

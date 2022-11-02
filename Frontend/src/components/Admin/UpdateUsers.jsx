@@ -29,7 +29,7 @@ export const UpdateUsers = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/user/milJobs/').then(response => {
+        axios.get('/api/mjt/milJobs/').then(response => {
             setTitles(response.data);
             setLoading1(false);
         });
