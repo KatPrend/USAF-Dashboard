@@ -1,4 +1,5 @@
 const express = require("express");
+const { user } = require("../config");
 const router = express.Router()
 
 var db = require('../database');
@@ -31,26 +32,6 @@ router.post('/', (req, res) => {
         "${user_email}", 
         "${mil_job_title_id}"
         )`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
-    console.log(req.body);
-});
-
-// Adding user to UPL
-router.post('/addToUPL', (req, res) => {
-    const {userID, projectID} = req.body;
-    let sql = `
-    INSERT INTO user_project_link(
-        user_id,
-        project_id
-    ) VALUES (
-        ${userID},
-        ${projectID}
-    )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -180,26 +161,7 @@ router.get('/iptmembers/:project_id', (req, res) => {
     });
 });
 
-// I think we can delete this
-router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
-    let sql = `
-    SELECT 
-        u.id, 
-        u.mil_job_title_id, 
-        u.user_name 
-    FROM users u 
-    INNER JOIN user_project_link upl on upl.user_id = u.id 
-    WHERE upl.project_id = ${req.params.project_id} 
-    AND u.mil_job_title_id=${req.params.job_title}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-// Get a user role from user email
+// Get project by user email
 router.get('/userEmail/:userEmail', (req, res) => {
     let sql = `
     SELECT *
@@ -214,7 +176,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
 });
 
 // Get a user role from user id
-router.get('/userId/:userId', (req, res) => {
+router.get('/userRole/:userId', (req, res) => {
     let sql = `
     SELECT *
     FROM users u 
@@ -227,7 +189,7 @@ router.get('/userId/:userId', (req, res) => {
     });
 });
 
-// Mil Job Titles
+// Grabbing all mil job titles
 router.get('/milJobs', (req, res) => {
     let sql = `
     SELECT * FROM military_job_titles`;
@@ -277,6 +239,54 @@ router.delete('/removeMilJob/:milid', (req, res) => {
     let sql = `
     DELETE FROM military_job_titles
     WHERE id = '${req.params.milid}'`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Adding User to User Project Link
+router.post('/addToUPL', (req,res) => {
+    const {user_id,project_id, mil_job_title_id} = req.body;
+    let sql = `
+    INSERT INTO user_project_link(
+        user_id,
+        project_id,
+        mil_job_title_id
+    ) VALUES (
+        ${user_id},
+        ${project_id},
+        ${mil_job_title_id}
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Remove IPT Member from UPL
+router.delete('/removeUPL', (req, res) => {
+    const {user_id, project_id} = req.body;
+    let sql = `
+    DELETE FROM user_project_link
+    WHERE user_id = ${user_id} AND project_id = ${project_id}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Adding Admin to EVery Project
+router.post('/addAdminUPL/:userID', (req,res) => {
+    let sql = `
+    INSERT INTO user_project_link
+    SELECT ${req.params.userID}, id, NULL FROM project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
