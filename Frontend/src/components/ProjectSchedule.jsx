@@ -111,12 +111,12 @@ export const ProjectSchedule = (props) => {
                                         </td>
                                         <td>
                                             <Form>
-                                                <Form.Control value={format(new Date(Start), 'yyyy-MM-dd')} type='date'/>
+                                                <Form.Control value={format(new Date(Start), 'MM/dd/yyyy')} type='date'/>
                                             </Form>
                                         </td>
                                         <td>
                                             <Form>
-                                                <Form.Control value={format(new Date(End), 'yyyy-MM-dd')} type='date'/>
+                                                <Form.Control value={format(new Date(End), 'MM/dd/yyyy')} type='date'/>
                                             </Form>
                                         </td>
                                         <td>

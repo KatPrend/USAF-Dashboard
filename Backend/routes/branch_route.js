@@ -21,19 +21,36 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/:newbranch', (req, res) => {
+router.post('/', (req, res) => {
+    const {branch_name} = req.body;
+
     let sql = `
     INSERT INTO branches(
         branch_name
     ) VALUES(
-        '${req.params.newbranch}'
+        '${req.params.branch_name}'
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
         res.send(results)
-    })
+    });
+});
+
+router.put('/:branchid', (req, res) => {
+    const {branch_name} = req.body;
+
+    let sql = `
+    UPDATE branches
+    SET branch_name = $
+    WHERE id = ${req.params.branchid}`;;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
 router.delete('/:branchid', (req, res) => {
