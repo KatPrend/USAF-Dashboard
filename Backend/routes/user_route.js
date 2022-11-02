@@ -169,9 +169,9 @@ router.get('/iptmembers/:project_id', (req, res) => {
         u.user_name 
     FROM users u 
     INNER JOIN user_project_link upl on upl.user_id = u.id
-    INNER JOIN military_job_titles mjt on u.mil_job_title_id = mjt.id
-    WHERE upl.project_id = 4 
-    AND u.user_role ='IPT Member'`;
+    INNER JOIN military_job_titles mjt on upl.mil_job_title_id = mjt.id
+    WHERE upl.project_id = ${req.params.project_id} AND upl.mil_job_title_id IS NOT NULL
+    ORDER BY upl.mil_job_title_id`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
