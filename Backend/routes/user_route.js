@@ -70,10 +70,10 @@ router.post('/newContractor', (req, res) => {
         user_role,
         user_email
     ) VALUES(
-        ${contractor_id},
-        ${user_name},
+        "${contractor_id}",
+        "${user_name}",
         1,
-        ${user_email}
+        "${user_email}"
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){

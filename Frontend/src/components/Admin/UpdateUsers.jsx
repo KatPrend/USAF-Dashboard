@@ -83,7 +83,7 @@ export const UpdateUsers = () => {
         e.preventDefault();
 
         axios.post('/api/user/', {
-            contractor_company: '1',
+            contractor_id: '1',
             user_name: adminName,
             user_role: 'Admin',
             user_email: adminEmail,
@@ -135,7 +135,7 @@ export const UpdateUsers = () => {
         console.log("Title: " + IPTTitle);
 
         axios.post('/api/user/', {
-            contractor_company: '1',
+            contractor_id: '1',
             user_name: IPTName,
             user_role: 'IPT Member',
             user_email: IPTEmail,
@@ -182,12 +182,10 @@ export const UpdateUsers = () => {
     let handleAddContractor = async (e) => {
         e.preventDefault();
 
-        axios.post('/api/user/', {
-            contractor_company: contractor,
+        axios.post('/api/user/newContractor', {
+            contractor_id: contractor,
             user_name: contractorName,
-            user_role: 'Contractor',
-            user_email: contractorEmail,
-            mil_job_title: 'NULL'
+            user_email: contractorEmail
         })
         .then(function(res){
             //console.log(res);
