@@ -13,7 +13,7 @@ export const UpdateFunding = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/funds/allFundingTypes/').then(response => {
+        axios.get('/api/fundingType/').then(response => {
             setData(response.data);
             setLoading(false);
         });
@@ -33,14 +33,15 @@ export const UpdateFunding = () => {
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        axios.post(`/api/funds/newFundingType/${addFunding}`, {
+        axios.post(`/api/fundingType/`, {
+            funding_type: addFunding
         })
         .then(function(res){
             // res.data.insertId
 
             setAdded(true);
 
-            axios.get('/api/funds/allFundingTypes/').then(response => {
+            axios.get('/api/fundingType/').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
@@ -58,13 +59,13 @@ export const UpdateFunding = () => {
     }
 
     let handleRemove = async () => {
-        axios.put(`/api/funds/deactivateFundingType/${removeFunding}`, {
+        axios.put(`/api/fundingType/deactivate/${removeFunding}`, {
         })
         .then(function(res){
 
             setRemoved(true);
 
-            axios.get('/api/funds/allFundingTypes/').then(response => {
+            axios.get('/api/fundingType/').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
