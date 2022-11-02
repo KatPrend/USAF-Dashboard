@@ -10,7 +10,7 @@ export function SummaryIcon({data}){
 
             if (data === "ONTRACK" || data === "ON-BUDGET") {
                 return (
-                    <div style={{color: 'green', fontSize: '30px'}} >{'\u25CF'}</div>
+                    <div style={{color: 'green', fontSize: '30px'}} >{'⬤'}</div>
                 )
             } 
             else if (data === "BEHIND" || data === "UNDER") {
