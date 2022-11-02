@@ -14,19 +14,19 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {contractor_company, userName, userRole, userEmail, mil_job_title} = req.body;
+    const {contractor_company, user_name, user_role, user_email, mil_job_title} = req.body;
     let sql = `
     INSERT INTO users (
-        contractor_company,
+        contractor_id,
         user_name,
         user_role,
         user_email,
-        mil_job_title) 
+        mil_job_title_id) 
     VALUES (
         "${contractor_company}",
-        "${userName}",
-        "${userRole}", 
-        "${userEmail}", 
+        "${user_name}",
+        "${user_role}", 
+        "${user_email}", 
         "${mil_job_title}"
         )`;
     let query = db.query(sql, (err, results) =>{
@@ -56,17 +56,10 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
 
 // router.post()
 
-router.delete("/deleteUser/:userid", (req, res)=>{
-    // let sql = `
-    // DELETE 
-    // FROM users 
-    // WHERE id = ${req.params.userid}`;
+router.delete("/:userid", (req, res)=>{
     let sql = `
-    DELETE FROM user_project_link
-    WHERE user_id = ${req.params.userid};
-    DELETE FROM users
-    WHERE id = ${req.params.userid};
-    DELETE FROM users
+    DELETE 
+    FROM users 
     WHERE id = ${req.params.userid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
