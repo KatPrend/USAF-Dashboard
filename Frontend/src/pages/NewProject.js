@@ -8,45 +8,45 @@ import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
-// function renderInfo(projectName, projectId) {
-//   //console.log("project name: " + projectName);
+function renderInfo(projectName, projectId) {
+  //console.log("project name: " + projectName);
 
-//   if (projectName === "") {
-//     return <></>
-//   } else {
-//     return <>
-//      <h2>{projectName} Project Information</h2>
-//       <br />
-//       <br />
-//       <h4>Upload Files:</h4>
-//       <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
-//       <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={projectId}/></div>
-//       <br />
-//       <h4>Contract Information:</h4>
-//       <div className="project-element">
-//         <AddContract  data = {projectId}/>
-//       </div>
-//       <br />
-//       <br />
-//       <h4>IPT Members:</h4>
-//       <div className="project-element">
-//         <AddIPT />
-//       </div>
-//       <br />
-//       <br />
-//       <h4>Dependencies</h4>
-//       <p>What projects does this project depend on?</p>
-//       <div className="project-element">
-//         <Predecessors />
-//       </div>
-//     </>
-//   }
-// };
+  // if (projectName === "") {
+  //   return <></>
+  // } else {
+    return <>
+     <h2>{projectName} Project Information</h2>
+      <br />
+      <br />
+      <h4>Upload Files:</h4>
+      <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
+      <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={projectId}/></div>
+      <br />
+      <h4>Contract Information:</h4>
+      <div className="project-element">
+        <AddContract  data = {projectId}/>
+      </div>
+      <br />
+      <br />
+      <h4>IPT Members:</h4>
+      <div className="project-element">
+        <AddIPT />
+      </div>
+      <br />
+      <br />
+      <h4>Dependencies</h4>
+      <p>What projects does this project depend on?</p>
+      <div className="project-element">
+        <Predecessors />
+      </div>
+    </>
+  //}
+};
 
 function renderIPT(projectId) {
-  if (projectId === 0) {
-    return null
-  } else {
+  // if (projectId === 0) {
+  //   return null
+  // } else {
     return <div>
       <h4>IPT Members:</h4>
       <div className="project-element">
@@ -55,8 +55,8 @@ function renderIPT(projectId) {
       <br />
       <br />
     </div>
-  }
-}
+  //}
+};
 
 function NewProject() {
   const [projectName, setProjectName] = useState("");
@@ -89,6 +89,7 @@ function NewProject() {
           <br />
           <br />
           {renderIPT(projectId)}
+          {renderInfo(projectId)}
         </div>
     }
     </div>

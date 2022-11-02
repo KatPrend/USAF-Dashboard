@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './page.css';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
-import { ProjectData } from '../components/ProjectData';
-import { IPT } from '../components/IPT';
-import { ProjectSchedule } from '../components/ProjectSchedule';
-import { ContractStatus } from '../components/Pre-Award/ContractStatus';
-import { FundingData } from '../components/Pre-Award/FundingData';
+import { ProjectData } from '../components/Projects/ProjectData';
+import { IPT } from '../components/Projects/IPT';
+import { ProjectSchedule } from '../components/Projects/ProjectSchedule';
+import { ContractStatus } from '../components/Projects/Pre-Award/ContractStatus';
+import { FundingData } from '../components/Projects/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
 
 function PreAwardProject(){

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, Form, } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import { propTypes } from 'react-bootstrap/esm/Image';
+//import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link} from 'react-router-dom';
 import "./projectData.css"
 
@@ -131,7 +131,7 @@ export const ProjectData = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Data</span>
                         </Col>
-                        { props.userRole !== "Admin" ? null : <Col style={{textAlign: 'right'}}>
+                        { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                             </Col>
                         }
