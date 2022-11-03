@@ -13,7 +13,7 @@ function renderInfo(projectName, projectId) {
   // if (projectName === "") {
   //   return <></>
   // } else {
-    return <>
+    return <div>
      <h2>{projectName} Project Information</h2>
       <br />
       <br />
@@ -32,7 +32,7 @@ function renderInfo(projectName, projectId) {
       <div className="project-element">
         <Predecessors />
       </div>
-    </>
+    </div>
   //}
 };
 

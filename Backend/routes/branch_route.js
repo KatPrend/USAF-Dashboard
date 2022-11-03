@@ -4,9 +4,20 @@ const router = express.Router()
 var db = require('../database');
 
 //Branch End Points
+router.get('/', (req, res) => {
+    let sql = `
+    SELECT *
+    FROM branches`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+});
 
 // get branches not associated with a project
-router.get('/', (req, res) => {
+router.get('/noproject', (req, res) => {
     let sql = `
     SELECT *
     FROM branches b
