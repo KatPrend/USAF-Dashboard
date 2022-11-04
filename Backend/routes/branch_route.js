@@ -32,6 +32,7 @@ router.get('/noproject', (req, res) => {
     })
 });
 
+// Making a new branch
 router.post('/', (req, res) => {
     const {branch_name} = req.body;
 
@@ -49,6 +50,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// Update a branch
 router.put('/:branchid', (req, res) => {
     const {branch_name} = req.body;
 
@@ -64,6 +66,7 @@ router.put('/:branchid', (req, res) => {
     });
 });
 
+//Delete a branch
 router.delete('/:branchid', (req, res) => {
     let sql = `
     DELETE FROM branches
