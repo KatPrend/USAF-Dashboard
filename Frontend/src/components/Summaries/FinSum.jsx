@@ -14,20 +14,21 @@ const dataPie = (spent, planned) => {
     )
 }
   
-const getPieColor = (percent) => {
-    if (percent > 0.9)
+const getPieColor = (percentDiff) => {
+    percentDiff = (percentDiff > 0 ? percentDiff : -1 * percentDiff);
+    if (percentDiff >= 0.2)
     {
         return 'red';
     }
-    if (percent > 0.7)
+    if (percentDiff >= 0.1)
     {
         return 'yellow';
     }
     return 'green';
 }
 
-const expendOptionsPie = (percent) => {
-    var color = getPieColor(percent)
+const expendOptionsPie = (percentDiff) => {
+    var color = getPieColor(percentDiff)
     return(
         {
             tooltip: {trigger: 'none'},
@@ -70,7 +71,7 @@ export const FinSum = () => {
                                         width="168px"
                                         height="168px"
                                         data={dataPie(obligationActual, obligationPlanned)}
-                                        options={expendOptionsPie(obligationActual / obligationPlanned)}
+                                        options={expendOptionsPie((obligationActual - obligationPlanned) / ((obligationActual + obligationPlanned) / 2))}
                                         />
                                     </div>
                                     <p className="finInfo">Planned Obligation: {obligationActual}</p>

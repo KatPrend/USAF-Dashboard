@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState} from 'react';
 import './page.css';
 import {Link} from 'react-router-dom';
-import { Col, Container, Button, Row, Table, Form } from 'react-bootstrap';
+import { Row, Col, Container} from 'react-bootstrap';
 import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { FinSum } from '../components/Summaries/FinSum';
@@ -39,7 +38,7 @@ function Main() {
                     </Col>
                </Row>  
             </Container>
-            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
+            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
         </div>
     );
 }

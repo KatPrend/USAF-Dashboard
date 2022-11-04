@@ -46,7 +46,7 @@ export const NavB = ({getUserInfo}) => {
         <>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
 
-            <Navbar className="whole-bar" bg="primary" variant="dark" style={{height: 'auto'}}>
+            <Navbar className="whole-bar"  variant="dark" style={{backgroundColor: '#0033A0', height: 'auto'}}>
                 <Container>
                     <Navbar.Brand href="/">
                         <img

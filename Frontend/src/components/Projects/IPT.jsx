@@ -106,8 +106,7 @@ export const IPT = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Done</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
