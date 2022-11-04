@@ -42,6 +42,8 @@ const projectRoute = require('./routes/project_route');
 const userRoute = require('./routes/user_route');
 const uploadRoute = require('./routes/upload_route');
 const wbsRoute = require('./routes/wbs_route');
+const mjtRoute = require('./routes/mjt_route');
+const uplRoute = require('./routes/upl_route');
 
 
 app.use('/api/approved', approvedFundingRoute);
@@ -57,6 +59,8 @@ app.use('/api/project', projectRoute);
 app.use('/api/user', userRoute);
 app.use('/api/upload', uploadRoute);
 app.use('/api/wbs', wbsRoute);
+app.use('/api/mjt', mjtRoute);
+app.use('/api/upl', uplRoute);
 
 //All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {

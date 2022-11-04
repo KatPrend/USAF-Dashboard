@@ -18,7 +18,7 @@ export const FileUpload = (props) => {
         
        // ${props.projectId}
 
-        axios.post(`/api/upload/${props.name}/1`, formData, {
+        axios.post(`/api/upload/${props.name}/${props.projectId}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -26,7 +26,7 @@ export const FileUpload = (props) => {
     }
 
     return (
-        <>
+        <div>
             <Form.Group as={Row} controlId="formFile" className="mb-3">
                 <Form.Label column xs="auto">{props.label}:</Form.Label>
                 <Col xs="auto">
@@ -34,7 +34,7 @@ export const FileUpload = (props) => {
                     { isSelected ? <Button className="submit-new-project" onClick={handleSubmission}>Upload File</Button> : null }
                 </Col>
             </Form.Group>
-        </>
+        </div>
     );
 }
 

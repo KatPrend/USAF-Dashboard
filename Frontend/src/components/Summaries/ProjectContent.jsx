@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
-import { Col, Container, Button, Row, Table, Form } from 'react-bootstrap';
+import { Button, Table, Form } from 'react-bootstrap';
 import {SummaryIcon} from './SummaryIcon';
 
 function renderContent(contractStatus, projectId, projectName) {
@@ -92,7 +92,7 @@ export const ProjectContent = (props) => {
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
             <h2>
                 Projects: 
-                {props.userRole !== "Admin" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
+                {props.userRole === "Contractor" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
             </h2>
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>

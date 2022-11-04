@@ -13,7 +13,7 @@ export const UpdateTitles = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/user/milJobs/notInUse/').then(response => {
+        axios.get('/api/mjt/milJobs/notInUse/').then(response => {
             setData(response.data);
             setLoading(false);
         });
@@ -32,14 +32,14 @@ export const UpdateTitles = () => {
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        axios.post(`/api/user/newMilJob/${addTitle}`, {
+        axios.post(`/api/mjt/newMilJob/${addTitle}`, {
         })
         .then(function(res){
             // res.data.insertId
 
             setAdded(true);
 
-            axios.get('/api/user/milJobs/notInUse/').then(response => {
+            axios.get('/api/mjt/milJobs/notInUse/').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
@@ -57,13 +57,13 @@ export const UpdateTitles = () => {
     }
 
     let handleRemove = async () => {
-        axios.delete(`/api/user/removeMilJob/${removeTitle}`, {
+        axios.delete(`/api/mjt/removeMilJob/${removeTitle}`, {
         })
         .then(function(res){
 
             setRemoved(true);
 
-            axios.get('/api/user/milJobs/notInUse/').then(response => {
+            axios.get('/api/mjt/milJobs/notInUse/').then(response => {
                 setData(response.data);
                 setLoading(false);
             });

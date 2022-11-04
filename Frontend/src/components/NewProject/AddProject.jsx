@@ -7,24 +7,31 @@ export const AddProject = ({getProjectName}) => {
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("1");
     const [contractor, setContractor] = useState("1");
-    const [branch, setBranch] = useState("");
+    const [branch, setBranch] = useState("1");
     const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
-    const [projectStart, setProjectStart] = useState("");
-    const [projectEnd, setProjectEnd] = useState("");
 
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading1, setLoading1] = useState(true);
     const [contractors, setContractors] = useState();
+    const [isLoading2, setLoading2] = useState(true);
+    const [branches, setBranches] = useState();
 
     useEffect(() => {
         axios.get('/api/contractor').then(response => {
             setContractors(response.data);
-            setLoading(false);
+            setLoading1(false);
         });
     }, []);
 
-    if (isLoading) {
+    useEffect(() => {
+      axios.get('/api/branch/').then(response => {
+          setBranches(response.data);
+          setLoading2(false);
+      });
+  }, []);
+
+    if (isLoading1 || isLoading2) {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -56,14 +63,6 @@ export const AddProject = ({getProjectName}) => {
         setCcar(e.target.value);
     };
 
-    const handleProjectStart = (e) => {
-      setProjectStart(e.target.value);
-    };
-    
-    const handleProjectEnd = (e) => {
-        setProjectEnd(e.target.value);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         alert("Project Added");
@@ -74,12 +73,10 @@ export const AddProject = ({getProjectName}) => {
             project_name: projectName,
             project_type: projectType,
             contractor_id: contractor,
-            branch: branch,
-            requirement_type: requirementType,
+            branch_id: branch,
+            requirement_type_id: requirementType,
             summary: summary,
-            ccar_num: ccarNum,
-            start_date: projectStart,
-            end_date: projectEnd
+            ccar_num: ccarNum
         })
         .then(function(res){
             //console.log(res);
@@ -138,11 +135,13 @@ export const AddProject = ({getProjectName}) => {
           <Form.Group as={Row}>
             <Form.Label column sm={3}>Enter Branch:</Form.Label>
             <Col sm={7}>
-              <Form.Control
-                placeholder=" Enter branch"
-                type="branch"
-                onChange={handleBranch}
-              />
+              <Form.Control as="select" type="branch" onChange={handleBranch}>
+                {
+                  branches.map(({id, branch_name}) => (
+                    <option value={id} key={id} eventKey={id}>{branch_name}</option>
+                  ))
+                }
+              </Form.Control>
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
@@ -179,27 +178,6 @@ export const AddProject = ({getProjectName}) => {
                 placeholder=" Enter Ccar Number"
                 type="Ccar"
                 onChange={handleCcar}
-              />
-            </Col>
-          </Form.Group>
-          <br />
-          <Form.Group as={Row} className='project-element'>
-            <Form.Label column xs="auto">Start Date:</Form.Label>
-            <Col xs="auto">
-              <Form.Control
-                placeholder="Start Date"
-                type="date"
-                value={projectStart}
-                onChange={handleProjectStart}
-              />
-            </Col>
-            <Form.Label column xs="auto">End Date:</Form.Label>
-            <Col xs="auto">
-              <Form.Control
-                placeholder="End Date"
-                type="date"
-                value={projectEnd}
-                onChange={handleProjectEnd}
               />
             </Col>
           </Form.Group>

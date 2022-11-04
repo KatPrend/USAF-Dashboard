@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Container, Row, Tabs, Tab, Modal, ModalBody, ButtonGroup, ModalDialog, Form } from 'react-bootstrap';
-import BarGraph from '../BarGraph';
-import LineGraph from '../LineGraph';
+import BarGraph from '../../BarGraph';
+import LineGraph from '../../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import {ObligationFundingDataTable, ExpenditureFundingDataTable, ObligationFundingDataTableEditable, ExpenditureFundingDataTableEditable} from './FundingDataTable';
-import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../ApprovedFundingTable';
-import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../pages/DummyData';
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../../ApprovedFundingTable';
+import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../../pages/DummyData';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import '../../pages/page.css';
+import '../../../pages/page.css';
 
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);

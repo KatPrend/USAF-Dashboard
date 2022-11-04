@@ -38,6 +38,17 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 
   await dropTempTable();
   
+
+  try {
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
+    console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
+  } catch (error) {
+    console.error('there was an error:', error.message);
+  }
+
   //console.log(res);
 
 });
@@ -186,6 +197,15 @@ router.post('/milestonesUpload/:projectId', uploadFile.single('milestonesUpload'
   console.log("Delete the temp tables");
   await deleteTempMilestone();
   
+  try {
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
+    console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
+  } catch (error) {
+    console.error('there was an error:', error.message);
+  }
   //console.log(res);
 
 });
