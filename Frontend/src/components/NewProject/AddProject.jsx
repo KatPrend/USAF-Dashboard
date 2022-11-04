@@ -7,7 +7,7 @@ export const AddProject = ({getProjectName}) => {
     const [projectName, setProjectName] = useState("");
     const [projectType, setProjectType] = useState("1");
     const [contractor, setContractor] = useState("1");
-    const [branch, setBranch] = useState("");
+    const [branch, setBranch] = useState("1");
     const [requirementType, setRequirementType] = useState("1");
     const [summary, setSummary] = useState("");
     const [ccarNum, setCcar] = useState("");
@@ -73,8 +73,8 @@ export const AddProject = ({getProjectName}) => {
             project_name: projectName,
             project_type: projectType,
             contractor_id: contractor,
-            branch: branch,
-            requirement_type: requirementType,
+            branch_id: branch,
+            requirement_type_id: requirementType,
             summary: summary,
             ccar_num: ccarNum
         })

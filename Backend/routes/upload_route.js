@@ -40,7 +40,10 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
   
 
   try {
-    await unlink(__dirname + '/uploads/' + req.file.filename);
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
     console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
   } catch (error) {
     console.error('there was an error:', error.message);
@@ -195,7 +198,10 @@ router.post('/milestonesUpload/:projectId', uploadFile.single('milestonesUpload'
   await deleteTempMilestone();
   
   try {
-    await unlink(__dirname + '/uploads/' + req.file.filename);
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
     console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
   } catch (error) {
     console.error('there was an error:', error.message);
