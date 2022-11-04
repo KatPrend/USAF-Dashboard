@@ -25,7 +25,7 @@ export const IPT = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/user/milJobs/`).then(response =>{
+        axios.get(`/api/mjt/milJobs/`).then(response =>{
             setTitles(response.data);
             setLoading2(false);
         });
