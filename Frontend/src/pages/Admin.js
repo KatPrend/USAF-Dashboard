@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import './page.css';
-import { Button, ButtonGroup, Col, Container, Modal, Row, Table } from 'react-bootstrap';
-import axios from 'axios';
+import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
 import { UpdateContractors } from '../components/Admin/UpdateContractors';
 import '../components/Admin/admin.css';

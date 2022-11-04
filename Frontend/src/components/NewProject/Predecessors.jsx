@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {Button, Col, Form, Row} from 'react-bootstrap';
-import { element } from "prop-types";
 
 export const Predecessors = () => {
 
