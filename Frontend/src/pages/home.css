@@ -111,7 +111,6 @@ li {
 
 .button, .butt , input[type=submit] {
   background-color: rgb(3, 77, 152);
-  border: 2px solid black;
   color: white;
   width: 256px;
   height: auto;
@@ -119,7 +118,6 @@ li {
   margin: 18px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 15px;
   box-shadow: rgba(99, 104, 109, 0.2) 0px 8px 24px;
   transition-duration: 0.3s;
   text-align: center;

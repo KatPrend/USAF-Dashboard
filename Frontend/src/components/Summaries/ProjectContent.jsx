@@ -89,7 +89,7 @@ export const ProjectContent = (props) => {
 
     const searchStyle = {width: '100%'};
     return (
-        <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
+        <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '90%'}}>
             <h2>
                 Projects: 
                 {props.userRole === "Contractor" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}

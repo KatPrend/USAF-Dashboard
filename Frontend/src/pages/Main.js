@@ -38,7 +38,7 @@ function Main() {
                     </Col>
                </Row>  
             </Container>
-            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
+            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
         </div>
     );
 }
