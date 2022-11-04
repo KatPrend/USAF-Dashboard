@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './page.css';
 import {Link} from 'react-router-dom';
 import { Row, Col, Container} from 'react-bootstrap';
@@ -38,7 +38,7 @@ function Main() {
                     </Col>
                </Row>  
             </Container>
-            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
         </div>
     );
 }
