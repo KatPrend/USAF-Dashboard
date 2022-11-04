@@ -147,6 +147,126 @@ router.get('/userSuccessor/:userid', (req, res) => {
 
 });
 
+// Get Red user Project Dependencies
+router.get('/redUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Red user Project Dependencies
+router.get('/redUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Yellow user Project Dependencies
+router.get('/yellowUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Green user Project Dependencies
+router.get('/greenUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*)
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
 // Get Internal Project Dependencies for Ganntt Chart
 router.get('/internalDependencies/:projectid', (req, res) => {
     let sql = `
