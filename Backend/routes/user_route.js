@@ -62,51 +62,6 @@ router.post('/newContractor', (req, res) => {
     console.log(req.body);
 });
 
-// Adding a IPT Member 
-router.post('/newIPT', (req, res) => {
-    const {user_name, user_email} = req.body;
-    let sql = `
-    INSERT INTO users(
-        user_name,
-        user_role,
-        user_email
-    ) VALUES(
-        '${user_name}',
-        2,
-        '${user_email}',
-    )`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
-    console.log(req.body);
-});
-
-// Adding an Admin
-router.post('/newAdmin', (req, res) => {
-    const {user_name, user_email} = req.body;
-    let sql = `
-    INSERT INTO users(
-        user_name,
-        user_role,
-        user_email
-    ) VALUES(
-        "${user_name}",
-        3,
-        "${user_email}"
-    );INSERT INTO user_project_link
-    SELECT (SELECT id FROM users WHERE user_name = "${user_name}"), id, NULL FROM project`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    })
-    console.log(req.body);
-});
-
 //Update User Role
 router.put("/changeUserRole/:userid/role/:userRole/", (req, res)=>{
     let sql = `
@@ -218,11 +173,27 @@ router.delete('/removeUPL/:userId/:projectId', (req, res) => {
     });
 });
 
-//Adding Admin to EVery Project
+//Adding Admin to EVery Project  
+//Useless for now
 router.post('/addAdminUPL/:userID', (req,res) => {
     let sql = `
     INSERT INTO user_project_link
     SELECT ${req.params.userID}, id, NULL FROM project`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get All IPT Members attached to a project 
+// For IPT Drop down
+router.get('/getIPTMembersAttached/:projectID', (req, res) => {
+    let sql = `
+    SELECT * FROM user_project_link upl
+    INNER JOIN users u on upl.user_id = u.id
+    WHERE upl.project_id = ${req.params.projectID} AND u.user_role != 1`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

@@ -4,7 +4,6 @@ import './page.css';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
-import { Sankey, Layer, Rectangle } from 'recharts';
 import { DepSum } from '../components/Summaries/DepSum';
 import { format } from 'date-fns';
 import { Chart } from "react-google-charts";
@@ -63,10 +62,6 @@ const ProjectContent = (props) => {
   );
 }
 
-function daysToMilliseconds(days) {
-  return days * 24 * 60 * 60 * 1000;
-}
-
 const columns = [
   { type: "string", label: "Task ID" },
   { type: "string", label: "Task Name" },
@@ -78,7 +73,7 @@ const columns = [
 ];
 
 function GanttChartDataFormat(JsonData){
-  console.log("Ganttyy");
+console.log("Ganttyy");
   console.log(JsonData);
   var Rows = [];
 
@@ -101,6 +96,7 @@ function GanttChartDataFormat(JsonData){
         null,
         pred_name
       ])
+      return 0;
   })
   console.log("Rows")
   console.log(Rows)
@@ -142,7 +138,7 @@ function Dependency() {
                     {/*2*/}
                     <Col>
                         <CardGeneric Header='Dependency Graph' 
-                        Body={ data == 0 ? <></> :
+                        Body={ data === 0 ? <></> :
                             <Chart
                             chartType='Gantt'
                             width="100%" 
@@ -156,7 +152,7 @@ function Dependency() {
                 </Row>
             </Container>
 
-            {userid != 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
+            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
 
         </div>
     );

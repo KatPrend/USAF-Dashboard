@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Card, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateContractors = () => {

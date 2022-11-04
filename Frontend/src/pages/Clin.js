@@ -4,7 +4,7 @@ import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
 import { useLocation } from 'react-router-dom';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const ClinData = (props) => {
 
