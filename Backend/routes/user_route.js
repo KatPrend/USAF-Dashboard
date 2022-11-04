@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router()
+const router = express.Router();
 
 var db = require('../database');
 
+// Get All users
 router.get('/', (req, res) => {
     let sql = 'SELECT * FROM users'
     let query = db.query(sql, (err, results) =>{
@@ -13,21 +14,20 @@ router.get('/', (req, res) => {
     })
 });
 
+//Create New User
 router.post('/', (req, res) => {
-    const {contractor_company, userName, userRole, userEmail, mil_job_title} = req.body;
+    const {contractor_id, user_name, user_role, user_email} = req.body;
     let sql = `
     INSERT INTO users (
-        contractor_company,
+        contractor_id,
         user_name,
         user_role,
-        user_email,
-        mil_job_title) 
+        user_email) 
     VALUES (
-        "${contractor_company}",
-        "${userName}",
-        "${userRole}", 
-        "${userEmail}", 
-        "${mil_job_title}"
+        "${contractor_id}",
+        "${user_name}",
+        "${user_role}", 
+        "${user_email}"
         )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -38,14 +38,82 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-//Incase the user is put into the system wrong
-router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, res)=>{
+// Adding a Contractor
+router.post('/newContractor', (req, res) => {
+    const {contractor_id, user_name, user_email} = req.body;
+    let sql = `
+    INSERT INTO users(
+        contractor_id,
+        user_name,
+        user_role,
+        user_email
+    ) VALUES(
+        "${contractor_id}",
+        "${user_name}",
+        1,
+        "${user_email}"
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+    console.log(req.body);
+});
+
+// Adding a IPT Member 
+router.post('/newIPT', (req, res) => {
+    const {user_name, user_email} = req.body;
+    let sql = `
+    INSERT INTO users(
+        user_name,
+        user_role,
+        user_email
+    ) VALUES(
+        '${user_name}',
+        2,
+        '${user_email}',
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+    console.log(req.body);
+});
+
+// Adding an Admin
+router.post('/newAdmin', (req, res) => {
+    const {user_name, user_email} = req.body;
+    let sql = `
+    INSERT INTO users(
+        user_name,
+        user_role,
+        user_email
+    ) VALUES(
+        "${user_name}",
+        3,
+        "${user_email}"
+    );INSERT INTO user_project_link
+    SELECT (SELECT id FROM users WHERE user_name = "${user_name}"), id, NULL FROM project`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+    console.log(req.body);
+});
+
+//Update User Role
+router.put("/changeUserRole/:userid/role/:userRole/", (req, res)=>{
     let sql = `
     UPDATE users 
     SET 
-        user_role = ${req.params.userRole}, 
-        mil_job_title = ${req.params.jobTitle}
-    WHERE id = ${req.params.userid} `;
+        user_role = '${req.params.userRole}'
+    WHERE id = '${req.params.userid}'`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -54,19 +122,11 @@ router.put("/changeUserRole/:userid/role/:userRole/jobTitle/:jobTitle", (req, re
     })
 });
 
-// router.post()
-
-router.delete("/deleteUser/:userid", (req, res)=>{
-    // let sql = `
-    // DELETE 
-    // FROM users 
-    // WHERE id = ${req.params.userid}`;
+//Delete User
+router.delete("/del/:userid", (req, res)=>{
     let sql = `
-    DELETE FROM user_project_link
-    WHERE user_id = ${req.params.userid};
-    DELETE FROM users
-    WHERE id = ${req.params.userid};
-    DELETE FROM users
+    DELETE 
+    FROM users 
     WHERE id = ${req.params.userid}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -76,16 +136,18 @@ router.delete("/deleteUser/:userid", (req, res)=>{
     });
 });
 
+// IPT Member by Project ID
 router.get('/iptmembers/:project_id', (req, res) => {
     let sql = `
     SELECT 
         u.id, 
-        u.mil_job_title_id, 
+        mjt.mil_job_title, 
         u.user_name 
     FROM users u 
-    INNER JOIN user_project_link upl on upl.user_id = u.id 
-    WHERE upl.project_id = ${req.params.project_id}  
-    AND u.user_role ='IPT Member' AND u.user_role != 'Admin'`;
+    INNER JOIN user_project_link upl on upl.user_id = u.id
+    INNER JOIN military_job_titles mjt on upl.mil_job_title_id = mjt.id
+    WHERE upl.project_id = ${req.params.project_id} AND upl.mil_job_title_id IS NOT NULL
+    ORDER BY upl.mil_job_title_id`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -94,25 +156,7 @@ router.get('/iptmembers/:project_id', (req, res) => {
     });
 });
 
-router.get('/iptmembers/:project_id/jobTitle/:job_title', (req, res) => {
-    let sql = `
-    SELECT 
-        u.id, 
-        u.mil_job_title_id, 
-        u.user_name 
-    FROM users u 
-    INNER JOIN user_project_link upl on upl.user_id = u.id 
-    WHERE upl.project_id = ${req.params.project_id} 
-    AND u.mil_job_title_id=${req.params.job_title}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-// Get a user role from user email
+// Get project by user email
 router.get('/userEmail/:userEmail', (req, res) => {
     let sql = `
     SELECT *
@@ -127,7 +171,7 @@ router.get('/userEmail/:userEmail', (req, res) => {
 });
 
 // Get a user role from user id
-router.get('/userId/:userId', (req, res) => {
+router.get('/userRole/:userId', (req, res) => {
     let sql = `
     SELECT *
     FROM users u 
@@ -140,25 +184,18 @@ router.get('/userId/:userId', (req, res) => {
     });
 });
 
-// Mil Job Titles
-router.get('/milJobs', (req, res) => {
+//Adding User to User Project Link
+router.post('/addToUPL', (req,res) => {
+    const {user_id,project_id, mil_job_title_id} = req.body;
     let sql = `
-    SELECT * FROM military_job_titles`;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-    });
-});
-
-//New Mill Job Title
-router.post('/newMilJob/:newJob', (req, res) => {
-    let sql = `
-    INSERT INTO military_job_titles(
-        mil_job_title
+    INSERT INTO user_project_link(
+        user_id,
+        project_id,
+        mil_job_title_id
     ) VALUES (
-        ${req.params.newJob}
+        ${user_id},
+        ${project_id},
+        ${mil_job_title_id}
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -168,10 +205,24 @@ router.post('/newMilJob/:newJob', (req, res) => {
     });
 });
 
-router.delete('/removeMilJob/:milid', (req, res) => {
+//Remove IPT Member from UPL
+router.delete('/removeUPL/:userId/:projectId', (req, res) => {
     let sql = `
-    DELETE FROM military_job_titles
-    WHERE id = ${req.params.milid}`;
+    DELETE FROM user_project_link
+    WHERE user_id = ${req.params.userId} AND project_id = ${req.params.projectId}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Adding Admin to EVery Project
+router.post('/addAdminUPL/:userID', (req,res) => {
+    let sql = `
+    INSERT INTO user_project_link
+    SELECT ${req.params.userID}, id, NULL FROM project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

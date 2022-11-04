@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, Form} from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../pages/DummyData";
-import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../ApprovedFundingTable";
+import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../../pages/DummyData";
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../../ApprovedFundingTable";
 import {FundingDataTable, FundingDataTableEditable} from "./FundingDataTable";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import { SummaryIcon } from "../Summaries/SummaryIcon";
+import { SummaryIcon } from "../../Summaries/SummaryIcon";
 
 
 export const FundingData = (props) => {
@@ -18,7 +18,7 @@ export const FundingData = (props) => {
     const {id} =location.state;
 
     useEffect(() => {
-        axios.get(`/api/funds/obligation_table/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/obligation_table/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading(false);
         });
@@ -44,7 +44,6 @@ export const FundingData = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -52,20 +51,6 @@ export const FundingData = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
-                        <Row>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Independent Cost Estimate:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Projected Contract Value:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>

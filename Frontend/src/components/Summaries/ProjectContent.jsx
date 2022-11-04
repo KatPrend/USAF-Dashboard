@@ -92,7 +92,7 @@ export const ProjectContent = (props) => {
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '90%'}}>
             <h2>
                 Projects: 
-                {props.userRole !== "Admin" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
+                {props.userRole === "Contractor" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
             </h2>
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>
@@ -102,7 +102,7 @@ export const ProjectContent = (props) => {
                         <th>Contract Number</th>
                         <th>Contract Status</th>
                         <th>Org/Branch</th>
-                        {props.userRole === "Contractor" ? null : <th>Contract Value</th>}
+                        {props.userRole === "Contractor" ? null : <th>Contract Value ($)</th>}
                         <th>Dependency Status</th>
                         {props.userRole === "Contractor" ? null : <th>Financial Status</th>}
                         <th>Schedule Status</th>

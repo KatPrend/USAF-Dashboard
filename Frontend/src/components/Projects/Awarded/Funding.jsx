@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Col, Container, Row, Tabs, Tab, Modal, ModalBody, ButtonGroup, ModalDialog, Form } from 'react-bootstrap';
-import BarGraph from '../BarGraph';
-import LineGraph from '../LineGraph';
+import BarGraph from '../../BarGraph';
+import LineGraph from '../../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import {FundingDataTable, FundingDataTableEditable} from './FundingDataTable';
-import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../ApprovedFundingTable';
-import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../pages/DummyData';
+import {ObligationFundingDataTable, ExpenditureFundingDataTable, ObligationFundingDataTableEditable, ExpenditureFundingDataTableEditable} from './FundingDataTable';
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../../ApprovedFundingTable';
+import { AwardedProjectFundingDataExpenditure, AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../../pages/DummyData';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import '../../pages/page.css';
+import '../../../pages/page.css';
 
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
@@ -22,7 +22,7 @@ export const Funding = (props) => {
 
     useEffect(() => {
         // id.project_id
-        axios.get(`/api/funds/expenditure/${props.data}`).then(response =>{
+        axios.get(`/api/expenditure/${props.data}`).then(response =>{
             setExpenData(response.data);
             setLoading1(false);
         });
@@ -32,7 +32,7 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/funds/obligation/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });
@@ -63,7 +63,6 @@ export const Funding = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -71,20 +70,6 @@ export const Funding = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
-                        <Row>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Independent Cost Estimate:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                            <Col style={{fontWeight: 'bold', textAlign: 'left'}}>
-                                Projected Contract Value:
-                                <Form>
-                                    <Form.Control defaultValue={"temp"}/>
-                                </Form>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col style={{fontWeight: 'bold', textAlign: 'left'}}>Approved Funding:</Col>
                         </Row>
@@ -98,7 +83,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <FundingDataTableEditable data={AwardedProjectFundingDataObligation}/>
+                                <ObligationFundingDataTableEditable data={AwardedProjectFundingDataObligation}/>
                             </Col>
                         </Row>
                         <Row>
@@ -106,7 +91,8 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <FundingDataTableEditable data={AwardedProjectFundingDataExpenditure}/>
+                                {/* AwardedProjectFundingDataExpenditure */}
+                                <ExpenditureFundingDataTableEditable data={expen_data}/>
                             </Col>
                         </Row>
                     </Container>
@@ -185,7 +171,7 @@ export const Funding = (props) => {
                     <Row>
                         <Col>
                             {/*AwardedProjectFundingDataObligation */}
-                            <FundingDataTable data={obligation_data}/>
+                            <ObligationFundingDataTable data={obligation_data}/>
                         </Col>
                     </Row>
                     <Row>
@@ -196,7 +182,7 @@ export const Funding = (props) => {
                     <Row>
                         <Col>
                             {/* AwardedProjectFundingDataExpenditure */}
-                            <FundingDataTable data={expen_data}/>
+                            <ExpenditureFundingDataTable data={expen_data}/>
                         </Col>
                     </Row>
                 </Container>

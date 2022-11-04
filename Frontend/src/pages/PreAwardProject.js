@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import './page.css';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
-import { ProjectData } from '../components/ProjectData';
-import { IPT } from '../components/IPT';
-import { ProjectSchedule } from '../components/ProjectSchedule';
-import { ContractStatus } from '../components/Pre-Award/ContractStatus';
-import { FundingData } from '../components/Pre-Award/FundingData';
+import { ProjectData } from '../components/Projects/ProjectData';
+import { IPT } from '../components/Projects/IPT';
+import { ProjectSchedule } from '../components/Projects/ProjectSchedule';
+import { ContractStatus } from '../components/Projects/Pre-Award/ContractStatus';
+import { FundingData } from '../components/Projects/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
-import { AwardedModal } from '../components/Pre-Award/AwardedModal';
 
 function PreAwardProject(){
     const location = useLocation();
@@ -32,13 +31,13 @@ function PreAwardProject(){
                     </Col>
 
                     <Col>                      
-                        <IPT data={id} userRole={userRole} />
+                        <IPT data={id} userRole={userRole} userid={userid} />
                     </Col>
                 </Row>
                 <br />
                 <Row>
                     <Col>
-                        <ContractStatus data={id}/>
+                        <ContractStatus data={id} userRole={userRole}/>
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>
@@ -53,7 +52,7 @@ function PreAwardProject(){
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule data={id}/>
+                        <ProjectSchedule data={id} userRole={userRole}/>
                     </Col>
                 </Row>
             </Container>

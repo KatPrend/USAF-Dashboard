@@ -118,8 +118,9 @@ router.get('/predecessor/:projectid', (req, res) => {
 
 // Get Project Successor's from a userID
 router.get('/userSuccessor/:userid', (req, res) => {
+
     let sql = `
-	SELECT 
+	SELECT
         p.project_name as pred_proj_name,
         pm.task_name as pred_name,
         pm.start_date as pred_start,
@@ -127,7 +128,7 @@ router.get('/userSuccessor/:userid', (req, res) => {
         
         p2.project_name as succ_proj_name,
         pm1.task_name as succ_name,
-        pm1.start_date as succe_start,
+        pm1.start_date as succ_start,
         pm1.end_date as succ_end
     FROM project p
     INNER JOIN project_milestones pm ON pm.project_id = p.id
@@ -141,8 +142,9 @@ router.get('/userSuccessor/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-
+        console.log(res);
     });
+
 });
 
 // Get Internal Project Dependencies for Ganntt Chart

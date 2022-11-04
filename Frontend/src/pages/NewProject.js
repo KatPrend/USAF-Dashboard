@@ -4,7 +4,6 @@ import { NavB } from "../components/NavB";
 import { AddProject } from "../components/NewProject/AddProject";
 import { AddContract } from "../components/NewProject/AddContract";
 import { FileUpload } from "../components/NewProject/FileUpload";
-import { AddIPT } from "../components/NewProject/AddIPT";
 import "../components/NewProject/newProject.css";
 import { Predecessors } from "../components/NewProject/Predecessors";
 
@@ -25,12 +24,6 @@ function renderInfo(projectName, projectId) {
       <h4>Contract Information:</h4>
       <div className="project-element">
         <AddContract  data = {projectId}/>
-      </div>
-      <br />
-      <br />
-      <h4>IPT Members:</h4>
-      <div className="project-element">
-        <AddIPT />
       </div>
       <br />
       <br />
@@ -73,7 +66,7 @@ function NewProject() {
           </div>
           <br />
           <br />
-          {renderInfo(projectName, projectId)}
+          {renderInfo(projectId)}
         </div>
     }
     </div>

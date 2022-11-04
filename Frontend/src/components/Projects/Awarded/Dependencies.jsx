@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 
-export const Dependencies = () => {
+export const Dependencies = (props) => {
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     return (
@@ -39,9 +39,10 @@ export const Dependencies = () => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Dependencies</span>
                         </Col>
-                        <Col style={{textAlign: 'right'}}>
-                            <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
-                        </Col>
+                        { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
+                                <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
+                            </Col>
+                        }
                     </Row>
                 </Container>
             </Card.Header>

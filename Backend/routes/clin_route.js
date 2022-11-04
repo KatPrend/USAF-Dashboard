@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     let sql = 
     `
     SELECT * 
-    FROM clin_data
+    FROM view_clin
     `
 
     let query = db.query(sql, (err, results) =>{
@@ -19,20 +19,20 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {clin_num, project_id, clin_type, clin_scope, proj_clin_value} = req.body;
+    const {clin_num, project_id, clin_type, clin_scope, ind_gov_est} = req.body;
     let sql = `
     INSERT INTO clin_data 
         (clin_num, 
         project_id, 
         clin_type, 
         clin_scope, 
-        proj_clin_value) 
+        ind_gov_est) 
     VALUES 
         ("${clin_num}",
         "${project_id}",
         "${clin_type}", 
         "${clin_scope}", 
-        "${proj_clin_value}")`;
+        "${ind_gov_est}")`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -43,8 +43,8 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-router.put("put/:clinID", (req, res)=>{
-    const {clin_num, project_id, clin_type, clin_scope, proj_clin_value} = req.body;
+router.put("/:clinid", (req, res)=>{
+    const {clin_num, project_id, clin_type, clin_scope, ind_gov_est} = req.body;
     let sql = 
     `
     UPDATE clin_data 
@@ -53,11 +53,11 @@ router.put("put/:clinID", (req, res)=>{
         project_id = "${project_id}", 
         clin_type = "${clin_type}", 
         clin_scope = "${clin_scope}", 
-        proj_clin_value = "${proj_clin_value}"
+        ind_gov_est = "${ind_gov_est}"
     WHERE
-        id = ${clinID}
+        id = ${req.params.clinid}
     `;
-    
+
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -66,15 +66,23 @@ router.put("put/:clinID", (req, res)=>{
     })
 })
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete clin endpoint"})
+router.delete("/:clinid", (req, res)=>{
+    let sql = `
+    DELETE FROM clin_data
+    WHERE id = ${req.params.clinid}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
 })
 
 // Get Clin by projectid
 router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT * FROM 
-        clin_data 
+        view_clin
     WHERE project_id = "${req.params.project_id}"
     `;
     let query = db.query(sql, (err, results) =>{
