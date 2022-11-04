@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Form, Button } from 'react-bootstrap';
 
 
@@ -41,6 +41,9 @@ export function ApprovedFundingTable({data}){
 
 
 export function ApprovedFundingTableEditable({data}){
+    const [editData, setEditData] = useState(data);
+    const [columsEdited, setColumsEdited] = useState([]);
+
 
     function FormatData(data){
         let arr = Object.keys(data[0])
@@ -51,8 +54,52 @@ export function ApprovedFundingTableEditable({data}){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("1");
+        
+        editData.map((currRow, index) => (
+            columsEdited.includes(index) === true ? console.log(currRow) : null
+        ))
+
+        setColumsEdited([]);
     }
+
+    const handleFiscalYear = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp.FiscalYear = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+
+    }
+
+    const handleFundingType = (e, row, fundingType) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : temp = temp
+        ))
+
+        temp[fundingType] = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
 
     return(
         <div>
@@ -62,21 +109,25 @@ export function ApprovedFundingTableEditable({data}){
                     <tbody>
                         <tr>
                             <td key = "1" >Funding Type</td>
-                            {data.map( (info) => (
-                                <td key = {info.FiscalYear}>
-                                    <Form.Group>
-                                        <Form.Control defaultValue={info.FiscalYear}/>
+                            {editData.map( (info, index) => (
+                                <td key = {index}>
+                                    <Form.Group key={index}>
+                                        <Form.Control 
+                                        defaultValue={info.FiscalYear}
+                                        onChange={(e) => handleFiscalYear(e, index)}/>
                                     </Form.Group>
                                 </td>
                             ))}
                         </tr>
-                        {FormatData(data).map( (key) => (
+                        {FormatData(editData).map( (key) => (
                             <tr key={key}>
                                 <td>{key}</td>
-                                {data.map( (info) => (
-                                    <td key = {info[key]}>
-                                        <Form.Group>
-                                            <Form.Control defaultValue={info[key]}/>
+                                {editData.map( (info, index) => (
+                                    <td key = {index}>
+                                        <Form.Group key={index}>
+                                            <Form.Control 
+                                            defaultValue={info[key]}
+                                            onChange={(e) => handleFundingType(e, index, key)}/>
                                         </Form.Group>
                                     </td>
                                 ))}

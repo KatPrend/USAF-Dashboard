@@ -10,12 +10,25 @@ export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+
+    const [projectName, setProjectName] = useState("");
+    const [contractNumber, setContractNumber] = useState("");
+    const [contractor, setContractor] = useState("1");
+    const [branch, setBranch] = useState("");
+    const [requirementType, setRequirementType] = useState("1");
+    const [summary, setSummary] = useState("");
+    const [ccarNum, setCcar] = useState("");
+    const [contractors, setContractors] = useState([]);
+    const [branches, setBranches] = useState([]);
     
     useEffect(() => {
         axios.get(`/api/project/${props.data}`).then(response => {
-
+            
             setData(response.data);
             setLoading(false);
+        });
+        axios.get('/api/contractor').then(response => {
+            setContractors(response.data);
         });
     }, []);
 
@@ -27,6 +40,35 @@ export const ProjectData = (props) => {
         e.preventDefault();
         console.log("1");
     }
+
+    const handleName = (e) => {
+        setProjectName(e.target.value);
+    }
+
+    const handleContractNumber = (e) => {
+        setContractNumber(e.target.value);
+    }
+
+    const handleContractor = (e) => {
+        setContractor(e.target.value);
+    }
+
+    const handleBranch = (e) => {
+        setBranch(e.target.value);
+    }
+
+    const handleRequirementType = (e) => {
+        setRequirementType(e.target.value);
+    }
+
+    const handleCcarNumber = (e) => {
+        setCcar(e.target.value);
+    }
+
+    const handleCapabilitySummery = (e) => {
+        setSummary(e.target.value);
+    }
+    
 
 
     return (
@@ -50,7 +92,7 @@ export const ProjectData = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     {
-                        data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                        data.map(({id,project_name, contractor_id, contract_num, ccar_num, branch_id, requirement_type_id, summary}) => (
                             <Form key={id} id="ProjectDataEdit" onSubmit={handleSubmit}>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm={3}>Project Name</Form.Label>
@@ -58,6 +100,7 @@ export const ProjectData = (props) => {
                                         <Form.Control
                                             defaultValue={project_name}
                                             type="text"
+                                            onChange={handleName}
                                         />
                                     </Col>
                                 </Form.Group>
@@ -67,15 +110,17 @@ export const ProjectData = (props) => {
                                         <Form.Control
                                             defaultValue={contract_num}
                                             type="text"
+                                            onChange={handleContractNumber}
                                         />
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={3}>Contract Status</Form.Label>
+                                    <Form.Label column sm={3}>Ccar Number</Form.Label>
                                     <Col sm={7}>
                                         <Form.Control
-                                            defaultValue={contract_status}
+                                            defaultValue={ccar_num}
                                             type="text"
+                                            onChange={handleCcarNumber}
                                         />
                                     </Col>
                                 </Form.Group>
@@ -83,27 +128,38 @@ export const ProjectData = (props) => {
                                     <Form.Label column sm={3}>Contractor</Form.Label>
                                     <Col sm={7}>
                                         <Form.Control
-                                            defaultValue={contractor_name}
-                                            type="text"
-                                        />
+                                            as="select"
+                                            onChange={handleContractor}
+                                            defaultValue={contractor_id}>
+                                                {contractors.map((element, index) => (
+                                                    <option key={index} value={element.id}>{element.contractor_name}</option>
+                                                ))}
+                                        </Form.Control>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm={3}>Branch</Form.Label>
                                     <Col sm={7}>
                                         <Form.Control
-                                            defaultValue={branch}
+                                            defaultValue={branch_id}
                                             type="text"
-                                        />
+                                            onChange={handleBranch}>
+                                        </Form.Control>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm={3}>Requirement Type</Form.Label>
                                     <Col sm={7}>
                                         <Form.Control
-                                            defaultValue={requirement_type}
-                                            type="text"
-                                        />
+                                            defaultValue={requirement_type_id}
+                                            as="select"
+                                            onChange={handleRequirementType}>
+                                                
+                                            <option value="1">CDD</option>
+                                            <option value="2">CPD</option>
+                                            <option value="3">1067</option>
+                                            <option value="4">UON/JUONs</option>
+                                        </Form.Control>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row}>
@@ -113,6 +169,7 @@ export const ProjectData = (props) => {
                                             as="textarea"
                                             defaultValue={summary}
                                             type="text"
+                                            onChange={handleCapabilitySummery}
                                         />
                                     </Col>
                                 </Form.Group>
@@ -140,11 +197,12 @@ export const ProjectData = (props) => {
             </Card.Header>
             <Card.Body>
                 {
-                    data.map(({id,project_name, contractor_name, contract_num, contract_status, branch, requirement_type, summary}) => (
+                    data.map(({id,project_name, contractor_name, contract_num, contract_status, ccar_num, branch, requirement_type, summary}) => (
                         <div key = {id}>
                             <p className='project-data'><span>Project Name:</span> {project_name}</p>
                             <p className='project-data'><span>Contract Number:</span> {contract_num}</p>
                             <p className='project-data'><span>Contract Status:</span> {contract_status}</p>
+                            <p className='project-data'><span>Ccar Number:</span> {ccar_num}</p>
                             <p className='project-data'><span>Contractor:</span> {contractor_name}</p>
                             <p className='project-data'><span>Branch:</span> {branch}</p>
                             <p className='project-data'><span>Requirement Type:</span> {requirement_type}</p>
