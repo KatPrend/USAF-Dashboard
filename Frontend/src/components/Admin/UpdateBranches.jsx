@@ -13,7 +13,7 @@ export const UpdateBranches = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/branch/').then(response => {
+        axios.get('/api/branch/noproject').then(response => {
             setData(response.data);
             setLoading(false);
         });
@@ -39,7 +39,7 @@ export const UpdateBranches = () => {
 
             setAdded(true);
 
-            axios.get('/api/branch/').then(response => {
+            axios.get('/api/branch/noproject').then(response => {
                 setData(response.data);
                 setLoading(false);
             });
@@ -63,7 +63,7 @@ export const UpdateBranches = () => {
 
             setRemoved(true);
 
-            axios.get('/api/branch/').then(response => {
+            axios.get('/api/branch/noproject').then(response => {
                 setData(response.data);
                 setLoading(false);
             });

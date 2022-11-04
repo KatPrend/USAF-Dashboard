@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+var db = require('../database');
+
 // Grabbing all mil job titles
 router.get('/milJobs', (req, res) => {
     let sql = `

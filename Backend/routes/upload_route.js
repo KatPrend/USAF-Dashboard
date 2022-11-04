@@ -40,7 +40,10 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
   
 
   try {
-    await unlink(__dirname + '/uploads/' + req.file.filename);
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
     console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
   } catch (error) {
     console.error('there was an error:', error.message);
@@ -95,12 +98,14 @@ return new Promise((resolve) => {
       INSERT INTO temp_propricer_table(
         task_id,
         task_description,
-        month,wbs, 
+        month,
+        wbs, 
         clin_num, 
         source_type, 
         resource_code, 
         resource_description, 
-        resource_type, rate, 
+        resource_type, 
+        rate, 
         hours_worked, 
         units, 
         cost, 
@@ -124,7 +129,8 @@ function importTRT(projectId){
       project_id,
       clin_id,task_id, 
       task_description, 
-      month, wbs, 
+      month, 
+      wbs, 
       clin_num, 
       source_type, 
       resource_code, 
@@ -195,7 +201,10 @@ router.post('/milestonesUpload/:projectId', uploadFile.single('milestonesUpload'
   await deleteTempMilestone();
   
   try {
-    await unlink(__dirname + '/uploads/' + req.file.filename);
+    await fs.unlink(__dirname + '/uploads/' + req.file.filename, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
     console.log(`successfully deleted ${__dirname}/uploads/${req.file.filename}`);
   } catch (error) {
     console.error('there was an error:', error.message);
