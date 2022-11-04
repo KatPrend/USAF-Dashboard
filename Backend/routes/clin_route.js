@@ -3,6 +3,7 @@ const router = express.Router()
 
 var db = require('../database');
 
+// Get all CLIN
 router.get('/', (req, res) => {
     let sql = 
     `
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
     })
 });
 
+// POST a CLIN
 router.post('/', (req, res) => {
     const {clin_num, project_id, clin_type, clin_scope, ind_gov_est} = req.body;
     let sql = `
@@ -27,12 +29,12 @@ router.post('/', (req, res) => {
         clin_type, 
         clin_scope, 
         ind_gov_est) 
-    VALUES 
-        ("${clin_num}",
-        "${project_id}",
+    VALUES (
+        ${clin_num},
+        ${project_id},
         "${clin_type}", 
         "${clin_scope}", 
-        "${ind_gov_est}")`;
+        ${ind_gov_est})`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -43,6 +45,7 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
+//Update a CLIN
 router.put("/:clinid", (req, res)=>{
     const {clin_num, project_id, clin_type, clin_scope, ind_gov_est} = req.body;
     let sql = 
@@ -66,6 +69,7 @@ router.put("/:clinid", (req, res)=>{
     })
 })
 
+//Delete a CLIN
 router.delete("/:clinid", (req, res)=>{
     let sql = `
     DELETE FROM clin_data

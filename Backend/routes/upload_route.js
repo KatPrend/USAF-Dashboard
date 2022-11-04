@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
 
 const uploadFile = multer({ storage: storage })
 
+//Uploading ProPricer data into DB
 router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'), async (req, res) => {
 
   console.log("Create the Temp Table")
@@ -197,7 +198,7 @@ function dropTempTable(){
   });
 }
 
-
+//Uploading Milestones to the DB from a file
 router.post('/milestonesUpload/:projectId', uploadFile.single('milestonesUpload'), async (req, res) => {
 
   // Create the temp milestones table

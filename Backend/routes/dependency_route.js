@@ -3,6 +3,7 @@ const router = express.Router()
 
 var db = require('../database');
 
+//Get a List of all dependencies
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
@@ -15,20 +16,21 @@ router.get('/', (req, res) => {
     })
 });
 
+//Make a new Dependency
 router.post('/', (req, res) => {
     const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
-    INSERT INTO dependency_table (
+    INSERT INTO project_milestone_dependency (
         predecessor_project, 
         predecessor_milestone,
         successor_project,
         successor_milestone
         ) 
     VALUES (
-        "${predecessor_project}",
-        "${predecessor_milestone}",
-        "${successor_project}",
-        "${successor_milestone}"
+        ${predecessor_project},
+        ${predecessor_milestone},
+        ${successor_project},
+        ${successor_milestone}
         )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -47,6 +49,7 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
 });
 
+//Grab Successor
 router.get('/successor/:projectid', (req, res) => {
     let sql = `
     SELECT 
@@ -81,6 +84,7 @@ router.get('/successor/:projectid', (req, res) => {
     });
 });
 
+//Grab Predecessor
 router.get('/predecessor/:projectid', (req, res) => {
     let sql = `
     SELECT

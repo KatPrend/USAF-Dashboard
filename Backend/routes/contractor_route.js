@@ -3,6 +3,7 @@ const router = express.Router()
 
 var db = require('../database');
 
+//Get a list of all Contractors
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
@@ -16,6 +17,7 @@ router.get('/', (req, res) => {
     });
 });
 
+//Adding a new Contractor
 router.post('/', (req, res) => {
     const {contractor_name, summary} = req.body;
     let sql = `
@@ -27,7 +29,7 @@ router.post('/', (req, res) => {
         "${contractor_name}",
         "${summary}"
         )`;
-    let query = db.query(sql, (err, results) =>{
+    db.query = db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -36,10 +38,7 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update clin endpoint"})
-})
-
+//Delete a Contractor
 router.delete("/:contractor_id", (req, res)=>{
 
     let sql = `
@@ -53,9 +52,9 @@ router.delete("/:contractor_id", (req, res)=>{
         }
         res.send(results)
     })
-})
+});
 
-
+//Get Contractors with no Projects
 router.get('/noproject', (req, res)=>{
 
     let sql = `
