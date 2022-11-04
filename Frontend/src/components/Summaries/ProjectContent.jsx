@@ -78,11 +78,11 @@ export const ProjectContent = (props) => {
             return false;
         if (!(safeToString(contract_value).toLowerCase().includes(contract_value_search.toLowerCase())) && contract_value_search !== '')
             return false;
-        if (!(safeToString(dependency_status).toLowerCase() == (dependency_status_search.toLowerCase())) && dependency_status_search !== '')
+        if (!(safeToString(dependency_status).toLowerCase() === (dependency_status_search.toLowerCase())) && dependency_status_search !== '')
             return false;
-        if (!(safeToString(financial_status).toLowerCase() == (financial_status_search.toLowerCase())) && financial_status_search !== '')
+        if (!(safeToString(financial_status).toLowerCase() === (financial_status_search.toLowerCase())) && financial_status_search !== '')
             return false;
-        if (!(safeToString(schedule_status).toLowerCase() == (schedule_status_search.toLowerCase())) && schedule_status_search !== '')
+        if (!(safeToString(schedule_status).toLowerCase() === (schedule_status_search.toLowerCase())) && schedule_status_search !== '')
             return false;
         return true;
     }
