@@ -3,6 +3,7 @@ const router = express.Router()
 
 var db = require('../database');
 
+//Grabbing all WBS's
 router.get('/', (req, res) => {
     let sql = `
     SELECT *
@@ -28,6 +29,7 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete wbs endpoint"})
 })
 
+//Grab all WBS's for a project
 router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT *
@@ -42,6 +44,7 @@ router.get('/:project_id', (req, res) => {
     });
 });
 
+// Grab a CLIN's WBS
 router.get('/project/:project_id/clin/:clin_id', (req, res) => {
     let sql = `
     SELECT *
