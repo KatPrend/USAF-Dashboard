@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
         }
         res.send(results)
     })
-    console.log(req.body);
+    //console.log(req.body);
 });
 
 router.put("/", (req, res)=>{
@@ -146,7 +146,7 @@ router.get('/userSuccessor/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        //console.log(res);
     });
 
 });
@@ -176,7 +176,7 @@ router.get('/redUserDependencies/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        //console.log(res);
     });
 
 });
@@ -206,7 +206,7 @@ router.get('/redUserDependencies/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        //console.log(res);
     });
 
 });
@@ -237,7 +237,7 @@ router.get('/yellowUserDependencies/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        //console.log(res);
     });
 
 });
@@ -267,7 +267,7 @@ router.get('/greenUserDependencies/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        //console.log(res);
     });
 
 });

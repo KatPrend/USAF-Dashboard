@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Form, Button } from 'react-bootstrap';
+import { Row, Col, Table, Form, Button } from 'react-bootstrap';
 
 
 
@@ -20,7 +20,7 @@ export function ApprovedFundingTable({data}){
                     <tr>
                         <td key = "1" >Funding Type</td>
                         {data.map( (info) => (
-                            <td key = {info.FiscalYear}>{info.FiscalYear}</td>
+                            <td key = {info.FiscalYear}>FY'{info.FiscalYear}</td>
                         ))}
                     </tr>
                     {FormatData(data).map( (key) => (
@@ -111,10 +111,13 @@ export function ApprovedFundingTableEditable({data}){
                             <td key = "1" >Funding Type</td>
                             {editData.map( (info, index) => (
                                 <td key = {index}>
-                                    <Form.Group key={index}>
-                                        <Form.Control 
-                                        defaultValue={info.FiscalYear}
-                                        onChange={(e) => handleFiscalYear(e, index)}/>
+                                    <Form.Group as={Row} key={index}>
+                                        <Form.Label column sm={2}>FY'</Form.Label>
+                                        <Col sm={5}>
+                                            <Form.Control 
+                                            defaultValue={info.FiscalYear}
+                                            onChange={(e) => handleFiscalYear(e, index)}/>
+                                        </Col>
                                     </Form.Group>
                                 </td>
                             ))}
