@@ -227,7 +227,8 @@ router.get('/yellowUserDependencies/:userid', (req, res) => {
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
         WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+        AND DATEDIFF(pm1.start_date,pm.end_date) > 0
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 6
     ) T1 
     `;
 
@@ -245,7 +246,7 @@ router.get('/yellowUserDependencies/:userid', (req, res) => {
 router.get('/greenUserDependencies/:userid', (req, res) => {
 
     let sql = `
-	SELECT COUNT(*)
+	SELECT COUNT(*) as count
     FROM
     (
     SELECT
@@ -257,7 +258,7 @@ router.get('/greenUserDependencies/:userid', (req, res) => {
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
         WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+        AND DATEDIFF(pm1.start_date,pm.end_date) > 5
     ) T1 
     `;
 

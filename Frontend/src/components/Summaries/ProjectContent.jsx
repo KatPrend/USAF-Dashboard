@@ -54,8 +54,8 @@ export const ProjectContent = (props) => {
         }
     }, []);
 
-    console.log(props.userid);
-    console.log(data);
+    // console.log(props.userid);
+    // console.log(data);
 
     if (isLoading) {
         return <div className="mx-auto w-100">Loading...</div>;

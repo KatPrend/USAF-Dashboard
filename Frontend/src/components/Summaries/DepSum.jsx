@@ -31,8 +31,10 @@ export const DepSum = (props) => {
         });
     }, []);
 
-    console.log("YELLOW")
-    console.log(yellow);
+    console.log("GREEN")
+    console.log(green);
+    
+    if(yellow !== undefined) console.log(yellow[0].count) ;
 
     if (isLoadingRed || isLoadingYellow || isLoadingGreen) {
         return <div className="mx-auto w-100">Loading...</div>;
@@ -47,19 +49,19 @@ export const DepSum = (props) => {
                         <Col>
                             <div className="box green">
                                 <p className="category">Tracked Dependencies With {">5"} Days Schedule Margin</p>
-                                <p className="value">{green.count}</p>
+                                <p className="value">{green[0].count}</p>
                             </div>
                         </Col>
                         <Col>
                             <div className="box yellow">
                                 <p className="category">Tracked Dependencies With {"<5"} Days Schedule Margin</p>
-                                <p className="value">{yellow.count}</p>
+                                <p className="value">{yellow[0].count}</p>
                             </div>
                         </Col>
                         <Col>
                             <div className="box red">
                                 <p className="category">Tracked Dependencies With Tracked Impacts</p>
-                                <p className="value">{red.count}</p>
+                                <p className="value">{red[0].count}</p>
                             </div>
                         </Col>
                     </Row>
