@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Form, Table } from 'react-bootstrap';
+import { Alert, Button, Form, Table } from 'react-bootstrap';
 import { format } from 'date-fns';
 
 
@@ -82,6 +82,8 @@ export function ExpenditureFundingDataTableEditable({data}){
 
     const[editData, setEditData] = useState();
     const[columsEdited, setColumsEdited] = useState([]);
+    const[showAlert, setShowAlert] = useState(false);
+    const[columnToDelete, setColumnToDelete] = useState();
 
     useEffect(() => {
         setEditData(data);
@@ -106,7 +108,7 @@ export function ExpenditureFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.date = e.target.value;
@@ -125,7 +127,7 @@ export function ExpenditureFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Projected = e.target.value;
@@ -144,7 +146,7 @@ export function ExpenditureFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Actual = e.target.value;
@@ -155,11 +157,32 @@ export function ExpenditureFundingDataTableEditable({data}){
         
     }
 
+    const handleAddCol = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleDeletCol = (row) => {
+        setColumnToDelete(row);
+        setShowAlert(true);
+    }
+
+    const DeleteCol = async (e, row) => {
+        e.preventDefault();
+    }
+
+
     return(
+        <>
         <Form onSubmit={handleSubmit}>
-            <Button className='Button' type="submit">Save Expenditure Data</Button>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
+                    <tr>
+                        <td> </td>
+                        {data.map( (info, index) => (
+                            <td><Button className="Button" onClick={() => handleDeletCol(index)}>Delete Column {index+1}</Button></td>
+                        ))}
+                        <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
+                    </tr>
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
@@ -199,7 +222,15 @@ export function ExpenditureFundingDataTableEditable({data}){
                     </tr>
                 </tbody>
             </Table>
+            <Alert show={showAlert} variant="danger">
+                <Alert.Heading>Are You Sure you want to delete column {columnToDelete+1}</Alert.Heading>
+                <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
+                <Button variant="outline-danger">Delete</Button>
+            </Alert>
+            <Button className='Button' type="submit">Save Expenditure Data</Button>
         </Form>
+        </>
+        
     )
 }
 
@@ -207,6 +238,9 @@ export function ObligationFundingDataTableEditable({data}){
 
     const[editData, setEditData] = useState();
     const[columsEdited, setColumsEdited] = useState([]);
+    const[showAlert, setShowAlert] = useState(false);
+    const[columnToDelete, setColumnToDelete] = useState();
+
 
     useEffect(() => {
         setEditData(data);
@@ -231,7 +265,7 @@ export function ObligationFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.date = e.target.value;
@@ -250,7 +284,7 @@ export function ObligationFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.FundingType = e.target.value;
@@ -269,7 +303,7 @@ export function ObligationFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.FiscalYear = e.target.value;
@@ -288,7 +322,7 @@ export function ObligationFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Projected = e.target.value;
@@ -307,7 +341,7 @@ export function ObligationFundingDataTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Actual = e.target.value;
@@ -318,11 +352,30 @@ export function ObligationFundingDataTableEditable({data}){
         
     }
 
+    const handleAddCol = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleDeletCol = (row) => {
+        setColumnToDelete(row);
+        setShowAlert(true);
+    }
+
+    const DeleteCol = async (e, row) => {
+        e.preventDefault();
+    }
+
     return(
         <Form  onSubmit={handleSubmit}>
-            <Button className='Button' type="submit">Save Obligation Data</Button>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
+                    <tr>
+                        <td> </td>
+                        {data.map( (info, index) => (
+                            <td><Button className="Button" onClick={() => handleDeletCol(index)}>Delete Column {index+1}</Button></td>
+                        ))}
+                        <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
+                    </tr>
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
@@ -386,6 +439,12 @@ export function ObligationFundingDataTableEditable({data}){
                     </tr>
                 </tbody>
             </Table>
+            <Alert show={showAlert} variant="danger">
+                <Alert.Heading>Are You Sure you want to delete column {columnToDelete+1}</Alert.Heading>
+                <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
+                <Button variant="outline-danger">Delete</Button>
+            </Alert>
+            <Button className='Button' type="submit">Save Obligation Data</Button>
         </Form>
     )
 }

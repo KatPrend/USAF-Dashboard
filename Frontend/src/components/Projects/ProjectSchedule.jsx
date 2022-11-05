@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, Form} from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, Form, Alert} from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
@@ -54,6 +54,8 @@ export const ProjectSchedule = (props) => {
     const [editData, setEditData] = useState();
     const [columsEdited, setColumsEdited] = useState([]);
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+    const [showRowAlert, setShowRowAlert] = useState(false);
+    const [rowToDelete, setRowToDelete] = useState();
 
     useEffect(() => {
         axios.get(`/api/project/schedule/${props.data}`).then(response =>{
@@ -82,7 +84,7 @@ export const ProjectSchedule = (props) => {
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Name = e.target.value;
@@ -101,7 +103,7 @@ export const ProjectSchedule = (props) => {
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Start = e.target.value;
@@ -120,7 +122,7 @@ export const ProjectSchedule = (props) => {
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.End = e.target.value;
@@ -139,7 +141,7 @@ export const ProjectSchedule = (props) => {
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.Predecessors = e.target.value;
@@ -148,6 +150,19 @@ export const ProjectSchedule = (props) => {
             index === row ? {...currObject, temp} : {...currObject}
         )))
         
+    }
+
+    const handleAddRow = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleRowAlert = (row) => {
+        setRowToDelete(row);
+        setShowRowAlert(true);
+    }
+
+    const DeleteRow = async (e, row) => {
+        e.preventDefault();
     }
 
 
@@ -179,6 +194,7 @@ export const ProjectSchedule = (props) => {
                         <Table responsive striped bordered hover className="bg-light">
                             <thead>
                                 <tr>
+                                    <th> </th>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Start</th>
@@ -190,6 +206,7 @@ export const ProjectSchedule = (props) => {
                                 {
                                     editData.map(({ID, Name, Start, End, Predecessors}, index) => (
                                         <tr key={ID}>
+                                            <td><Button className="Button" onClick={() => handleRowAlert(ID)}>Delete Milestone {ID}</Button></td>
                                             <td>
                                                 {ID}
                                             </td>
@@ -228,6 +245,12 @@ export const ProjectSchedule = (props) => {
                                 }
                             </tbody>
                         </Table>
+                        <Button className="Button" onClick={handleAddRow}>Add Milestone</Button>
+                        <Alert show={showRowAlert} variant="danger">
+                            <Alert.Heading>Are You Sure you want to delete Milestone {rowToDelete}</Alert.Heading>
+                            <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
+                            <Button variant="outline-danger">Delete</Button>
+                        </Alert>
                     </Form>
                     
                 </ModalBody>
