@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import './page.css';
 import {Link} from 'react-router-dom';
 import { Row, Col, Container} from 'react-bootstrap';
@@ -25,7 +25,7 @@ function Main() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum body = {<Link to="/dependency">See Dependencies</Link>}/>
+                        {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     {userid === 0 || userRole === "Contractor" ? null : <Col>
@@ -38,7 +38,7 @@ function Main() {
                     </Col>
                </Row>  
             </Container>
-            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
+            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
         </div>
     );
 }

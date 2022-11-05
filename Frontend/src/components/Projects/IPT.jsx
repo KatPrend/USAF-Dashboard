@@ -15,7 +15,7 @@ export const IPT = (props) => {
 
     const [addUsername, setAddUsername] = useState(1);
     const [addUsertitle, setAddUsertitle] = useState(1);
-    const [removeUser, setRemoveUser] = useState(1);
+    const [removeUser, setRemoveUser] = useState(0);
 
     useEffect(() => {
         axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
@@ -25,7 +25,7 @@ export const IPT = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/user/milJobs/`).then(response =>{
+        axios.get(`/api/mjt/milJobs/`).then(response =>{
             setTitles(response.data);
             setLoading2(false);
         });
@@ -81,17 +81,21 @@ export const IPT = (props) => {
         console.log("Remove " + removeUser);
         console.log("project id: " + props.data);
 
-        axios.delete(`/api/user/removeUPL/${removeUser}/${props.data}`, {
-        })
-        .then(function(res){
-            axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
-                setIpt(response.data);
-                setLoading1(false);
+        if (removeUser !== 0) {
+            axios.delete(`/api/user/removeUPL/${removeUser}/${props.data}`, {
+            })
+            .then(function(res){
+                axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
+                    setIpt(response.data);
+                    setLoading1(false);
+                });
+                
+                setRemoveUser(0);
+            })
+            .catch(function (err){
+                console.log(err);
             });
-        })
-        .catch(function (err){
-            console.log(err);
-        });
+        }
     }
 
     return (
@@ -106,8 +110,7 @@ export const IPT = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button'>Save</Button>
+                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Done</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -150,6 +153,7 @@ export const IPT = (props) => {
                                     <Form.Label column sm={3}>User:</Form.Label>
                                     <Col sm={8}>
                                         <Form.Control as="select" columns sm="auto" onChange={handleRemoveUser}>
+                                            <option value={0} key={0} eventKey={0}>Choose IPT Member</option>
                                             {
                                                 ipt.map(({id, user_name}) => (
                                                     <option value={id} key={id} eventKey={id}>{user_name}</option>

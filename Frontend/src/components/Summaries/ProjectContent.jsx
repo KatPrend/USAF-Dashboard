@@ -41,14 +41,21 @@ export const ProjectContent = (props) => {
     const [schedule_status_search, set_schedule_status_search] = useState('');
 
     useEffect(() => {
-        axios.get(`/api/project/userId/${props.userid}`).then(response => {
-            setData(response.data);
-            setLoading(false);
-        });
+        if (props.userRole === "Admin") {
+            axios.get(`/api/project/`).then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        } else {
+            axios.get(`/api/project/userId/${props.userid}`).then(response => {
+                setData(response.data);
+                setLoading(false);
+            });
+        }
     }, []);
 
-    console.log(props.userid);
-    console.log(data);
+    // console.log(props.userid);
+    // console.log(data);
 
     if (isLoading) {
         return <div className="mx-auto w-100">Loading...</div>;
@@ -78,18 +85,18 @@ export const ProjectContent = (props) => {
             return false;
         if (!(safeToString(contract_value).toLowerCase().includes(contract_value_search.toLowerCase())) && contract_value_search !== '')
             return false;
-        if (!(safeToString(dependency_status).toLowerCase() == (dependency_status_search.toLowerCase())) && dependency_status_search !== '')
+        if (!(safeToString(dependency_status).toLowerCase() === (dependency_status_search.toLowerCase())) && dependency_status_search !== '')
             return false;
-        if (!(safeToString(financial_status).toLowerCase() == (financial_status_search.toLowerCase())) && financial_status_search !== '')
+        if (!(safeToString(financial_status).toLowerCase() === (financial_status_search.toLowerCase())) && financial_status_search !== '')
             return false;
-        if (!(safeToString(schedule_status).toLowerCase() == (schedule_status_search.toLowerCase())) && schedule_status_search !== '')
+        if (!(safeToString(schedule_status).toLowerCase() === (schedule_status_search.toLowerCase())) && schedule_status_search !== '')
             return false;
         return true;
     }
 
     const searchStyle = {width: '100%'};
     return (
-        <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '100%'}}>
+        <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '90%'}}>
             <h2>
                 Projects: 
                 {props.userRole === "Contractor" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
@@ -142,10 +149,10 @@ export const ProjectContent = (props) => {
                     </td>
                 </tr>
                 {
-                    data.map(({ project_id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status }) => (
-                        <tr key={project_id} style={shouldDisplay(project_id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status) ? {} : {display: 'none'}}>
-                            <td>{project_id}</td>
-                            <td> {renderContent(contract_status,project_id,project_name)}</td>
+                    data.map(({ id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status }) => (
+                        <tr key={id} style={shouldDisplay(id, project_name, contract_num, contract_status, branch, contract_value , dependency_status, financial_status, schedule_status) ? {} : {display: 'none'}}>
+                            <td>{id}</td>
+                            <td> {renderContent(contract_status,id,project_name)}</td>
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>

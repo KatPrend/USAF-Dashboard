@@ -3,10 +3,11 @@ const router = express.Router()
 
 var db = require('../database');
 
+//Get a List of all Projects
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
-    FROM project`;
+    FROM view_project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -15,6 +16,7 @@ router.get('/', (req, res) => {
     })
 });
 
+//Make a new Project
 router.post('/', (req, res) => {
     const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num} = req.body;
     let sql = `
@@ -46,6 +48,7 @@ router.post('/', (req, res) => {
     console.log(req.body);
 });
 
+//Update a project
 router.put('/:projectid', (req, res)=>{
     const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
     
@@ -71,6 +74,7 @@ router.put('/:projectid', (req, res)=>{
     });
 });
 
+//Delete a project
 router.delete("/:projectid", (req, res)=>{
     let sql = `
     DELETE FROM project
@@ -101,7 +105,7 @@ router.get('/userId/:userId', (req, res) => {
     });
 });
 
-// Get a project with Project ID
+// Get all information for a project
 router.get('/:projectid', (req, res) => {
     let sql = `
     SELECT * 
@@ -117,7 +121,7 @@ router.get('/:projectid', (req, res) => {
 
 });
 
-// Grabbing all of the project information
+// Grabbing all the Project Schedule for a project
 router.get('/schedule/:projectid', (req, res) => {
     
     let sql = `

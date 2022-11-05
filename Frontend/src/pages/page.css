@@ -17,7 +17,7 @@
 
 .card {
   background-color: whitesmoke;
-  border: steelblue;
+  border: rgb(0 51 160);
 }
 
 .no-bot-pad {
@@ -25,8 +25,9 @@
 }
 
 .cardHead {
-  background-color: steelblue;
+  background-color: 0 51 160;
   color: seashell;
+  background-color: rgb(0 51 160);
   font-weight: bold;
 }
 
@@ -43,20 +44,18 @@
 
 .Button {
   background-color: white;
-  border-color: black;
-  color: steelblue;  
+  color: rgb(0 51 160);  
 }
 
 .Button:hover {
   background-color: steelblue;
-  border-color: black;
   color: white;
 }
 
 .CLIN-and-File-buttongroup{
   width: auto;
   background-color: white;
-  border-color: black;
+  border: none;
   color: steelblue;
 }
 
