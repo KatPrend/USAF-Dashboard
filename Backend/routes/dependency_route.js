@@ -3,6 +3,7 @@ const router = express.Router()
 
 var db = require('../database');
 
+//Get a List of all dependencies
 router.get('/', (req, res) => {
     let sql = `
     SELECT * 
@@ -15,20 +16,21 @@ router.get('/', (req, res) => {
     })
 });
 
+//Make a new Dependency
 router.post('/', (req, res) => {
     const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
-    INSERT INTO dependency_table (
+    INSERT INTO project_milestone_dependency (
         predecessor_project, 
         predecessor_milestone,
         successor_project,
         successor_milestone
         ) 
     VALUES (
-        "${predecessor_project}",
-        "${predecessor_milestone}",
-        "${successor_project}",
-        "${successor_milestone}"
+        ${predecessor_project},
+        ${predecessor_milestone},
+        ${successor_project},
+        ${successor_milestone}
         )`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -47,6 +49,7 @@ router.delete("/", (req, res)=>{
     res.send({message:"TODO: Make a delete clin endpoint"})
 });
 
+//Grab Successor
 router.get('/successor/:projectid', (req, res) => {
     let sql = `
     SELECT 
@@ -81,6 +84,7 @@ router.get('/successor/:projectid', (req, res) => {
     });
 });
 
+//Grab Predecessor
 router.get('/predecessor/:projectid', (req, res) => {
     let sql = `
     SELECT
@@ -136,6 +140,127 @@ router.get('/userSuccessor/:userid', (req, res) => {
     INNER JOIN project p2 ON p2.id = pmd.successor_project
     INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
     WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})`;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Red user Project Dependencies
+router.get('/redUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Red user Project Dependencies
+router.get('/redUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Yellow user Project Dependencies
+router.get('/yellowUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) > 0
+        AND DATEDIFF(pm1.start_date,pm.end_date) < 6
+    ) T1 
+    `;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+        console.log(res);
+    });
+
+});
+
+// Get Green user Project Dependencies
+router.get('/greenUserDependencies/:userid', (req, res) => {
+
+    let sql = `
+	SELECT COUNT(*) as count
+    FROM
+    (
+    SELECT
+        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        FROM project p
+        INNER JOIN project_milestones pm ON pm.project_id = p.id
+        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
+        INNER JOIN project p2 ON p2.id = pmd.successor_project
+        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
+        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
+        AND DATEDIFF(pm1.start_date,pm.end_date) > 5
+    ) T1 
+    `;
 
     let query = db.query(sql, (err, results) =>{
         if(err){

@@ -25,7 +25,7 @@ function Main() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum body = {<Link to="/dependency">See Dependencies</Link>}/>
+                        {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     {userid === 0 || userRole === "Contractor" ? null : <Col>

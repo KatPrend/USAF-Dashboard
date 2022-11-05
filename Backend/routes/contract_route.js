@@ -107,7 +107,7 @@ router.put("/:contractid", (req, res)=>{
     SET contract_status = ${contract_status}
     WHERE id = ${req.params.contractid}`;
     
-    let query = db.query(sql, (err, results) =>{
+    db.query = db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -115,12 +115,22 @@ router.put("/:contractid", (req, res)=>{
     });
 });
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete contract endpoint"})
+//Deleting a Contract Value
+router.delete("/:contractid", (req, res)=>{
+    let sql = `
+    DELETE FROM contract_award
+    WHERE id = ${req.params.contractid}`;
+    
+    db.query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
+//Get Contract AwardTimeline by Project IDs
 router.get('/contractawardtimeline/:project_id', (req, res) => {
-
     let sql = `
     SELECT 
         cat.id,
@@ -144,6 +154,7 @@ router.get('/contractawardtimeline/:project_id', (req, res) => {
         res.send(results)
     });
 });
+
 
 router.get('/daysAdded', (req, res) => {
     let sql =`
