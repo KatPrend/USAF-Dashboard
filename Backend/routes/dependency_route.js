@@ -146,7 +146,7 @@ router.get('/userSuccessor/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        console.log(res);
+        // console.log(res);
     });
 
 });
