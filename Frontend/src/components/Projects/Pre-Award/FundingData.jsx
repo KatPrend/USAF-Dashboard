@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog, Form} from 'react-bootstrap';
+import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog} from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { AwardedProjectFundingDataObligation, ApprovedFundingData } from "../../../pages/DummyData";
+import { ApprovedFundingData } from "../../../pages/DummyData";
 import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../../ApprovedFundingTable";
 import {FundingDataTable, FundingDataTableEditable} from "./FundingDataTable";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
-import { SummaryIcon } from "../../Summaries/SummaryIcon";
 
 
 export const FundingData = (props) => {

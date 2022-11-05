@@ -58,11 +58,11 @@ function createTempTable(){
 
   let createTempTable = `
   CREATE TEMPORARY TABLE 
-    temp_propricer_table 
+  temp_propricer_table 
   SELECT 
     task_id,
     task_description, 
-    month,
+    clin_num as month_int,
     wbs, 
     clin_num, 
     source_type, 
@@ -75,10 +75,12 @@ function createTempTable(){
     cost, 
     base_cost, 
     direct_cost, 
-    total_price 
+    total_price
+
   FROM 
     task_resource_table 
-  LIMIT 0;`;
+  LIMIT 0;
+  `;
 
   return new Promise((resolve) => {
     db.query(createTempTable, function(error, response){
@@ -99,7 +101,7 @@ return new Promise((resolve) => {
       INSERT INTO temp_propricer_table(
         task_id,
         task_description,
-        month,
+        month_int,
         wbs, 
         clin_num, 
         source_type, 
@@ -125,29 +127,50 @@ return new Promise((resolve) => {
 }
 
 function importTRT(projectId){
+
+  console.log(projectId);
   let trtInsert = `
-  INSERT INTO task_resource_table (
-      project_id,
-      clin_id,task_id, 
-      task_description, 
-      month, 
-      wbs, 
-      clin_num, 
-      source_type, 
-      resource_code, 
-      resource_description, 
-      resource_type, 
-      rate, 
-      hours_worked, 
-      units, 
-      cost, 
-      base_cost, 
-      direct_cost, 
-      total_price ) 
-    SELECT 
+  INSERT INTO task_resource_table 
+(
+		project_id, 
+      clin_id, 
+      task_id,
+      task_description,
+      month,
+      wbs,
+      clin_num,
+      source_type,
+      resource_code,
+      resource_description,
+      resource_type,
+      rate,
+      hours_worked,
+      units,
+      cost,
+      base_cost,
+      direct_cost,
+      total_price
+)
+SELECT 
       p.id, 
       c.id, 
-      tpt.* 
+      tpt.task_id,
+      tpt.task_description,
+      FROM_UNIXTIME(((tpt.month_int-25567)*86400),'%Y-%m-%d') as month,
+      tpt.wbs,
+      tpt.clin_num,
+      tpt.source_type,
+      tpt.resource_code,
+      tpt.resource_description,
+      tpt.resource_type,
+      tpt.rate,
+      tpt.hours_worked,
+      tpt.units,
+      tpt.cost,
+      tpt.base_cost,
+      tpt.direct_cost,
+      tpt.total_price
+
     FROM 
       project p 
     INNER JOIN 
@@ -156,6 +179,7 @@ function importTRT(projectId){
       ON c.project_id = p.id 
       AND c.clin_num = tpt.clin_num 
     WHERE p.id = "${projectId}"`;
+
     return new Promise((resolve) => {
       db.query(trtInsert, (error, response) => {
         console.log(error || response);
