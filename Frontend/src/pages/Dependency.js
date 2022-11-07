@@ -14,6 +14,7 @@ import { Chart } from "react-google-charts";
 const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
+  console.log(props.userid);
   useEffect(() => {
       axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
           setData(response.data);
