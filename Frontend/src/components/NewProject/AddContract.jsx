@@ -89,11 +89,9 @@ export const AddContract = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Contract Added");
-
         let projectId = props.data;
 
-        let contractAwardId = -1;
+        // let contractAwardId = -1;
 
         axios.post('/api/contract', {
           project_id: projectId,
@@ -101,34 +99,32 @@ export const AddContract = (props) => {
           contract_num: contractNum
         })
         .then(function(res){
-          contractAwardId = res.data.insertId;
+          // contractAwardId = res.data.insertId;
 
-          axios.post('/api/contract/contractTimeline', {
-            contract_award_id: contractAwardId,
-            contract_status: contractStatus,
-            contract_num: contractNum,
-            requirement_plan: requirementPlan, 
-            draft_rfp_released: draftRfpReleased, 
-            approved_by_acb:  approvedByAcb, 
-            rfp_released: rfpReleased, 
-            proposal_received: proposalReceived, 
-            tech_eval_comp: techEvalComp, 
-            negotiation_comp: negotiationComp, 
-            awarded: awarded
-          })
-          .then(function(res){
-              console.log(res);
-          })
-          .catch(function (err){
-              console.log(err);
-          });
+          // axios.post('/api/contract/contractTimeline', {
+          //   contract_award_id: contractAwardId,
+          //   contract_status: contractStatus,
+          //   contract_num: contractNum,
+          //   requirement_plan: requirementPlan, 
+          //   draft_rfp_released: draftRfpReleased, 
+          //   approved_by_acb:  approvedByAcb, 
+          //   rfp_released: rfpReleased, 
+          //   proposal_received: proposalReceived, 
+          //   tech_eval_comp: techEvalComp, 
+          //   negotiation_comp: negotiationComp, 
+          //   awarded: awarded
+          // })
+          // .then(function(res){
+          //     console.log(res);
+          // })
+          // .catch(function (err){
+          //     console.log(err);
+          // });
 
         })
         .catch(function (err){
             console.log(err);
-        });
-
-        
+        }); 
     };
 
     return (
@@ -158,7 +154,7 @@ export const AddContract = (props) => {
               />
             </Col>
           </Form.Group>
-          <br />
+          {/* <br />
           <h5>Contract Award Timeline</h5>
           <Form.Group as={Row} className='project-element'>
             <Form.Label column xs="auto">Requirement Plan Date:</Form.Label>
@@ -254,7 +250,7 @@ export const AddContract = (props) => {
               onChange={handleAwarded}
               />
             </Col>
-          </Form.Group>
+          </Form.Group> */}
           <br />
           <Button type="submit" className="submit-new-project">
             Submit New Contract

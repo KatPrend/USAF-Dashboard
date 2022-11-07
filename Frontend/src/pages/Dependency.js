@@ -121,11 +121,15 @@ function Dependency() {
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
-    const [data, setData] = useState(0)
+    const [data, setData] = useState(0);
+
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
+
+        console.log("userid: " + uid);
     }
+    
     return (
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>

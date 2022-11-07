@@ -24,14 +24,12 @@ router.post('/', (req, res) => {
     INSERT INTO contract_award(
         project_id,
         contract_num,
-        contract_status, 
-        indep_cost_est
+        contract_status
     )
     VALUES (
         "${project_id}",
         "${contract_num}",
-        "${contract_status}",
-        "${indep_cost_est}"
+        "${contract_status}"
     )`;
         
     db.query(contractAward, (err, results) =>{
