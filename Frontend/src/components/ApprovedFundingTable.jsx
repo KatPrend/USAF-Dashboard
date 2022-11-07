@@ -158,10 +158,13 @@ export function ApprovedFundingTableEditable({data}){
                             <td key = "1" >Funding Type</td>
                             {editData.map( (info, index) => (
                                 <td key = {index}>
-                                    <Form.Group key={index}>
-                                        <Form.Control 
-                                        defaultValue={info.FiscalYear}
-                                        onChange={(e) => handleFiscalYear(e, index)}/>
+                                    <Form.Group as={Row} key={index}>
+                                        <Form.Label column sm={2}>FY'</Form.Label>
+                                        <Col sm={5}>
+                                            <Form.Control 
+                                            defaultValue={info.FiscalYear}
+                                            onChange={(e) => handleFiscalYear(e, index)}/>
+                                        </Col>
                                     </Form.Group>
                                 </td>
                             ))}

@@ -8,6 +8,7 @@ import { UpdateFunding } from '../components/Admin/UpdateFunding';
 import { UpdateBranches } from '../components/Admin/UpdateBranches';
 import { UpdateTitles } from '../components/Admin/UpdateTitles';
 import { UpdateUsers } from '../components/Admin/UpdateUsers';
+import { DeleteProjects } from '../components/Admin/DeleteProjects';
 
 function Admin() {
     const [userid, setUserid] = useState(0);
@@ -17,6 +18,7 @@ function Admin() {
     const [showBranch, setShowBranch] = useState(false);
     const [showTitle, setShowTitle] = useState(false);
     const [showUsers, setShowUsers] = useState(false);
+    const [showProjects, setShowProjects] = useState(false);
 
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
@@ -29,6 +31,7 @@ function Admin() {
         setShowBranch(false);
         setShowTitle(false);
         setShowUsers(false);
+        setShowProjects(false);
 
         if (button === "Contractor") {
             setShowContractor(true);
@@ -40,6 +43,8 @@ function Admin() {
             setShowTitle(true);
         } else if (button === "User") {
             setShowUsers(true);
+        } else if (button === "Project") {
+            setShowProjects(true);
         }
     }
     
@@ -57,6 +62,7 @@ function Admin() {
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Branch")}}>Branches</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("Title")}}>Military Job Titles</Button>
                                 <Button className="submit-new-project settings" onClick={() => {handleShow("User")}}>Users</Button>
+                                <Button className="submit-new-project settings" onClick={() => {handleShow("Project")}}>Projects</Button>
                             </ButtonGroup></Row>
                         </Col>
                         <Col className="edits">
@@ -66,6 +72,7 @@ function Admin() {
                             <Row>{showBranch ? <UpdateBranches /> : null}</Row>
                             <Row>{showTitle ? <UpdateTitles /> : null}</Row>
                             <Row>{showUsers ? <UpdateUsers /> : null}</Row>
+                            <Row>{showProjects ? <DeleteProjects /> : null}</Row>
                         </Col>
                     </Row>
                 </Container>
