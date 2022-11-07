@@ -1,10 +1,47 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Table, Form, Button } from 'react-bootstrap';
 
+export function ApprovedFundingTable({data, projectId}){
+
+    const [isLoadingFY, setLoadingFY] = useState(true);
+    const [isLoadingFundingTypes, setLoadingFundingTypes] = useState(true);
+    const [isLoadingTotal, setLoadingTotal] = useState(true);
+    const [FY, setFY] = useState();
+    const [fundingTypes, setFundingTypes] = useState();
+    const [total, setTotal] = useState();
+
+    useEffect(() => {
+        axios.get(`/api/approved/fy/2`).then(response => {
+            setFY(response.data);
+            setLoadingFY(false);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/fundingTypes/2`).then(response => {
+            setFundingTypes(response.data);
+            setLoadingFundingTypes(false);
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/total/2`, {
+            funding_type: "1",
+            fiscal_year: "22"
+        }).then(response => {
+            setTotal(response.data);
+            setLoadingTotal(false);
+        });
+    }, []);
+
+    console.log("PROJECT ID IN APPROVED FUDNDING TBEL")
+    console.log(projectId);
 
 
-
-export function ApprovedFundingTable({data}){
+    if (isLoadingFY || isLoadingFundingTypes || isLoadingTotal) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
 
     function FormatData(data){
         let arr = Object.keys(data[0])
@@ -13,24 +50,34 @@ export function ApprovedFundingTable({data}){
         return(arr)
     }
 
+
+
+//     <tr>
+//     <td key = "1" >Funding Type</td>
+//     {data.map( (info) => (
+//         <td key = {info.FiscalYear}>{info.FiscalYear}</td>
+//     ))}
+// </tr>
+// {FormatData(data).map( (key) => (
+//         <tr key={key}>
+//             <td>{key}</td>
+//             {data.map( (info) => (
+//                 <td key = {info[key]}>{info[key]}</td>
+//             ))}
+//         </tr>
+//     ))}
+
     return(
         <div>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
-                    <tr>
-                        <td key = "1" >Funding Type</td>
-                        {data.map( (info) => (
-                            <td key = {info.FiscalYear}>{info.FiscalYear}</td>
-                        ))}
-                    </tr>
-                    {FormatData(data).map( (key) => (
-                            <tr key={key}>
-                                <td>{key}</td>
-                                {data.map( (info) => (
-                                    <td key = {info[key]}>{info[key]}</td>
-                                ))}
-                            </tr>
-                        ))}
+                {
+                    FY.map(({ FY }, index) => (
+                        <tr key={index} >
+                            <td>{FY}</td>
+                        </tr>
+                    ))
+                }
                 </tbody>
             </Table>
         </div>

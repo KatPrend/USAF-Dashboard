@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
+import {Link} from 'react-router-dom';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
@@ -133,7 +134,7 @@ function Dependency() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum/>
+                    {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     <Col>
