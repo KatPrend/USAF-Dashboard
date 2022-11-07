@@ -78,4 +78,21 @@ router.delete('/:id', (req,res) => {
     });
 });
 
+//Get Indepentent Cost Est and Projected Contract Value
+router.get('/getEstimates/:id', (req,res) => {
+    let sql = `
+    SELECT 
+        contract_value,
+        ind_gov_est
+    FROM view_contract_award
+    WHERE project_id = ${req.params.id}`;
+    
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;

@@ -13,8 +13,10 @@ import '../../../pages/page.css';
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
+    const [isLoading3, setLoading3] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
+    const [est_data, setEstData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     const location = useLocation();
@@ -40,8 +42,18 @@ export const Funding = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
+            setEstData(response.data);
+            setLoading3(false);
+        });
+        return () => {
+            setObligationData({}); // This worked for me
+          };
+    }, []);
     
-    if(isLoading1 || isLoading2){
+    if(isLoading1 || isLoading2 || isLoading3){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -144,12 +156,12 @@ export const Funding = (props) => {
                     <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
                         <Col>
                             <span>
-                                Independent Cost Estimate:
+                                Independent Cost Estimate: $ {est_data.map(({ind_gov_est}) => ind_gov_est)}
                             </span>
                         </Col>
                         <Col>
                             <span>
-                                Projected Contract Value:
+                                Projected Contract Value: $ {est_data.map(({contract_value}) => contract_value)}
                             </span>
                         </Col>
                     </Row>

@@ -12,6 +12,8 @@ export const FundingData = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [obligation_data, setObligationData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+    const [isLoading3, setLoading3] = useState(true);
+    const [est_data, setEstData] = useState();
 
     const location = useLocation();
     const {id} =location.state;
@@ -25,8 +27,18 @@ export const FundingData = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
+            setEstData(response.data);
+            setLoading3(false);
+        });
+        return () => {
+            setObligationData({}); // This worked for me
+          };
+    }, []);
     
-    if(isLoading){
+    if(isLoading || isLoading3){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -90,12 +102,12 @@ export const FundingData = (props) => {
                     <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
                         <Col>
                             <span>
-                                Independent Cost Estimate:
+                                Independent Cost Estimate: $ {est_data.map(({ind_gov_est}) => ind_gov_est)}
                             </span>
                         </Col>
                         <Col>
                             <span>
-                                Projected Contract Value:
+                                Projected Contract Value: $ {est_data.map(({contract_value}) => contract_value)}
                             </span>
                         </Col>
                     </Row>

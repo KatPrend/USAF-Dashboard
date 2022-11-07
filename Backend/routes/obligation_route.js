@@ -6,7 +6,8 @@ var db = require('../database');
 // Get Obligation plan for a project
 router.get('/:project_id', (req, res) => {
     let sql = `
-    SELECT 
+    SELECT
+        id,
         DATE_FORMAT(obli_funding_date,'%m/%d/%y') as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
