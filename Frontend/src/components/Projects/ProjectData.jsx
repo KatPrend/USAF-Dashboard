@@ -30,6 +30,9 @@ export const ProjectData = (props) => {
         axios.get('/api/contractor').then(response => {
             setContractors(response.data);
         });
+        axios.get('/api/branch/').then(response => {
+            setBranches(response.data);
+        });
     }, []);
 
     if (isLoading) {
@@ -142,8 +145,11 @@ export const ProjectData = (props) => {
                                     <Col sm={7}>
                                         <Form.Control
                                             defaultValue={branch_id}
-                                            type="text"
+                                            as="select"
                                             onChange={handleBranch}>
+                                                {branches.map((element, index) => (
+                                                    <option key={index} value={element.id}>{element.branch_name}</option>
+                                                ))}
                                         </Form.Control>
                                     </Col>
                                 </Form.Group>

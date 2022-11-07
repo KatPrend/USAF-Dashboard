@@ -15,7 +15,7 @@ export function SummaryIcon({data}){
             } 
             else if (data === "BEHIND" || data === "UNDER") {
                 return (
-                    <div style={{color: 'yellow', fontSize: '30px'}} >{'\u25A0'}</div>
+                    <div style={{color: 'orange', fontSize: '30px'}} >{'\u25A0'}</div>
                 )
             } 
             else if (data === "REALLY-BEHIND" || data === "OVER") {

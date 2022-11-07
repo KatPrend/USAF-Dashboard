@@ -86,7 +86,6 @@ router.get('/getEstimates/:id', (req,res) => {
         ind_gov_est
     FROM view_contract_award
     WHERE project_id = ${req.params.id}`;
-    
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -94,5 +93,56 @@ router.get('/getEstimates/:id', (req,res) => {
         res.send(results)
     });
 });
+    
+
+// Get Distinct Fiscal Years for a project
+router.get('/fy/:projectID', (req,res) => {
+    let sql = `
+    SELECT DISTINCT(appro_fiscal_year) as FY
+    FROM approved_funding
+    WHERE project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Get Distinct Approved Funding Types for a project
+router.get('/fundingTypes/:projectID', (req,res) => {
+    let sql = `
+    SELECT DISTINCT(appro_funding_type) as fundingType
+    FROM approved_funding
+    WHERE project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Get Distinct Approved Funding Types for a project
+router.get('/total/:projectID', (req,res) => {
+    const {funding_type, fiscal_year} = req.body;
+
+    let sql = `
+    SELECT 
+	IFNULL(sum(af.approved_amount),0) as total_amount
+    FROM approved_funding af
+    INNER JOIN funding_types ft ON ft.id = af.appro_funding_type
+    WHERE appro_funding_type = ${funding_type}
+    AND appro_fiscal_year = ${fiscal_year}
+    AND project_id = ${req.params.projectID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+
 
 module.exports = router;
