@@ -36,11 +36,7 @@ function Main() {
                     }
                </Row>  
             </Container>
-<<<<<<< HEAD
             {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
-=======
-            {userid !== 0 ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto w-100">Loading...</div>}
->>>>>>> a87b8421732b1d3b2ad3b7ce47e494bc71099ba1
         </div>
     );
 }
