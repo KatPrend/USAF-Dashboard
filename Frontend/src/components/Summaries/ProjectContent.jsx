@@ -90,10 +90,13 @@ export const ProjectContent = (props) => {
     const searchStyle = {width: '100%'};
     return (
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '90%'}}>
-            <h2>
-                Projects: 
-                {props.userRole === "Contractor" ? null : <Link to="/newProject"><Button className='submit-new-project main'>Add Project</Button></Link>}
-            </h2>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <h2 style={{width: '10%'}}>
+                    Projects: 
+                </h2>
+                {props.userRole === "Contractor" ? null : <Link style={{width: '15%'}} to="/newProject"><Button className='submit-new-project main'><span style={{whiteSpace: 'nowrap'}}>Add Project</span></Button></Link>}
+            </div>
+
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>
                     <tr>
@@ -149,7 +152,7 @@ export const ProjectContent = (props) => {
                             <td>{contract_num}</td>
                             <td>{contract_status}</td>
                             <td>{branch}</td>
-                            {props.userRole === "Contractor" ? null : <td>{contract_value}</td>}
+                            {props.userRole === "Contractor" ? null : <td>${contract_value}</td>}
                             <td><SummaryIcon data = {dependency_status} /></td>
                             {props.userRole === "Contractor" ? null : <td><SummaryIcon data = {financial_status} /></td>}
                             <td><SummaryIcon data = {schedule_status} /></td>

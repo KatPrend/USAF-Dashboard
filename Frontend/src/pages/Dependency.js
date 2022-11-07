@@ -72,11 +72,11 @@ const columns = [
   { type: "string", label: "Dependencies" },
 ];
 
-function GanttChartDataFormat(JsonData){
+function GanttChartDataFormat(JsonData) {
 console.log("Ganttyy");
-  console.log(JsonData);
-  var Rows = [];
-
+console.log(JsonData);
+    var Rows = [];
+    
   JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }) => {
       Rows.push([
         pred_name,
@@ -138,7 +138,7 @@ function Dependency() {
                     {/*2*/}
                     <Col>
                         <CardGeneric Header='Dependency Graph' 
-                        Body={ data === 0 ? <></> :
+                        Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
                             <Chart
                             chartType='Gantt'
                             width="100%" 
