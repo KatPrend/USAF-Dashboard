@@ -69,4 +69,73 @@ router.get('/getTotalObligation/:userid', (req, res) => {
     });
 });
 
+//Make a new Obligation Output
+router.post('/', (req, res) => {
+    const {project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total} = req.body;
+    let sql = `
+    INSERT INTO obligation_funding_data(
+        project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total
+    ) VALUES (
+        ${project_id},
+        "${obli_funding_date}",
+        ${obli_funding_type},
+        "${obli_fiscal_year}",
+        ${obli_projected},
+        ${obli_proj_total},
+        ${obli_actual},
+        ${obli_actual_total}
+    )`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Update an Obligation Output
+router.put('/', (req, res) => {
+    const {id,
+        project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total} = req.body;
+    let sql = `
+    UPDATE obligation_funding_data
+    SET
+        project_id = ${project_id},
+        obli_funding_date = "${obli_funding_date}",
+        obli_funding_type = ${obli_funding_type},
+        obli_fiscal_year = "${obli_fiscal_year}",
+        obli_projected = ${obli_projected},
+        obli_proj_total = ${obli_proj_total},
+        obli_actual = ${obli_actual},
+        obli_actual_total = ${obli_actual}
+    WHERE id = ${id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;
