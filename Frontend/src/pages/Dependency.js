@@ -7,6 +7,7 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { format } from 'date-fns';
 import { Chart } from "react-google-charts";
+import { Link } from 'react-router-dom';
 
 /**
 * Renders information about projects assigned to the current user
@@ -137,7 +138,7 @@ function Dependency() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum/>
+                    {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     <Col>

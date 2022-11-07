@@ -249,7 +249,7 @@ export const ProjectSchedule = (props) => {
                     </Row>
                 </Container>
             </Card.Header>
-            <Card.Body>
+            {infoData.length === 0 ? <div style={{marginBottom:"3%", marginTop:"3%"}}>No Schedule Data</div> : <Card.Body>
                 <Container>
                     <Row>
                         <Col>
@@ -289,7 +289,7 @@ export const ProjectSchedule = (props) => {
                         </Col>
                     </Row>
                 </Container>
-            </Card.Body>
+            </Card.Body>}
         </Card>
         </>
 
