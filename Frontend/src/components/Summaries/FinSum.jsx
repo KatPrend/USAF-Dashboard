@@ -8,30 +8,32 @@ const dataPie = (spent, planned) => {
         [
             ["funding", "amount"],
             ["Actual", spent],
-            ["Unspent", (unspent < 0) ? 0 : unspent],
+            ["difference", (unspent < 0) ? 0 : unspent],
             ["Buffer", (spent > planned) ? planned - (spent - planned) : planned]
         ]
     )
 }
   
-const getPieColor = (percentDiff) => {
-    percentDiff = (percentDiff > 0 ? percentDiff : -1 * percentDiff);
-    if (percentDiff >= 0.2)
+const getPieColor = (actual, planned) => {
+    // TODO: set up backend modifiability for these coefficents
+    var red_coefficent = .2;
+    var yellow_coefficent = .1;
+    if (actual >= planned * (1 + red_coefficent) || actual <= planned * (1 - red_coefficent))
     {
         return 'red';
     }
-    if (percentDiff >= 0.1)
+    if (actual >= planned * (1 + yellow_coefficent) || actual <= planned * (1 - yellow_coefficent))
     {
         return 'yellow';
     }
     return 'green';
 }
 
-const expendOptionsPie = (percentDiff) => {
-    var color = getPieColor(percentDiff)
+const expendOptionsPie = (actual, planned) => {
+    var color = getPieColor(actual, planned)
     return(
         {
-            tooltip: {trigger: 'none'},
+            tooltip: {text: 'value'},
             chartArea:{left:'5%', top:'5%   ',width:'90%',height:'90%'},
             backgroundColor: "whitesmoke",
             pieSliceBorderColor: 'transparent',
@@ -52,10 +54,9 @@ const expendOptionsPie = (percentDiff) => {
 
 export const FinSum = () => {
     const [expenditurePlanned, setExpenditurePlanned] = useState(100);
-    const [expenditureActual, setExpenditureActual] = useState(60);
+    const [expenditureActual, setExpenditureActual] = useState(80);
     const [obligationPlanned, setObligationPlanned] = useState(200);
     const [obligationActual, setObligationActual] = useState(210);
-
     return (
         <Card className='card'>
             <Card.Header className="text-center cardHead">Financial Summary</Card.Header>
@@ -65,15 +66,16 @@ export const FinSum = () => {
                             <Col>
                                 <div className="obligation">
                                     <p className="finTitle">Obligation Status to Date</p>
-                                    <div>
                                         <Chart
+                                        style={{margin: 'auto'}}
                                         chartType="PieChart"
                                         width="168px"
                                         height="168px"
                                         data={dataPie(obligationActual, obligationPlanned)}
-                                        options={expendOptionsPie((obligationActual - obligationPlanned) / ((obligationActual + obligationPlanned) / 2))}
+                                        options={expendOptionsPie(obligationActual, obligationPlanned)}
                                         />
-                                    </div>
+                                    <div>Obligation %:</div>
+                                    <div>{((obligationActual / obligationPlanned) * 100).toFixed(2)}%</div>
                                     <p className="finInfo">Planned Obligation: {obligationActual}</p>
                                     <p className="finInfo">Actual Obligation: {obligationPlanned}</p>
                                 </div>
@@ -81,15 +83,16 @@ export const FinSum = () => {
                             <Col>
                                 <div className="expenditure">
                                     <p className="finTitle">Expenditure Status to Date</p>
-                                    <div>
-                                        <Chart
-                                        chartType="PieChart"    
-                                        width="168px"
-                                        height="168px"
-                                        data={dataPie(expenditureActual, expenditurePlanned)}
-                                        options={expendOptionsPie(expenditureActual / expenditurePlanned)}
-                                        />
-                                    </div>
+                                    <Chart
+                                    style={{margin: 'auto'}}
+                                    chartType="PieChart"    
+                                    width="168px"
+                                    height="168px"
+                                    data={dataPie(expenditureActual, expenditurePlanned)}
+                                    options={expendOptionsPie(expenditureActual, expenditurePlanned)}
+                                    />
+                                    <div>Expenditure %:</div>
+                                    <div>{((expenditureActual / expenditurePlanned) * 100).toFixed(2)}%</div>
                                     <p className="finInfo">Planned Expenditure: {expenditurePlanned}</p>
                                     <p className="finInfo">Actual Expenditure: {expenditureActual}</p>
                                 </div>
