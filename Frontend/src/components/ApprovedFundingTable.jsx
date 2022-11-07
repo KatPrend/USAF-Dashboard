@@ -90,6 +90,10 @@ export function ApprovedFundingTable({data, projectId}){
 export function ApprovedFundingTableEditable({data}){
     const [editData, setEditData] = useState(data);
     const [columsEdited, setColumsEdited] = useState([]);
+    const [showColAlert, setShowColAlert] = useState(false);
+    const [showRowAlert, setShowRowAlert] = useState(false);
+    const [columnToDelete, setColumnToDelete] = useState();
+    const [rowToDelete, setRowToDelete] = useState();
 
 
     function FormatData(data){
@@ -117,13 +121,13 @@ export function ApprovedFundingTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp.FiscalYear = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
-            index === row ? {...currObject, temp} : {...currObject}
+            index === row ? {...temp} : {...currObject}
         )))
 
     }
@@ -136,25 +140,59 @@ export function ApprovedFundingTableEditable({data}){
         var temp;
 
         editData.map((currObject, index) => (
-            index === row ? temp = currObject : temp = temp
+            index === row ? temp = currObject : null
         ))
 
         temp[fundingType] = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
-            index === row ? {...currObject, temp} : {...currObject}
+            index === row ? {...temp} : {...currObject}
         )))
         
+    }
+
+    const handleAddCol = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleColAlert = (col) => {
+        setColumnToDelete(col);
+        setShowColAlert(true);
+    }
+
+    const DeleteCol = async (e, col) => {
+        e.preventDefault();
+    }
+
+    const handleAddRow = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleRowAlert = (row) => {
+        setRowToDelete(row);
+        setShowRowAlert(true);
+    }
+
+    const DeleteRow = async (e, row) => {
+        e.preventDefault();
     }
 
 
     return(
         <div>
             <Form onSubmit={handleSubmit}>
-                <Button className='Button' type="submit">Save Approved Funding Data</Button>
                 <Table responsive striped bordered hover className="bg-light">
                     <tbody>
                         <tr>
+                            <td> </td>
+                            <td> </td>
+                            {data.map( (info, index) => (
+                                <td><Button className="Button" onClick={() => handleColAlert(index)}>Delete Column {index+1}</Button></td>
+                            ))}
+                            <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
+                        </tr>
+                        <tr>
+                            <td> </td>
                             <td key = "1" >Funding Type</td>
                             {editData.map( (info, index) => (
                                 <td key = {index}>
@@ -169,8 +207,9 @@ export function ApprovedFundingTableEditable({data}){
                                 </td>
                             ))}
                         </tr>
-                        {FormatData(editData).map( (key) => (
+                        {FormatData(editData).map( (key, index) => (
                             <tr key={key}>
+                                <td><Button className="Button" onClick={() => handleRowAlert(index)}>Delete Row {index+1}</Button></td>
                                 <td>{key}</td>
                                 {editData.map( (info, index) => (
                                     <td key = {index}>
@@ -183,8 +222,20 @@ export function ApprovedFundingTableEditable({data}){
                                 ))}
                             </tr>
                         ))}
+                        <tr><td><Button className="Button" onClick={handleAddRow}>Add Row</Button></td></tr>
                     </tbody>
                 </Table>
+                <Alert show={showColAlert} variant="danger">
+                    <Alert.Heading>Are You Sure you want to delete column {columnToDelete+1}</Alert.Heading>
+                    <Button variant="outline-danger" onClick={() => setShowColAlert(false)}>Cancel</Button>
+                    <Button variant="outline-danger">Delete</Button>
+                </Alert>
+                <Alert show={showRowAlert} variant="danger">
+                    <Alert.Heading>Are You Sure you want to delete row {rowToDelete+1}</Alert.Heading>
+                    <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
+                    <Button variant="outline-danger">Delete</Button>
+                </Alert>
+                <Button className='Button' type="submit">Save Approved Funding Data</Button>
             </Form>
             
         </div>
