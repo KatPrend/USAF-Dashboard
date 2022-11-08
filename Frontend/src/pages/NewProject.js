@@ -3,9 +3,9 @@ import "./page.css";
 import { NavB } from "../components/NavB";
 import { AddProject } from "../components/NewProject/AddProject";
 import { AddContract } from "../components/NewProject/AddContract";
-import { FileUpload } from "../components/NewProject/FileUpload";
 import "../components/NewProject/newProject.css";
-import { Predecessors } from "../components/NewProject/Predecessors";
+import { ContractStatus } from "../components/Projects/Pre-Award/ContractStatus";
+import { Link } from 'react-router-dom';
 
 // function renderInfo(projectName, projectId) {
 //   //console.log("project name: " + projectName);
@@ -30,14 +30,22 @@ import { Predecessors } from "../components/NewProject/Predecessors";
 //   //}
 // };
 
-function renderContract(projectName, projectId) {
-  return <div>
-      <h2>{projectName} Contract Information:</h2>
-      <div className="project-element">
-        <AddContract  data = {projectId}/>
-      </div>
-    </div>
-}
+function renderPageLink(contractStatus, projectId, projectName) {
+  if(contractStatus === 2){
+      return <span>Go to <Link to={{ 
+          pathname: "/awardedproject", 
+          state: {id:projectId} // your data array of objects
+      }}
+    >{projectName}</Link></span>
+  }
+  else if (contractStatus === 1){
+      return <span>Go to <Link to={{ 
+          pathname: "/preawardproject", 
+          state: {id:projectId} // your data array of objects
+      }}
+    >{projectName}</Link></span>
+  }
+};
 
 function NewProject() {
   const [projectName, setProjectName] = useState("");
@@ -45,6 +53,9 @@ function NewProject() {
 
   const [userid, setUserid] = useState(0);
   const [userRole, setUserRole] = useState("");
+
+  const [contractStatus, setContractStatus] = useState(0);
+  const [showLink, setShowLink] = useState(false);
 
   const getUserInfo = (uid, urole) => {
       setUserid(uid);
@@ -58,6 +69,18 @@ function NewProject() {
     setProjectId(id);
   };
 
+  const getContractStatus = (status) => {
+    setContractStatus(status);
+  }
+
+  const getShowLink = (show) => {
+    if (show) {
+      console.log("in show, should show link");
+      console.log("contract status is " + contractStatus)
+      setShowLink(true);
+    }
+  }
+
   return (
     <div className="lightBlue">
       <NavB getUserInfo={getUserInfo} />
@@ -69,9 +92,13 @@ function NewProject() {
           </div>
           <br />
           <br />
-          {projectId !== 0 ? renderContract(projectName, projectId) : null}
-          {//renderInfo(projectId)
-          }
+          {projectId === 0 ? null : <div>
+            <h2>{projectName} Contract Information:</h2>
+            <div className="project-element">
+              <AddContract data={projectId} getShowLink={getShowLink} getContractStatus={getContractStatus}/>
+            </div>
+          </div>}
+          {showLink && contractStatus !== 0 ? renderPageLink(contractStatus, projectId, projectName) : null}
         </div>
     }
     </div>

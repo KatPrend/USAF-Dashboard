@@ -10,12 +10,23 @@ export const ContractStatus = (props) => {
     const [isLoading2, setLoading2] = useState(true);
     const [data, setData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
-    const [awarded, setAwarded] = useState(false);
+    const [editData, setEditData] = useState();
+    const [rowsEdited, setRowsEdited] = useState([]);
+    const [reload, setReload] = useState(false);
+    const [timelineModal, setTimelineModal] = useState(false);
+    const [contractId, setContractId] = useState();
 
     useEffect(() => {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
             setData(response.data);
-            setLoading(false);
+            setEditData(response.data);
+            setLoading1(false);
+        });
+
+        axios.get(`api/contract/contractAward/${props.data}`).then(response => {
+            console.log(JSON.stringify(response.data));
+            setContractId(response.data[0].id);
+            setLoading2(false);
         });
     }, []);
 

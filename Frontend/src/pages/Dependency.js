@@ -8,7 +8,6 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { format } from 'date-fns';
 import { Chart } from "react-google-charts";
-import { Link } from 'react-router-dom';
 
 /**
 * Renders information about projects assigned to the current user

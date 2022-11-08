@@ -61,7 +61,7 @@ export const ProjectContent = (props) => {
         return <div className="mx-auto w-100">Loading...</div>;
     }
 
-    // protects from toStrining null or undefined
+    // protects from toString null or undefined
     const safeToString = (input) => {
         if (input === null)
             return 'null';

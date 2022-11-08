@@ -24,6 +24,9 @@ export const AddContract = (props) => {
       })
       .then(function(res){
         console.log(res);
+
+        props.getContractStatus(contractStatus);
+        props.getShowLink(true);
       })
       .catch(function (err){
           console.log(err);

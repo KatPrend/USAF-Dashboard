@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, Form, Alert} from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
-import { FileUpload } from "../NewProject/FileUpload";
 import axios from 'axios';
 import { format } from 'date-fns';
 // import {TimeLineData, TimeLineData2} from '../pages/DummyData'
@@ -65,12 +64,6 @@ export const ProjectSchedule = (props) => {
             setLoading(false);
         });
     }, []);
-
-    let handleCloseMilestones = () => {
-        setOpenMilestones(false);
-
-        window.location.reload(false)
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -156,6 +149,7 @@ export const ProjectSchedule = (props) => {
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
         )))
+        
     }
 
     const handleAddRow = async (e) => {
@@ -262,28 +256,7 @@ export const ProjectSchedule = (props) => {
                 </ModalBody>
             </Modal>
         </ModalDialog>
-        
-        <ModalDialog scrollable>
-            <Modal show={openMilestones} size='xl' autoFocus={true}>
-                <ModalHeader>
-                    <Container>
-                        <Row>
-                            <Col style={{textAlign: 'left'}}>
-                                <h3>Upload Project Schedule Milestones</h3>
-                            </Col>
-                            <Col style={{textAlign: 'right'}}>
-                                <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={handleCloseMilestones()}>Done</Button>
-                                </ButtonGroup>
-                            </Col>
-                        </Row>
-                    </Container>
-                </ModalHeader>
-                <ModalBody>
-                    <FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={props.data}/>
-                </ModalBody>
-            </Modal>
-        </ModalDialog>
+
 
         <Card className="card">
             <Card.Header className = "cardHead">
@@ -292,16 +265,14 @@ export const ProjectSchedule = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Schedule</span>
                         </Col>
-                        { props.userRole === "Contractor" || infoData.length === 0 ? null : <Col style={{textAlign: 'right'}}>
+                        { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                             </Col>
                         }
                     </Row>
                 </Container>
             </Card.Header>
-            {infoData.length === 0 ? <div className='upload mx-auto' style={{marginTop:"3%"}}>
-                <Button className='Button' onClick={()=>setOpenMilestones(true)}></Button>
-            </div> : <Card.Body>
+            <Card.Body>
                 <Container>
                     <Row>
                         <Col>
@@ -341,10 +312,8 @@ export const ProjectSchedule = (props) => {
                         </Col>
                     </Row>
                 </Container>
-            </Card.Body>}
+            </Card.Body>
         </Card>
         </>
-
-        
     );
 }
