@@ -4,7 +4,7 @@ const router = express.Router()
 var db = require('../database');
 
 // Get Obligation plan for a project
-router.get('/:project_id', (req, res) => {
+router.get('/getObli/:project_id', (req, res) => {
     let sql = `
     SELECT
         id,
@@ -61,6 +61,23 @@ router.get('/getTotalObligation/:userid', (req, res) => {
     JOIN contract_award ca on upl.project_id = ca.project_id
     JOIN users u on upl.user_id = u.id
     WHERE u.id = ${req.params.userid} AND ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), vo.obli_funding_date)) >= 0`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get ADMIN Total Obligation For all Awarded Projects
+router.get('/getAdminTotalObligation', (req, res) => {
+    let sql = `
+    SELECT 
+	    SUM(obli_projected) as obli_projected,
+        SUM(obli_actual) as obli_actual
+    FROM view_obligation vo
+    JOIN contract_award ca on vo.project_id = ca.project_id
+    WHERE ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), vo.obli_funding_date)) >= 0`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
