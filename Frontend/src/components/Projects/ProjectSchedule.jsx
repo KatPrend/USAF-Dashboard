@@ -265,7 +265,9 @@ export const ProjectSchedule = (props) => {
                         <Col style={{textAlign: 'left'}}>
                             <span>Project Schedule</span>
                         </Col>
-                        { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
+                        { props.userRole === "Contractor" ? null : infoData.length === 0 ? <Col style={{textAlign: 'right'}}>
+                                <span><Button className='Button'>Add</Button></span>
+                            </Col> : <Col style={{textAlign: 'right'}}>
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                             </Col>
                         }
@@ -273,7 +275,7 @@ export const ProjectSchedule = (props) => {
                 </Container>
             </Card.Header>
             <Card.Body>
-                <Container>
+                {infoData.length === 0 ? <div>There are currently no project milestones.</div> : <Container>
                     <Row>
                         <Col>
                             <Table responsive striped bordered hover className="bg-light">
@@ -311,7 +313,7 @@ export const ProjectSchedule = (props) => {
                             />
                         </Col>
                     </Row>
-                </Container>
+                </Container>}
             </Card.Body>
         </Card>
         </>
