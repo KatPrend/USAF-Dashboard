@@ -170,4 +170,31 @@ router.get('/daysAdded', (req, res) => {
     });
 });
 
+//Update a Contract Timeline
+router.put("/updateContractTimeline/:timelineID", (req, res)=>{
+    const {contract_award_id, timeline_status,requirement_plan, draft_rfp_released, approved_by_acb,
+        rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+    let sql = `
+    UPDATE contract_award_timeline
+    SET 
+        contract_award_id = ${contract_award_id},
+        timeline_status = ${timeline_status},
+        requirement_plan = "${requirement_plan}",
+        draft_rfp_released = "${draft_rfp_released}",
+        approved_by_acb = "${approved_by_acb}",
+        rfp_released = "${rfp_released}",
+        proposal_received = "${proposal_received}",
+        tech_eval_comp = "${tech_eval_comp}",
+        negotiation_comp = "${negotiation_comp}",
+        awarded = "${awarded}"	
+    WHERE id = ${req.params.timelineID}`;
+    
+    db.query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;

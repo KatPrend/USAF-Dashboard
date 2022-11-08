@@ -17,6 +17,7 @@ export const Funding = (props) => {
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
     const [approved_data, setApprovedData] = useState();
+    const [est_data, setEstData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     const location = useLocation();
@@ -24,7 +25,7 @@ export const Funding = (props) => {
 
     useEffect(() => {
         // id.project_id
-        axios.get(`/api/expenditure/${props.data}`).then(response =>{
+        axios.get(`/api/expenditure/${props.projectId}`).then(response =>{
             setExpenData(response.data);
             setLoading1(false);
         });
@@ -34,7 +35,7 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/obligation/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/${props.projectId}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });
@@ -50,6 +51,14 @@ export const Funding = (props) => {
         });
         return () => {
             setApprovedData({}); // This worked for me
+        }
+        
+        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
+            setEstData(response.data);
+            setLoading3(false);
+        });
+        return () => {
+            setObligationData({}); // This worked for me
           };
     }, []);
     
@@ -156,12 +165,12 @@ export const Funding = (props) => {
                     <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
                         <Col>
                             <span>
-                                Independent Cost Estimate:
+                                Independent Cost Estimate: $ {est_data.map(({ind_gov_est}) => ind_gov_est)}
                             </span>
                         </Col>
                         <Col>
                             <span>
-                                Projected Contract Value:
+                                Projected Contract Value: $ {est_data.map(({contract_value}) => contract_value)}
                             </span>
                         </Col>
                     </Row>

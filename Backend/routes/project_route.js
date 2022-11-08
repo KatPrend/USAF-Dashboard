@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
 });
 
 //Update a project
-router.put('/:projectid', (req, res)=>{
+router.put('/:projectId', (req, res)=>{
     const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
     
     let sql = `
@@ -64,7 +64,7 @@ router.put('/:projectid', (req, res)=>{
         ccar_num = "${ccar_num}",
         start_date =  "${start_date}",
         end_date = "${end_date}"
-    WHERE id = ${req.params.projectid};  
+    WHERE id = ${req.params.projectId};  
     `
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -75,10 +75,10 @@ router.put('/:projectid', (req, res)=>{
 });
 
 //Delete a project
-router.delete("/:projectid", (req, res)=>{
+router.delete("/:projectId", (req, res)=>{
     let sql = `
     DELETE FROM project
-    WHERE id = ${req.params.projectid}`;
+    WHERE id = ${req.params.projectId}`;
 
     let query = db.query(sql, (err, results)=>{
         if(err){
@@ -106,11 +106,11 @@ router.get('/userId/:userId', (req, res) => {
 });
 
 // Get all information for a project
-router.get('/:projectid', (req, res) => {
+router.get('/:projectId', (req, res) => {
     let sql = `
     SELECT * 
     FROM view_project
-    WHERE id = ${req.params.projectid}`;
+    WHERE id = ${req.params.projectId}`;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -122,7 +122,7 @@ router.get('/:projectid', (req, res) => {
 });
 
 // Grabbing all the Project Schedule for a project
-router.get('/schedule/:projectid', (req, res) => {
+router.get('/schedule/:projectId', (req, res) => {
     
     let sql = `
     SELECT 
@@ -150,7 +150,7 @@ router.get('/schedule/:projectid', (req, res) => {
         ) as "Predecessors_Name"
         
 	FROM project_milestones pm
-	WHERE pm.project_id = ${req.params.projectid}
+	WHERE pm.project_id = ${req.params.projectId}
     `
 
     let query = db.query(sql, (err, results) =>{

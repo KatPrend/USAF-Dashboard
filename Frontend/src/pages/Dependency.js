@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
+import {Link} from 'react-router-dom';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
@@ -14,6 +15,7 @@ import { Chart } from "react-google-charts";
 const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
+  console.log(props.userid);
   useEffect(() => {
       axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
           setData(response.data);
@@ -72,11 +74,11 @@ const columns = [
   { type: "string", label: "Dependencies" },
 ];
 
-function GanttChartDataFormat(JsonData){
+function GanttChartDataFormat(JsonData) {
 console.log("Ganttyy");
-  console.log(JsonData);
-  var Rows = [];
-
+console.log(JsonData);
+    var Rows = [];
+    
   JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }) => {
       Rows.push([
         pred_name,
@@ -133,12 +135,12 @@ function Dependency() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        <DepSum/>
+                    {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     <Col>
                         <CardGeneric Header='Dependency Graph' 
-                        Body={ data === 0 ? <></> :
+                        Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
                             <Chart
                             chartType='Gantt'
                             width="100%" 

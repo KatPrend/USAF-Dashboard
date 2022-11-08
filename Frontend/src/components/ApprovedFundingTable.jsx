@@ -35,6 +35,23 @@ export function ApprovedFundingTable({data}){
         return <div className="mx-auto w-100">Loading...</div>;
     }
 
+
+
+//     <tr>
+//     <td key = "1" >Funding Type</td>
+//     {data.map( (info) => (
+//         <td key = {info.FiscalYear}>{info.FiscalYear}</td>
+//     ))}
+// </tr>
+// {FormatData(data).map( (key) => (
+//         <tr key={key}>
+//             <td>{key}</td>
+//             {data.map( (info) => (
+//                 <td key = {info[key]}>{info[key]}</td>
+//             ))}
+//         </tr>
+//     ))}
+
     return(
         <div>
             <Table responsive striped bordered hover className="bg-light">

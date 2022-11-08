@@ -297,8 +297,7 @@ export const UpdateUsers = () => {
                                 <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
                                     {user_name}
                                 </Dropdown.Item>
-                            ))
-                            }
+                            ))}
                         </DropdownButton> 
                     </Col>
                     <Col>

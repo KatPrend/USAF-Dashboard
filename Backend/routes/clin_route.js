@@ -82,7 +82,7 @@ router.delete("/:clinid", (req, res)=>{
     })
 })
 
-// Get Clin by projectid
+// Get Clin by projectId
 router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT * FROM 

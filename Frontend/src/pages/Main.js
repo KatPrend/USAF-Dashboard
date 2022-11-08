@@ -26,16 +26,14 @@ function Main() {
                     {/*1*/}
                     <Col>
                         {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                        <SchedSum />
                     </Col>
                     {/*2*/}
-                    {userid === 0 || userRole === "Contractor" ? null : <Col>
+                    {userid === 0 || userRole === "Contractor" ? null :
+                         <Col>
                             <FinSum />
                         </Col>
                     }
-                    {/*3*/}
-                    <Col>
-                        <SchedSum />
-                    </Col>
                </Row>  
             </Container>
             {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
