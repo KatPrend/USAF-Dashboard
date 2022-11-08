@@ -8,7 +8,8 @@ var db = require('../database');
 router.get('/:projectID', (req,res) => {
     let sql = `
     SELECT * FROM approved_funding
-    WHERE project_id = ${req.params.projectID}`;
+    WHERE project_id = ${req.params.projectID}
+    ORDER BY appro_fiscal_year`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err

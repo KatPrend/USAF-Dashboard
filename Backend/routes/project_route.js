@@ -50,7 +50,7 @@ router.post('/', (req, res) => {
 
 //Update a project
 router.put('/:projectId', (req, res)=>{
-    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
+    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num} = req.body;    
     
     let sql = `
     UPDATE project
@@ -61,9 +61,7 @@ router.put('/:projectId', (req, res)=>{
         branch_id = "${branch_id}",
         requirement_type_id = "${requirement_type_id}", 
         summary = "${summary}",
-        ccar_num = "${ccar_num}",
-        start_date =  "${start_date}",
-        end_date = "${end_date}"
+        ccar_num = "${ccar_num}"
     WHERE id = ${req.params.projectId};  
     `
     let query = db.query(sql, (err, results) =>{
@@ -119,47 +117,6 @@ router.get('/:projectId', (req, res) => {
 
     });
 
-});
-
-// Grabbing all the Project Schedule for a project
-router.get('/schedule/:projectId', (req, res) => {
-    
-    let sql = `
-    SELECT 
-        pm.id as ID,
-        pm.task_name as "Name",
-        DATEDIFF(pm.end_date,pm.start_date) as "Duration",
-        pm.start_date as "Start",
-        pm.end_date as "End",
-        
-        (
-	        SELECT 
-	        GROUP_CONCAT(predecessor_milestone SEPARATOR ',' ) 
-	        FROM project_milestone_dependency  pmd
-	        WHERE pmd.successor_milestone = pm.id
-	        AND pmd.predecessor_project = pmd.successor_project
-        ) as "Predecessors",
-        (
-	        SELECT 
-	        GROUP_CONCAT(pm1.task_name SEPARATOR ',' ) 
-	        
-	        FROM project_milestone_dependency  pmd
-	        INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
-	        WHERE pmd.successor_milestone = pm.id
-	        AND pmd.predecessor_project = pmd.successor_project
-        ) as "Predecessors_Name"
-        
-	FROM project_milestones pm
-	WHERE pm.project_id = ${req.params.projectId}
-    `
-
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
 });
 
 module.exports = router;

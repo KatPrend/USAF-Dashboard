@@ -58,7 +58,7 @@ export const ProjectSchedule = (props) => {
     const [rowToDelete, setRowToDelete] = useState();
 
     useEffect(() => {
-        axios.get(`/api/project/schedule/${props.data}`).then(response =>{
+        axios.get(`/api/milestone/schedule/${props.data}`).then(response =>{
             setInfoData(response.data);
             setEditData(response.data);
             setLoading(false);
