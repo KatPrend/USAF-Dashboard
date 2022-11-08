@@ -13,8 +13,10 @@ import '../../../pages/page.css';
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
+    const [isLoading3, setLoading3] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
+    const [approved_data, setApprovedData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
     const location = useLocation();
@@ -40,8 +42,18 @@ export const Funding = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/${props.data}`).then(response =>{
+            setApprovedData(response.data);
+            setLoading3(false);
+        });
+        return () => {
+            setApprovedData({}); // This worked for me
+          };
+    }, []);
     
-    if(isLoading1 || isLoading2){
+    if(isLoading1 || isLoading2 || isLoading3){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -75,7 +87,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ApprovedFundingTableEditable data={ApprovedFundingData}/>
+                                <ApprovedFundingTableEditable data={approved_data} id={props.data}/>
                             </Col>
                         </Row>
                         <Row>
@@ -160,7 +172,7 @@ export const Funding = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <ApprovedFundingTable data={ApprovedFundingData}/>
+                            <ApprovedFundingTable data={approved_data}/>
                         </Col>
                     </Row>
                     <Row>

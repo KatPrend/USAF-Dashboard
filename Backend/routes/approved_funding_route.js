@@ -8,7 +8,8 @@ var db = require('../database');
 router.get('/:projectID', (req,res) => {
     let sql = `
     SELECT * FROM approved_funding
-    WHERE project_id = ${req.params.projectID}`;
+    WHERE project_id = ${req.params.projectID}
+    ORDER BY appro_fiscal_year`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -51,7 +52,7 @@ router.put('/', (req, res) => {
     let sql = `
     UPDATE approved_funding
     SET
-        project_id = ${projectID},
+        project_id = "${projectID}",
         appro_funding_type = "${appro_funding_type}",
         appro_fiscal_year = "${appro_fiscal_year}",
         approved_amount = ${approved_amount}
