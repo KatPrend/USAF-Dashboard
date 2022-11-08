@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Form, Button, Alert, DropdownButton, FormCheck } from 'react-bootstrap';
+import { Table, Form, Button, Alert, DropdownButton, Row, Col, Container } from 'react-bootstrap';
 import axios from "axios";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
@@ -167,6 +167,21 @@ export function ApprovedFundingTableEditable(props){
         setAddedCol(true);
     }
 
+    const handleFirstApproved = async (e) => {
+        e.preventDefault();
+
+        if(addedColSelected === true && addedRowSelected){
+            axios.post('/api/approved', {
+                project_id: props.id, 
+                appro_funding_type: fundingTypeToAdd, 
+                appro_fiscal_year: fiscalYearToAdd, 
+                approved_amount: 0
+            })
+            
+            setAddedCol(false);
+        }
+    }
+
     const handleAddCol = async (e) => {
         e.preventDefault();
 
@@ -235,6 +250,45 @@ export function ApprovedFundingTableEditable(props){
 
     if (isLoading) {
         return <div className="mx-auto w-100">Loading...</div>;
+    }
+
+    if(isLoading === false && editData.length === 0){
+        return(
+            <Container>
+                <Row>
+                    <Col>Enter Fiscal Year and Funding Type</Col>
+                </Row>
+                <Row>
+                    <Col>
+                    <Form>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={2}>FY'</Form.Label>
+                            <Col sm={2}>
+                                <Form.Control onChange={handleFisscalYearSelect} />
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{alignSelf: 'left'}}>
+                    <DropdownButton className="Button" title="Funding Types">
+                        {allFundingTypes.map(({id, funding_type}) => (
+                            (fundingTypes.includes(id) === true ? null :
+                                <DropdownItem key={id} eventKey={id} onSelect={handleFundingTypeSelect}>
+                                    {funding_type}
+                                </DropdownItem>
+                            )
+                        ))}
+                    </DropdownButton>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col><Button onClick={handleFirstApproved}>Submit</Button></Col>
+                </Row>
+
+            </Container>
+        );
     }
 
     return(
