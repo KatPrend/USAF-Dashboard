@@ -41,6 +41,44 @@ router.post('/', (req, res) => {
     //console.log(req.body);
 });
 
+//Get All Inner Project Dependencies
+router.get('/getDependecies/:projectID', (req, res) => {
+    let sql = `
+    SELECT * FROM project_milestone_dependency
+    WHERE predecessor_project = ${req.params.projectID} AND successor_project = ${req.params.projectID}`
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
+//Remove a Milestone Dependency
+router.delete('/removeDependency', (req, res) => {
+    const {predecessor_project,
+        predecessor_milestone,
+        successor_project,
+        successor_milestone} = req.body;
+    let sql = `
+    DELETE FROM project_milestone_dependency
+    WHERE 
+        predecessor_project = ${predecessor_project} AND 
+        predecessor_milestone = ${predecessor_milestone} AND 
+        successor_project = ${successor_project} AND 
+        successor_milestone = ${successor_milestone}`
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
 router.put("/", (req, res)=>{
     res.send({message:"TODO: Make an update clin endpoint"})
 });
@@ -50,7 +88,7 @@ router.delete("/", (req, res)=>{
 });
 
 //Grab Successor
-router.get('/successor/:projectid', (req, res) => {
+router.get('/successor/:projectId', (req, res) => {
     let sql = `
     SELECT 
         pmd.predecessor_project,
@@ -73,7 +111,7 @@ router.get('/successor/:projectid', (req, res) => {
     INNER JOIN project p2 ON p2.id = pmd.successor_project
     INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
 
-    WHERE pmd.predecessor_project = ${req.params.projectid} 
+    WHERE pmd.predecessor_project = ${req.params.projectId} 
     AND pmd.predecessor_project != pmd.successor_project`;
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -85,7 +123,7 @@ router.get('/successor/:projectid', (req, res) => {
 });
 
 //Grab Predecessor
-router.get('/predecessor/:projectid', (req, res) => {
+router.get('/predecessor/:projectId', (req, res) => {
     let sql = `
     SELECT
         pmd.predecessor_project,
@@ -108,7 +146,7 @@ router.get('/predecessor/:projectid', (req, res) => {
     INNER JOIN project p2 ON p2.id = pmd.successor_project
     INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
 
-    WHERE pmd.successor_project = ${req.params.projectid} 
+    WHERE pmd.successor_project = ${req.params.projectId} 
     AND pmd.predecessor_project != pmd.successor_project
     `;
     let query = db.query(sql, (err, results) =>{
@@ -146,37 +184,7 @@ router.get('/userSuccessor/:userid', (req, res) => {
             throw err
         }
         res.send(results)
-        //console.log(res);
-    });
-
-});
-
-// Get Red user Project Dependencies
-router.get('/redUserDependencies/:userid', (req, res) => {
-
-    let sql = `
-	SELECT COUNT(*) as count
-    FROM
-    (
-    SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
-        
-        FROM project p
-        INNER JOIN project_milestones pm ON pm.project_id = p.id
-        INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
-        INNER JOIN project p2 ON p2.id = pmd.successor_project
-        INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
-        WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
-    ) T1 
-    `;
-
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-        //console.log(res);
+        // console.log(res);
     });
 
 });
@@ -273,7 +281,7 @@ router.get('/greenUserDependencies/:userid', (req, res) => {
 });
 
 // Get Internal Project Dependencies for Ganntt Chart
-router.get('/internalDependencies/:projectid', (req, res) => {
+router.get('/internalDependencies/:projectId', (req, res) => {
     let sql = `
     SELECT 
         pmd.predecessor_project,
@@ -291,7 +299,7 @@ router.get('/internalDependencies/:projectid', (req, res) => {
     INNER JOIN project_milestones pm1 ON pm1.id = pmd.predecessor_milestone
     INNER JOIN project p2 ON p2.id = pmd.successor_project
     INNER JOIN project_milestones pm2 ON pm2.id = pmd.successor_milestone
-    WHERE pmd.predecessor_project = ${req.params.projectid}
+    WHERE pmd.predecessor_project = ${req.params.projectId}
     AND pmd.predecessor_project = pmd.successor_project`;
 
     let query = db.query(sql, (err, results) =>{
@@ -304,15 +312,15 @@ router.get('/internalDependencies/:projectid', (req, res) => {
 });
 
 
-router.get('/successorDateDifference/:projectid', (req, res) => {
+router.get('/successorDateDifference/:projectId', (req, res) => {
     // let sql = `
     // SELECT
     //     p.project_name as predescessor_name,
     //     p.end_date,
-    //     DATEDIFF((SELECT start_date FROM project where id = ${req.params.projectid}),p.end_date) as date_difference
+    //     DATEDIFF((SELECT start_date FROM project where id = ${req.params.projectId}),p.end_date) as date_difference
     // FROM dependency_table d
     // INNER JOIN project p  ON p.id =  d.successor
-    // WHERE d.dependency = ${req.params.projectid} `;
+    // WHERE d.dependency = ${req.params.projectId} `;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -322,15 +330,15 @@ router.get('/successorDateDifference/:projectid', (req, res) => {
     });
 });
 
-router.get('/dependencyDateDifference/:projectid', (req, res) => {
+router.get('/dependencyDateDifference/:projectId', (req, res) => {
     // let sql = `
     // SELECT
     //     p.project_name as predescessor_name,
     //     p.start_date,
-    //     DATEDIFF(p.start_date, (SELECT start_date FROM project where id = ${req.params.projectid})) as date_difference
+    //     DATEDIFF(p.start_date, (SELECT start_date FROM project where id = ${req.params.projectId})) as date_difference
     // FROM dependency_table d
     // INNER JOIN project p  ON p.id =  d.dependency
-    // WHERE d.successor = ${req.params.projectid} `;
+    // WHERE d.successor = ${req.params.projectId} `;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

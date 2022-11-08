@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
+import {Link} from 'react-router-dom';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
@@ -15,6 +16,7 @@ import { Link } from 'react-router-dom';
 const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
+  console.log(props.userid);
   useEffect(() => {
       axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
           setData(response.data);
