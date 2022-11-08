@@ -25,7 +25,7 @@ export function SummaryIcon({data}){
             } 
             else {
                 return (
-                    <div>Error</div>
+                    <div> </div>
                 )
             }
 

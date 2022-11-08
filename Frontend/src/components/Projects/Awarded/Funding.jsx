@@ -14,8 +14,10 @@ export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
     const [isLoading3, setLoading3] = useState(true);
+    const [isLoading4, setLoading4] = useState(true);
     const [expen_data, setExpenData] = useState();
     const [obligation_data, setObligationData] = useState();
+    const [approved_data, setApprovedData] = useState();
     const [est_data, setEstData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
 
@@ -44,16 +46,26 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
-            setEstData(response.data);
+        axios.get(`/api/approved/${props.projectId}`).then(response =>{
+            setApprovedData(response.data);
             setLoading3(false);
+        });
+        return () => {
+            setApprovedData({}); // This worked for me
+        }
+    }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/getEstimates/${props.projectId}`).then(response =>{
+            setEstData(response.data);
+            setLoading4(false);
         });
         return () => {
             setObligationData({}); // This worked for me
           };
     }, []);
     
-    if(isLoading1 || isLoading2 || isLoading3){
+    if(isLoading1 || isLoading2 || isLoading3 || isLoading4){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -87,7 +99,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ApprovedFundingTableEditable data={ApprovedFundingData} />
+                                <ApprovedFundingTableEditable data={approved_data} id={props.projectId}/>
                             </Col>
                         </Row>
                         <Row>
@@ -172,7 +184,7 @@ export const Funding = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <ApprovedFundingTable data={ApprovedFundingData} projectId={props.projectId}/>
+                            <ApprovedFundingTable data={approved_data} projectId={props.projectId}/>
                         </Col>
                     </Row>
                     <Row>

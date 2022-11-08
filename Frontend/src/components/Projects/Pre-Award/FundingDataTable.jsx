@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Table, Form, Button } from 'react-bootstrap';
+import { Table, Form, Button, Alert} from 'react-bootstrap';
 import { format } from 'date-fns';
 
 
@@ -46,6 +46,9 @@ export function FundingDataTableEditable({data}){
 
     const [editData, setEditData] = useState();
     const [columsEdited, setColumsEdited] = useState([]);
+    const[showAlert, setShowAlert] = useState(false);
+    const[columnToDelete, setColumnToDelete] = useState();
+
 
     useEffect(() => {
         setEditData(data);
@@ -138,18 +141,37 @@ export function FundingDataTableEditable({data}){
         
     }
 
+    const handleAddCol = async (e) => {
+        e.preventDefault();
+    }
+
+    const handleDeletCol = (row) => {
+        setColumnToDelete(row);
+        setShowAlert(true);
+    }
+
+    const DeleteCol = async (e, row) => {
+        e.preventDefault();
+    }
+
     return(
         <Form onSubmit={handleSubmit}>
-            <Button className='Button' type="submit">Save Obligation Data</Button>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
+                    <tr>
+                        <td> </td>
+                        {data.map( (info, index) => (
+                            <td><Button className="Button" onClick={() => handleDeletCol(index)}>Delete Column {index+1}</Button></td>
+                        ))}
+                        <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
+                    </tr>
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    value={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -194,6 +216,12 @@ export function FundingDataTableEditable({data}){
                     </tr>
                 </tbody>
             </Table>
+            <Alert show={showAlert} variant="danger">
+                <Alert.Heading>Are You Sure you want to delete column {columnToDelete+1}</Alert.Heading>
+                <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
+                <Button variant="outline-danger">Delete</Button>
+            </Alert>
+            <Button className='Button' type="submit">Save Obligation Data</Button>
         </Form>
     )
 }

@@ -52,7 +52,7 @@ router.put('/', (req, res) => {
     let sql = `
     UPDATE approved_funding
     SET
-        project_id = ${projectID},
+        project_id = "${projectID}",
         appro_funding_type = "${appro_funding_type}",
         appro_fiscal_year = "${appro_fiscal_year}",
         approved_amount = ${approved_amount}

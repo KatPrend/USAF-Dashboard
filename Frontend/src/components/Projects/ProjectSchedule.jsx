@@ -220,7 +220,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    value={format(new Date(Start), 'yyyy-MM-dd')} 
+                                                    defaultValue={format(new Date(Start), 'yyyy-MM-dd')} 
                                                     type='date'
                                                     onChange={(e) => handleStart(e, index)}/>
                                                 </Form.Group>
@@ -228,7 +228,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    value={format(new Date(End), 'yyyy-MM-dd')} 
+                                                    defaultValue={format(new Date(End), 'yyyy-MM-dd')} 
                                                     type='date'
                                                     onChange={(e) => handleEnd(e, index)}/>
                                                 </Form.Group>
