@@ -16,6 +16,20 @@ router.get('/', (req, res) => {
     });
 });
 
+// get contract id from project id
+router.get('/contractAward/:projectId', (req, res) => {
+    let sql = `
+    SELECT id
+    FROM contract_award
+    WHERE project_id = ${req.params.projectId}`
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 //Add a new Contract Award
 router.post('/', (req, res) => {
 
