@@ -107,7 +107,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ObligationFundingDataTableEditable data={AwardedProjectFundingDataObligation}/>
+                                <ObligationFundingDataTableEditable data={obligation_data} id={props.projectId}/>
                             </Col>
                         </Row>
                         <Row>
@@ -116,7 +116,7 @@ export const Funding = (props) => {
                         <Row>
                             <Col>
                                 {/* AwardedProjectFundingDataExpenditure */}
-                                <ExpenditureFundingDataTableEditable data={expen_data}/>
+                                <ExpenditureFundingDataTableEditable data={expen_data} id={props.projectId}/>
                             </Col>
                         </Row>
                     </Container>

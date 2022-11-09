@@ -50,7 +50,7 @@ router.post('/', (req, res) => {
 
 //Update a project
 router.put('/:projectId', (req, res)=>{
-    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num, start_date, end_date} = req.body;    
+    const {project_name, project_type, contractor_id,  branch_id, requirement_type_id, summary, ccar_num} = req.body;    
     
     let sql = `
     UPDATE project
@@ -61,9 +61,7 @@ router.put('/:projectId', (req, res)=>{
         branch_id = "${branch_id}",
         requirement_type_id = "${requirement_type_id}", 
         summary = "${summary}",
-        ccar_num = "${ccar_num}",
-        start_date =  "${start_date}",
-        end_date = "${end_date}"
+        ccar_num = "${ccar_num}"
     WHERE id = ${req.params.projectId};  
     `
     let query = db.query(sql, (err, results) =>{

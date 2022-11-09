@@ -10,10 +10,12 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 export const FundingData = (props) => {
     const [isLoading, setLoading] = useState(true);
+    const [isLoading4, setLoading4] = useState(true);
     const [obligation_data, setObligationData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [isLoading3, setLoading3] = useState(true);
     const [est_data, setEstData] = useState();
+    const [approved_data, setApprovedData] = useState();
 
     const location = useLocation();
     const {id} =location.state;
@@ -37,8 +39,18 @@ export const FundingData = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
+
+    useEffect(() => {
+        axios.get(`/api/approved/${props.data}`).then(response =>{
+            setApprovedData(response.data);
+            setLoading4(false);
+        });
+        return () => {
+            setApprovedData({}); // This worked for me
+        }
+    }, []);
     
-    if(isLoading || isLoading3){
+    if(isLoading || isLoading3 || isLoading4){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -67,7 +79,7 @@ export const FundingData = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ApprovedFundingTableEditable data={ApprovedFundingData}/>
+                                <ApprovedFundingTableEditable data={approved_data} id={props.data}/>
                             </Col>
                         </Row>
                         <Row>
@@ -75,7 +87,7 @@ export const FundingData = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <FundingDataTableEditable data={obligation_data}/>
+                                <FundingDataTableEditable data={obligation_data} id={props.data}/>
                             </Col>
                         </Row>
                     </Container>
@@ -118,7 +130,7 @@ export const FundingData = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <ApprovedFundingTable data={ApprovedFundingData}/>
+                            <ApprovedFundingTable data={approved_data}/>
                         </Col>
                     </Row>
                     <Row>

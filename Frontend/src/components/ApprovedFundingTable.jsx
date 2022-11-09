@@ -253,7 +253,7 @@ export function ApprovedFundingTableEditable(props){
         return <div className="mx-auto w-100">Loading...</div>;
     }
 
-    if(isLoading === false && editData.length === 0){
+    if(editData.length === 0){
         return(
             <Container>
                 <Row>
@@ -298,31 +298,29 @@ export function ApprovedFundingTableEditable(props){
                 <Table responsive striped bordered hover className="bg-light">
                     {getRowsAndCol(editData)}
                     <tbody>
-                        <tr>
+                        <tr key="top1">
                             <td> </td>
                             <td> </td>
                             {fiscalYears.map( (year, index) => (
-                                <td><Button className="Button" onClick={() => handleColAlert(year)}>Delete Column {index+1}</Button></td>
+                                <td key={year}><Button className="Button" onClick={() => handleColAlert(year)}>Delete Column {index+1}</Button></td>
                             ))}
                             <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
                         </tr>
-                        <tr>
+                        <tr key="top2">
                             <td> </td>
                             <td key = "1" >Funding Type</td>
                             {fiscalYears.map( (year) => (
                                 <td key = {year}>FY'{year}</td>
                             ))}
-                            <td>FY'
-                                <Form>
-                                    <Form.Group>
-                                        <Form.Control type="text" onChange={handleFisscalYearSelect}/>
-                                    </Form.Group>
-                                </Form>
+                            <td key="top3">FY'
+                                <Form.Group>
+                                    <Form.Control type="text" onChange={handleFisscalYearSelect}/>
+                                </Form.Group>
                             </td>
                         </tr>
                         {fundingTypes.map((funding, index) => (
-                            <tr>
-                                <td><Button className="Button" onClick={() => handleRowAlert(funding)}>Delete Row {index+1}</Button></td>
+                            <tr key={index}>
+                                <td key="button"><Button className="Button" onClick={() => handleRowAlert(funding)}>Delete Row {index+1}</Button></td>
                                 {allFundingTypes.map(({id, funding_type}) => (
                                     id === funding ? <td>{funding_type}</td> : null
                                 ))}
@@ -332,8 +330,8 @@ export function ApprovedFundingTableEditable(props){
                                         <>
                                         {info.appro_fiscal_year === year && info.appro_funding_type === funding
                                         ?
-                                        <td>
-                                            <Form.Group key={index}>
+                                        <td key={info}>
+                                            <Form.Group>
                                                 <Form.Control 
                                                 defaultValue={info.approved_amount} 
                                                 onChange={(e) => handleFundingType(e, info.id)}/>
@@ -348,9 +346,9 @@ export function ApprovedFundingTableEditable(props){
                                 ))}
                             </tr>
                         ))}
-                        <tr>
-                            <td><Button className="Button" onClick={handleAddRow}>Add Row</Button></td>
-                            <td><DropdownButton className="Button" title="Funding Types">
+                        <tr key="bottom1">
+                            <td key="bottom2"><Button className="Button" onClick={handleAddRow}>Add Row</Button></td>
+                            <td key="bottom3"><DropdownButton className="Button" title="Funding Types">
                                     {allFundingTypes.map(({id, funding_type}) => (
                                         (fundingTypes.includes(id) === true ? null :
                                             <DropdownItem key={id} eventKey={id} onSelect={handleFundingTypeSelect}>
@@ -373,9 +371,8 @@ export function ApprovedFundingTableEditable(props){
                     <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
                     <Button variant="outline-danger" onClick={DeleteRow}>Delete</Button>
                 </Alert>
-                <Button className='Button' type="submit">Save Approved Funding Data</Button>
-            </Form>
-            
+                <Button className='Button' type="submit">Save Approved Funding Data</Button> 
+            </Form>       
         </div>
     )
 }

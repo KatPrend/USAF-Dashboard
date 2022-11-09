@@ -58,10 +58,10 @@ router.post('/', (req, res) => {
         expen_projected,
         expen_actual
     ) VALUES(
-        ${project_id},
+        "${project_id}",
         "${expen_funding_date}"
-        ${expen_projected},
-        ${expen_actual}
+        "${expen_projected}",
+        "${expen_actual}"
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
