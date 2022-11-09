@@ -85,15 +85,15 @@ export const ProjectSchedule = (props) => {
             })
             : null)
 
-            (columsEdited.includes(index) === true 
-            ? 
-            axios.put('/api/milestone', {
-                milestone_id: currRow.ID,
-                project_id: currRow.project_id,
-                Predecessors: currRow.Name,
+            // (columsEdited.includes(index) === true 
+            // ? 
+            // axios.put('/api/milestone', {
+            //     milestone_id: currRow.ID,
+            //     project_id: currRow.project_id,
+            //     Predecessors: currRow.Name,
 
-            })
-            : null)
+            // })
+            // : null)
 
             
         ))
@@ -136,7 +136,7 @@ export const ProjectSchedule = (props) => {
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
         )))
-        
+
     }
 
     const handleProjectedEnd = (e, row) => {
@@ -155,7 +155,7 @@ export const ProjectSchedule = (props) => {
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
         )))
-        
+            
     }
 
 

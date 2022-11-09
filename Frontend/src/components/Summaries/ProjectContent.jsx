@@ -40,7 +40,10 @@ export const ProjectContent = (props) => {
     const [financial_status_search, set_financial_status_search] = useState('');
     const [schedule_status_search, set_schedule_status_search] = useState('');
 
+
+
     useEffect(() => {
+
         if (props.userRole === "Admin") {
             axios.get(`/api/project/`).then(response => {
                 setData(response.data);

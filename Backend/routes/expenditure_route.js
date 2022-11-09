@@ -15,7 +15,8 @@ router.get('/getExpen/:project_id', (req, res) => {
         expen_actual_total as "Actual Total" 
     FROM view_expenditure 
     WHERE project_id=${req.params.project_id}
-    ORDER BY date`;
+    ORDER BY date
+    `;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
