@@ -391,9 +391,11 @@ export function ObligationFundingDataTableEditable(props){
 
         axios.post('/api/obligation', {
             project_id: props.id,
-            expen_funding_date: format(new Date(null), 'yyyy-MM-dd'),
-            expen_projected: 0,
-            expen_actual: 0
+            obli_funding_date: format(new Date(null), 'yyyy-MM-dd'),
+            obli_funding_type: 0,
+            obli_fiscal_year: 0,
+            obli_projected: 0,
+            obli_actual: 0
         })
     }
 
@@ -402,18 +404,15 @@ export function ObligationFundingDataTableEditable(props){
         setShowAlert(true);
     }
 
-    const DeleteCol = async (e, row) => {
+    const DeleteCol = async (e) => {
         e.preventDefault();
 
         editData.map((info, index) => (
             index === columnToDelete ? 
-            axios.delete(`/api/obligation/${info.id}`, {
-                expenID: info.id,
-                projectID: props.id,
-                expen_funding_date: format(new Date(info.date), 'yyyy-MM-dd'),
-                expen_projected: info.Projected,
-                expen_actual: info.Actual
-            })
+            // axios.delete(`/api/obligation/${info.id}`, {
+            //     
+            // })
+            null
             :
             null
         ))

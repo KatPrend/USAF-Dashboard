@@ -59,7 +59,7 @@ router.post('/', (req, res) => {
         expen_actual
     ) VALUES(
         "${project_id}",
-        "${expen_funding_date}"
+        "${expen_funding_date}",
         "${expen_projected}",
         "${expen_actual}"
     )`;

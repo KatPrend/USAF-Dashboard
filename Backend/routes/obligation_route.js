@@ -76,9 +76,7 @@ router.post('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_proj_total,
-        obli_actual,
-        obli_actual_total} = req.body;
+        obli_actual,} = req.body;
     let sql = `
     INSERT INTO obligation_funding_data(
         project_id,
@@ -86,18 +84,14 @@ router.post('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_proj_total,
-        obli_actual,
-        obli_actual_total
+        obli_actual
     ) VALUES (
-        ${project_id},
+        "${project_id}",
         "${obli_funding_date}",
-        ${obli_funding_type},
+        "${obli_funding_type}",
         "${obli_fiscal_year}",
-        ${obli_projected},
-        ${obli_proj_total},
-        ${obli_actual},
-        ${obli_actual_total}
+        "${obli_projected}",
+        "${obli_actual}"
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
@@ -115,7 +109,7 @@ router.put('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_actual,} = req.body;
+        obli_actual} = req.body;
     let sql = `
     UPDATE obligation_funding_data
     SET
@@ -124,7 +118,7 @@ router.put('/', (req, res) => {
         obli_funding_type = ${obli_funding_type},
         obli_fiscal_year = "${obli_fiscal_year}",
         obli_projected = "${obli_projected}",
-        obli_actual = "${obli_actual}",
+        obli_actual = "${obli_actual}"
     WHERE id = "${id}"`;
     let query = db.query(sql, (err, results)=>{
         if(err){
