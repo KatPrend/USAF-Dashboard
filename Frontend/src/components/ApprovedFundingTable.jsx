@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Row, Col, Alert } from "react";
 import axios from "axios";
 import { Table, Form, Button } from 'react-bootstrap';
 
@@ -25,14 +25,20 @@ export function ApprovedFundingTable({data, projectId}){
         });
     }, []);
 
+
+    
+
     useEffect(() => {
+
         axios.get(`/api/approved/total/2`, {
-            funding_type: "1",
-            fiscal_year: "22"
-        }).then(response => {
+            funding_type: 1,
+            fiscal_year: 22
+        })
+        .then(response => {
             setTotal(response.data);
             setLoadingTotal(false);
         });
+
     }, []);
 
     console.log("PROJECT ID IN APPROVED FUDNDING TBEL")

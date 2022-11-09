@@ -75,7 +75,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ApprovedFundingTableEditable data={ApprovedFundingData} />
+                                <ApprovedFundingTableEditable data={ApprovedFundingData} projectId={props.projectId}/>
                             </Col>
                         </Row>
                         <Row>

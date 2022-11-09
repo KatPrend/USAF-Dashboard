@@ -116,8 +116,8 @@ router.get('/total/:projectID', (req,res) => {
 	IFNULL(sum(af.approved_amount),0) as total_amount
     FROM approved_funding af
     INNER JOIN funding_types ft ON ft.id = af.appro_funding_type
-    WHERE appro_funding_type = ${funding_type}
-    AND appro_fiscal_year = ${fiscal_year}
+    WHERE appro_funding_type = "${funding_type}"
+    AND appro_fiscal_year = "${fiscal_year}"
     AND project_id = ${req.params.projectID}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
