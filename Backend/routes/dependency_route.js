@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
 router.get('/getDependecies/:projectID', (req, res) => {
     let sql = `
     SELECT * FROM project_milestone_dependency
-    WHERE successor_project = ${req.params.projectID}`
+    WHERE predecessor_project = ${req.params.projectID} AND successor_project = ${req.params.projectID}`
 
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -77,14 +77,6 @@ router.delete('/removeDependency', (req, res) => {
         res.send(results)
 
     });
-});
-
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update clin endpoint"})
-});
-
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete clin endpoint"})
 });
 
 //Grab Successor

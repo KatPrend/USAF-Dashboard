@@ -11,10 +11,8 @@ router.get('/getObli/:project_id', (req, res) => {
         DATE_FORMAT(obli_funding_date,'%m/%d/%y') as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
-        obli_projected as Projected, 
-        obli_projected_total as "Projected Total", 
-        obli_actual as Actual, 
-        obli_actual_total as "Actual Total" 
+        obli_projected as Projected,
+        obli_actual as Actual
     FROM view_obligation 
     WHERE project_id=${req.params.project_id}
     ORDER BY date`;
@@ -33,10 +31,8 @@ router.get('/obligation_table/:project_id', (req, res) => {
         DATE_FORMAT(obli_funding_date,'%m/%d') as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear",
-        obli_projected as Projected, 
-        obli_projected_total as "Projected Total",
-        obli_actual as "Actual", 
-        obli_actual_total as "Actual Total" 
+        obli_projected as Projected,
+        obli_actual as "Actual"
     FROM 
         view_obligation 
     WHERE 
@@ -93,9 +89,7 @@ router.post('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_proj_total,
-        obli_actual,
-        obli_actual_total} = req.body;
+        obli_actual} = req.body;
     let sql = `
     INSERT INTO obligation_funding_data(
         project_id,
@@ -103,18 +97,14 @@ router.post('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_proj_total,
-        obli_actual,
-        obli_actual_total
+        obli_actual
     ) VALUES (
         ${project_id},
         "${obli_funding_date}",
         ${obli_funding_type},
         "${obli_fiscal_year}",
         ${obli_projected},
-        ${obli_proj_total},
-        ${obli_actual},
-        ${obli_actual_total}
+        ${obli_actual}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
@@ -132,9 +122,7 @@ router.put('/', (req, res) => {
         obli_funding_type,
         obli_fiscal_year,
         obli_projected,
-        obli_proj_total,
-        obli_actual,
-        obli_actual_total} = req.body;
+        obli_actual} = req.body;
     let sql = `
     UPDATE obligation_funding_data
     SET
@@ -143,9 +131,7 @@ router.put('/', (req, res) => {
         obli_funding_type = ${obli_funding_type},
         obli_fiscal_year = "${obli_fiscal_year}",
         obli_projected = ${obli_projected},
-        obli_proj_total = ${obli_proj_total},
-        obli_actual = ${obli_actual},
-        obli_actual_total = ${obli_actual}
+        obli_actual = ${obli_actual}
     WHERE id = ${id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
