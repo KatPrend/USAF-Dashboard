@@ -41,19 +41,19 @@ router.post('/', (req, res) => {
     //console.log(req.body);
 });
 
-//Get All Inner Project Dependencies
-router.get('/getDependecies/:projectID', (req, res) => {
+router.put("/", (req, res)=>{
+    const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
-    SELECT * FROM project_milestone_dependency
-    WHERE predecessor_project = ${req.params.projectID} AND successor_project = ${req.params.projectID}`
+    UPDATE project_milestones
+    SET
+        predecessor_project = "${predecessor_project}",
+        predecessor_milestone =  "${predecessor_milestone}",
+        successor_project = "${successor_project}",
+        successor_milestone =  "${successor_milestone}"
+    WHERE id = "${milestone_id}"
+        `
 
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
+        console.log(sql);
 });
 
 //Remove a Milestone Dependency
@@ -79,13 +79,23 @@ router.delete('/removeDependency', (req, res) => {
     });
 });
 
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update clin endpoint"})
+//Get All Inner Project Dependencies
+router.get('/getDependecies/:projectID', (req, res) => {
+    let sql = `
+    SELECT * FROM project_milestone_dependency
+    WHERE predecessor_project = ${req.params.projectID} AND successor_project = ${req.params.projectID}`
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
 });
 
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete clin endpoint"})
-});
+
+
 
 //Grab Successor
 router.get('/successor/:projectId', (req, res) => {

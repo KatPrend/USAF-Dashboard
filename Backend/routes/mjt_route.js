@@ -20,9 +20,10 @@ router.get('/milJobs/notInUse', (req, res) => {
     let sql = `
     SELECT * 
     FROM military_job_titles m
-    WHERE m.id NOT IN(SELECT DISTINCT(u.mil_job_title_id)
-    FROM users u
-    WHERE u.mil_job_title_id IS NOT NULL);`
+    WHERE m.id NOT IN(SELECT DISTINCT(upl.mil_job_title_id)
+    FROM user_project_link upl
+    WHERE upl.mil_job_title_id IS NOT NULL);
+    `
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
