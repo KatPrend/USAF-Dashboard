@@ -7,6 +7,7 @@ var db = require('../database');
 router.get('/:project_id', (req, res) => {
     let sql = `
     SELECT 
+        id,
         DATE_FORMAT(expen_funding_date,'%m/%d/%y') as date,
         expen_projected as Projected, 
         expen_projected_total as "Projected Total", 
@@ -75,6 +76,25 @@ router.delete('/:expenID', (req, res) => {
     let sql = `
     DELETE FROM expenditure_funding_data 
     WHERE id = ${req.params.expenID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get Total Expenditure For all Awarded Projects
+router.get('/getTotalExpenditure/:userid', (req, res) => {
+    let sql = `
+    SELECT 
+        SUM(expen_projected) as "Planned Expenditure",
+        SUM(expen_actual) as "Actual Expenditure"
+    FROM view_expenditure ve
+    JOIN user_project_link upl on ve.project_id = upl.project_id
+    JOIN contract_award ca on upl.project_id = ca.project_id
+    JOIN users u on upl.user_id = u.id
+    WHERE u.id = ${req.params.userid} AND ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), ve.expen_funding_date)) >= 0`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err

@@ -95,7 +95,7 @@ export function ExpenditureFundingDataTableEditable({data}){
         editData.map((currRow, index) => (
             columsEdited.includes(index) === true ? console.log(currRow) : null
         ))
-
+        console.log(editData);
         setColumsEdited([]);
 
     }
@@ -189,7 +189,7 @@ export function ExpenditureFundingDataTableEditable({data}){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    value={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -382,7 +382,7 @@ export function ObligationFundingDataTableEditable({data}){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    value={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>

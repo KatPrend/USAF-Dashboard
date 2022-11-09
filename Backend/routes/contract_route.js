@@ -16,6 +16,20 @@ router.get('/', (req, res) => {
     });
 });
 
+// get contract id from project id
+router.get('/contractAward/:projectId', (req, res) => {
+    let sql = `
+    SELECT id
+    FROM contract_award
+    WHERE project_id = ${req.params.projectId}`
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 //Add a new Contract Award
 router.post('/', (req, res) => {
 
@@ -24,14 +38,12 @@ router.post('/', (req, res) => {
     INSERT INTO contract_award(
         project_id,
         contract_num,
-        contract_status, 
-        indep_cost_est
+        contract_status
     )
     VALUES (
         "${project_id}",
         "${contract_num}",
-        "${contract_status}",
-        "${indep_cost_est}"
+        "${contract_status}"
     )`;
         
     db.query(contractAward, (err, results) =>{
@@ -167,6 +179,33 @@ router.get('/daysAdded', (req, res) => {
             throw err
         };
         res.send(results);
+    });
+});
+
+//Update a Contract Timeline
+router.put("/updateContractTimeline/:timelineID", (req, res)=>{
+    const {contract_award_id, timeline_status,requirement_plan, draft_rfp_released, approved_by_acb,
+        rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+    let sql = `
+    UPDATE contract_award_timeline
+    SET 
+        contract_award_id = ${contract_award_id},
+        timeline_status = ${timeline_status},
+        requirement_plan = "${requirement_plan}",
+        draft_rfp_released = "${draft_rfp_released}",
+        approved_by_acb = "${approved_by_acb}",
+        rfp_released = "${rfp_released}",
+        proposal_received = "${proposal_received}",
+        tech_eval_comp = "${tech_eval_comp}",
+        negotiation_comp = "${negotiation_comp}",
+        awarded = "${awarded}"	
+    WHERE id = ${req.params.timelineID}`;
+    
+    db.query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
     });
 });
 

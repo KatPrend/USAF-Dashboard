@@ -15,6 +15,7 @@ import { Chart } from "react-google-charts";
 const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
+  console.log(props.userid);
   useEffect(() => {
       axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
           setData(response.data);
@@ -122,11 +123,15 @@ function Dependency() {
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
-    const [data, setData] = useState(0)
+    const [data, setData] = useState(0);
+
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
+
+        console.log("userid: " + uid);
     }
+    
     return (
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>

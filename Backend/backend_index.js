@@ -38,6 +38,7 @@ const dependencyRoute = require('./routes/dependency_route');
 const expenditureRoute = require('./routes/expenditure_route');
 const fundingTypeRoute = require('./routes/funding_type_route');
 const obligationRoute = require('./routes/obligation_route');
+const milestoneRoute = require('./routes/project_milestone_route');
 const projectRoute = require('./routes/project_route');
 const userRoute = require('./routes/user_route');
 const uploadRoute = require('./routes/upload_route');
@@ -52,9 +53,10 @@ app.use('/api/clin', clinRoute);
 app.use('/api/contract', contractRoute);
 app.use('/api/contractor', contractorRoute);
 app.use('/api/dependency', dependencyRoute);
-app.use('/api/expenditure', expenditureRoute)
-app.use('/api/fundingType', fundingTypeRoute)
-app.use('/api/obligation', obligationRoute)
+app.use('/api/expenditure', expenditureRoute);
+app.use('/api/fundingType', fundingTypeRoute);
+app.use('/api/obligation', obligationRoute);
+app.use('/api/milestone', milestoneRoute);
 app.use('/api/project', projectRoute);
 app.use('/api/user', userRoute);
 app.use('/api/upload', uploadRoute);

@@ -8,7 +8,8 @@ var db = require('../database');
 router.get('/:projectID', (req,res) => {
     let sql = `
     SELECT * FROM approved_funding
-    WHERE project_id = ${req.params.projectID}`;
+    WHERE project_id = ${req.params.projectID}
+    ORDER BY appro_fiscal_year`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -51,7 +52,7 @@ router.put('/', (req, res) => {
     let sql = `
     UPDATE approved_funding
     SET
-        project_id = ${projectID},
+        project_id = "${projectID}",
         appro_funding_type = "${appro_funding_type}",
         appro_fiscal_year = "${appro_fiscal_year}",
         approved_amount = ${approved_amount}
@@ -78,6 +79,22 @@ router.delete('/:id', (req,res) => {
     });
 });
 
+//Get Indepentent Cost Est and Projected Contract Value
+router.get('/getEstimates/:id', (req,res) => {
+    let sql = `
+    SELECT 
+        contract_value,
+        ind_gov_est
+    FROM view_contract_award
+    WHERE project_id = ${req.params.id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+    
 
 // Get Distinct Fiscal Years for a project
 router.get('/fy/:projectID', (req,res) => {

@@ -65,7 +65,6 @@ export const AddProject = ({getProjectName}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Project Added");
 
         let projectId = -1;
 

@@ -6,7 +6,8 @@ var db = require('../database');
 // Get Obligation plan for a project
 router.get('/:project_id', (req, res) => {
     let sql = `
-    SELECT 
+    SELECT
+        id,
         DATE_FORMAT(obli_funding_date,'%m/%d/%y') as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
@@ -41,6 +42,94 @@ router.get('/obligation_table/:project_id', (req, res) => {
     WHERE 
         project_id=${req.params.project_id}
     ORDER BY date`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get Total Obligation For all Awarded Projects
+router.get('/getTotalObligation/:userid', (req, res) => {
+    let sql = `
+    SELECT 
+	    SUM(obli_projected) as "Planned Obligation",
+        SUM(obli_actual) as "Actual Obligation"
+    FROM view_obligation vo
+    JOIN user_project_link upl on vo.project_id = upl.project_id
+    JOIN contract_award ca on upl.project_id = ca.project_id
+    JOIN users u on upl.user_id = u.id
+    WHERE u.id = ${req.params.userid} AND ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), vo.obli_funding_date)) >= 0`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Make a new Obligation Output
+router.post('/', (req, res) => {
+    const {project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total} = req.body;
+    let sql = `
+    INSERT INTO obligation_funding_data(
+        project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total
+    ) VALUES (
+        ${project_id},
+        "${obli_funding_date}",
+        ${obli_funding_type},
+        "${obli_fiscal_year}",
+        ${obli_projected},
+        ${obli_proj_total},
+        ${obli_actual},
+        ${obli_actual_total}
+    )`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Update an Obligation Output
+router.put('/', (req, res) => {
+    const {id,
+        project_id,
+        obli_funding_date,
+        obli_funding_type,
+        obli_fiscal_year,
+        obli_projected,
+        obli_proj_total,
+        obli_actual,
+        obli_actual_total} = req.body;
+    let sql = `
+    UPDATE obligation_funding_data
+    SET
+        project_id = ${project_id},
+        obli_funding_date = "${obli_funding_date}",
+        obli_funding_type = ${obli_funding_type},
+        obli_fiscal_year = "${obli_fiscal_year}",
+        obli_projected = ${obli_projected},
+        obli_proj_total = ${obli_proj_total},
+        obli_actual = ${obli_actual},
+        obli_actual_total = ${obli_actual}
+    WHERE id = ${id}`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
