@@ -50,7 +50,6 @@ router.put("/", (req, res)=>{
         predecessor_milestone =  "${predecessor_milestone}",
         successor_project = "${successor_project}",
         successor_milestone =  "${successor_milestone}"
-    WHERE id = "${milestone_id}"
         `
 
         console.log(sql);
