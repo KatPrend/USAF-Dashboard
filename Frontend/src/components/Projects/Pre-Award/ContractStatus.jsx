@@ -192,10 +192,6 @@ export const ContractStatus = (props) => {
         setTimelineModal(open);
     }
 
-    const getReload = (rel) => {
-        setReload(rel);
-    }
-
     if (reload) {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
             setData(response.data);
