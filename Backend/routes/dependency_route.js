@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
 router.get('/getDependecies/:projectID', (req, res) => {
     let sql = `
     SELECT * FROM project_milestone_dependency
-    WHERE predecessor_project = ${req.params.projectID} AND successor_project = ${req.params.projectID}`
+    WHERE successor_project = ${req.params.projectID}`
 
     let query = db.query(sql, (err, results) =>{
         if(err){
