@@ -146,6 +146,7 @@ router.get('/contractawardtimeline/:project_id', (req, res) => {
     let sql = `
     SELECT 
         cat.id,
+        cat.contract_award_id,
         cat.timeline_status,
         cat.requirement_plan, 
         cat.draft_rfp_released,

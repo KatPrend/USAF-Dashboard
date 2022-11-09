@@ -78,18 +78,27 @@ export const ProjectSchedule = (props) => {
                 milestone_id: currRow.ID,
                 project_id: currRow.project_id,
                 task_name: currRow.Name,
-                projected_start: format(new Date(currRow.ProjectedStart), 'yyyy-MM-dd'),
-                projected_end: format(new Date(currRow.ProjectedEnd), 'yyyy-MM-dd'),
-                actual_start: currRow.ActualStart !== null ? format(new Date(currRow.ActualStart), 'yyyy-MM-dd') : "N/A" ,
+                projected_start: currRow.ProjectedStart,
+                projected_end: currRow.ProjectedEnd,
+                actual_start: currRow.ActualStart !== null ? currRow.ActualStart : null ,
+                actual_end: currRow.ActualEnd !== null ?currRow.ActualEnd : null ,
             })
-            
             : null)
-        ))
-        
 
+            (columsEdited.includes(index) === true 
+            ? 
+            axios.put('/api/milestone', {
+                milestone_id: currRow.ID,
+                project_id: currRow.project_id,
+                Predecessors: currRow.Name,
+
+            })
+            : null)
+
+            
+        ))
 
         setColumsEdited([]);
-
     }
 
     const handleName = (e, row) => {

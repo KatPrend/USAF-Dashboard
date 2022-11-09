@@ -98,9 +98,11 @@ router.put('/', (req, res) => {
         start_date = "${projected_start}",
         end_date =  "${projected_end}"
         ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
+        ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"
         `
 
+        console.log(sql);
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -109,7 +111,6 @@ router.put('/', (req, res) => {
 
     });
 
-    console.log(res["body"]);
 });
 
 //Remove a Project Milestone
