@@ -9,11 +9,13 @@ router.get('/schedule/:projectId', (req, res) => {
     let sql = `
     SELECT 
         pm.id as ID,
+        pm.project_id,
         pm.task_name as "Name",
         DATEDIFF(pm.end_date,pm.start_date) as "Duration",
-        pm.start_date as "Start",
-        pm.end_date as "End",
-        
+        pm.start_date as "ProjectedStart",
+        pm.end_date as "ProjectedEnd",
+        pm.actual_start as "ActualStart",
+        pm.actual_end as "ActualEnd",        
         (
 	        SELECT 
 	        GROUP_CONCAT(predecessor_milestone SEPARATOR ',' ) 
@@ -60,7 +62,7 @@ router.get('/:projectID', (req, res) => {
 });
 
 //Make a new Project Milestone
-router.post('/milestone', (req, res) => {
+router.post('/', (req, res) => {
     const {project_id, task_name, start_date, end_date} = req.body;
     let sql = `
     INSERT INTO project_milestones(
@@ -82,6 +84,32 @@ router.post('/milestone', (req, res) => {
         res.send(results)
 
     });
+});
+
+
+// Update a project milestone
+router.put('/', (req, res) => {
+    const {milestone_id, project_id, task_name, projected_start, projected_end, actual_start, actual_end} = req.body;
+    let sql = `
+    UPDATE project_milestones
+    SET
+        project_id = "${project_id}",
+        task_name =  "${task_name}",
+        start_date = "${projected_start}",
+        end_date =  "${projected_end}"
+        ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
+    WHERE id = "${milestone_id}"
+        `
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+
+    console.log(res["body"]);
 });
 
 //Remove a Project Milestone
