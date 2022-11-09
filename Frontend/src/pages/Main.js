@@ -31,7 +31,7 @@ function Main() {
                     {/*2*/}
                     {userid === 0 || userRole === "Contractor" ? null :
                          <Col>
-                            <FinSum />
+                            {userRole === "" ? null : <FinSum userid={userid} userRole={userRole}/> }
                         </Col>
                     }
                </Row>  

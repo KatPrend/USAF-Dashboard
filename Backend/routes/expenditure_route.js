@@ -4,7 +4,7 @@ const router = express.Router()
 var db = require('../database');
 
 // Get Expenditures for a project
-router.get('/:project_id', (req, res) => {
+router.get('/getExpen/:project_id', (req, res) => {
     let sql = `
     SELECT 
         id,
@@ -95,6 +95,23 @@ router.get('/getTotalExpenditure/:userid', (req, res) => {
     JOIN contract_award ca on upl.project_id = ca.project_id
     JOIN users u on upl.user_id = u.id
     WHERE u.id = ${req.params.userid} AND ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), ve.expen_funding_date)) >= 0`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get ADMIN Total Expenditure For all Awarded Projects
+router.get('/getAdminTotalExpenditure', (req, res) => {
+    let sql = `
+    SELECT 
+        SUM(expen_projected) as expen_projected,
+        SUM(expen_actual) as expen_actual
+    FROM view_expenditure ve
+    JOIN contract_award ca on ve.project_id = ca.project_id
+    WHERE ca.contract_status = 2 AND (SELECT DATEDIFF((SELECT CURDATE()), ve.expen_funding_date)) >= 0`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err

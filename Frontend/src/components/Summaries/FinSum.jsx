@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Chart } from 'react-google-charts';
 
@@ -52,11 +53,39 @@ const expendOptionsPie = (actual, planned) => {
     )
 };
 
-export const FinSum = () => {
+export const FinSum = (props) => {
     const [expenditurePlanned, setExpenditurePlanned] = useState(100);
     const [expenditureActual, setExpenditureActual] = useState(80);
     const [obligationPlanned, setObligationPlanned] = useState(200);
     const [obligationActual, setObligationActual] = useState(210);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (props.userRole === "Admin") {
+            axios.get(`/api/obligation/getAdminTotalObligation`).then(response => {
+                setObligationActual(response.data[0].obli_actual);
+                setObligationPlanned(response.data[0].obli_projected);
+                setLoading(false);
+            });
+            axios.get(`/api/expenditure/getAdminTotalExpenditure`).then(response => {
+                setExpenditurePlanned(response.data[0].expen_projected);
+                setExpenditureActual(response.data[0].expen_actual);
+                setLoading(false);
+            });
+        } else {
+            axios.get(`/api/project/userId/${props.userid}`).then(response => {
+                // setData(response.data);
+                console.log("NOOOOOOo");
+                console.log(JSON.stringify(response.data));
+                setLoading(false);
+            });
+        }
+    }, []);
+
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
+
     return (
         <Card className='card'>
             <Card.Header className="text-center cardHead">Financial Summary</Card.Header>

@@ -26,7 +26,7 @@ export const Funding = (props) => {
 
     useEffect(() => {
         // id.project_id
-        axios.get(`/api/expenditure/${props.projectId}`).then(response =>{
+        axios.get(`/api/expenditure/getExpen/${props.projectId}`).then(response =>{
             setExpenData(response.data);
             setLoading1(false);
         });
@@ -36,7 +36,7 @@ export const Funding = (props) => {
     }, []);
 
     useEffect(() => {
-        axios.get(`/api/obligation/${props.projectId}`).then(response =>{
+        axios.get(`/api/obligation/getObli/${props.projectId}`).then(response =>{
             setObligationData(response.data);
             setLoading2(false);
         });
