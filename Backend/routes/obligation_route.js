@@ -141,4 +141,16 @@ router.put('/', (req, res) => {
     });
 });
 
+router.delete('/:obliID', (req, res) => {
+    let sql = `
+    DELETE FROM obligation_funding_data
+    WHERE id = ${req.params.obliID}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;
