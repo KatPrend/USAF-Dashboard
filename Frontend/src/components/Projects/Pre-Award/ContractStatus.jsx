@@ -38,9 +38,22 @@ export const ContractStatus = (props) => {
         e.preventDefault();
 
         editData.map((currRow, index) => (
-            rowsEdited.includes(currRow.id) === true ? console.log(currRow) : null
+            rowsEdited.includes(currRow.id) === true ? 
+            axios.put(`/api/updateContractTimeline/${currRow.id}`, {
+                contract_award_id: currRow,
+                timeline_status: currRow,
+                requirement_plan: format(new Date(currRow), 'yyyy-MM-dd'),
+                draft_rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
+                approved_by_acb: format(new Date(currRow), 'yyyy-MM-dd'),
+                rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
+                proposal_received: format(new Date(currRow), 'yyyy-MM-dd'),
+                tech_eval_comp: format(new Date(currRow), 'yyyy-MM-dd'),
+                negotiation_comp: format(new Date(currRow), 'yyyy-MM-dd'),
+                awarded: format(new Date(currRow), 'yyyy-MM-dd')
+            })
+            : null
         ))
-
+        console.log(editData); 
         setRowsEdited([]);
     }
 

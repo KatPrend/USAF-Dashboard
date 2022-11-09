@@ -43,7 +43,6 @@ export const ProjectData = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("1");
     }
     const handleName = (e) => {
         setProjectName(e.target.value);
