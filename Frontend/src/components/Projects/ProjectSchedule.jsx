@@ -9,8 +9,8 @@ import { format } from 'date-fns';
 const columns = [
     { type: "string", label: "Task ID" },
     { type: "string", label: "Task Name" },
-    { type: "date", label: "Start Date" },
-    { type: "date", label: "End Date" },
+    { type: "date", label: "Start" },
+    { type: "date", label: "End" },
     { type: "number", label: "Duration" },
     { type: "number", label: "Percent Complete" },
     { type: "string", label: "Dependencies" },
@@ -24,11 +24,11 @@ function GanttChartDataFormat(JsonData){
         Rows.push([
             (data.ID).toString(),
             data.Name, 
-            new Date(data.Start),
-            new Date(data.End),
+            new Date(data.ActualStart !== null ? data.ActualStart : data.ProjectedStart),
+            new Date(data.ActualEnd !== null ? data.ActualEnd :data.ProjectedEnd),
             null, 
             null,
-            data.Predecessors == null ? null : (data.Predecessors).toString()
+            data.Predecessors === null ? null : (data.Predecessors).toString()
         ])
     ))
 
@@ -69,8 +69,24 @@ export const ProjectSchedule = (props) => {
         e.preventDefault();
         
         editData.map((currRow, index) => (
-            columsEdited.includes(index) === true ? console.log(currRow) : null
+            //columsEdited.includes(index) === true ? console.log(currRow) : null
+            // Update that sends these Json objects to the database
+            
+            (columsEdited.includes(index) === true 
+            ? 
+            axios.put('/api/milestone', {
+                milestone_id: currRow.ID,
+                project_id: currRow.project_id,
+                task_name: currRow.Name,
+                projected_start: format(new Date(currRow.ProjectedStart), 'yyyy-MM-dd'),
+                projected_end: format(new Date(currRow.ProjectedEnd), 'yyyy-MM-dd'),
+                actual_start: currRow.ActualStart !== null ? format(new Date(currRow.ActualStart), 'yyyy-MM-dd') : "N/A" ,
+            })
+            
+            : null)
         ))
+        
+
 
         setColumsEdited([]);
 
@@ -95,7 +111,7 @@ export const ProjectSchedule = (props) => {
         
     }
 
-    const handleStart = (e, row) => {
+    const handleProjectedStart = (e, row) => {
         if(columsEdited.includes(row) === false){
             setColumsEdited([...columsEdited, row])
         }
@@ -106,7 +122,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.Start = e.target.value;
+        temp.ProjectedStart = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -114,7 +130,7 @@ export const ProjectSchedule = (props) => {
         
     }
 
-    const handleEnd = (e, row) => {
+    const handleProjectedEnd = (e, row) => {
         if(columsEdited.includes(row) === false){
             setColumsEdited([...columsEdited, row])
         }
@@ -125,7 +141,46 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.End = e.target.value;
+        temp.ProjectedEnd = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+
+    const handleActualStart = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : null
+        ))
+
+        temp.ActualStart = e.target.value;
+        
+        setEditData(editData.map((currObject, index) =>(
+            index === row ? {...currObject, temp} : {...currObject}
+        )))
+        
+    }
+
+    const handleActualEnd = (e, row) => {
+        if(columsEdited.includes(row) === false){
+            setColumsEdited([...columsEdited, row])
+        }
+        
+        var temp;
+
+        editData.map((currObject, index) => (
+            index === row ? temp = currObject : null
+        ))
+
+        temp.ActualEnd = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -197,14 +252,16 @@ export const ProjectSchedule = (props) => {
                                     <th> </th>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Start</th>
-                                    <th>End</th>
+                                    <th>Projected Start</th>
+                                    <th>Projected End</th>
+                                    <th>Actual Start</th>
+                                    <th>Actual End</th>
                                     <th>Predecessors</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    editData.map(({ID, Name, Start, End, Predecessors}, index) => (
+                                    editData.map(({ID, Name, ProjectedStart, ProjectedEnd, Predecessors, ActualStart, ActualEnd,}, index) => (
                                         <tr key={ID}>
                                             <td><Button className="Button" onClick={() => handleRowAlert(ID)}>Delete Milestone {ID}</Button></td>
                                             <td>
@@ -220,29 +277,45 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(Start), 'yyyy-MM-dd')} 
+                                                    defaultValue={format(new Date(ProjectedStart), 'yyyy-MM-dd')} 
                                                     type='date'
-                                                    onChange={(e) => handleStart(e, index)}/>
+                                                    onChange={(e) => handleProjectedStart(e, index)}/>
                                                 </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(End), 'yyyy-MM-dd')} 
+                                                    defaultValue={format(new Date(ProjectedEnd), 'yyyy-MM-dd')} 
                                                     type='date'
-                                                    onChange={(e) => handleEnd(e, index)}/>
+                                                    onChange={(e) => handleProjectedEnd(e, index)}/>
                                                 </Form.Group>
+                                            </td>
+
+                                            <td>
+                                            <Form.Group key={ID}>
+                                                <Form.Control 
+                                                defaultValue={ActualStart !== null ? format(new Date(ActualStart), 'yyyy-MM-dd') : "N/A" }
+                                                type='date'
+                                                onChange={(e) => handleActualStart(e, index)}/>
+                                            </Form.Group>
                                             </td>
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={Predecessors}
-                                                    onChange={(e) => handlePredecessors(e, index)}/>
+                                                    defaultValue={ActualEnd !== null ? format(new Date(ActualEnd), 'yyyy-MM-dd') : "N/A" } 
+                                                    type='date'
+                                                    onChange={(e) => handleActualEnd(e, index)}/>
                                                 </Form.Group>
                                             </td>
-                                        </tr>
-                                    ))
-                                }
+                                                <td>
+                                                    <Form.Group key={ID}>
+                                                        <Form.Control 
+                                                        defaultValue={Predecessors}
+                                                        onChange={(e) => handlePredecessors(e, index)}/>
+                                                    </Form.Group>
+                                                </td>
+                                            </tr>
+                                ))}
                             </tbody>
                         </Table>
                         <Button className="Button" onClick={handleAddRow}>Add Milestone</Button>
@@ -282,18 +355,22 @@ export const ProjectSchedule = (props) => {
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Start</th>
-                                        <th>End</th>
+                                        <th>Projected Start</th>
+                                        <th>Projected End</th>
+                                        <th>Actual Start</th>
+                                        <th>Actual End</th>
                                         <th>Predecessors</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        infoData.map(({ID, Name, Start, End, Predecessors_Name}) => (
+                                        infoData.map(({ID, Name, ProjectedStart, ProjectedEnd, ActualStart, ActualEnd, Predecessors_Name}) => (
                                             <tr key={ID}>
                                                 <td>{Name}</td>
-                                                <td>{format(new Date(Start), 'MM/dd/yyyy')}</td>
-                                                <td>{format(new Date(End), 'MM/dd/yyyy')}</td>
+                                                <td>{format(new Date(ProjectedStart), 'MM/dd/yyyy')}</td>
+                                                <td>{format(new Date(ProjectedEnd), 'MM/dd/yyyy')}</td>
+                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "N/A" }</td>
+                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "N/A" }</td>
                                                 <td>{Predecessors_Name}</td>
                                             </tr>
                                         ))
