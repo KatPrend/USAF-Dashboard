@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
     INSERT INTO branches(
         branch_name
     ) VALUES(
-        '${req.params.branch_name}'
+        '${branch_name}'
     )`;
     let query = db.query(sql, (err, results) =>{
         if(err){

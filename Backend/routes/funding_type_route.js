@@ -22,10 +22,12 @@ router.post('/', (req, res) => {
     const {funding_type} = req.body;
     let sql = `
     INSERT INTO funding_types(
-        funding_type
+        funding_type,
+        status
     )
     VALUES(
-        "${funding_type}"
+        "${funding_type}",
+        1
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){

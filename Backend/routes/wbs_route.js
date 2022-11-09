@@ -17,18 +17,6 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-    res.send({message:"TODO: Make an post wbs endpoint endpoint"})
-});
-
-router.put("/", (req, res)=>{
-    res.send({message:"TODO: Make an update wbs endpoint"})
-})
-
-router.delete("/", (req, res)=>{
-    res.send({message:"TODO: Make a delete wbs endpoint"})
-})
-
 //Grab all WBS's for a project
 router.get('/:project_id', (req, res) => {
     let sql = `
