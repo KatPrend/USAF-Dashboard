@@ -271,8 +271,6 @@ function Clin() {
                             Make sure to fill out all fields.
                         </p>
                     </Alert>
-                    <Button onClick={() => {setShowAlert(true)}}>temp</Button>
-
                     <Form>
                         <Form.Group>
                             <Form.Label>CLIN Number</Form.Label>
