@@ -8,6 +8,7 @@ import { NavB } from '../components/NavB';
 import { DepSum } from '../components/Summaries/DepSum';
 import { format } from 'date-fns';
 import { Chart } from "react-google-charts";
+import { Redirect } from 'react-router-dom';
 
 /**
 * Renders information about projects assigned to the current user
@@ -75,8 +76,8 @@ const columns = [
 ];
 
 function GanttChartDataFormat(JsonData) {
-console.log("Ganttyy");
-console.log(JsonData);
+//console.log("Ganttyy");
+//console.log(JsonData);
     var Rows = [];
     
   JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }) => {
@@ -100,12 +101,12 @@ console.log(JsonData);
       ])
       return 0;
   })
-  console.log("Rows")
-  console.log(Rows)
+  //console.log("Rows")
+  //console.log(Rows)
 
   const data = [columns, ...Rows];
-  console.log("final DATA for ganttyytrtt")
-  console.log(data);
+  //console.log("final DATA for ganttyytrtt")
+  //console.log(data);
 
   return (data);
 }
@@ -119,20 +120,33 @@ const options = {
   },
 };
 
-function Dependency() {
+const Dependency = (props) => {
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
-    const [data, setData] = useState(0);
-
+    const [data, setData] = useState(0)
+    const [redirect, setRedirect] = useState(0)
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
 
         console.log("userid: " + uid);
     }
+    function refreshPage() {
+        window.location.replace('/dependency');
+      }
+    useEffect(() => {
+        setTimeout(() => {
+            console.log("in useeffect")
+            console.log(props.firstLoad)
+          if(props.firstLoad == 1)
+          {
+            refreshPage();
+          }
+        }, 10);
+      }, []); // <- add empty brackets here
     
-    return (
+      return ( 
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
             <Container className="top-Padding" style={{marginBottom: '3%'}}>
@@ -157,7 +171,9 @@ function Dependency() {
                     </Col>
                 </Row>
             </Container>
-
+            {console.log("FirstLoad: " + props.firstLoad)}
+            {props.firstLoad == 1 ? <p>first</p> : <p>second load</p>}
+            {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
             {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
 
         </div>

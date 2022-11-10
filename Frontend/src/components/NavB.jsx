@@ -36,7 +36,7 @@ export const NavB = ({getUserInfo}) => {
         });
     }, []);
 
-    console.log(data);
+    //console.log(data);
 
     if (isLoading) {
         return <div className="mx-auto w-75">Loading...</div>;
