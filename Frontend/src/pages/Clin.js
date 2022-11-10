@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './page.css';
-import { Button, Table, Modal, ModalBody, ButtonGroup, ModalDialog, Form, FormGroup } from 'react-bootstrap';
+import { Button, Table, Modal, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
 import { useLocation } from 'react-router-dom';
@@ -103,11 +103,28 @@ const ClinData = (props) => {
     );
 }
 
+function incompleteInputAlert() {
+    const[show, setShow] = useState(false);
+
+    if (show) {
+    return (
+        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>Error: Incomplete CLIN data</Alert.Heading>
+            <p>
+                Make sure to fill out all fields.
+            </p>
+        </Alert>
+        );
+    }
+
+}
+
 function Clin() {
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [addClinNum, setAddClinNum] = useState('');
     const [addClinType, setAddClinType] = useState(1);
     const [addClinScope, setAddClinScope] = useState('');
@@ -124,25 +141,22 @@ function Clin() {
 
     const  toggleModal = () => {showModal ? setShowModal(false) : setShowModal(true)}
     
+    const allValuesSet = () => {
+        if (addClinNum === '')
+            return false
+        if (addClinType === '')
+            return false
+        if (addClinScope === '')
+            return false
+        if (addClinEst === '')
+            return false
+        return true
+    }
+
+
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
-    }
-
-    const addClin = async () => {
-        console.log("Adding CLIN: " + addClinNum + " " + proj_id_global + " " + addClinType + " " + addClinScope + " " +  addClinEst )
-            
-        axios.post('/api/clin/', {
-            clin_num: addClinNum,
-            project_id: proj_id_global,
-            clin_type: clinTypeToNum(addClinType),
-            clin_scope: addClinScope,
-            ind_gov_est: addClinEst
-        })
-        setAddClinNum('');
-        setAddClinType(1);
-        setAddClinScope('');
-        setAddClinEst('');
     }
 
     const clinTypeToNum = (type) =>
@@ -166,10 +180,40 @@ function Clin() {
     }
 
 
+    const addClin = async () => {
+        console.log("Adding CLIN: " + addClinNum + " " + proj_id_global + " " + addClinType + " " + addClinScope + " " +  addClinEst )
+        
+        if (!allValuesSet())
+        {
+            setShowAlert(true);
+            return;
+        }
+
+        axios.post('/api/clin/', {
+            clin_num: addClinNum,
+            project_id: proj_id_global,
+            clin_type: clinTypeToNum(addClinType),
+            clin_scope: addClinScope,
+            ind_gov_est: addClinEst
+        })
+        setAddClinNum('');
+        setAddClinType(1);
+        setAddClinScope('');
+        setAddClinEst('');
+        toggleModal();
+        setTarget(0);
+    }
+
     const editClin = async () => {
         console.log("Editing clin: " + addClinNum + " " + proj_id_global + " " + addClinType + " " + addClinScope + " " +  addClinEst )
         console.log(target)
-            
+
+        if (!allValuesSet())
+        {
+            setShowAlert(true);
+            return;
+        }
+
         axios.put(`/api/clin/${target}`, {
             clin_num: addClinNum,
             project_id: proj_id_global,
@@ -181,16 +225,20 @@ function Clin() {
         setAddClinType(1);
         setAddClinScope('');
         setAddClinEst('');
+        toggleModal();
+        setTarget(0);
     }
 
     const deleteClin = async () => {
         console.log("deleting clin: " + target)
-            
+
         axios.delete(`/api/clin/${target}`, {})
         setAddClinNum('');
         setAddClinType(1);
         setAddClinScope('');
         setAddClinEst('');
+        toggleModal();
+        setTarget(0);
     }
 
 
@@ -216,6 +264,15 @@ function Clin() {
                     <Modal.Title>{ target === 0 ? 'Add CLIN' : 'Edit CLIN'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+
+                    <Alert show={showAlert} variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                        <Alert.Heading>Error: Incomplete CLIN data</Alert.Heading>
+                        <p>
+                            Make sure to fill out all fields.
+                        </p>
+                    </Alert>
+                    <Button onClick={() => {setShowAlert(true)}}>temp</Button>
+
                     <Form>
                         <Form.Group>
                             <Form.Label>CLIN Number</Form.Label>
@@ -241,14 +298,16 @@ function Clin() {
                             <Form.Label>Independent Goverment Cost Estamate</Form.Label>
                             <Form.Control onChange={function (event) {setAddClinEst(event.target.value)}} value={addClinEst} type="text" placeholder="Enter Independent Goverment Cost Estamate" />
                         </Form.Group>
-                        {target === 0 ? <></> : 
-                            <Button onClick={() => {deleteClin(); toggleModal(); setTarget(0);}} variant="danger">
-                                Delete CLIN
-                            </Button>                    
-                        }
-                        <Button onClick={() => {(target === 0 ? addClin() : editClin()); toggleModal(); setTarget(0);}} variant="primary">
-                            Submit
-                        </Button>
+                        <div className={target === 0 ? '' : 'd-flex justify-content-between'}>
+                            {target === 0 ? <></> : 
+                                <Button style={{marginTop: '2%', marginBottom: '2%'}} onClick={() => {deleteClin();}} variant="danger">
+                                    Delete CLIN
+                                </Button>                    
+                            }
+                            <Button style={{marginTop: '2%', marginBottom: '2%'}} onClick={() => {(target === 0 ? addClin() : editClin());}} variant="primary">
+                                Submit
+                            </Button>
+                        </div>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -258,8 +317,8 @@ function Clin() {
             <div className="lightBlue">
                 <NavB getUserInfo={getUserInfo}/>
                 <div className="d-flex justify-content-between p-2">
-                    <h2>Projects:</h2>
-                    <Button onClick={() => {toggleModal(); setTarget(0);}}>Add</Button>
+                    <h2>CLIN Data:</h2>
+                    <Button onClick={() => {toggleModal(); setTarget(0);}}>Add CLIN</Button>
                 </div>
                 <ClinData editClinFunc={getEditClinData} showModal={showModal}/>
             </div>
