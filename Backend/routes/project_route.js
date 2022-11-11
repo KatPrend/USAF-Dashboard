@@ -56,10 +56,10 @@ router.put('/:projectId', (req, res)=>{
     UPDATE project
     SET
         project_name = "${project_name}",
-        project_type = ${project_type},  
-        contractor_id =  ${contractor_id},
-        branch_id = ${branch_id},
-        requirement_type_id = ${requirement_type_id}, 
+        project_type = "${project_type}",  
+        contractor_id =  "${contractor_id}",
+        branch_id = "${branch_id}",
+        requirement_type_id = "${requirement_type_id}", 
         summary = "${summary}",
         ccar_num = "${ccar_num}"
     WHERE id = ${req.params.projectId};  

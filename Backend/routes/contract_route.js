@@ -193,8 +193,8 @@ router.put("/updateContractTimeline/:timelineID", (req, res)=>{
     let sql = `
     UPDATE contract_award_timeline
     SET 
-        contract_award_id = ${contract_award_id},
-        timeline_status = ${timeline_status},
+        contract_award_id = "${contract_award_id}",
+        timeline_status = "${timeline_status}",
         requirement_plan = "${requirement_plan}",
         draft_rfp_released = "${draft_rfp_released}",
         approved_by_acb = "${approved_by_acb}",
