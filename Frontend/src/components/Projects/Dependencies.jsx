@@ -14,20 +14,30 @@ export const Dependencies = (props) => {
     const [isLoading3, setLoading3] = useState(true);
     const [projects, setProjects] = useState(true);
     const [isLoading4, setLoading4] = useState(true);
-
+    // add predecessors variables:
     const [predProject, setPredProject] = useState(0);
     const [predSchedule, setPredSchedule] = useState();
     const [isLoading5, setLoading5] = useState(true);
     const [predMilestone, setPredMilestone] = useState(0);
     const [predSuccMilestone, setPredSuccMilestone] = useState(0);
     const [addPred, setAddPred] = useState(false);
-
+    // add successor variables:
     const [succPredMilestone, setSuccPredMilestone] = useState(0);
     const [succProject, setSuccProject] = useState(0);
     const [succSchedule, setSuccSchedule] = useState();
     const [isLoading6, setLoading6] = useState(true);
     const [succMilestone, setSuccMilestone] = useState(0);
     const [addSucc, setAddSucc] = useState(false);
+    // remove predecessor variables:
+    const [removePredProject, setRemovePredProject] = useState(0);
+    const [removePredMilestone, setRemovePredMilestone] = useState(0);
+    const [removePredSuccMilestone, setRemovePredSuccMilestone] = useState(0);
+    const [removedPred, setRemovedPred] = useState(false);
+    // remove successor variables:
+    const [removeSuccProject, setRemoveSuccProject] = useState(0);
+    const [removeSuccMilestone, setRemoveSuccMilestone] = useState(0);
+    const [removeSuccPredMilestone, setRemoveSuccPredMilestone] = useState(0);
+    const [removedSucc, setRemovedSucc] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/dependency/predecessor/${props.projectId}`).then(response =>{
@@ -55,6 +65,7 @@ export const Dependencies = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    // Add Predecessor functions:
     let handleSelectAddPredProject = (e) => {
         setPredProject(e.target.value);
         setLoading5(true);
@@ -93,11 +104,12 @@ export const Dependencies = (props) => {
                 setLoading1(false);
             });
         })
-        .catch(function (err){
+        .catch(function (err) {
             console.log(err);
         });
     }
 
+    // Add Successor Functions:
     let handleSelectPredForSucc = (e) => {
         setSuccPredMilestone(e.target.value);
 
@@ -135,6 +147,88 @@ export const Dependencies = (props) => {
                 setSucc(response.data);
                 setLoading2(false);
             });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
+    // Remove Predecessor Functions:
+    let handleSelectRemovePred = (e) => {
+        let ids = e.target.value.split(',');
+        let project = ids[0];
+        let pred = ids[1];
+        let succ = ids[2];
+
+        setRemovePredProject(project);
+        setRemovePredMilestone(pred);
+        setRemovePredSuccMilestone(succ);
+
+        setRemovedPred(false);
+    }
+    let handleDeletePred = async (e) => {
+
+        axios.delete(`/api/dependency/removeDependency`, {
+            data: {
+                predecessor_project: removePredProject,
+                predecessor_milestone: removePredMilestone,
+                successor_project: props.projectId,
+                successor_milestone: removePredSuccMilestone
+            }
+        })
+        .then(function(res){
+
+            setRemovedPred(true);
+
+            axios.get(`/api/dependency/predecessor/${props.projectId}`).then(response =>{
+                setPred(response.data);
+                setLoading1(false);
+            });
+
+            setRemovePredProject(0);
+            setRemovePredMilestone(0);
+            setRemovePredSuccMilestone(0);
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
+    // Remove Successor Functions:
+    let handleSelectRemoveSucc = (e) => {
+        let ids = e.target.value.split(',')
+        let pred = ids[0];
+        let sProj = ids[1];
+        let succ = ids[2];
+
+        setRemoveSuccPredMilestone(pred);
+        setRemoveSuccProject(sProj);
+        setRemoveSuccMilestone(succ);
+
+        setRemovedSucc(false);
+    }
+    let handleDeleteSucc = async (e) => {
+
+        axios.delete(`/api/dependency/removeDependency`, {
+            data: {
+                predecessor_project: props.projectId,
+                predecessor_milestone: removeSuccPredMilestone,
+                successor_project: removeSuccProject,
+                successor_milestone: removeSuccMilestone
+            }
+        })
+        .then(function(res){
+
+            setRemovedSucc(true);
+
+            axios.get(`/api/dependency/successor/${props.projectId}`).then(response =>{
+                setSucc(response.data);
+                setLoading1(false);
+            });
+
+            setRemoveSuccProject(0);
+            setRemoveSuccMilestone(0);
+            setRemoveSuccPredMilestone(0);
         })
         .catch(function (err){
             console.log(err);
@@ -237,10 +331,40 @@ export const Dependencies = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <span><h4>Remove Predecessor</h4></span>
+                                <span><h4 style={{marginBottom:"5%"}}>Remove Predecessor</h4></span>
+                                <Form>
+                                    <Form.Group style={{marginBottom:"3%"}}>
+                                        <Form.Label>Select Predecessor to Delete:</Form.Label>
+                                        <Form.Control as="select" onChange={handleSelectRemovePred}>
+                                            <option key={0} value={0}>Choose Dependency</option>
+                                            {predecessors.map((element, index) => (
+                                                <option key={index} value={[element.predecessor_project, element.predecessor_milestone, element.successor_milestone]}>
+                                                    {element.predecessor_name}: {element.predecessor_task_name} {"\u2192"} {element.dep_proj_name}: {element.successor_task_name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form>
+                                {removePredProject === 0 ? null : <Button className='Button' onClick={handleDeletePred}>Delete</Button>}
+                                {removedPred ? <div>Successfully Removed!</div> : null}
                             </Col>
                             <Col>
-                                <span><h4>Remove Successor</h4></span>
+                                <span><h4 style={{marginBottom:"5%"}}>Remove Successor</h4></span>
+                                <Form>
+                                    <Form.Group style={{marginBottom:"3%"}}>
+                                        <Form.Label>Select Successor to Delete:</Form.Label>
+                                        <Form.Control as="select" onChange={handleSelectRemoveSucc}>
+                                            <option key={0} value={0}>Choose Dependency</option>
+                                            {successors.map((element, index) => (
+                                                <option key={index} value={[element.predecessor_milestone, element.successor_project, element.successor_milestone]}>
+                                                    {element.predecessor_name}: {element.predecessor_task_name} {"\u2192"} {element.succ_proj_name}: {element.successor_task_name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Form>
+                                {removeSuccProject === 0 ? null : <Button className='Button' onClick={handleDeleteSucc}>Delete</Button>}
+                                {removedSucc ? <div>Successfully Removed!</div> : null}
                             </Col>
                         </Row>
                     </Container>}
@@ -282,7 +406,7 @@ export const Dependencies = (props) => {
                                 </thead>
                                 <tbody>
                                 {predecessors.map((element, index) => (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>{index+1}</td>
                                         <td>{element.predecessor_name}</td>
                                         <td>{element.predecessor_task_name}</td>
@@ -313,7 +437,7 @@ export const Dependencies = (props) => {
                                 </thead>
                                 <tbody>
                                 {successors.map((element, index) => (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>{index+1}</td>
                                         <td>{element.predecessor_name}</td>
                                         <td>{element.predecessor_task_name}</td>
