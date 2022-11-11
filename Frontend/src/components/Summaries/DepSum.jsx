@@ -11,30 +11,40 @@ export const DepSum = (props) => {
     const [green, setGreen] = useState();
 
     useEffect(() => {
-        axios.get(`/api/dependency/redUserDependencies/${props.userid}`).then(response => {
-            setRed(response.data);
-            setLoadingRed(false);
-        });
+        if(props.userRole === "Admin"){
+            axios.get(`/api/dependency/redAdmin`).then(response => {
+                setRed(response.data);
+                setLoadingRed(false);
+            });
+
+            axios.get(`/api/dependency/yellowAdmin`).then(response => {
+                setYellow(response.data);
+                setLoadingYellow(false);
+            });
+
+            axios.get(`/api/dependency/greenAdmin`).then(response => {
+                setGreen(response.data);
+                setLoadingGreen(false);
+            });
+        } 
+        else {
+            axios.get(`/api/dependency/redUserDependencies/${props.userid}`).then(response => {
+                setRed(response.data);
+                setLoadingRed(false);
+            });
+
+            axios.get(`/api/dependency/yellowUserDependencies/${props.userid}`).then(response => {
+                setYellow(response.data);
+                setLoadingYellow(false);
+            });
+
+            axios.get(`/api/dependency/greenUserDependencies/${props.userid}`).then(response => {
+                setGreen(response.data);
+                setLoadingGreen(false);
+            });
+        }
     }, []);
 
-    useEffect(() => {
-        axios.get(`/api/dependency/yellowUserDependencies/${props.userid}`).then(response => {
-            setYellow(response.data);
-            setLoadingYellow(false);
-        });
-    }, []);
-
-    useEffect(() => {
-        axios.get(`/api/dependency/greenUserDependencies/${props.userid}`).then(response => {
-            setGreen(response.data);
-            setLoadingGreen(false);
-        });
-    }, []);
-
-    console.log("GREEN")
-    console.log(green);
-    
-    if(yellow !== undefined) console.log(yellow[0].count) ;
 
     if (isLoadingRed || isLoadingYellow || isLoadingGreen) {
         return <div className="mx-auto w-100">Loading...</div>;

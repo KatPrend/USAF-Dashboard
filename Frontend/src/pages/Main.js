@@ -25,8 +25,8 @@ function Main() {
                 <Row>
                     {/*1*/}
                     <Col>
-                        {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
-                        <SchedSum />
+                        {userid !== 0 && userRole !== "" ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                        {userid !== 0 && userRole !== "" ? <SchedSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     {userid === 0 || userRole === "Contractor" ? null :

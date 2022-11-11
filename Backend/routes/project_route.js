@@ -62,7 +62,8 @@ router.put('/:projectId', (req, res)=>{
         requirement_type_id = ${requirement_type_id}, 
         summary = "${summary}",
         ccar_num = "${ccar_num}"
-    WHERE id = ${req.params.projectId}`
+    WHERE id = ${req.params.projectId};  
+    `
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err

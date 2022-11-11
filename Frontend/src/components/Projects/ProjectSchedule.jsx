@@ -4,6 +4,7 @@ import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import {Chart} from "react-google-charts";
 import axios from 'axios';
 import { format } from 'date-fns';
+import { UploadScheduleModal } from './UploadScheduleModal';
 // import {TimeLineData, TimeLineData2} from '../pages/DummyData'
 
 const columns = [
@@ -56,6 +57,8 @@ export const ProjectSchedule = (props) => {
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [showRowAlert, setShowRowAlert] = useState(false);
     const [rowToDelete, setRowToDelete] = useState();
+    const [uploadModal, setUploadModal] = useState(false);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/milestone/schedule/${props.data}`).then(response =>{
@@ -85,15 +88,15 @@ export const ProjectSchedule = (props) => {
             })
             : null)
 
-            (columsEdited.includes(index) === true 
-            ? 
-            axios.put('/api/milestone', {
-                milestone_id: currRow.ID,
-                project_id: currRow.project_id,
-                Predecessors: currRow.Name,
+            // (columsEdited.includes(index) === true 
+            // ? 
+            // axios.put('/api/milestone', {
+            //     milestone_id: currRow.ID,
+            //     project_id: currRow.project_id,
+            //     Predecessors: currRow.Name,
 
-            })
-            : null)
+            // })
+            // : null)
 
             
         ))
@@ -136,7 +139,7 @@ export const ProjectSchedule = (props) => {
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
         )))
-        
+
     }
 
     const handleProjectedEnd = (e, row) => {
@@ -155,7 +158,7 @@ export const ProjectSchedule = (props) => {
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
         )))
-        
+            
     }
 
 
@@ -229,6 +232,23 @@ export const ProjectSchedule = (props) => {
         e.preventDefault();
     }
 
+    const getOpenUploadModal = (open) => {
+        setUploadModal(open);
+
+        if (!open) {
+            setReload(true);
+        }
+    }
+
+    if (reload) {
+        axios.get(`/api/milestone/schedule/${props.data}`).then(response =>{
+            setInfoData(response.data);
+            setEditData(response.data);
+            setLoading(false);
+        });
+
+        setReload(false);
+    }
 
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
@@ -338,7 +358,8 @@ export const ProjectSchedule = (props) => {
                 </ModalBody>
             </Modal>
         </ModalDialog>
-
+        
+        <UploadScheduleModal projectId={props.data} open={uploadModal} getOpenUploadModal={getOpenUploadModal}/>
 
         <Card className="card">
             <Card.Header className = "cardHead">
@@ -348,7 +369,7 @@ export const ProjectSchedule = (props) => {
                             <span>Project Schedule</span>
                         </Col>
                         { props.userRole === "Contractor" ? null : infoData.length === 0 ? <Col style={{textAlign: 'right'}}>
-                                <span><Button className='Button'>Add</Button></span>
+                                <span><Button className='Button' onClick={()=>setUploadModal(true)}>Add</Button></span>
                             </Col> : <Col style={{textAlign: 'right'}}>
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                             </Col>
