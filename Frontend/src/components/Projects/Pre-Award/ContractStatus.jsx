@@ -36,24 +36,26 @@ export const ContractStatus = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(editData);
         editData.map((currRow, index) => (
-            rowsEdited.includes(currRow.id) === true ? 
-            axios.put(`/api/updateContractTimeline/${currRow.id}`, {
-                contract_award_id: currRow,
-                timeline_status: currRow,
-                requirement_plan: format(new Date(currRow), 'yyyy-MM-dd'),
-                draft_rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
-                approved_by_acb: format(new Date(currRow), 'yyyy-MM-dd'),
-                rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
-                proposal_received: format(new Date(currRow), 'yyyy-MM-dd'),
-                tech_eval_comp: format(new Date(currRow), 'yyyy-MM-dd'),
-                negotiation_comp: format(new Date(currRow), 'yyyy-MM-dd'),
-                awarded: format(new Date(currRow), 'yyyy-MM-dd')
-            })
-            : null
+            
+            (rowsEdited.includes(currRow.id) === true ? 
+                axios.put(`/api/contract/updateContractTimeline/${currRow.id}`, {
+                    id: currRow.id,
+                    contract_award_id: currRow.contract_award_id,
+                    timeline_status: currRow.timeline_status,
+                    requirement_plan: format(new Date(currRow.requirement_plan), 'yyyy-MM-dd'),
+                    draft_rfp_released: format(new Date(currRow.draft_rfp_released), 'yyyy-MM-dd'),
+                    approved_by_acb: format(new Date(currRow.approved_by_acb), 'yyyy-MM-dd'),
+                    rfp_released: format(new Date(currRow.rfp_released), 'yyyy-MM-dd'),
+                    proposal_received: format(new Date(currRow.proposal_received), 'yyyy-MM-dd'),
+                    tech_eval_comp: format(new Date(currRow.tech_eval_comp), 'yyyy-MM-dd'),
+                    negotiation_comp: format(new Date(currRow.negotiation_comp), 'yyyy-MM-dd'),
+                    awarded: format(new Date(currRow.awarded), 'yyyy-MM-dd')
+                })
+            : null)
         ))
-        console.log(editData); 
+         
         setRowsEdited([]);
     }
 

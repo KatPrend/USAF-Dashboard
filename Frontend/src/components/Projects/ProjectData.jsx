@@ -13,13 +13,13 @@ export const ProjectData = (props) => {
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [openWBS, setOpenWBS] = useState(false);
 
-    const [projectName, setProjectName] = useState("");
-    const [contractNumber, setContractNumber] = useState("");
-    const [contractor, setContractor] = useState("1");
-    const [branch, setBranch] = useState("");
-    const [requirementType, setRequirementType] = useState("1");
-    const [summary, setSummary] = useState("");
-    const [ccarNum, setCcar] = useState("");
+    const [projectNameEdit, setProjectName] = useState("");
+    const [contractNumberEdit, setContractNumber] = useState("");
+    const [contractorEdit, setContractor] = useState("");
+    const [branchEdit, setBranch] = useState("");
+    const [requirementTypeEdit, setRequirementType] = useState("");
+    const [summaryEdit, setSummary] = useState("");
+    const [ccarNumEdit, setCcar] = useState("");
     const [contractors, setContractors] = useState([]);
     const [branches, setBranches] = useState([]);
     
@@ -43,6 +43,20 @@ export const ProjectData = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        data.map(({id,project_name, contractor_id, contract_num, ccar_num, branch_id, requirement_type_id, summary, project_type}) => (
+            axios.put(`/api/project/${id}`, {
+                id: id,
+                project_name: (projectNameEdit === "" ? project_name : projectNameEdit),
+                project_type: project_type,
+                contractor_id: (contractorEdit === "" ? contractor_id : contractorEdit),
+                branch_id: (branchEdit === "" ? branch_id : branchEdit),
+                requirement_type_id: (requirementTypeEdit === "" ? requirement_type_id : requirementTypeEdit),
+                summary: (summaryEdit === "" ? summary : summaryEdit),
+                ccar_num: (ccarNumEdit === "" ? ccar_num : ccarNumEdit)
+            })
+        ))
+        
+        
     }
     const handleName = (e) => {
         setProjectName(e.target.value);
@@ -68,6 +82,7 @@ export const ProjectData = (props) => {
     const getOpenWBSModal = (open) => {
         setOpenWBS(open);
     }
+
 
     return (
         <>
