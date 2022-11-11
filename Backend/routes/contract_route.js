@@ -112,11 +112,14 @@ router.post('/contractTimeline', (req, res) => {
 // Updating a Contract Status
 router.put("/:contractid", (req, res)=>{
     
-    const {contract_status} = req.body;
+    const {contract_num, contract_status, contract_value} = req.body;
 
     let sql = `
     UPDATE contract_award 
-    SET contract_status = ${contract_status}
+    SET 
+        contract_num = "${contract_num}",
+        contract_status = "${contract_status}",
+        contract_value = "${contract_value}"
     WHERE id = ${req.params.contractid}`;
     
     db.query = db.query(sql, (err, results) =>{
