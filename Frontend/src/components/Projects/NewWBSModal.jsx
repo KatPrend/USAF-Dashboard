@@ -3,7 +3,7 @@ import { Button, Col, Container, Row, Modal, ModalBody, ButtonGroup, ModalDialog
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import { FileUpload } from "../NewProject/FileUpload";
 
-export const UploadScheduleModal = (props) => {
+export const NewWBSModal = (props) => {
 
     return (
         <ModalDialog scrollable>
@@ -12,18 +12,18 @@ export const UploadScheduleModal = (props) => {
                     <Container>
                         <Row>
                             <Col style={{textAlign: 'left'}}>
-                                <h3>Upload Project Schedule Milestones</h3>
+                                <h3>Upload ProPricer Output</h3>
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>props.getOpenUploadModal(false)}>Done</Button>
+                                    <Button className='Button' onClick={()=>props.getOpenWBSModal(false)}>Done</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={props.projectId}/></div>
+                    <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.projectId}/></div>
                 </ModalBody>
             </Modal>
         </ModalDialog>

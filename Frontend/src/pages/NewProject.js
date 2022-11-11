@@ -30,8 +30,12 @@ import { Link } from 'react-router-dom';
 //   //}
 // };
 
-function renderPageLink(contractStatus, projectId, projectName) {
-  if(contractStatus === 2){
+function  renderPageLink(contractStatus, projectId, projectName) {
+  console.log("contract status: " + contractStatus);
+  console.log("projectId: " + projectId + ", projectName: " + projectName);
+
+  if (contractStatus === 2){
+    console.log("in awarded contract link");
       return <span>Go to <Link to={{ 
           pathname: "/awardedproject", 
           state: {id:projectId} // your data array of objects
@@ -73,14 +77,6 @@ function NewProject() {
     setContractStatus(status);
   }
 
-  const getShowLink = (show) => {
-    if (show) {
-      console.log("in show, should show link");
-      console.log("contract status is " + contractStatus)
-      setShowLink(true);
-    }
-  }
-
   return (
     <div className="lightBlue">
       <NavB getUserInfo={getUserInfo} />
@@ -95,10 +91,10 @@ function NewProject() {
           {projectId === 0 ? null : <div>
             <h2>{projectName} Contract Information:</h2>
             <div className="project-element">
-              <AddContract data={projectId} getShowLink={getShowLink} getContractStatus={getContractStatus}/>
+              <AddContract data={projectId} getContractStatus={getContractStatus} />
             </div>
           </div>}
-          {showLink && contractStatus !== 0 ? renderPageLink(contractStatus, projectId, projectName) : null}
+          {contractStatus !== 0 ? renderPageLink(contractStatus, projectId, projectName) : null}
         </div>
     }
     </div>

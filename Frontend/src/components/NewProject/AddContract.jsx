@@ -26,7 +26,6 @@ export const AddContract = (props) => {
         console.log(res);
 
         props.getContractStatus(contractStatus);
-        props.getShowLink(true);
       })
       .catch(function (err){
           console.log(err);
@@ -46,7 +45,6 @@ export const AddContract = (props) => {
 
               <option value="1">Pre-Awarded</option>
               <option value="2">Awarded</option>
-              <option value="3">Closed</option>
             </Form.Control>
           </Col>
         </Form.Group>

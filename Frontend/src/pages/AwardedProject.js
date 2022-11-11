@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
-import { Dependencies } from '../components/Projects/Awarded/Dependencies';
+import { Dependencies } from '../components/Projects/Dependencies';
 //import { Documents } from '../components/Awarded/Documents';
 import { Funding } from '../components/Projects/Awarded/Funding';
 import { IPT } from '../components/Projects/IPT';
@@ -34,8 +34,11 @@ function AwardedProject(){
                     <Col>
                         <IPT data={id} userid={userid} userRole={userRole} />
                     </Col>
+                </Row>
+                <br />
+                <Row>
                     <Col>
-                        <Dependencies userRole={userRole} />
+                        <Dependencies userRole={userRole} projectId={id}/>
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>

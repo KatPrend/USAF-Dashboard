@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, Form, } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import { FileUpload } from "../NewProject/FileUpload";
 //import { propTypes } from 'react-bootstrap/esm/Image';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./projectData.css"
+import { NewWBSModal } from './NewWBSModal';
 
 export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);
@@ -64,6 +64,9 @@ export const ProjectData = (props) => {
     }
     const handleCapabilitySummery = (e) => {
         setSummary(e.target.value);
+    }
+    const getOpenWBSModal = (open) => {
+        setOpenWBS(open);
     }
 
     return (
@@ -178,29 +181,7 @@ export const ProjectData = (props) => {
             </Modal>
         </ModalDialog>
 
-        <ModalDialog scrollable>
-            <Modal show={openWBS} size='xl' autoFocus={true}>
-                <ModalHeader>
-                    <Container>
-                        <Row>
-                            <Col style={{textAlign: 'left'}}>
-                                <h3>Upload WBS ProPricer Output</h3>
-                            </Col>
-                            <Col style={{textAlign: 'right'}}>
-                                <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setOpenWBS(false)}>Done</Button>
-                                </ButtonGroup>
-                            </Col>
-                        </Row>
-                    </Container>
-                </ModalHeader>
-                <ModalBody>
-                    <div className='upload mx-auto'>
-                        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.data}/>
-                    </div>
-                </ModalBody>
-            </Modal>
-        </ModalDialog>
+        <NewWBSModal projectId={props.data} open={openWBS} getOpenWBSModal={getOpenWBSModal}/>
 
         <Card className="card">
             <Card.Header className = "cardHead">
