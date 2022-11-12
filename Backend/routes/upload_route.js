@@ -38,6 +38,10 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 
   await importTRT(req.params.projectId);
 
+  console.log("Insert into expenditure");
+
+  await importExpenditure(req.params.projectId);
+
   console.log("Drop the Table");
 
   await dropTempTable();
@@ -61,7 +65,10 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 function deletePreviousEntries(projectId){
   let deleteEntries = `
   DELETE FROM task_resource_table
-  WHERE project_id = ${projectId}`
+  WHERE project_id = ${projectId};
+  DELETE FROM expenditure_funding_data
+  WHERE project_id = ${projectId};
+  `
 
   return new Promise((resolve) => {
     db.query(deleteEntries, function(error, response){
@@ -100,7 +107,7 @@ function createTempTable(){
   LIMIT 0;
   `;
 
-  
+
   return new Promise((resolve) => {
     db.query(createTempTable, function(error, response){
       console.log(error || response);
@@ -207,6 +214,32 @@ SELECT
         resolve();
       });
     });
+}
+
+function importExpenditure(projectId){
+
+  let expenditureInsert = `
+    INSERT INTO expenditure_funding_data
+    (
+    project_id,
+    expen_funding_date,
+    expen_projected
+    )
+    SELECT 
+    project_id,
+    EXTRACT(YEAR_MONTH FROM month) AS year_and_month,
+    SUM(total_price) AS expen_projected
+    
+    FROM task_resource_table   
+    WHERE project_id = ${projectId}
+    GROUP BY year_and_month;`;
+
+return new Promise((resolve) => {
+  db.query(expenditureInsert, (error, response) => {
+    console.log(error || response);
+    resolve();
+  });
+});
 }
 
 function dropTempTable(){
