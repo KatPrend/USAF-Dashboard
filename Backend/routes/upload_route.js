@@ -24,6 +24,9 @@ const uploadFile = multer({ storage: storage })
 //Uploading ProPricer data into DB
 router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'), async (req, res) => {
 
+  console.log("Delete Previous Entries")
+  await deletePreviousEntries();
+
   console.log("Create the Temp Table")
   await createTempTable();
 
@@ -54,6 +57,21 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 
 });
 
+
+function deletePreviousEntries(projectId){
+  let deleteEntries = `
+  DELETE FROM task_resource_table
+  WHERE project_id = ${projectId}`
+
+  return new Promise((resolve) => {
+    db.query(deleteEntries, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
+  });
+
+}
+
 function createTempTable(){
 
   let createTempTable = `
@@ -82,6 +100,7 @@ function createTempTable(){
   LIMIT 0;
   `;
 
+  
   return new Promise((resolve) => {
     db.query(createTempTable, function(error, response){
       console.log(error || response);
@@ -117,6 +136,7 @@ return new Promise((resolve) => {
         total_price) 
       VALUES ?`;
 
+
         db.query(query, [rows], (error, response) => {
           console.log(error || response);
           resolve();
@@ -128,7 +148,7 @@ return new Promise((resolve) => {
 
 function importTRT(projectId){
 
-  console.log(projectId);
+
   let trtInsert = `
   INSERT INTO task_resource_table 
 (
@@ -179,6 +199,7 @@ SELECT
       ON c.project_id = p.id 
       AND c.clin_num = tpt.clin_num 
     WHERE p.id = "${projectId}"`;
+
 
     return new Promise((resolve) => {
       db.query(trtInsert, (error, response) => {
