@@ -217,7 +217,7 @@ router.get('/contractorUsers/:conID', (req, res) => {
     });
 });
 
-//Grab all contractors associated to a project
+//Grab all contractors that are NOT associated to a project
 router.get('/conNotActive', (req, res) => {
     let sql = `
     SELECT * FROM contractor
@@ -227,6 +227,24 @@ router.get('/conNotActive', (req, res) => {
             contractor_id
         FROM project
     )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Grab all contractors associated to a project
+router.get('/conProject/:projectID', (req, res) => {
+    let sql = `
+    SELECT 
+        u.user_name
+    FROM users u
+    INNER JOIN user_project_link upl on u.id = upl.user_id
+    INNER JOIN view_project vp on vp.id = upl.project_id
+    WHERE vp.id = 1 AND u.user_role = ${req.params.projectID}
+    `;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
