@@ -83,7 +83,6 @@ export const ProjectData = (props) => {
         setOpenWBS(open);
     }
 
-
     return (
         <>
         <ModalDialog scrollable>
