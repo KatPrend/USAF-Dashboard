@@ -18,9 +18,9 @@ export const IPT = (props) => {
     const [removeUser, setRemoveUser] = useState(0);
     // Contractors
     const [allContractors, setAllContractors] = useState();
-    //const [isLoading4, setLoading4] = useState(true);
+    const [isLoading4, setLoading4] = useState(true);
     const [projectCont, setProjectCont] = useState();
-    //const [isLoading5, setLoading5] = useState(true);
+    const [isLoading5, setLoading5] = useState(true);
     const [addCont, setAddCont] = useState(0);
     const [addContName, setAddContName] = useState("");
     const [removeCont, setRemoveCont] = useState(0);
@@ -32,23 +32,29 @@ export const IPT = (props) => {
             setIpt(response.data);
             setLoading1(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get(`/api/mjt/milJobs/`).then(response =>{
             setTitles(response.data);
             setLoading2(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get(`/api/user/`).then(response =>{
             setUsers(response.data);
             setLoading3(false);
         });
+
+        axios.get(`/api/user/contractorUsers/${props.contractor}`).then(response =>{
+            setAllContractors(response.data);
+            setLoading4(false);
+        });
+
+        // axios.get(`/api/contractorUsers/${props.contractor}`).then(response =>{
+        //     setAllContractors(response.data);
+        //     setLoading4(false);
+        // });        
     }, []);
 
-    if(isLoading1 || isLoading2 || isLoading3) { // || isLoading4 || isLoading5){
+    if (isLoading1 || isLoading2 || isLoading3 || isLoading4) { // || isLoading5) {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -183,6 +189,9 @@ export const IPT = (props) => {
                                     <Col sm={8}>
                                         <Form.Control as="select">
                                             <option key={0} value={0}>Choose Contractor User</option>
+                                            {allContractors.map((element, index) => (
+                                                <option key={index} value={element.id}>{element.user_name}</option>
+                                            ))}
                                         </Form.Control>
                                     </Col>
                                 </Form.Group>

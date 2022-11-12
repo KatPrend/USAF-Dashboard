@@ -28,6 +28,8 @@ export const ProjectData = (props) => {
             
             setData(response.data);
             setLoading(false);
+
+            props.getContractor(response.data[0].contractor_id, response.data[0].contractor_name);
         });
         axios.get('/api/contractor').then(response => {
             setContractors(response.data);

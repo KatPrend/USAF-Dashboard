@@ -16,10 +16,17 @@ function PreAwardProject(){
 
     const [userid, setUserid] = useState(0);
     const [userRole, setUserRole] = useState("");
+    const [contractor, setContractor] = useState(0);
+    const [contractorName, setContractorName] = useState("");
 
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
+    }
+
+    const getContractor = (cont, name) => {
+        setContractor(cont);
+        setContractorName(name);
     }
     
     return(
@@ -28,11 +35,15 @@ function PreAwardProject(){
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData data={id} userRole={userRole} />
+                        <ProjectData data={id} userRole={userRole} getContractor={getContractor} />
                     </Col>
 
                     <Col>                      
-                        <IPT data={id} userRole={userRole} userid={userid} />
+                        {contractor === 0 ? null : <IPT data={id} 
+                                                            userid={userid} 
+                                                            userRole={userRole} 
+                                                            contractor={contractor}
+                                                            contractorName={contractorName} /> }
                     </Col>
                 </Row>
                 <br />
