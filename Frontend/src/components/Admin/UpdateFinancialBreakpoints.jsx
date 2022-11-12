@@ -7,16 +7,23 @@ export const UpdateFinancialBreakpoints = () => {
 
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
-    const [redOblBreak, setRedOblBreak] = useState(20);
-    const [yellowOblBreak, setYellowOblBreak] = useState(10);
-    const [redExpBreak, setRedExpBreak] = useState(20);
-    const [yellowExpBreak, setYellowExpBreak] = useState(10);
+    const [redOblBreak, setRedOblBreak] = useState();
+    const [yellowOblBreak, setYellowOblBreak] = useState();
+    const [redExpBreak, setRedExpBreak] = useState();
+    const [yellowExpBreak, setYellowExpBreak] = useState();
     const [showAlert, setShowAlert] = useState(false);
     // get breakpoints
     // TODO: find BE api call
     useEffect(() => {
         axios.get('/api/fundingType/').then(response => {
             setData(response.data);
+            setLoading(false);
+        });
+        axios.get('/api/finSum/').then(response => {
+            setYellowOblBreak(response.data[0].obli_yellow_breakpoint);
+            setYellowExpBreak(response.data[0].expen_yellow_breakpoint);
+            setRedOblBreak(response.data[0].obli_red_breakpoint);
+            setRedExpBreak(response.data[0].expen_red_breakpoint);
             setLoading(false);
         });
     }, []);
@@ -31,7 +38,12 @@ export const UpdateFinancialBreakpoints = () => {
             return;
         }
 
-        // TODO: do some axios stuff once endpoint is set up
+        axios.put('/api/finSum', {
+            obli_yellow_breakpoint: yellowOblBreak,
+            obli_red_breakpoint: redOblBreak,
+            expen_yellow_breakpoint: yellowExpBreak,
+            expen_red_breakpoint: redExpBreak
+        });
     }
 
 
