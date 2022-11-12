@@ -128,7 +128,7 @@ export const IPT = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
-                        <Row>
+                        <Row style={{marginBottom:"5%"}}>
                             <Col>
                                 <h4 style={{marginBottom:"4%"}}>Add IPT Member</h4>
                                 <Form.Group as={Row}>
@@ -175,6 +175,32 @@ export const IPT = (props) => {
                                 <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleRemove}>Remove</Button>
                             </Col>
                         </Row>
+                        <Row>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Add Contractor</h4>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contractor:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select">
+                                            <option key={0} value={0}>Choose Contractor User</option>
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project'>Add</Button>
+                            </Col>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Remove Contractor</h4>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contractor:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select">
+                                            <option key={0} value={0}>Choose Contractor User</option>
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project'>Remove</Button>
+                            </Col>
+                        </Row>
                     </Container>
                 </ModalBody>
             </Modal>
@@ -203,7 +229,9 @@ export const IPT = (props) => {
                         </div>
                     ))
                 }
-                <br></br>
+                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                    <Button className='Button'>See Contractors</Button>
+                </ButtonGroup>
             </Card.Body>
         </Card>
         </>
