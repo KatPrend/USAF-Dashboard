@@ -16,13 +16,25 @@ const ProjectContent = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState();
   console.log(props.userid);
-  useEffect(() => {
-      axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
-          setData(response.data);
-          props.dataSetter(response.data);
-          setLoading(false);
-      });
-  }, []);
+  console.log(props.userRole);
+
+    if(props.userRole === "Admin"){
+        useEffect(() => {
+            axios.get(`/api/dependency/adminSuccessor`).then(response => {
+                setData(response.data);
+                props.dataSetter(response.data);
+                setLoading(false);
+            });
+        }, []);
+    } else {
+        useEffect(() => {
+            axios.get(`/api/dependency/userSuccessor/${props.userid}`).then(response => {
+                setData(response.data);
+                props.dataSetter(response.data);
+                setLoading(false);
+            });
+        }, []);
+    }
 
   if (isLoading) {
       return <div className="mx-auto w-75">Loading...</div>;
@@ -35,26 +47,34 @@ const ProjectContent = (props) => {
                   <tr>
                     <th>Predecessor Project</th>
                     <th>Predecessor Milestone</th> 
-                    <th>Predecessor Start Date</th> 
+                    <th>Predecessor Projected Start Date</th> 
+                    <th>Predecessor Projected End Date</th>
+                    <th>Predecessor Actual Start Date</th> 
                     <th>Predecessor End Date</th>
                     <th>Successor Project</th>
                     <th>Successor Milestone</th>
-                    <th>Successor Start Date</th>
-                    <th>Successor End Date</th>
+                    <th>Successor Projected Start Date</th>
+                    <th>Successor Projected End Date</th>
+                    <th>Successor Actual Start Date</th>
+                    <th>Successor Actual End Date</th>
                   </tr>
               </thead>
               <tbody>
               {
-                  data.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }, index) => (
+                  data.map(({ pred_proj_name, pred_name, pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end}, index) => (
                       <tr key={index}>
                           <td>{pred_proj_name}</td>
                           <td>{pred_name}</td>
-                          <td>{format(new Date(pred_start), 'MM/dd/yyyy')}</td>
-                          <td>{format(new Date(pred_end), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(pred_proj_start), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(pred_proj_end), 'MM/dd/yyyy')}</td>
+                          <td>{pred_actual_start !== null ? format(new Date(pred_actual_start), 'MM/dd/yyyy') : "No Date" }</td>
+                          <td>{pred_actual_end !== null ? format(new Date(pred_actual_end), 'MM/dd/yyyy') : "No Date" }</td>
                           <td>{succ_proj_name}</td>
                           <td>{succ_name}</td>
-                          <td>{format(new Date(succ_start), 'MM/dd/yyyy')}</td>
-                          <td>{format(new Date(succ_end), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(succ_proj_start), 'MM/dd/yyyy')}</td>
+                          <td>{format(new Date(succ_proj_end), 'MM/dd/yyyy')}</td>
+                          <td>{succ_actual_start !== null ? format(new Date(succ_actual_start), 'MM/dd/yyyy') : "No Date" }</td>
+                          <td>{succ_actual_end !== null ? format(new Date(succ_actual_end), 'MM/dd/yyyy') : "No Date" }</td>
                       </tr>
                   ))
               }
@@ -79,12 +99,12 @@ console.log("Ganttyy");
 console.log(JsonData);
     var Rows = [];
     
-  JsonData.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }) => {
+  JsonData.map(({ pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_start, succ_end, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end }) => {
       Rows.push([
         pred_name,
         pred_name,
-        new Date(pred_start),
-        new Date(pred_end),
+        pred_actual_start !== null ? new Date(pred_actual_start) : new Date(pred_proj_start),
+        pred_actual_end !== null ? new Date(pred_actual_end) : new Date(pred_proj_end),
         null,
         null,
         null
@@ -92,8 +112,8 @@ console.log(JsonData);
       Rows.push([
         succ_name,
         succ_name,
-        new Date(succ_start),
-        new Date(succ_end),
+        succ_actual_start !== null ? new Date(succ_actual_start) : new Date(succ_proj_start),
+        succ_actual_end !== null ? new Date(succ_actual_end) : new Date(succ_proj_end),
         null,
         null,
         pred_name
@@ -139,7 +159,8 @@ function Dependency() {
                 <Row>
                     {/*1*/}
                     <Col>
-                    {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                    {userid !== 0 && userRole !== "" ? <DepSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                    
                     </Col>
                     {/*2*/}
                     <Col>
@@ -158,7 +179,7 @@ function Dependency() {
                 </Row>
             </Container>
 
-            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
+            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole} dataSetter={setData}/> : <></> }
 
         </div>
     );

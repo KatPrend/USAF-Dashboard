@@ -219,20 +219,21 @@ SELECT
 function importExpenditure(projectId){
 
   let expenditureInsert = `
-    INSERT INTO expenditure_funding_data
-    (
-    project_id,
-    expen_funding_date,
-    expen_projected
-    )
-    SELECT 
-    project_id,
-    EXTRACT(YEAR_MONTH FROM month) AS year_and_month,
-    SUM(total_price) AS expen_projected
-    
-    FROM task_resource_table   
-    WHERE project_id = ${projectId}
-    GROUP BY year_and_month;`;
+  INSERT INTO expenditure_funding_data
+  (
+  project_id,
+  expen_funding_date,
+  expen_projected
+  )
+  SELECT 
+  project_id,
+  DATE_FORMAT(month, '%Y-%m-1') AS year_and_month,
+  SUM(total_price) AS expen_projected
+  
+  FROM task_resource_table   
+  WHERE project_id = ${projectId}
+  GROUP BY year_and_month; 
+`;
 
 return new Promise((resolve) => {
   db.query(expenditureInsert, (error, response) => {
