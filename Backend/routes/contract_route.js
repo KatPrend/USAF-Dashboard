@@ -110,6 +110,23 @@ router.post('/contractTimeline', (req, res) => {
 });
 
 // Updating a Contract Status
+router.put("/status/:contractid", (req, res)=>{
+    const {contract_status} = req.body;
+
+    let sql = `
+    UPDATE contract_award 
+    SET contract_status = "${contract_status}"
+    WHERE id = ${req.params.contractid}`;
+    
+    db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Updating a Contract Status
 router.put("/:contractid", (req, res)=>{
     
     const {contract_num, contract_status, contract_value} = req.body;
@@ -122,7 +139,7 @@ router.put("/:contractid", (req, res)=>{
         contract_value = "${contract_value}"
     WHERE id = ${req.params.contractid}`;
     
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -136,7 +153,7 @@ router.delete("/:contractid", (req, res)=>{
     DELETE FROM contract_award
     WHERE id = ${req.params.contractid}`;
     
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -205,7 +222,7 @@ router.put("/updateContractTimeline/:timelineID", (req, res)=>{
         awarded = "${awarded}"	
     WHERE id = ${req.params.timelineID}`;
     
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }

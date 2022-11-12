@@ -8,6 +8,7 @@ import { ProjectSchedule } from '../components/Projects/ProjectSchedule';
 import { ContractStatus } from '../components/Projects/Pre-Award/ContractStatus';
 import { FundingData } from '../components/Projects/Pre-Award/FundingData';
 import { useLocation } from 'react-router-dom';
+import { Dependencies } from '../components/Projects/Dependencies';
 
 function PreAwardProject(){
     const location = useLocation();
@@ -32,6 +33,12 @@ function PreAwardProject(){
 
                     <Col>                      
                         <IPT data={id} userRole={userRole} userid={userid} />
+                    </Col>
+                </Row>
+                <br />
+                <Row>
+                    <Col>
+                        <Dependencies userRole={userRole} projectId={id}/>
                     </Col>
                 </Row>
                 <br />

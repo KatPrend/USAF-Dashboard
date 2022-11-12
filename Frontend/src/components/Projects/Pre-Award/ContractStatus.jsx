@@ -4,6 +4,7 @@ import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { NewContractModal } from "./NewContractModal";
+import { Link } from "react-router-dom";
 
 export const ContractStatus = (props) => {
     const [isLoading1, setLoading1] = useState(true);
@@ -15,6 +16,7 @@ export const ContractStatus = (props) => {
     const [reload, setReload] = useState(false);
     const [timelineModal, setTimelineModal] = useState(false);
     const [contractId, setContractId] = useState();
+    const [awarded, setAwarded] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
@@ -52,6 +54,11 @@ export const ContractStatus = (props) => {
                     tech_eval_comp: format(new Date(currRow.tech_eval_comp), 'yyyy-MM-dd'),
                     negotiation_comp: format(new Date(currRow.negotiation_comp), 'yyyy-MM-dd'),
                     awarded: format(new Date(currRow.awarded), 'yyyy-MM-dd')
+                })
+                .then(function(res){
+                    if (currRow.awarded !== null) {
+                        setAwarded(true);
+                    }
                 })
             : null)
         ))
@@ -214,6 +221,17 @@ export const ContractStatus = (props) => {
         });
 
         setReload(false);
+    }
+
+    let handleAward = () => {
+        axios.put(`/api/contract/status/${contractId}`, {
+            contract_status: 'Awarded'
+        })
+        .then(function(res) {
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
     }
 
     return (
@@ -396,6 +414,7 @@ export const ContractStatus = (props) => {
                             <span>Contract Status</span>
                         </Col>
                         { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
+                                {awarded ? <Link to={{pathname: "/awardedproject", state: {id:props.data}}} onClick={handleAward}><Button className='Button'>Award Project</Button></Link> : null}
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                                 {contractId === 0 || data.length !== 0 ? null : <span><Button className='Button' onClick={()=>setTimelineModal(true)}>Add</Button></span>}
                             </Col>
