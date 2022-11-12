@@ -243,7 +243,7 @@ router.get('/conProject/:projectID', (req, res) => {
     FROM users u
     INNER JOIN user_project_link upl on u.id = upl.user_id
     INNER JOIN view_project vp on vp.id = upl.project_id
-    WHERE vp.id = 1 AND u.user_role = ${req.params.projectID}
+    WHERE vp.id = ${req.params.projectID} AND u.user_role = 1
     `;
     let query = db.query(sql, (err, results) =>{
         if(err){
