@@ -153,7 +153,7 @@ const Dependency = (props) => {
                 <Row>
                     {/*1*/}
                     <Col>
-                    {userid !== 0 ? <DepSum body = {<Link to="/dependency">See Dependencies</Link>} userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                    {userid !== 0 ? <DepSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
                     </Col>
                     {/*2*/}
                     <Col>
@@ -172,7 +172,6 @@ const Dependency = (props) => {
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
-            {props.firstLoad == 1 ? <p>first</p> : <p>second load</p>}
             {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
             {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
 
