@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Form, Button, Alert, DropdownButton, Row, Col, Container } from 'react-bootstrap';
 import axios from "axios";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 
 
@@ -93,6 +92,8 @@ export function ApprovedFundingTableEditable(props){
     const [showRowAlert, setShowRowAlert] = useState(false);
     const [columnToDelete, setColumnToDelete] = useState();
     const [rowToDelete, setRowToDelete] = useState();
+    const [reload, setReload] = useState(false);
+
 
     let fiscalYears = [];
     let fundingTypes = [];
@@ -136,6 +137,7 @@ export function ApprovedFundingTableEditable(props){
         ))
         
         setElementsEdited([]);
+        setReload(true);
     }
 
 
@@ -159,7 +161,7 @@ export function ApprovedFundingTableEditable(props){
     }
 
     let handleFundingTypeSelect = (e) => {
-        setFundingTypeToAdd(e);
+        setFundingTypeToAdd(e.target.value);
         setAddedRow(true);
     }
 
@@ -180,6 +182,7 @@ export function ApprovedFundingTableEditable(props){
             })
             
             setAddedCol(false);
+            setReload(true);
         }
     }
 
@@ -197,6 +200,7 @@ export function ApprovedFundingTableEditable(props){
             ))
 
             setAddedCol(false);
+            setReload(true);
         }
     }
 
@@ -215,6 +219,7 @@ export function ApprovedFundingTableEditable(props){
         })
 
         setShowColAlert(false);
+        setReload(true);
     }
 
     const handleAddRow = async (e) => {
@@ -230,6 +235,7 @@ export function ApprovedFundingTableEditable(props){
                 })
             ))
             setAddedRow(false);
+            setReload(true);
         }
     }
 
@@ -247,10 +253,20 @@ export function ApprovedFundingTableEditable(props){
             }
         })
         setShowRowAlert(false);
+        setReload(true);
     }
 
     if (isLoading) {
         return <div className="mx-auto w-100">Loading...</div>;
+    }
+
+    if(reload){
+
+        axios.get(`/api/approved/${props.id}`).then(response =>{
+            setEditData(response.data);
+        });
+
+        setReload(false);
     }
 
     if(editData.length === 0){
@@ -265,23 +281,30 @@ export function ApprovedFundingTableEditable(props){
                         <Form.Group as={Row}>
                             <Form.Label column sm={2}>FY'</Form.Label>
                             <Col sm={2}>
-                                <Form.Control onChange={handleFisscalYearSelect} />
+                                <Form.Control type="number" onChange={handleFisscalYearSelect} />
                             </Col>
                         </Form.Group>
                     </Form>
                     </Col>
                 </Row>
                 <Row>
-                    <Col style={{alignSelf: 'left'}}>
-                    <DropdownButton className="Button" title="Funding Types">
-                        {allFundingTypes.map(({id, funding_type}) => (
-                            (fundingTypes.includes(id) === true ? null :
-                                <DropdownItem key={id} eventKey={id} onSelect={handleFundingTypeSelect}>
-                                    {funding_type}
-                                </DropdownItem>
-                            )
-                        ))}
-                    </DropdownButton>
+                    <Col>
+                        <Form>
+                            <Form.Label column sm={3}>Funding Types</Form.Label>
+                            <Col sm={3}>
+                            <Form.Control 
+                                as="select"
+                                onChange={handleFundingTypeSelect}>
+
+                                <option value={0}>Select</option>
+                                {allFundingTypes.map(({id, funding_type}) => (
+                                    (fundingTypes.includes(id) === true ? null :
+                                        <option key={id} value={id}>{funding_type}</option>
+                                    )
+                                ))}
+                            </Form.Control>
+                            </Col>
+                        </Form>
                     </Col>
                 </Row>
                 <Row>
@@ -314,7 +337,7 @@ export function ApprovedFundingTableEditable(props){
                             ))}
                             <td key="top3">FY'
                                 <Form.Group>
-                                    <Form.Control type="text" onChange={handleFisscalYearSelect}/>
+                                    <Form.Control type="number" onChange={handleFisscalYearSelect}/>
                                 </Form.Group>
                             </td>
                         </tr>
@@ -333,6 +356,7 @@ export function ApprovedFundingTableEditable(props){
                                         <td key={info}>
                                             <Form.Group>
                                                 <Form.Control 
+                                                type="number"
                                                 defaultValue={info.approved_amount} 
                                                 onChange={(e) => handleFundingType(e, info.id)}/>
                                             </Form.Group>
@@ -348,15 +372,23 @@ export function ApprovedFundingTableEditable(props){
                         ))}
                         <tr key="bottom1">
                             <td key="bottom2"><Button className="Button" onClick={handleAddRow}>Add Row</Button></td>
-                            <td key="bottom3"><DropdownButton className="Button" title="Funding Types">
-                                    {allFundingTypes.map(({id, funding_type}) => (
-                                        (fundingTypes.includes(id) === true ? null :
-                                            <DropdownItem key={id} eventKey={id} onSelect={handleFundingTypeSelect}>
-                                                {funding_type}
-                                            </DropdownItem>
-                                        )
-                                    ))}
-                                </DropdownButton>
+                            <td key="bottom3">
+                                <Form>
+                                    <Form.Label>Funding Types</Form.Label>
+                                    <Col>
+                                    <Form.Control 
+                                        as="select"
+                                        onChange={handleFundingTypeSelect}>
+
+                                        <option value={0}>Select</option>
+                                        {allFundingTypes.map(({id, funding_type}) => (
+                                            (fundingTypes.includes(id) === true ? null :
+                                                <option key={id} value={id}>{funding_type}</option>
+                                            )
+                                        ))}
+                                    </Form.Control>
+                                    </Col>
+                                </Form>
                             </td>
                         </tr>
                     </tbody>

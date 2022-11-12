@@ -43,7 +43,8 @@ export const ProjectData = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        data.map(({id,project_name, contractor_id, contract_num, ccar_num, branch_id, requirement_type_id, summary, project_type}) => (
+        console.log(data);
+        data.map(({id,project_name, contractor_id, ccar_num, branch_id, requirement_type_id, summary, project_type, contract_num,contract_status, contract_value, contract_award_id}) => {
             axios.put(`/api/project/${id}`, {
                 id: id,
                 project_name: (projectNameEdit === "" ? project_name : projectNameEdit),
@@ -54,7 +55,16 @@ export const ProjectData = (props) => {
                 summary: (summaryEdit === "" ? summary : summaryEdit),
                 ccar_num: (ccarNumEdit === "" ? ccar_num : ccarNumEdit)
             })
-        ))
+            .then(
+                axios.put(`/api/contract/${contract_award_id}`, {
+                    id: id, 
+                    contract_num: (contractNumberEdit === "" ? contract_num : contractNumberEdit),
+                    contract_status: contract_status,
+                    contract_value: contract_value
+                })
+            )
+            
+        })
         
         
     }

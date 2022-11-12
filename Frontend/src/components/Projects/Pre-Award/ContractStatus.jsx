@@ -38,7 +38,6 @@ export const ContractStatus = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(editData);
         editData.map((currRow, index) => (
             
             (rowsEdited.includes(currRow.id) === true ? 
@@ -63,6 +62,8 @@ export const ContractStatus = (props) => {
             : null)
         ))
          
+        setReload(true);
+        setModalIsOpen(false);
         setRowsEdited([]);
     }
 
@@ -235,6 +236,11 @@ export const ContractStatus = (props) => {
         });
     }
 
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -247,7 +253,7 @@ export const ContractStatus = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
                                     <Button className='Button' type="submit" form="ContractAwardTimelineEdit">Save</Button>
                                 </ButtonGroup>
                             </Col>
@@ -277,7 +283,7 @@ export const ContractStatus = (props) => {
                                             <td>{timeline_status}</td>
                                             <td >
                                                 <Form.Group key={requirement_plan}>
-                                                    {requirement_plan !== null ?
+                                                    {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(requirement_plan), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -292,7 +298,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={draft_rfp_released}>
-                                                    {draft_rfp_released !== null ?
+                                                    {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(draft_rfp_released), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -307,7 +313,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={approved_by_acb}>
-                                                    {approved_by_acb !== null ?
+                                                    {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(approved_by_acb), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -322,7 +328,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={rfp_released}>
-                                                    {rfp_released !== null ?
+                                                    {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(rfp_released), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -337,7 +343,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={proposal_received}>
-                                                    {proposal_received !== null ?
+                                                    {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(proposal_received), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -352,7 +358,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={tech_eval_comp}>
-                                                    {tech_eval_comp !== null ?
+                                                    {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(tech_eval_comp), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -367,7 +373,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td>
                                                 <Form.Group key={negotiation_comp}>
-                                                    {negotiation_comp !== null ?
+                                                    {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(negotiation_comp), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -382,7 +388,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td>
                                                 <Form.Group key={awarded}>
-                                                    {awarded !== null ?
+                                                    {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(awarded), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -442,14 +448,14 @@ export const ContractStatus = (props) => {
                         data.map(({id, timeline_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
                             <tr key = {id}>
                                 <td>{timeline_status}</td>
-                                {requirement_plan !== null ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {draft_rfp_released !== null ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {approved_by_acb !== null ? <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {rfp_released !== null ? <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {proposal_received !== null ? <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {tech_eval_comp !== null ? <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {negotiation_comp !== null ? <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {awarded !== null ? <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
                             </tr>
                         ))
                     }
