@@ -12,7 +12,9 @@ router.get('/getObli/:project_id', (req, res) => {
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
         obli_projected as Projected,
-        obli_actual as Actual
+        obli_projected_total as "Projected Total",
+        obli_actual as Actual,
+        obli_actual_total as "Actual Total"
     FROM view_obligation 
     WHERE project_id=${req.params.project_id}
     ORDER BY date`;

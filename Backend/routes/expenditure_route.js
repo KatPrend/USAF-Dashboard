@@ -10,7 +10,9 @@ router.get('/getExpen/:project_id', (req, res) => {
         id,
         DATE_FORMAT(expen_funding_date,'%m/%d/%y') as date,
         expen_projected as Projected, 
-        expen_actual as Actual
+        expen_projected_total as "Projected Total",
+        expen_actual as Actual,
+        expen_actual_total as "Actual Total"
     FROM view_expenditure 
     WHERE project_id=${req.params.project_id}
     ORDER BY date
