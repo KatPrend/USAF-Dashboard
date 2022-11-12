@@ -180,6 +180,8 @@ SELECT
       AND c.clin_num = tpt.clin_num 
     WHERE p.id = "${projectId}"`;
 
+    console.log(trtInsert);
+
     return new Promise((resolve) => {
       db.query(trtInsert, (error, response) => {
         console.log(error || response);

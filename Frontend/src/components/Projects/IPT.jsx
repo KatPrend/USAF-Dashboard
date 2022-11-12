@@ -12,10 +12,20 @@ export const IPT = (props) => {
     const [isLoading3, setLoading3] = useState(true);
     const [users, setUsers] = useState()
     const [ModalIsOpen, setModalIsOpen] = useState(false);
-
+    // IPT Users
     const [addUsername, setAddUsername] = useState(1);
     const [addUsertitle, setAddUsertitle] = useState(1);
     const [removeUser, setRemoveUser] = useState(0);
+    // Contractors
+    const [allContractors, setAllContractors] = useState();
+    //const [isLoading4, setLoading4] = useState(true);
+    const [projectCont, setProjectCont] = useState();
+    //const [isLoading5, setLoading5] = useState(true);
+    const [addCont, setAddCont] = useState(0);
+    const [addContName, setAddContName] = useState("");
+    const [removeCont, setRemoveCont] = useState(0);
+    const [addedCont, setAddedCont] = useState(false);
+    const [removedCont, setRemovedCont] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
@@ -38,7 +48,7 @@ export const IPT = (props) => {
         });
     }, []);
 
-    if(isLoading1 || isLoading2 || isLoading3){
+    if(isLoading1 || isLoading2 || isLoading3) { // || isLoading4 || isLoading5){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 

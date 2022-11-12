@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import './page.css';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
-import { ProjectData } from '../components/Projects/ProjectData';
-import { IPT } from '../components/Projects/IPT';
-import { ProjectSchedule } from '../components/Projects/ProjectSchedule';
-import { ContractStatus } from '../components/Projects/Pre-Award/ContractStatus';
-import { FundingData } from '../components/Projects/Pre-Award/FundingData';
-import { useLocation } from 'react-router-dom';
-import { Dependencies } from '../components/Projects/Dependencies';
+import {Funding} from '../components/Projects/Completed/Funding'
+import {ProjectSchedule} from '../components/Projects/Completed/ProjectSchedule'
+import {IPT} from '../components/Projects/Completed/IPT'
+import {ProjectData} from '../components/Projects/Completed/ProjectData'
 
-function PreAwardProject(){
+function CompletedProject(){
     const location = useLocation();
     const {id} = location.state;
 
@@ -21,37 +17,28 @@ function PreAwardProject(){
         setUserid(uid);
         setUserRole(urole);
     }
-    
+
     return(
         <div className="lightBlue">
-            <NavB getUserInfo={getUserInfo} />
+            <NavB getUserInfo={getUserInfo}/>
+
             <Container className='top-Padding'>
                 <Row>
                     <Col>
                         <ProjectData data={id} userRole={userRole} />
                     </Col>
-
-                    <Col>                      
-                        <IPT data={id} userRole={userRole} userid={userid} />
-                    </Col>
-                </Row>
-                <br />
-                <Row>
                     <Col>
-                        <Dependencies userRole={userRole} projectId={id}/>
+                        <IPT data={id} userid={userid} userRole={userRole} />
                     </Col>
-                </Row>
-                <br />
-                <Row>
                     <Col>
-                        <ContractStatus data={id} userRole={userRole}/>
+                        {/* <Dependencies userRole={userRole} /> */}
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>
                         <br />
                         <Row>
                             <Col>
-                                <FundingData data={id}/>
+                                <Funding projectId={id}/>
                             </Col>
                         </Row>
                     </div>
@@ -67,4 +54,4 @@ function PreAwardProject(){
     );
 }
 
-export default PreAwardProject;
+export default CompletedProject;
