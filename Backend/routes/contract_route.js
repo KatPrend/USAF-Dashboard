@@ -109,6 +109,30 @@ router.post('/contractTimeline', (req, res) => {
 
 });
 
+//Update the days added to a Contract Award Timeline
+router.put("/updateDaysAdded", (req, res)=>{
+    const {draft_rfp_released, approved_by_acb,
+        rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+    let sql = `
+    UPDATE contract_days_added
+    SET
+        draft_rfp_released = ${draft_rfp_released},
+        approved_by_acb = ${approved_by_acb},
+        rfp_released = ${rfp_released},
+        proposal_received = ${proposal_received},
+        tech_eval_comp = ${tech_eval_comp},
+        negotiation_comp = ${negotiation_comp},
+        awarded = ${awarded} `;
+    
+    db.query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+
 // Updating a Contract Status
 router.put("/status/:contractid", (req, res)=>{
     const {contract_status} = req.body;
@@ -207,7 +231,7 @@ router.get('/contractawardtimeline/:project_id', (req, res) => {
     });
 });
 
-
+//Grab all of the days added for a Contract Award Timeline
 router.get('/daysAdded', (req, res) => {
     let sql =`
     SELECT *

@@ -100,7 +100,7 @@ router.put('/', (req, res) => {
         ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
         ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"
-        `
+    `
 
         console.log(sql);
     let query = db.query(sql, (err, results) =>{

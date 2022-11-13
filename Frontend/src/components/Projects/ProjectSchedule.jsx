@@ -399,8 +399,8 @@ export const ProjectSchedule = (props) => {
                                                 <td>{Name}</td>
                                                 <td>{format(new Date(ProjectedStart), 'MM/dd/yyyy')}</td>
                                                 <td>{format(new Date(ProjectedEnd), 'MM/dd/yyyy')}</td>
-                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "N/A" }</td>
-                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "N/A" }</td>
+                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "No Date" }</td>
+                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "No Date" }</td>
                                                 <td>{Predecessors_Name}</td>
                                             </tr>
                                         ))

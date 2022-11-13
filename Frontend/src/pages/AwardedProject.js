@@ -21,6 +21,8 @@ function AwardedProject(){
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [contractId, setContractId] = useState();
     const [loading, setLoading] = useState(true);
+    const [contractor, setContractor] = useState(0);
+    const [contractorName, setContractorName] = useState("");
 
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
@@ -44,6 +46,10 @@ function AwardedProject(){
 
     if(loading){
         return <div className="mx-auto w-75">Loading...</div>;
+
+    const getContractor = (cont, name) => {
+        setContractor(cont);
+        setContractorName(name);
     }
 
     return(
@@ -75,10 +81,14 @@ function AwardedProject(){
             <Container className='top-Padding'>
                 <Row>
                     <Col>
-                        <ProjectData data={id} userRole={userRole} />
+                        <ProjectData data={id} userRole={userRole} getContractor={getContractor} />
                     </Col>
                     <Col>
-                        <IPT data={id} userid={userid} userRole={userRole} />
+                        {contractor === 0 ? null : <IPT data={id} 
+                                                        userid={userid} 
+                                                        userRole={userRole} 
+                                                        contractor={contractor}
+                                                        contractorName={contractorName} /> }
                     </Col>
                 </Row>
                 <br />

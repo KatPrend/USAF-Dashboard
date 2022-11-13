@@ -7,29 +7,6 @@ import "../components/NewProject/newProject.css";
 import { ContractStatus } from "../components/Projects/Pre-Award/ContractStatus";
 import { Link } from 'react-router-dom';
 
-// function renderInfo(projectName, projectId) {
-//   //console.log("project name: " + projectName);
-
-//   // if (projectName === "") {
-//   //   return <></>
-//   // } else {
-//     return <div>
-//      <h2>{projectName} Project Information</h2>
-//       <br />
-//       <br />
-//       <h4>Upload Files:</h4>
-//       <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
-//       <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={projectId}/></div>
-//       <br />
-//       <h4>Dependencies</h4>
-//       <p>What projects does this project depend on?</p>
-//       <div className="project-element">
-//         <Predecessors />
-//       </div>
-//     </div>
-//   //}
-// };
-
 function  renderPageLink(contractStatus, projectId, projectName) {
   console.log("contract status: " + contractStatus);
   console.log("projectId: " + projectId + ", projectName: " + projectName);
