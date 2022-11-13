@@ -46,6 +46,7 @@ function AwardedProject(){
 
     if(loading){
         return <div className="mx-auto w-75">Loading...</div>;
+    }
 
     const getContractor = (cont, name) => {
         setContractor(cont);

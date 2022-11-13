@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
     `
     SELECT * 
     FROM view_clin
+    ORDER BY 
     `
 
     let query = db.query(sql, (err, results) =>{
@@ -88,6 +89,7 @@ router.get('/:project_id', (req, res) => {
     SELECT * FROM 
         view_clin
     WHERE project_id = "${req.params.project_id}"
+    ORDER BY clin_num
     `;
     let query = db.query(sql, (err, results) =>{
         if(err){
