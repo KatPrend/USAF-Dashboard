@@ -49,6 +49,7 @@ export function FundingDataTableEditable(props){
     const [columsEdited, setColumsEdited] = useState([]);
     const[showAlert, setShowAlert] = useState(false);
     const[columnToDelete, setColumnToDelete] = useState();
+    const [reload, setReload] = useState(false);
 
 
 
@@ -71,6 +72,7 @@ export function FundingDataTableEditable(props){
         ))
 
         setColumsEdited([]);
+        setReload(true);
 
     }
 
@@ -85,7 +87,7 @@ export function FundingDataTableEditable(props){
             index === row ? temp = currObject : temp = temp
         ))
 
-        temp.date = e.target.value;
+        temp.date = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -161,6 +163,8 @@ export function FundingDataTableEditable(props){
             obli_projected: 0,
             obli_actual: 0
         })
+
+        setReload(true);
     }
 
     const handleDeletCol = (row) => {
@@ -178,6 +182,15 @@ export function FundingDataTableEditable(props){
             null
         ))
         setShowAlert(false)
+        setReload(true);
+    }
+
+    if(reload){
+        axios.get(`/api/obligation/getObli/${props.id}`).then(response =>{
+            setEditData(response.data);
+        });
+
+        setReload(false);
     }
 
     return(

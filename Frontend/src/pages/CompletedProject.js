@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Col, Row } from 'react-bootstrap';
 import { NavB } from '../components/NavB';
-import {Funding} from '../components/Projects/Completed/Funding'
-import {ProjectSchedule} from '../components/Projects/Completed/ProjectSchedule'
-import {IPT} from '../components/Projects/Completed/IPT'
-import {ProjectData} from '../components/Projects/Completed/ProjectData'
+import {Funding} from '../components/Projects/Completed/Funding';
+import {ProjectSchedule} from '../components/Projects/Completed/ProjectSchedule';
+import {IPT} from '../components/Projects/Completed/IPT';
+import {ProjectData} from '../components/Projects/Completed/ProjectData';
+import { useLocation } from 'react-router-dom';
+import {Dependencies} from '../components/Projects/Completed/Dependencies'
+
 
 function CompletedProject(){
     const location = useLocation();
@@ -30,8 +33,11 @@ function CompletedProject(){
                     <Col>
                         <IPT data={id} userid={userid} userRole={userRole} />
                     </Col>
+                </Row>
+                <br />
+                <Row>
                     <Col>
-                        {/* <Dependencies userRole={userRole} /> */}
+                        <Dependencies userRole={userRole} projectId={id}/>
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>

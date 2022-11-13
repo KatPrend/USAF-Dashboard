@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row} from "react-bootstrap";
 //import { propTypes } from 'react-bootstrap/esm/Image';
 import { Link} from 'react-router-dom';
-import "./projectData.css"
+import "../projectData.css"
 
 export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);

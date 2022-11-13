@@ -134,7 +134,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ProjectedStart = e.target.value;
+        temp.ProjectedStart = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -153,7 +153,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ProjectedEnd = e.target.value;
+        temp.ProjectedEnd = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -173,7 +173,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualStart = e.target.value;
+        temp.ActualStart = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -192,7 +192,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualEnd = e.target.value;
+        temp.ActualEnd = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}

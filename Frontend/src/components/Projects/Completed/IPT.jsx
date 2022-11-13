@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Container, Row} from "react-bootstrap";
 import axios from 'axios';
-import "./projectData.css"
+import "../projectData.css"
 
 export const IPT = (props) => {
     const [isLoading1, setLoading1] = useState(true);

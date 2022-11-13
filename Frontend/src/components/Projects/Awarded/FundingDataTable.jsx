@@ -352,7 +352,7 @@ export function ObligationFundingDataTableEditable(props){
             index === row ? temp = currObject : null
         ))
 
-        temp.date = e.target.value;
+        temp.date = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}

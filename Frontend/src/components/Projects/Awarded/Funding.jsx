@@ -170,7 +170,6 @@ export const Funding = (props) => {
                 <Container>
                     <Row>
                         <Col>
-                        {console.log(obligation_data)}
                         <Tabs className="Tabs">
                             <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
                                 <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
@@ -185,7 +184,6 @@ export const Funding = (props) => {
                                 <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
                         </Tabs>
-                        
                         </Col>
                     </Row>
                     <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
