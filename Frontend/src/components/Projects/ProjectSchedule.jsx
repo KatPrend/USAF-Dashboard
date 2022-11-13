@@ -39,14 +39,20 @@ function GanttChartDataFormat(JsonData){
     return (data);
 }
 
-const options = {
-    gantt: {
-        criticalPathEnabled: true,
-        criticalPathStyle: {
-            stroke: "#e64a19",
+const getOptions = (cHeight) => {
+    const options = {
+        gantt: {
+            criticalPathEnabled: true,
+            criticalPathStyle: {
+                stroke: "#e64a19",
+            },
         },
-    },
-};
+        width: 1250,
+        height: cHeight
+    };
+
+    return options;
+}
 
   
 export const ProjectSchedule = (props) => {
@@ -59,6 +65,8 @@ export const ProjectSchedule = (props) => {
     const [rowToDelete, setRowToDelete] = useState();
     const [uploadModal, setUploadModal] = useState(false);
     const [reload, setReload] = useState(false);
+
+    let chartHeight = 0;
 
     useEffect(() => {
         axios.get(`/api/milestone/schedule/${props.data}`).then(response =>{
@@ -411,13 +419,13 @@ export const ProjectSchedule = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <Chart
+                            {infoData.length === 0 ? null : <Chart
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={options}
+                            options={getOptions(infoData.length * 55)}
                             data={GanttChartDataFormat(infoData)}
-                            />
+                            />}
                         </Col>
                     </Row>
                 </Container>}

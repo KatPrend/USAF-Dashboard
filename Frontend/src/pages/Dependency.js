@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
+import {Link} from 'react-router-dom';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
@@ -41,8 +42,8 @@ const ProjectContent = (props) => {
   }
 
   return (
-      <div className="lightBlue">
-          <Table responsive striped bordered hover className="bg-light">
+      <div style={{width:"100%"}}>
+          <Table responsive striped bordered hover className="bg-light" style={{width:"100%"}}>
               <thead>
                   <tr>
                     <th>Predecessor Project</th>
@@ -50,7 +51,7 @@ const ProjectContent = (props) => {
                     <th>Predecessor Projected Start Date</th> 
                     <th>Predecessor Projected End Date</th>
                     <th>Predecessor Actual Start Date</th> 
-                    <th>Predecessor Actual End Date</th>
+                    <th>Predecessor End Date</th>
                     <th>Successor Project</th>
                     <th>Successor Milestone</th>
                     <th>Successor Projected Start Date</th>
@@ -125,19 +126,24 @@ function GanttChartDataFormat(JsonData) {
 
   const data = [columns, ...Rows];
   //console.log("final DATA for ganttyytrtt")
-  console.log("dependencies: " + data);
+  //console.log(data);
 
   return (data);
 }
 
-const options = {
-  gantt: {
-      criticalPathEnabled: false,
-      criticalPathStyle: {
-          stroke: "#e64a19",
-      },  
-  },
-};
+const getOptions = (cHeight) => {
+    const options = {
+        gantt: {
+            criticalPathEnabled: false,
+            criticalPathStyle: {
+                stroke: "#e64a19",
+            },  
+        },
+        width: 1250,
+        height: cHeight
+      };
+    return options;
+}
 
 const Dependency = (props) => {
 
@@ -145,6 +151,9 @@ const Dependency = (props) => {
     const [userRole, setUserRole] = useState("");
     const [data, setData] = useState(0)
     const [redirect, setRedirect] = useState(0)
+    
+    let chartHeight = 0;
+
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
@@ -164,36 +173,40 @@ const Dependency = (props) => {
           }
         }, 10);
       }, []); // <- add empty brackets here
+
+      if (data !== 0 && data.length > 0) {
+        chartHeight = data.length * 100;
+      }
     
       return ( 
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
             <Container className="top-Padding" style={{marginBottom: '3%'}}>
-                {/*1*/}
                 <Row>
-                    <Col style={{width:"25%"}}></Col>
+                    {/*1*/}
+                    <Col>
                     {userid !== 0 && userRole !== "" ? <DepSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
-                    <Col style={{width:"25%"}}></Col>
-                </Row>
-                {/*2*/}
-                <Row>
-                    <CardGeneric Header='Dependency Graph'
-                    Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
-                        <Chart
-                        chartType='Gantt'
-                        width="100%" 
-                        height="100%"
-                        options={options}
-                        data={GanttChartDataFormat(data)}
-                        />
-                        }>
-                    </CardGeneric>
+                    
+                    </Col>
+                    {/*2*/}
+                    <Col>
+                        {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
+                        Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
+                            <Chart
+                            chartType='Gantt'
+                            width="100%" 
+                            height="100%"
+                            options={getOptions(chartHeight)}
+                            data={GanttChartDataFormat(data)}
+                            />
+                         }>
+                        </CardGeneric>}
+                    </Col>
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
             {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
             {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
-
         </div>
     );
 }
