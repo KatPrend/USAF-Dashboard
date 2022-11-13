@@ -92,7 +92,7 @@ export function FundingDataTableEditable(props){
             axios.put('/api/obligation', {
                 id: currRow.id,
                 project_id: props.id,
-                obli_funding_date: format(new Date(currRow.date.split('-')), 'yyyy-MM-dd'),
+                obli_funding_date: currRow.date.replace(/T.+/, ''),
                 obli_funding_type: currRow.FundingType,
                 obli_fiscal_year: currRow.FiscalYear,
                 obli_projected: currRow.Projected,
@@ -117,7 +117,7 @@ export function FundingDataTableEditable(props){
             index === row ? temp = currObject : temp = temp
         ))
 
-        temp.date = format(new Date(e.target.value.split('-')), 'yyyy-MM-dd');
+        temp.date = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -244,7 +244,7 @@ export function FundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>

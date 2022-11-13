@@ -81,10 +81,10 @@ export const ProjectSchedule = (props) => {
                 milestone_id: currRow.ID,
                 project_id: currRow.project_id,
                 task_name: currRow.Name,
-                projected_start: format(new Date(currRow.ProjectedStart), 'yyyy-MM-dd'),
-                projected_end: format(new Date(currRow.ProjectedEnd), 'yyyy-MM-dd'),
-                actual_start: currRow.ActualStart !== null ? format(new Date(currRow.ActualStart), 'yyyy-MM-dd') : null ,
-                actual_end: currRow.ActualEnd !== null ? format(new Date(currRow.ActualEnd), 'yyyy-MM-dd') : null ,
+                projected_start: currRow.ProjectedStart !== null ? null : currRow.ProjectedStart.replace(/T.+/, ''),
+                projected_end: currRow.ProjectedEnd !== null ? null : currRow.ProjectedEnd.replace(/T.+/, ''),
+                actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
+                actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
             })
             : null)
 
@@ -133,8 +133,8 @@ export const ProjectSchedule = (props) => {
         editData.map((currObject, index) => (
             index === row ? temp = currObject : null
         ))
-
-        temp.ProjectedStart = new Date(e.target.value.split('-'));
+            
+        temp.ProjectedStart = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -153,7 +153,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ProjectedEnd = new Date(e.target.value.split('-'));
+        temp.ProjectedEnd = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -173,7 +173,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualStart = new Date(e.target.value.split('-'));
+        temp.ActualStart = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -192,7 +192,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualEnd = new Date(e.target.value.split('-'));
+        temp.ActualEnd = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -306,7 +306,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(ProjectedStart), 'yyyy-MM-dd')} 
+                                                    defaultValue={ProjectedStart.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handleProjectedStart(e, index)}/>
                                                 </Form.Group>
@@ -314,7 +314,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(ProjectedEnd), 'yyyy-MM-dd')} 
+                                                    defaultValue={ProjectedEnd.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handleProjectedEnd(e, index)}/>
                                                 </Form.Group>
@@ -323,7 +323,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                             <Form.Group key={ID}>
                                                 <Form.Control 
-                                                defaultValue={ActualStart !== null ? format(new Date(ActualStart), 'yyyy-MM-dd') : "N/A" }
+                                                defaultValue={ActualStart !== null ? ActualStart.replace(/T.+/, '') : "N/A" }
                                                 type='date'
                                                 onChange={(e) => handleActualStart(e, index)}/>
                                             </Form.Group>
@@ -331,7 +331,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={ActualEnd !== null ? format(new Date(ActualEnd), 'yyyy-MM-dd') : "N/A" } 
+                                                    defaultValue={ActualEnd !== null ? ActualEnd.replace(/T.+/, '') : "N/A" } 
                                                     type='date'
                                                     onChange={(e) => handleActualEnd(e, index)}/>
                                                 </Form.Group>
