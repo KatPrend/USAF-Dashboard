@@ -308,4 +308,53 @@ router.get('/greenAdmin', (req, res) => {
 
 });
 
+//Get all Sch Sum Data for Admins
+router.get('/adminSchSum', (req, res) => {
+
+    let sql = `
+	SELECT
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'ONTRACK') as green_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'BEHIND') as yellow_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'REALLY-BEHIND') as red_sch`;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get all Sch Sum for users
+router.get('/userSchSum/:userID', (req, res) => {
+
+    let sql = `
+	SELECT
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'ONTRACK' AND upl.user_id = ${req.params.userID}) as green_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'BEHIND' AND upl.user_id = ${req.params.userID}) as yellow_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'REALLY-BEHIND' AND upl.user_id = ${req.params.userID}) as red_sch`;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 module.exports = router;
