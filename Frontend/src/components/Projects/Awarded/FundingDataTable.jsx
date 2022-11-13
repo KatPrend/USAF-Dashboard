@@ -409,10 +409,7 @@ export function ObligationFundingDataTableEditable(props){
 
         editData.map((info, index) => (
             index === columnToDelete ? 
-            // axios.delete(`/api/obligation/${info.id}`, {
-            //     
-            // })
-            null
+                axios.delete(`/api/obligation/${info.id}`)
             :
             null
         ))

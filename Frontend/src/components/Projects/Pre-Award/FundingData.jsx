@@ -10,10 +10,10 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
 export const FundingData = (props) => {
     const [isLoading, setLoading] = useState(true);
-    const [isLoading4, setLoading4] = useState(true);
+    const [isLoading2, setLoading2] = useState(true);
+    const [isLoading3, setLoading3] = useState(true);
     const [obligation_data, setObligationData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
-    const [isLoading3, setLoading3] = useState(true);
     const [est_data, setEstData] = useState();
     const [approved_data, setApprovedData] = useState();
 
@@ -21,13 +21,24 @@ export const FundingData = (props) => {
     const {id} =location.state;
 
     useEffect(() => {
-        axios.get(`/api/obligation/${props.data}`).then(response =>{
+        axios.get(`/api/obligation/getObli/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading(false);
         });
         return () => {
             setObligationData({}); // This worked for me
           };
+    }, []);
+
+
+    useEffect(() => {
+        axios.get(`/api/approved/${props.data}`).then(response =>{
+            setApprovedData(response.data);
+            setLoading2(false);
+        });
+        return () => {
+            setApprovedData({}); // This worked for me
+        }
     }, []);
 
     useEffect(() => {
@@ -39,18 +50,8 @@ export const FundingData = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
-
-    useEffect(() => {
-        axios.get(`/api/approved/${props.data}`).then(response =>{
-            setApprovedData(response.data);
-            setLoading4(false);
-        });
-        return () => {
-            setApprovedData({}); // This worked for me
-        }
-    }, []);
     
-    if(isLoading || isLoading3 || isLoading4){
+    if(isLoading || isLoading2 || isLoading3){
         return <div className="mx-auto w-75">Loading...</div>;
     }
 

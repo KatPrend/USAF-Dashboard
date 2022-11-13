@@ -41,6 +41,7 @@ router.post('/', (req, res) => {
     //console.log(req.body);
 });
 
+// Update Dependency Link
 router.put("/", (req, res)=>{
     const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
@@ -50,9 +51,14 @@ router.put("/", (req, res)=>{
         predecessor_milestone =  "${predecessor_milestone}",
         successor_project = "${successor_project}",
         successor_milestone =  "${successor_milestone}"
-        `
+     `;
+     let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
 
-        console.log(sql);
+    });
 });
 
 //Remove a Milestone Dependency
@@ -486,8 +492,19 @@ router.get('/dependencyDateDifference/:projectId', (req, res) => {
     });
 });
 
+// Update Milestones
+router.put("/updateMilestone/", (req, res)=>{
+    const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
+    let sql = `
+    `;
 
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
 
-
+    });    
+});
 
 module.exports = router;

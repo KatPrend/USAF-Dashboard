@@ -145,13 +145,14 @@ router.post('/addToUPL', (req,res) => {
     let sql = `
     INSERT INTO user_project_link(
         user_id,
-        project_id,
-        mil_job_title_id
+        project_id
+        ${mil_job_title_id !== undefined ? ",mil_job_title_id" : ""}
     ) VALUES (
         ${user_id},
-        ${project_id},
-        ${mil_job_title_id}
+        ${project_id}
+        ${mil_job_title_id !== undefined ? ',' + mil_job_title_id: ""}
     )`;
+    console.log(sql);
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -194,6 +195,56 @@ router.get('/getIPTMembersAttached/:projectID', (req, res) => {
     SELECT * FROM user_project_link upl
     INNER JOIN users u on upl.user_id = u.id
     WHERE upl.project_id = ${req.params.projectID} AND u.user_role != 1`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Grabs all contractors associated to a contract company
+router.get('/contractorUsers/:conID', (req, res) => {
+    let sql = `
+    SELECT * FROM users u 
+    INNER JOIN contractor c on c.id = u.contractor_id
+    WHERE u.contractor_id = ${req.params.conID}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Grab all contractors that are NOT associated to a project
+router.get('/conNotActive', (req, res) => {
+    let sql = `
+    SELECT * FROM contractor
+    WHERE id NOT IN 
+    (
+        SELECT DISTINCT 
+            contractor_id
+        FROM project
+    )`;
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Grab all contractors associated to a project
+router.get('/conProject/:projectID', (req, res) => {
+    let sql = `
+    SELECT 
+        u.user_name
+    FROM users u
+    INNER JOIN user_project_link upl on u.id = upl.user_id
+    INNER JOIN view_project vp on vp.id = upl.project_id
+    WHERE vp.id = ${req.params.projectID} AND u.user_role = 1
+    `;
     let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
