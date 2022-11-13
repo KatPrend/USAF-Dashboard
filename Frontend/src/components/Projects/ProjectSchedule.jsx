@@ -71,40 +71,53 @@ export const ProjectSchedule = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        editData.map((currRow, index) => (
-            //columsEdited.includes(index) === true ? console.log(currRow) : null
-            // Update that sends these Json objects to the database
-            
-            (columsEdited.includes(index) === true 
-            ? 
-            axios.put('/api/milestone', {
-                milestone_id: currRow.ID,
-                project_id: currRow.project_id,
-                task_name: currRow.Name,
-                projected_start: currRow.ProjectedStart !== null ? null : currRow.ProjectedStart.replace(/T.+/, ''),
-                projected_end: currRow.ProjectedEnd !== null ? null : currRow.ProjectedEnd.replace(/T.+/, ''),
-                actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
-                actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
-            })
-            : null)
+        editData.forEach((currRow, index) => {
 
-
-            (columsEdited.includes(index) === true 
-            ? 
-
-
-            currRow.Predecessors.split(",").forEach(element => {
-                axios.put('/api/dependency', {
-                    predecessor_project: currRow.project_id, 
-                    predecessor_milestone: element,
-                    successor_project: currRow.project_id,
-                    successor_milestone: currRow.ID
+                console.log(editData);
+            if(columsEdited.includes(index) === true ){
+                axios.put('/api/milestone', {
+                    milestone_id: currRow.ID,
+                    project_id: currRow.project_id,
+                    task_name: currRow.Name,
+                    projected_start: currRow.ProjectedStart !== null ? null : currRow.ProjectedStart.replace(/T.+/, ''),
+                    projected_end: currRow.ProjectedEnd !== null ? null : currRow.ProjectedEnd.replace(/T.+/, ''),
+                    actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
+                    actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
                 })
-            })
             
-            : null)
+                console.log(currRow.Predecessors.split(","))
 
-        ))
+
+                axios.delete('api/dependency/removeAllAssociated', {
+                    data:{successor_milestone: currRow.ID}
+                })
+
+                currRow.Predecessors.split(",").forEach(element => {
+                    axios.post('/api/dependency', {
+                        predecessor_project: currRow.project_id, 
+                        predecessor_milestone: element,
+                        successor_project: currRow.project_id,
+                        successor_milestone: currRow.ID
+                    })
+                    })
+                }
+            // : null
+        });
+
+        // editData.map((currRow, index) => (
+        //     //columsEdited.includes(index) === true ? console.log(currRow) : null
+        //     // Update that sends these Json objects to the database
+            
+            
+
+
+        //     // (columsEdited.includes(index) === true 
+        //     // ? 
+ 
+            
+        //     // : null)
+
+        // ))
 
         setColumsEdited([]);
     }
