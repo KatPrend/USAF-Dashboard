@@ -12,6 +12,7 @@ export const UpdateFinancialBreakpoints = () => {
     const [redExpBreak, setRedExpBreak] = useState();
     const [yellowExpBreak, setYellowExpBreak] = useState();
     const [showAlert, setShowAlert] = useState(false);
+    
     // get breakpoints
     useEffect(() => {
         axios.get('/api/finSum/').then(response => {
