@@ -1,12 +1,36 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Table, Form, Button, Alert} from 'react-bootstrap';
+import { Table, Form, Button, Alert, Row, Col} from 'react-bootstrap';
 import { format } from 'date-fns';
 import axios from "axios";
 
 
 export function FundingDataTable({data}){
+
+    const [allFundingTypes, setAllFundingTypes] = useState();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get('/api/fundingType/').then(response => {
+            setAllFundingTypes(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    function getFundingType(info){
+        let retVal = 0;
+
+        allFundingTypes.map(({id, funding_type}) => (
+            <>{id === parseInt(info.FundingType) ? retVal = funding_type : null}</>
+        ))
+
+        return(retVal)
+    }
+
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
 
     return(
         <div>
@@ -21,7 +45,7 @@ export function FundingDataTable({data}){
                     <tr>
                         <td>Funding Type</td>
                         {data.map( (info, index) => (
-                            <td key={index}>{info.FundingType}</td>
+                            <td key={index}>{getFundingType(info)}</td>
                         ))}
                     </tr>
                     <tr>
@@ -47,22 +71,28 @@ export function FundingDataTableEditable(props){
 
     const [editData, setEditData] = useState(props.data);
     const [columsEdited, setColumsEdited] = useState([]);
-    const[showAlert, setShowAlert] = useState(false);
-    const[columnToDelete, setColumnToDelete] = useState();
+    const [showAlert, setShowAlert] = useState(false);
+    const [columnToDelete, setColumnToDelete] = useState();
     const [reload, setReload] = useState(false);
+    const [allFundingTypes, setAllFundingTypes] = useState();
+    const [isLoading, setLoading] = useState(true);
 
-
+    useEffect(() => {
+        axios.get('/api/fundingType/').then(response => {
+            setAllFundingTypes(response.data);
+            setLoading(false);
+        });
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(editData);
         
         editData.map((currRow, index) => (
             columsEdited.includes(index) === true ? 
             axios.put('/api/obligation', {
                 id: currRow.id,
                 project_id: props.id,
-                obli_funding_date: format(new Date(currRow.date), 'yyyy-MM-dd'),
+                obli_funding_date: format(new Date(currRow.date.split('-')), 'yyyy-MM-dd'),
                 obli_funding_type: currRow.FundingType,
                 obli_fiscal_year: currRow.FiscalYear,
                 obli_projected: currRow.Projected,
@@ -87,7 +117,7 @@ export function FundingDataTableEditable(props){
             index === row ? temp = currObject : temp = temp
         ))
 
-        temp.date = new Date(e.target.value.split('-'));
+        temp.date = format(new Date(e.target.value.split('-')), 'yyyy-MM-dd');
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -193,6 +223,10 @@ export function FundingDataTableEditable(props){
         setReload(false);
     }
 
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
+
     return(
         <Form onSubmit={handleSubmit}>
             <Table responsive striped bordered hover className="bg-light">
@@ -223,8 +257,15 @@ export function FundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    as="select"
                                     defaultValue={info.FundingType}
-                                    onChange={(e) => handleFundingType(e, index)}/>
+                                    onChange={(e) => handleFundingType(e, index)}>
+
+                                    <option value={0}>Select</option>
+                                    {allFundingTypes.map(({id, funding_type}) => (
+                                        <option key={id} value={id}>{funding_type}</option>
+                                    ))}
+                                    </Form.Control>
                                 </Form.Group>
                             </td>
                         ))}
@@ -233,10 +274,16 @@ export function FundingDataTableEditable(props){
                         <td>Fiscal Year</td>
                         {editData.map( (info, index) => (
                             <td key={index}>
-                                <Form.Group key={index}>
-                                    <Form.Control 
-                                    defaultValue={info.FiscalYear}
-                                    onChange={(e) => handleFiscalYear(e, index)}/>
+                                <Form.Group as={Row} key={index}>
+                                    <Form.Label column sm={2}>
+                                        FY'
+                                    </Form.Label>
+                                    <Col sm={10}>
+                                        <Form.Control 
+                                        type="number"
+                                        defaultValue={info.FiscalYear}
+                                        onChange={(e) => handleFiscalYear(e, index)}/>
+                                    </Col>
                                 </Form.Group>
                             </td>
                         ))}
@@ -247,6 +294,7 @@ export function FundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    type="number"
                                     defaultValue={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>

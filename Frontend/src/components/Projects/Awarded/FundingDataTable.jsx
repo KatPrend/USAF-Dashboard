@@ -327,7 +327,7 @@ export function ObligationFundingDataTableEditable(props){
             axios.put('/api/obligation', {
                 id: currRow.id,
                 project_id: props.id,
-                obli_funding_date: format(new Date(currRow.date), 'yyyy-MM-dd'),
+                obli_funding_date: format(new Date(currRow.date.split('-')), 'yyyy-MM-dd'),
                 obli_funding_type: currRow.FundingType,
                 obli_fiscal_year: currRow.FiscalYear,
                 obli_projected: currRow.Projected,
@@ -351,8 +351,8 @@ export function ObligationFundingDataTableEditable(props){
         editData.map((currObject, index) => (
             index === row ? temp = currObject : null
         ))
-
-        temp.date = new Date(e.target.value.split('-'));
+        
+        temp.date = format(new Date(e.target.value.split('-')), 'yyyy-MM-dd');
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}

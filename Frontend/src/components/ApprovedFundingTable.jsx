@@ -42,22 +42,22 @@ export function ApprovedFundingTable({data}){
                 <tbody>
                     <tr>
                         <td key = "1" >Funding Type</td>
-                        {fiscalYears.map( (year) => (
-                            <td key = {year}>FY'{year}</td>
+                        {fiscalYears.map( (year, index) => (
+                            <td key = {index}>FY'{year}</td>
                         ))}
                     </tr>
-                    {fundingTypes.map((funding) => (
-                        <tr>
+                    {fundingTypes.map((funding, index) => (
+                        <tr key={index}>
                             {allFundingTypes.map(({id, funding_type}) => (
                                 id === funding ? <td>{funding_type}</td> : null
                             ))}
                             {fiscalYears.map( (year) => (
                                 <>
-                                {data.map( (info) => (
+                                {data.map( (info, index) => (
                                     <>
                                     {info.appro_fiscal_year === year && info.appro_funding_type === funding
                                     ?
-                                    <td>{info.approved_amount}</td>
+                                    <td key={index}>{info.approved_amount}</td>
                                     :
                                     null
                                     }
@@ -325,15 +325,15 @@ export function ApprovedFundingTableEditable(props){
                             <td> </td>
                             <td> </td>
                             {fiscalYears.map( (year, index) => (
-                                <td key={year}><Button className="Button" onClick={() => handleColAlert(year)}>Delete Column {index+1}</Button></td>
+                                <td key={index}><Button className="Button" onClick={() => handleColAlert(year)}>Delete Column {index+1}</Button></td>
                             ))}
                             <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
                         </tr>
                         <tr key="top2">
                             <td> </td>
                             <td key = "1" >Funding Type</td>
-                            {fiscalYears.map( (year) => (
-                                <td key = {year}>FY'{year}</td>
+                            {fiscalYears.map( (year, index) => (
+                                <td key = {index}>FY'{year}</td>
                             ))}
                             <td key="top3">FY'
                                 <Form.Group>
@@ -343,17 +343,17 @@ export function ApprovedFundingTableEditable(props){
                         </tr>
                         {fundingTypes.map((funding, index) => (
                             <tr key={index}>
-                                <td key="button"><Button className="Button" onClick={() => handleRowAlert(funding)}>Delete Row {index+1}</Button></td>
+                                <td key={index}><Button className="Button" onClick={() => handleRowAlert(funding)}>Delete Row {index+1}</Button></td>
                                 {allFundingTypes.map(({id, funding_type}) => (
                                     id === funding ? <td>{funding_type}</td> : null
                                 ))}
                                 {fiscalYears.map( (year) => (
                                     <>
-                                    {editData.map( (info) => (
+                                    {editData.map( (info, index) => (
                                         <>
                                         {info.appro_fiscal_year === year && info.appro_funding_type === funding
                                         ?
-                                        <td key={info}>
+                                        <td key={index}>
                                             <Form.Group>
                                                 <Form.Control 
                                                 type="number"

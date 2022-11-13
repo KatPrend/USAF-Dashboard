@@ -59,17 +59,17 @@ export const FundingData = (props) => {
 
     if(reload){
 
-        axios.get(`/api/obligation/getObli/${props.projectId}`).then(response =>{
+        axios.get(`/api/obligation/getObli/${props.data}`).then(response =>{
             setObligationData(response.data);
             setLoading(false);
         });
         
-        axios.get(`/api/approved/${props.projectId}`).then(response =>{
+        axios.get(`/api/approved/${props.data}`).then(response =>{
             setApprovedData(response.data);
             setLoading2(false);
         });
 
-        axios.get(`/api/approved/getEstimates/${props.projectId}`).then(response =>{
+        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
             setEstData(response.data);
             setLoading3(false);
         });
