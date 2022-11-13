@@ -253,15 +253,21 @@ router.get('/redUserDependencies/:userid', (req, res) => {
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
-        
+        DATEDIFF(
+            IFNULL(pm1.actual_start,pm1.start_date),
+            IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
+            
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
         INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
         WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 0
+        AND DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+            ) < 0
     ) T1 
     `;
 
@@ -283,7 +289,10 @@ router.get('/yellowUserDependencies/:userid', (req, res) => {
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        DATEDIFF(
+            IFNULL(pm1.actual_start,pm1.start_date),
+            IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
         
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
@@ -291,8 +300,14 @@ router.get('/yellowUserDependencies/:userid', (req, res) => {
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
         WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) > 0
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 6
+        AND DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+            ) > 0
+        AND DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+            ) < 6
     ) T1 
     `;
 
@@ -314,7 +329,10 @@ router.get('/greenUserDependencies/:userid', (req, res) => {
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        DATEDIFF(
+            IFNULL(pm1.actual_start,pm1.start_date),
+            IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
         
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
@@ -322,7 +340,10 @@ router.get('/greenUserDependencies/:userid', (req, res) => {
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
         WHERE p.id IN (SELECT project_id FROM user_project_link WHERE user_id = ${req.params.userid})
-        AND DATEDIFF(pm1.start_date,pm.end_date) > 5
+        AND DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+            ) > 5
     ) T1 
     `;
 
@@ -344,15 +365,20 @@ router.get('/redAdmin', (req, res) => {
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
-        
+        DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
         INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
-        WHERE DATEDIFF(pm1.start_date,pm.end_date) < 0
-    ) T1 
+        WHERE DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) < 0
+    ) T1
     `;
 
     let query = db.query(sql, (err, results) =>{
@@ -369,20 +395,30 @@ router.get('/redAdmin', (req, res) => {
 router.get('/yellowAdmin', (req, res) => {
 
     let sql = `
-	SELECT COUNT(*) as count
+    SELECT COUNT(*) as count
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
         
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
         INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
-        WHERE DATEDIFF(pm1.start_date,pm.end_date) > 0
-        AND DATEDIFF(pm1.start_date,pm.end_date) < 6
-    ) T1 
+        WHERE DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) > 0
+        AND DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) < 6
+    ) T1
     `;
 
     let query = db.query(sql, (err, results) =>{
@@ -399,18 +435,25 @@ router.get('/yellowAdmin', (req, res) => {
 router.get('/greenAdmin', (req, res) => {
 
     let sql = `
-	SELECT COUNT(*) as count
+    SELECT COUNT(*) as count
     FROM
     (
     SELECT
-        DATEDIFF(pm1.start_date,pm.end_date) as date_difference
+        
+        DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) as date_difference
         
         FROM project p
         INNER JOIN project_milestones pm ON pm.project_id = p.id
         INNER JOIN project_milestone_dependency pmd ON pmd.predecessor_milestone = pm.id AND pmd.predecessor_project != pmd.successor_project    
         INNER JOIN project p2 ON p2.id = pmd.successor_project
         INNER JOIN project_milestones pm1 ON pm1.id = pmd.successor_milestone
-        WHERE DATEDIFF(pm1.start_date,pm.end_date) > 5
+        WHERE DATEDIFF(
+        	IFNULL(pm1.actual_start,pm1.start_date),
+        	IFNULL(pm.actual_end,pm.end_date)
+        ) > 5
     ) T1 
     `;
 
