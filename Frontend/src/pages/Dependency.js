@@ -125,7 +125,7 @@ function GanttChartDataFormat(JsonData) {
 
   const data = [columns, ...Rows];
   //console.log("final DATA for ganttyytrtt")
-  //console.log(data);
+  console.log("dependencies: " + data);
 
   return (data);
 }

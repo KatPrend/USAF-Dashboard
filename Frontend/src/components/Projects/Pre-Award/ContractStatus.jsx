@@ -55,7 +55,7 @@ export const ContractStatus = (props) => {
                     awarded: format(new Date(currRow.awarded), 'yyyy-MM-dd')
                 })
                 .then(function(res){
-                    if (currRow.awarded !== null) {
+                    if (currRow.timeline_status === "Actual" && currRow.awarded !== null) {
                         setAwarded(true);
                     }
                 })
