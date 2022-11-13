@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, Form, } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import { FileUpload } from "../NewProject/FileUpload";
 //import { propTypes } from 'react-bootstrap/esm/Image';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./projectData.css"
+import { NewWBSModal } from './NewWBSModal';
 
 export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);
@@ -28,6 +28,8 @@ export const ProjectData = (props) => {
             
             setData(response.data);
             setLoading(false);
+
+            props.getContractor(response.data[0].contractor_id, response.data[0].contractor_name);
         });
         axios.get('/api/contractor').then(response => {
             setContractors(response.data);
@@ -43,7 +45,8 @@ export const ProjectData = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        data.map(({id,project_name, contractor_id, contract_num, ccar_num, branch_id, requirement_type_id, summary, project_type}) => (
+        console.log(data);
+        data.map(({id,project_name, contractor_id, ccar_num, branch_id, requirement_type_id, summary, project_type, contract_num,contract_status, contract_value, contract_award_id}) => {
             axios.put(`/api/project/${id}`, {
                 id: id,
                 project_name: (projectNameEdit === "" ? project_name : projectNameEdit),
@@ -54,7 +57,16 @@ export const ProjectData = (props) => {
                 summary: (summaryEdit === "" ? summary : summaryEdit),
                 ccar_num: (ccarNumEdit === "" ? ccar_num : ccarNumEdit)
             })
-        ))
+            .then(
+                axios.put(`/api/contract/${contract_award_id}`, {
+                    id: id, 
+                    contract_num: (contractNumberEdit === "" ? contract_num : contractNumberEdit),
+                    contract_status: contract_status,
+                    contract_value: contract_value
+                })
+            )
+            
+        })
         
         
     }
@@ -79,7 +91,9 @@ export const ProjectData = (props) => {
     const handleCapabilitySummery = (e) => {
         setSummary(e.target.value);
     }
-
+    const getOpenWBSModal = (open) => {
+        setOpenWBS(open);
+    }
 
     return (
         <>
@@ -193,29 +207,7 @@ export const ProjectData = (props) => {
             </Modal>
         </ModalDialog>
 
-        <ModalDialog scrollable>
-            <Modal show={openWBS} size='xl' autoFocus={true}>
-                <ModalHeader>
-                    <Container>
-                        <Row>
-                            <Col style={{textAlign: 'left'}}>
-                                <h3>Upload WBS ProPricer Output</h3>
-                            </Col>
-                            <Col style={{textAlign: 'right'}}>
-                                <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setOpenWBS(false)}>Done</Button>
-                                </ButtonGroup>
-                            </Col>
-                        </Row>
-                    </Container>
-                </ModalHeader>
-                <ModalBody>
-                    <div className='upload mx-auto'>
-                        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.data}/>
-                    </div>
-                </ModalBody>
-            </Modal>
-        </ModalDialog>
+        <NewWBSModal projectId={props.data} open={openWBS} getOpenWBSModal={getOpenWBSModal}/>
 
         <Card className="card">
             <Card.Header className = "cardHead">

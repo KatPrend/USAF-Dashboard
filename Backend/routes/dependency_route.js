@@ -70,10 +70,10 @@ router.delete('/removeDependency', (req, res) => {
     let sql = `
     DELETE FROM project_milestone_dependency
     WHERE 
-        predecessor_project = ${predecessor_project} AND 
-        predecessor_milestone = ${predecessor_milestone} AND 
-        successor_project = ${successor_project} AND 
-        successor_milestone = ${successor_milestone}`
+        predecessor_project = '${predecessor_project}' AND 
+        predecessor_milestone = '${predecessor_milestone}' AND 
+        successor_project = '${successor_project}' AND 
+        successor_milestone = '${successor_milestone}'`
 
     let query = db.query(sql, (err, results) =>{
         if(err){

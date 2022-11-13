@@ -134,6 +134,23 @@ router.put("/updateDaysAdded", (req, res)=>{
 
 
 // Updating a Contract Status
+router.put("/status/:contractid", (req, res)=>{
+    const {contract_status} = req.body;
+
+    let sql = `
+    UPDATE contract_award 
+    SET contract_status = "${contract_status}"
+    WHERE id = ${req.params.contractid}`;
+    
+    db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+// Updating a Contract Status
 router.put("/:contractid", (req, res)=>{
     
     const {contract_num, contract_status, contract_value} = req.body;
@@ -146,7 +163,7 @@ router.put("/:contractid", (req, res)=>{
         contract_value = "${contract_value}"
     WHERE id = ${req.params.contractid}`;
     
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -160,7 +177,7 @@ router.delete("/:contractid", (req, res)=>{
     DELETE FROM contract_award
     WHERE id = ${req.params.contractid}`;
     
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -210,5 +227,31 @@ router.get('/daysAdded', (req, res) => {
     });
 });
 
+//Update a Contract Timeline
+router.put("/updateContractTimeline/:timelineID", (req, res)=>{
+    const {contract_award_id, timeline_status,requirement_plan, draft_rfp_released, approved_by_acb,
+        rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+    let sql = `
+    UPDATE contract_award_timeline
+    SET 
+        contract_award_id = "${contract_award_id}",
+        timeline_status = "${timeline_status}",
+        requirement_plan = "${requirement_plan}",
+        draft_rfp_released = "${draft_rfp_released}",
+        approved_by_acb = "${approved_by_acb}",
+        rfp_released = "${rfp_released}",
+        proposal_received = "${proposal_received}",
+        tech_eval_comp = "${tech_eval_comp}",
+        negotiation_comp = "${negotiation_comp}",
+        awarded = "${awarded}"	
+    WHERE id = ${req.params.timelineID}`;
+    
+    db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
 
 module.exports = router;
