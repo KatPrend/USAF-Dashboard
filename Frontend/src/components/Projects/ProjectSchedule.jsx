@@ -231,7 +231,10 @@ export const ProjectSchedule = (props) => {
     const DeleteRow = async (e) => {
         e.preventDefault();
 
-        
+        axios.delete(`/api/milestone/${rowToDelete}`)
+
+        setShowRowAlert(false);
+        setReload(true);
     }
 
     const getOpenUploadModal = (open) => {
