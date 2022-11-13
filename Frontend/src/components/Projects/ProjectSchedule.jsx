@@ -90,7 +90,7 @@ export const ProjectSchedule = (props) => {
 
             // (columsEdited.includes(index) === true 
             // ? 
-            // axios.put('/api/milestone', {
+            // axios.put('/api/dependency', {
             //     milestone_id: currRow.ID,
             //     project_id: currRow.project_id,
             //     Predecessors: currRow.Name,

@@ -63,18 +63,22 @@ router.get('/schedule/:projectId', (req, res) => {
 
 //Make a new Project Milestone
 router.post('/', (req, res) => {
-    const {project_id, task_name, start_date, end_date} = req.body;
+    const {project_id, task_name, projected_start, projected_end, actual_start, actual_end } = req.body;
     let sql = `
     INSERT INTO project_milestones(
         project_id,
         task_name,
-        start_date,
-        end_date
+        ${projected_start !== null ? ',projected_start' : ""}
+        ${projected_end !== null ? ',projected_end' : ""}
+        ${actual_start !== null ? ',actual_start' : ""}
+        ${actual_end !== null ? ',actual_end ' : ""}
     ) VALUES (
         ${project_id}, 
-        "${task_name}",
-        "${start_date}",
-        "${end_date}"
+        "${task_name}"
+        ${projected_start !== null ? ',"' + projected_start + '"'  : ""}
+        ${projected_end !== null ? ',"' + projected_end + '"'  : ""}
+        ${actual_start !== null ? ',"' + actual_start + '"'  : ""}
+        ${actual_end !== null ? ',"' + actual_end + '"'  : ""}
     )`
 
     let query = db.query(sql, (err, results) =>{
