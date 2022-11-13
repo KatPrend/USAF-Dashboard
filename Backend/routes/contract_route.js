@@ -266,7 +266,7 @@ router.put("/updateContractTimeline/:timelineID", (req, res)=>{
         ${awarded !== null ? ',awarded = "' + awarded + '"'  : ""}
 
     WHERE id = ${req.params.timelineID}`;
-    
+    console.log(sql);
     db.query(sql, (err, results) =>{
         if(err){
             throw err

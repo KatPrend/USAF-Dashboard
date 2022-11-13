@@ -101,7 +101,7 @@ router.put('/', (req, res) => {
         ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"
     `
-
+    console.log(sql);
         console.log(sql);
     let query = db.query(sql, (err, results) =>{
         if(err){

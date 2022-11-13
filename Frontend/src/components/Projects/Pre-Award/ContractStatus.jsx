@@ -38,6 +38,7 @@ export const ContractStatus = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(editData);
         editData.map((currRow, index) => (
             
             (rowsEdited.includes(currRow.id) === true ? 
@@ -45,14 +46,14 @@ export const ContractStatus = (props) => {
                     id: currRow.id,
                     contract_award_id: currRow.contract_award_id,
                     timeline_status: currRow.timeline_status,
-                    requirement_plan: format(new Date(currRow.requirement_plan), 'yyyy-MM-dd'),
-                    draft_rfp_released: format(new Date(currRow.draft_rfp_released), 'yyyy-MM-dd'),
-                    approved_by_acb: format(new Date(currRow.approved_by_acb), 'yyyy-MM-dd'),
-                    rfp_released: format(new Date(currRow.rfp_released), 'yyyy-MM-dd'),
-                    proposal_received: format(new Date(currRow.proposal_received), 'yyyy-MM-dd'),
-                    tech_eval_comp: format(new Date(currRow.tech_eval_comp), 'yyyy-MM-dd'),
-                    negotiation_comp: format(new Date(currRow.negotiation_comp), 'yyyy-MM-dd'),
-                    awarded: format(new Date(currRow.awarded), 'yyyy-MM-dd')
+                    requirement_plan: currRow.requirement_plan !== null ?  currRow.requirement_plan.replace(/T.+/, '') : null,
+                    draft_rfp_released: currRow.draft_rfp_released !== null ? currRow.draft_rfp_released.replace(/T.+/, ''): null,
+                    approved_by_acb: currRow.approved_by_acb !== null ? currRow.approved_by_acb.replace(/T.+/, ''): null,
+                    rfp_released: currRow.rfp_released !== null ? currRow.rfp_released.replace(/T.+/, ''): null,
+                    proposal_received: currRow.proposal_received !== null ?  currRow.proposal_received.replace(/T.+/, ''): null,
+                    tech_eval_comp: currRow.tech_eval_comp !== null ? currRow.tech_eval_comp.replace(/T.+/, ''): null,
+                    negotiation_comp: currRow.negotiation_comp !== null ? currRow.negotiation_comp.replace(/T.+/, ''): null,
+                    awarded: currRow.awarded !== null ? currRow.awarded.replace(/T.+/, ''): null
                 })
                 .then(function(res){
                     if (currRow.awarded !== null) {
@@ -78,8 +79,8 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
         
-        temp.requirement_plan = new Date(e.target.value.split('-'));
-
+        temp.requirement_plan = e.target.value ;
+        
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
         )))
@@ -96,7 +97,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.draft_rfp_released = new Date(e.target.value.split('-'));
+        temp.draft_rfp_released = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -114,7 +115,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.approved_by_acb = new Date(e.target.value.split('-'));
+        temp.approved_by_acb = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -132,7 +133,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.rfp_released = new Date(e.target.value.split('-'));
+        temp.rfp_released = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -150,7 +151,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.proposal_received = new Date(e.target.value.split('-'));
+        temp.proposal_received = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -168,7 +169,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.tech_eval_comp = new Date(e.target.value.split('-'));
+        temp.tech_eval_comp = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -186,7 +187,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.negotiation_comp = new Date(e.target.value.split('-'));
+        temp.negotiation_comp = e.target.value ;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -204,7 +205,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.awarded = new Date(e.target.value.split('-'));
+        temp.awarded = e.target.value;
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -285,7 +286,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={requirement_plan}>
                                                     {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(requirement_plan), 'yyyy-MM-dd')} 
+                                                    defaultValue={requirement_plan.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_requirement_plan(e, id)}
                                                     />
@@ -300,7 +301,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={draft_rfp_released}>
                                                     {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(draft_rfp_released), 'yyyy-MM-dd')} 
+                                                    defaultValue={draft_rfp_released.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_draft_rfp_released(e, id)}
                                                     />
@@ -315,7 +316,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={approved_by_acb}>
                                                     {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(approved_by_acb), 'yyyy-MM-dd')} 
+                                                    defaultValue={approved_by_acb.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_approved_by_acb(e, id)}
                                                     />
@@ -330,7 +331,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={rfp_released}>
                                                     {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(rfp_released), 'yyyy-MM-dd')} 
+                                                    defaultValue={rfp_released.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_rfp_released(e, id)}
                                                     />
@@ -345,7 +346,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={proposal_received}>
                                                     {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(proposal_received), 'yyyy-MM-dd')} 
+                                                    defaultValue={proposal_received.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_proposal_received(e, id)}
                                                     />
@@ -360,7 +361,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={tech_eval_comp}>
                                                     {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(tech_eval_comp), 'yyyy-MM-dd')} 
+                                                    defaultValue={tech_eval_comp.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_tech_eval_comp(e, id)}
                                                     />
@@ -375,7 +376,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={negotiation_comp}>
                                                     {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(negotiation_comp), 'yyyy-MM-dd')} 
+                                                    defaultValue={negotiation_comp.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_negotiation_comp(e, id)}
                                                     />
@@ -390,7 +391,7 @@ export const ContractStatus = (props) => {
                                                 <Form.Group key={awarded}>
                                                     {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
-                                                    defaultValue={format(new Date(awarded), 'yyyy-MM-dd')} 
+                                                    defaultValue={awarded.replace(/T.+/, '')} 
                                                     type='date'
                                                     onChange={(e) => handle_awarded(e, id)}
                                                     />

@@ -8,7 +8,7 @@ router.get('/getObli/:project_id', (req, res) => {
     let sql = `
     SELECT
         id,
-        DATE_FORMAT(obli_funding_date,'%m/%d/%y') as date, 
+        obli_funding_date as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
         obli_projected as Projected,
@@ -135,6 +135,7 @@ router.put('/', (req, res) => {
         obli_projected = "${obli_projected}",
         obli_actual = "${obli_actual}"
     WHERE id = "${id}"`;
+    console.log(sql);
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
