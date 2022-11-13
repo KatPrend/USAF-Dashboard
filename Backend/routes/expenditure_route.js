@@ -89,8 +89,8 @@ router.delete('/:expenID', (req, res) => {
 router.get('/getTotalExpenditure/:userid', (req, res) => {
     let sql = `
     SELECT 
-        SUM(expen_projected) as "Planned Expenditure",
-        SUM(expen_actual) as "Actual Expenditure"
+        SUM(expen_projected) as expen_projected,
+        SUM(expen_actual) as expen_actual
     FROM view_expenditure ve
     JOIN user_project_link upl on ve.project_id = upl.project_id
     JOIN contract_award ca on upl.project_id = ca.project_id
