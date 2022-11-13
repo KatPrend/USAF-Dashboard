@@ -163,19 +163,19 @@ function Clin() {
 
     const clinTypeToNum = (type) =>
     {
-        if (type == "FFP")
+        if (type === "FFP")
             return 1;
-        if (type == "FIFF")
+        if (type === "FIFF")
             return 2;
-        if (type == "FF-EPA")
+        if (type === "FF-EPA")
             return 3;
-        if (type == "CPFF")
+        if (type === "CPFF")
             return 4;
-        if (type == "CPIF")
+        if (type === "CPIF")
             return 5;
-        if (type == "CPAF")
+        if (type === "CPAF")
             return 6;
-        if (type == "T&M")
+        if (type === "T&M")
             return 7;
         // default to FFP
         return 1;

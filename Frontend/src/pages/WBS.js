@@ -4,6 +4,7 @@ import { Button, Table } from 'react-bootstrap';
 import axios from 'axios';
 import { NavB } from '../components/NavB';
 import { useLocation} from 'react-router-dom';
+import { format } from 'date-fns';
 
 const WbsData = (props) => {
 
@@ -130,7 +131,7 @@ const WbsData = (props) => {
                         <tr key={id} style={shouldDisplay(task_id, task_description, month, clin_num, source_type, resource_code, resource_type, resource_description, rate, hours_worked, units, cost, base_cost, direct_cost, total_price) ? {} : {display: 'none'}}>
                             <td>{task_id}</td>
                             <td>{task_description}</td>
-                            <td>{month}</td>
+                            <td>{format(new Date(month), 'MMMM yyyy')}</td>
                             <td>{clin_num}</td>
                             <td>{source_type}</td>
                             <td>{resource_code}</td>
