@@ -172,7 +172,6 @@ const Dependency = (props) => {
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
-            {props.firstLoad == 1 ? <p>first</p> : <p>second load</p>}
             {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
             {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
 
