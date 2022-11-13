@@ -228,8 +228,10 @@ export const ProjectSchedule = (props) => {
         setShowRowAlert(true);
     }
 
-    const DeleteRow = async (e, row) => {
+    const DeleteRow = async (e) => {
         e.preventDefault();
+
+        
     }
 
     const getOpenUploadModal = (open) => {
@@ -250,6 +252,11 @@ export const ProjectSchedule = (props) => {
         setReload(false);
     }
 
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
+    }
+
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
     }
@@ -266,8 +273,8 @@ export const ProjectSchedule = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button' type='submit' form='ProjectSchedule'>Save</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
+                                    <Button className='Button' type='submit' form='ProjectSchedule' onClick={()=>setReload(true)}>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -351,7 +358,7 @@ export const ProjectSchedule = (props) => {
                         <Alert show={showRowAlert} variant="danger">
                             <Alert.Heading>Are You Sure you want to delete Milestone {rowToDelete}</Alert.Heading>
                             <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
-                            <Button variant="outline-danger">Delete</Button>
+                            <Button variant="outline-danger" onClick={DeleteRow}>Delete</Button>
                         </Alert>
                     </Form>
                     
