@@ -186,7 +186,7 @@ export const Funding = (props) => {
                         </Tabs>
                         </Col>
                     </Row>
-                    <Row style={{fontWeight: 'bold', textAlign: 'left'}}>
+                    <Row style={{fontWeight: 'bold', textAlign: 'left', marginTop:"3%", marginBottom:"3%"}}>
                         <Col>
                             <span>
                                 Independent Cost Estimate: $ {est_data.map(({ind_gov_est}) => ind_gov_est)}
