@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Alert, Button, Form, Table } from 'react-bootstrap';
+import { Alert, Button, Form, Table, Row, Col } from 'react-bootstrap';
 import { format } from 'date-fns';
 import axios from "axios";
 
@@ -38,6 +38,30 @@ export function ExpenditureFundingDataTable({data}){
 
 export function ObligationFundingDataTable({data}){
 
+    const [allFundingTypes, setAllFundingTypes] = useState();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.get('/api/fundingType/').then(response => {
+            setAllFundingTypes(response.data);
+            setLoading(false);
+        });
+    }, []);
+
+    function getFundingType(info){
+        let retVal = 0;
+
+        allFundingTypes.map(({id, funding_type}) => (
+            <>{id === parseInt(info.FundingType) ? retVal = funding_type : null}</>
+        ))
+
+        return(retVal)
+    }
+
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
+
     return(
         <div>
             <Table responsive striped bordered hover className="bg-light">
@@ -51,13 +75,13 @@ export function ObligationFundingDataTable({data}){
                     <tr>
                         <td>Funding Type</td>
                         {data.map( (info, index) => (
-                            <td  key = {index} >{info.FundingType}</td>
+                            <td  key = {index} >{getFundingType(info)}</td>
                         ))}
                     </tr>
                     <tr>
                         <td>Fiscal Year</td>
                         {data.map( (info, index) => (
-                            <td  key = {index} >{info.FiscalYear}</td>
+                            <td  key = {index} >FY'{info.FiscalYear}</td>
                         ))}
                     </tr>
                     <tr>
@@ -81,10 +105,12 @@ export function ObligationFundingDataTable({data}){
 
 export function ExpenditureFundingDataTableEditable(props){
 
-    const[editData, setEditData] = useState(props.data);
-    const[columsEdited, setColumsEdited] = useState([]);
-    const[showAlert, setShowAlert] = useState(false);
-    const[columnToDelete, setColumnToDelete] = useState();
+    const [editData, setEditData] = useState(props.data);
+    const [columsEdited, setColumsEdited] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
+    const [columnToDelete, setColumnToDelete] = useState();
+    const [reload, setReload] = useState(false);
+
 
 
     const handleSubmit = async (e) => {
@@ -103,6 +129,7 @@ export function ExpenditureFundingDataTableEditable(props){
         ))
         
         setColumsEdited([]);
+        setReload(true);
 
     }
 
@@ -173,6 +200,8 @@ export function ExpenditureFundingDataTableEditable(props){
             expen_projected: 0,
             expen_actual: 0
         })
+
+        setReload(true);
     }
 
     const handleDeletCol = (row) => {
@@ -195,7 +224,16 @@ export function ExpenditureFundingDataTableEditable(props){
             :
             null
         ))
-        setShowAlert(false)
+        setShowAlert(false);
+        setReload(true);
+    }
+
+    if(reload){
+        axios.get(`/api/expenditure/getExpen/${props.id}`).then(response =>{
+            setEditData(response.data);
+        });
+
+        setReload(false);
     }
 
 
@@ -230,6 +268,7 @@ export function ExpenditureFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    type="number"
                                     defaultValue={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>
@@ -242,6 +281,7 @@ export function ExpenditureFundingDataTableEditable(props){
                             <td  key = {index} >
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    type="number"
                                     defaultValue={info.Actual}
                                     onChange={(e) => handleActual(e, index)}/>
                                 </Form.Group>
@@ -264,11 +304,20 @@ export function ExpenditureFundingDataTableEditable(props){
 
 export function ObligationFundingDataTableEditable(props){
 
-    const[editData, setEditData] = useState(props.data);
-    const[columsEdited, setColumsEdited] = useState([]);
-    const[showAlert, setShowAlert] = useState(false);
-    const[columnToDelete, setColumnToDelete] = useState();
+    const [editData, setEditData] = useState(props.data);
+    const [columsEdited, setColumsEdited] = useState([]);
+    const [showAlert, setShowAlert] = useState(false);
+    const [columnToDelete, setColumnToDelete] = useState();
+    const [reload, setReload] = useState(false);
+    const [allFundingTypes, setAllFundingTypes] = useState();
+    const [isLoading, setLoading] = useState(true);
 
+    useEffect(() => {
+        axios.get('/api/fundingType/').then(response => {
+            setAllFundingTypes(response.data);
+            setLoading(false);
+        });
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -278,7 +327,7 @@ export function ObligationFundingDataTableEditable(props){
             axios.put('/api/obligation', {
                 id: currRow.id,
                 project_id: props.id,
-                obli_funding_date: format(new Date(currRow.date), 'yyyy-MM-dd'),
+                obli_funding_date: format(new Date(currRow.date.split('-')), 'yyyy-MM-dd'),
                 obli_funding_type: currRow.FundingType,
                 obli_fiscal_year: currRow.FiscalYear,
                 obli_projected: currRow.Projected,
@@ -288,6 +337,7 @@ export function ObligationFundingDataTableEditable(props){
         ))
 
         setColumsEdited([]);
+        setReload(true);
 
     }
 
@@ -301,8 +351,8 @@ export function ObligationFundingDataTableEditable(props){
         editData.map((currObject, index) => (
             index === row ? temp = currObject : null
         ))
-
-        temp.date = e.target.value;
+        
+        temp.date = format(new Date(e.target.value.split('-')), 'yyyy-MM-dd');
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -397,6 +447,8 @@ export function ObligationFundingDataTableEditable(props){
             obli_projected: 0,
             obli_actual: 0
         })
+
+        setReload(true);
     }
 
     const handleDeletCol = (row) => {
@@ -409,14 +461,24 @@ export function ObligationFundingDataTableEditable(props){
 
         editData.map((info, index) => (
             index === columnToDelete ? 
-            // axios.delete(`/api/obligation/${info.id}`, {
-            //     
-            // })
-            null
+                axios.delete(`/api/obligation/${info.id}`)
             :
             null
         ))
-        setShowAlert(false)
+        setShowAlert(false);
+        setReload(true);
+    }
+
+    if (isLoading) {
+        return <div className="mx-auto w-100">Loading...</div>;
+    }
+
+    if(reload){
+        axios.get(`/api/obligation/getObli/${props.id}`).then(response =>{
+            setEditData(response.data);
+        });
+
+        setReload(false);
     }
 
     return(
@@ -449,8 +511,15 @@ export function ObligationFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    as="select"
                                     defaultValue={info.FundingType}
-                                    onChange={(e) => handleFundingType(e, index)}/>
+                                    onChange={(e) => handleFundingType(e, index)}>
+
+                                    <option value={0}>Select</option>
+                                    {allFundingTypes.map(({id, funding_type}) => (
+                                        <option key={id} value={id}>{funding_type}</option>
+                                    ))}
+                                    </Form.Control>
                                 </Form.Group>
                             </td>
                         ))}
@@ -459,10 +528,16 @@ export function ObligationFundingDataTableEditable(props){
                         <td>Fiscal Year</td>
                         {editData.map( (info, index) => (
                             <td key={index}>
-                                <Form.Group key={index}>
-                                    <Form.Control 
-                                    defaultValue={info.FiscalYear}
-                                    onChange={(e) => handleFiscalYear(e, index)}/>
+                                <Form.Group as={Row} key={index}>
+                                    <Form.Label column sm={2}>
+                                        FY'
+                                    </Form.Label>
+                                    <Col sm={10}>
+                                        <Form.Control 
+                                        type="number"
+                                        defaultValue={info.FiscalYear}
+                                        onChange={(e) => handleFiscalYear(e, index)}/>
+                                    </Col>
                                 </Form.Group>
                             </td>
                         ))}
@@ -473,6 +548,7 @@ export function ObligationFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    type="number"
                                     defaultValue={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>
@@ -485,6 +561,7 @@ export function ObligationFundingDataTableEditable(props){
                             <td  key = {index} >
                                 <Form.Group key={index}>
                                     <Form.Control 
+                                    type="number"
                                     defaultValue={info.Actual}
                                     onChange={(e) => handleActual(e, index)}/>
                                 </Form.Group>

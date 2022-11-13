@@ -81,10 +81,10 @@ export const ProjectSchedule = (props) => {
                 milestone_id: currRow.ID,
                 project_id: currRow.project_id,
                 task_name: currRow.Name,
-                projected_start: currRow.ProjectedStart,
-                projected_end: currRow.ProjectedEnd,
-                actual_start: currRow.ActualStart !== null ? currRow.ActualStart : null ,
-                actual_end: currRow.ActualEnd !== null ?currRow.ActualEnd : null ,
+                projected_start: format(new Date(currRow.ProjectedStart), 'yyyy-MM-dd'),
+                projected_end: format(new Date(currRow.ProjectedEnd), 'yyyy-MM-dd'),
+                actual_start: currRow.ActualStart !== null ? format(new Date(currRow.ActualStart), 'yyyy-MM-dd') : null ,
+                actual_end: currRow.ActualEnd !== null ? format(new Date(currRow.ActualEnd), 'yyyy-MM-dd') : null ,
             })
             : null)
 
@@ -134,7 +134,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ProjectedStart = e.target.value;
+        temp.ProjectedStart = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -153,7 +153,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ProjectedEnd = e.target.value;
+        temp.ProjectedEnd = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -173,7 +173,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualStart = e.target.value;
+        temp.ActualStart = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -192,7 +192,7 @@ export const ProjectSchedule = (props) => {
             index === row ? temp = currObject : null
         ))
 
-        temp.ActualEnd = e.target.value;
+        temp.ActualEnd = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -399,8 +399,8 @@ export const ProjectSchedule = (props) => {
                                                 <td>{Name}</td>
                                                 <td>{format(new Date(ProjectedStart), 'MM/dd/yyyy')}</td>
                                                 <td>{format(new Date(ProjectedEnd), 'MM/dd/yyyy')}</td>
-                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "N/A" }</td>
-                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "N/A" }</td>
+                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "No Date" }</td>
+                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "No Date" }</td>
                                                 <td>{Predecessors_Name}</td>
                                             </tr>
                                         ))

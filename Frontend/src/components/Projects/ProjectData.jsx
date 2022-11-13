@@ -2,24 +2,25 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { Button, ButtonGroup, Card, Col, Container, Row, Modal, ModalBody, ModalDialog, Form, } from "react-bootstrap";
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
-import { FileUpload } from "../NewProject/FileUpload";
 //import { propTypes } from 'react-bootstrap/esm/Image';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./projectData.css"
+import { NewWBSModal } from './NewWBSModal';
 
 export const ProjectData = (props) => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [openWBS, setOpenWBS] = useState(false);
+    const [reload, setReload] = useState(false);
 
-    const [projectName, setProjectName] = useState("");
-    const [contractNumber, setContractNumber] = useState("");
-    const [contractor, setContractor] = useState("1");
-    const [branch, setBranch] = useState("");
-    const [requirementType, setRequirementType] = useState("1");
-    const [summary, setSummary] = useState("");
-    const [ccarNum, setCcar] = useState("");
+    const [projectNameEdit, setProjectName] = useState("");
+    const [contractNumberEdit, setContractNumber] = useState("");
+    const [contractorEdit, setContractor] = useState("");
+    const [branchEdit, setBranch] = useState("");
+    const [requirementTypeEdit, setRequirementType] = useState("");
+    const [summaryEdit, setSummary] = useState("");
+    const [ccarNumEdit, setCcar] = useState("");
     const [contractors, setContractors] = useState([]);
     const [branches, setBranches] = useState([]);
     
@@ -28,6 +29,8 @@ export const ProjectData = (props) => {
             
             setData(response.data);
             setLoading(false);
+
+            props.getContractor(response.data[0].contractor_id, response.data[0].contractor_name);
         });
         axios.get('/api/contractor').then(response => {
             setContractors(response.data);
@@ -43,6 +46,29 @@ export const ProjectData = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(data);
+        data.map(({id,project_name, contractor_id, ccar_num, branch_id, requirement_type_id, summary, project_type, contract_num,contract_status, contract_value, contract_award_id}) => {
+            axios.put(`/api/project/${id}`, {
+                id: id,
+                project_name: (projectNameEdit === "" ? project_name : projectNameEdit),
+                project_type: project_type,
+                contractor_id: (contractorEdit === "" ? contractor_id : contractorEdit),
+                branch_id: (branchEdit === "" ? branch_id : branchEdit),
+                requirement_type_id: (requirementTypeEdit === "" ? requirement_type_id : requirementTypeEdit),
+                summary: (summaryEdit === "" ? summary : summaryEdit),
+                ccar_num: (ccarNumEdit === "" ? ccar_num : ccarNumEdit)
+            })
+            .then(
+                axios.put(`/api/contract/contractNum/${contract_award_id}`, {
+                    id: id, 
+                    contract_num: (contractNumberEdit === "" ? contract_num : contractNumberEdit),
+                })
+            )
+            
+        })
+
+        setReload(true);
+        
     }
     const handleName = (e) => {
         setProjectName(e.target.value);
@@ -65,6 +91,18 @@ export const ProjectData = (props) => {
     const handleCapabilitySummery = (e) => {
         setSummary(e.target.value);
     }
+    const getOpenWBSModal = (open) => {
+        setOpenWBS(open);
+    }
+
+    if(reload){
+        axios.get(`/api/project/${props.data}`).then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+        
+        setReload(false);
+    }
 
     return (
         <>
@@ -79,7 +117,7 @@ export const ProjectData = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button' type='submit' form='ProjectDataEdit'>Save</Button>
+                                    <Button className='Button' type='submit' form='ProjectDataEdit' onClick={()=>setModalIsOpen(false)}>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -178,29 +216,7 @@ export const ProjectData = (props) => {
             </Modal>
         </ModalDialog>
 
-        <ModalDialog scrollable>
-            <Modal show={openWBS} size='xl' autoFocus={true}>
-                <ModalHeader>
-                    <Container>
-                        <Row>
-                            <Col style={{textAlign: 'left'}}>
-                                <h3>Upload WBS ProPricer Output</h3>
-                            </Col>
-                            <Col style={{textAlign: 'right'}}>
-                                <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setOpenWBS(false)}>Done</Button>
-                                </ButtonGroup>
-                            </Col>
-                        </Row>
-                    </Container>
-                </ModalHeader>
-                <ModalBody>
-                    <div className='upload mx-auto'>
-                        <FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.data}/>
-                    </div>
-                </ModalBody>
-            </Modal>
-        </ModalDialog>
+        <NewWBSModal projectId={props.data} open={openWBS} getOpenWBSModal={getOpenWBSModal}/>
 
         <Card className="card">
             <Card.Header className = "cardHead">

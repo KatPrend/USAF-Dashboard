@@ -4,6 +4,7 @@ import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { NewContractModal } from "./NewContractModal";
+import { Link } from "react-router-dom";
 
 export const ContractStatus = (props) => {
     const [isLoading1, setLoading1] = useState(true);
@@ -15,6 +16,7 @@ export const ContractStatus = (props) => {
     const [reload, setReload] = useState(false);
     const [timelineModal, setTimelineModal] = useState(false);
     const [contractId, setContractId] = useState();
+    const [awarded, setAwarded] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
@@ -36,24 +38,32 @@ export const ContractStatus = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         editData.map((currRow, index) => (
-            rowsEdited.includes(currRow.id) === true ? 
-            axios.put(`/api/updateContractTimeline/${currRow.id}`, {
-                contract_award_id: currRow,
-                timeline_status: currRow,
-                requirement_plan: format(new Date(currRow), 'yyyy-MM-dd'),
-                draft_rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
-                approved_by_acb: format(new Date(currRow), 'yyyy-MM-dd'),
-                rfp_released: format(new Date(currRow), 'yyyy-MM-dd'),
-                proposal_received: format(new Date(currRow), 'yyyy-MM-dd'),
-                tech_eval_comp: format(new Date(currRow), 'yyyy-MM-dd'),
-                negotiation_comp: format(new Date(currRow), 'yyyy-MM-dd'),
-                awarded: format(new Date(currRow), 'yyyy-MM-dd')
-            })
-            : null
+            
+            (rowsEdited.includes(currRow.id) === true ? 
+                axios.put(`/api/contract/updateContractTimeline/${currRow.id}`, {
+                    id: currRow.id,
+                    contract_award_id: currRow.contract_award_id,
+                    timeline_status: currRow.timeline_status,
+                    requirement_plan: format(new Date(currRow.requirement_plan), 'yyyy-MM-dd'),
+                    draft_rfp_released: format(new Date(currRow.draft_rfp_released), 'yyyy-MM-dd'),
+                    approved_by_acb: format(new Date(currRow.approved_by_acb), 'yyyy-MM-dd'),
+                    rfp_released: format(new Date(currRow.rfp_released), 'yyyy-MM-dd'),
+                    proposal_received: format(new Date(currRow.proposal_received), 'yyyy-MM-dd'),
+                    tech_eval_comp: format(new Date(currRow.tech_eval_comp), 'yyyy-MM-dd'),
+                    negotiation_comp: format(new Date(currRow.negotiation_comp), 'yyyy-MM-dd'),
+                    awarded: format(new Date(currRow.awarded), 'yyyy-MM-dd')
+                })
+                .then(function(res){
+                    if (currRow.awarded !== null) {
+                        setAwarded(true);
+                    }
+                })
+            : null)
         ))
-        console.log(editData); 
+         
+        setReload(true);
+        setModalIsOpen(false);
         setRowsEdited([]);
     }
 
@@ -68,8 +78,8 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
         
-        temp.requirement_plan = e.target.value;
-        
+        temp.requirement_plan = new Date(e.target.value.split('-'));
+
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
         )))
@@ -86,7 +96,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.draft_rfp_released = e.target.value;
+        temp.draft_rfp_released = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -104,7 +114,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.approved_by_acb = e.target.value;
+        temp.approved_by_acb = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -122,7 +132,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.rfp_released = e.target.value;
+        temp.rfp_released = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -140,7 +150,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.proposal_received = e.target.value;
+        temp.proposal_received = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -158,7 +168,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.tech_eval_comp = e.target.value;
+        temp.tech_eval_comp = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -176,7 +186,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.negotiation_comp = e.target.value;
+        temp.negotiation_comp = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -194,7 +204,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.awarded = e.target.value;
+        temp.awarded = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -208,10 +218,27 @@ export const ContractStatus = (props) => {
     if (reload) {
         axios.get(`/api/contract/contractawardtimeline/${props.data}`).then(response =>{
             setData(response.data);
+            setEditData(response.data);
             setLoading1(false);
         });
 
         setReload(false);
+    }
+
+    let handleAward = () => {
+        axios.put(`/api/contract/status/${contractId}`, {
+            contract_status: 'Awarded'
+        })
+        .then(function(res) {
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+    }
+
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
     }
 
     return (
@@ -226,7 +253,7 @@ export const ContractStatus = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
                                     <Button className='Button' type="submit" form="ContractAwardTimelineEdit">Save</Button>
                                 </ButtonGroup>
                             </Col>
@@ -256,7 +283,7 @@ export const ContractStatus = (props) => {
                                             <td>{timeline_status}</td>
                                             <td >
                                                 <Form.Group key={requirement_plan}>
-                                                    {requirement_plan !== null ?
+                                                    {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(requirement_plan), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -271,7 +298,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={draft_rfp_released}>
-                                                    {draft_rfp_released !== null ?
+                                                    {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(draft_rfp_released), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -286,7 +313,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={approved_by_acb}>
-                                                    {approved_by_acb !== null ?
+                                                    {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(approved_by_acb), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -301,7 +328,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={rfp_released}>
-                                                    {rfp_released !== null ?
+                                                    {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(rfp_released), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -316,7 +343,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={proposal_received}>
-                                                    {proposal_received !== null ?
+                                                    {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(proposal_received), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -331,7 +358,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td >
                                                 <Form.Group key={tech_eval_comp}>
-                                                    {tech_eval_comp !== null ?
+                                                    {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(tech_eval_comp), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -346,7 +373,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td>
                                                 <Form.Group key={negotiation_comp}>
-                                                    {negotiation_comp !== null ?
+                                                    {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(negotiation_comp), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -361,7 +388,7 @@ export const ContractStatus = (props) => {
                                             </td>
                                             <td>
                                                 <Form.Group key={awarded}>
-                                                    {awarded !== null ?
+                                                    {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z"?
                                                     <Form.Control 
                                                     defaultValue={format(new Date(awarded), 'yyyy-MM-dd')} 
                                                     type='date'
@@ -394,6 +421,7 @@ export const ContractStatus = (props) => {
                             <span>Contract Status</span>
                         </Col>
                         { props.userRole === "Contractor" ? null : <Col style={{textAlign: 'right'}}>
+                                {awarded ? <Link to={{pathname: "/awardedproject", state: {id:props.data}}} onClick={handleAward}><Button className='Button'>Award Project</Button></Link> : null}
                                 <span><Button className='Button' onClick={()=>setModalIsOpen(true)}>Edit</Button></span>
                                 {contractId === 0 || data.length !== 0 ? null : <span><Button className='Button' onClick={()=>setTimelineModal(true)}>Add</Button></span>}
                             </Col>
@@ -420,14 +448,14 @@ export const ContractStatus = (props) => {
                         data.map(({id, timeline_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
                             <tr key = {id}>
                                 <td>{timeline_status}</td>
-                                {requirement_plan !== null ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {draft_rfp_released !== null ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {approved_by_acb !== null ? <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {rfp_released !== null ? <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {proposal_received !== null ? <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {tech_eval_comp !== null ? <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {negotiation_comp !== null ? <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {awarded !== null ? <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
                             </tr>
                         ))
                     }

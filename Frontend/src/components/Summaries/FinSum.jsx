@@ -105,8 +105,8 @@ export const FinSum = (props) => {
                                         />
                                     <div>Obligation %:</div>
                                     <div>{((obligationActual / obligationPlanned) * 100).toFixed(2)}%</div>
-                                    <p className="finInfo">Planned Obligation: {obligationActual}</p>
-                                    <p className="finInfo">Actual Obligation: {obligationPlanned}</p>
+                                    <p className="finInfo">Actual Obligation: {obligationActual}</p>
+                                    <p className="finInfo">Planned Obligation: {obligationPlanned}</p>
                                 </div>
                             </Col>
                             <Col>
@@ -122,8 +122,8 @@ export const FinSum = (props) => {
                                     />
                                     <div>Expenditure %:</div>
                                     <div>{((expenditureActual / expenditurePlanned) * 100).toFixed(2)}%</div>
-                                    <p className="finInfo">Planned Expenditure: {expenditurePlanned}</p>
                                     <p className="finInfo">Actual Expenditure: {expenditureActual}</p>
+                                    <p className="finInfo">Planned Expenditure: {expenditurePlanned}</p>
                                 </div>
                             </Col>
                         </Row>

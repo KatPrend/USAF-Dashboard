@@ -12,33 +12,49 @@ export const IPT = (props) => {
     const [isLoading3, setLoading3] = useState(true);
     const [users, setUsers] = useState()
     const [ModalIsOpen, setModalIsOpen] = useState(false);
-
+    // IPT Users
     const [addUsername, setAddUsername] = useState(1);
     const [addUsertitle, setAddUsertitle] = useState(1);
     const [removeUser, setRemoveUser] = useState(0);
+    // Contractors
+    const [allContractors, setAllContractors] = useState();
+    const [isLoading4, setLoading4] = useState(true);
+    const [projectCont, setProjectCont] = useState();
+    const [isLoading5, setLoading5] = useState(true);
+    const [addCont, setAddCont] = useState(0);
+    const [removeCont, setRemoveCont] = useState(0);
+    const [addedCont, setAddedCont] = useState(false);
+    const [removedCont, setRemovedCont] = useState(false);
+    const [showContractors, setShowContractors] = useState(false);
 
     useEffect(() => {
         axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
             setIpt(response.data);
             setLoading1(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get(`/api/mjt/milJobs/`).then(response =>{
             setTitles(response.data);
             setLoading2(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get(`/api/user/`).then(response =>{
             setUsers(response.data);
             setLoading3(false);
         });
+
+        axios.get(`/api/user/contractorUsers/${props.contractor}`).then(response =>{
+            setAllContractors(response.data);
+            setLoading4(false);
+        });
+
+        axios.get(`/api/user/conProject/${props.data}`).then(response =>{
+            setProjectCont(response.data);
+            setLoading5(false);
+        });  
     }, []);
 
-    if(isLoading1 || isLoading2 || isLoading3){
+    if (isLoading1 || isLoading2 || isLoading3 || isLoading4 || isLoading5) { // || isLoading5) {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
@@ -98,6 +114,57 @@ export const IPT = (props) => {
         }
     }
 
+    let handleSelectAddCont = (e) => {
+        setAddCont(e.target.value);
+        setAddedCont(false);
+        setRemovedCont(false);
+
+        console.log(e.target.value);
+    }
+    let handleAddCont = async (e) => {
+        e.preventDefault();
+
+        axios.post('/api/user/addToUPL', {
+            user_id: addCont,
+            project_id: props.data
+        })
+        .then(function(res){
+            //console.log(res);
+            setAddedCont(true);
+
+            axios.get(`/api/user/conProject/${props.data}`).then(response =>{
+                setProjectCont(response.data);
+                setLoading5(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+    let handleSelectRemoveCont = (e) => {
+        setRemoveCont(e.target.value);
+        setAddedCont(false);
+        setRemovedCont(false);
+
+        console.log(e.target.value);
+    }
+    let handleRemoveCont = async (e) => {
+        axios.delete(`/api/user/removeUPL/${removeCont}/${props.data}`, {
+        })
+        .then(function(res){
+
+            setRemovedCont(true);
+
+            axios.get(`/api/user/conProject/${props.data}`).then(response =>{
+                setProjectCont(response.data);
+                setLoading5(false);
+            });
+        })
+        .catch(function (err){
+            console.log(err);
+        });
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -118,7 +185,7 @@ export const IPT = (props) => {
                 </ModalHeader>
                 <ModalBody>
                     <Container>
-                        <Row>
+                        <Row style={{marginBottom:"5%"}}>
                             <Col>
                                 <h4 style={{marginBottom:"4%"}}>Add IPT Member</h4>
                                 <Form.Group as={Row}>
@@ -165,11 +232,74 @@ export const IPT = (props) => {
                                 <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleRemove}>Remove</Button>
                             </Col>
                         </Row>
+                        <Row>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Add Contractor</h4>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contractor:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select" onChange={handleSelectAddCont}>
+                                            <option key={0} value={0}>Choose Contractor User</option>
+                                            {allContractors.map((element, index) => (
+                                                <option key={index} value={element.id}>{element.user_name}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleAddCont}>Add</Button>
+                                {addedCont ? <div>Successfully Added!</div> : null}
+                            </Col>
+                            <Col>
+                                <h4 style={{marginBottom:"4%"}}>Remove Contractor</h4>
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={3}>Contractor:</Form.Label>
+                                    <Col sm={8}>
+                                        <Form.Control as="select" onChange={handleSelectRemoveCont}>
+                                            <option key={0} value={0}>Choose Contractor User</option>
+                                            {projectCont.map((element, index) => (
+                                                <option key={index} value={element.id}>{element.user_name}</option>
+                                            ))}
+                                        </Form.Control>
+                                    </Col>
+                                </Form.Group>
+                                <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleRemoveCont}>Remove</Button>
+                                {removedCont ? <div>Successfully Removed!</div> : null}
+                            </Col>
+                        </Row>
                     </Container>
                 </ModalBody>
             </Modal>
         </ModalDialog>
-
+        
+        <ModalDialog scrollable>
+            <Modal show={showContractors} onHide={()=>setShowContractors(false)} autoFocus={true}>
+                <ModalHeader>
+                    <Container>
+                        <Row>
+                            <Col style={{textAlign: 'left'}}>
+                                <h3>{props.contractorName} Contractors</h3>
+                            </Col>
+                            <Col style={{textAlign: 'right'}}>
+                                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                                    <Button className='Button' onClick={()=>setShowContractors(false)}>Done</Button>
+                                </ButtonGroup>
+                            </Col>
+                        </Row>
+                    </Container>
+                </ModalHeader>
+                <ModalBody>
+                    <Container>
+                        {
+                            projectCont.map((element, index) => (
+                                <div key = {index}>
+                                    <p className='project-data'>{element.user_name}</p>
+                                </div>
+                            ))
+                        }
+                    </Container>
+                </ModalBody>
+            </Modal>
+        </ModalDialog>
 
         <Card className="card">
             <Card.Header className = "cardHead">
@@ -193,7 +323,9 @@ export const IPT = (props) => {
                         </div>
                     ))
                 }
-                <br></br>
+                <ButtonGroup className='CLIN-and-File-buttongroup'>
+                    <Button className='Button' onClick={()=>setShowContractors(true)}>See Contractors</Button>
+                </ButtonGroup>
             </Card.Body>
         </Card>
         </>

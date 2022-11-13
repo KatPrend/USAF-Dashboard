@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {Link} from 'react-router-dom';
-import { Button, Table, Form } from 'react-bootstrap';
+import { Button, Table, Form, Row } from 'react-bootstrap';
 import {SummaryIcon} from './SummaryIcon';
 
 function renderContent(contractStatus, projectId, projectName) {
@@ -15,6 +15,13 @@ function renderContent(contractStatus, projectId, projectName) {
     else if (contractStatus === "Pre-Award"){
         return <Link to={{ 
             pathname: "/preawardproject", 
+            state: {id:projectId} // your data array of objects
+        }}
+      >{projectName}</Link>
+    }
+    else if (contractStatus === "Completed"){
+        return <Link to={{ 
+            pathname: "/completedproject", 
             state: {id:projectId} // your data array of objects
         }}
       >{projectName}</Link>
@@ -100,12 +107,12 @@ export const ProjectContent = (props) => {
     const searchStyle = {width: '100%'};
     return (
         <div className="mx-auto" style={{margin: '5%', height: 'auto', width: '90%'}}>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Row style={{display:"flex", justifyContent:"space-between"}}>
                 <h2 style={{width: '10%'}}>
                     Projects: 
                 </h2>
                 {props.userRole === "Contractor" ? null : <Link style={{width: '15%'}} to="/newProject"><Button className='submit-new-project main'><span style={{whiteSpace: 'nowrap'}}>Add Project</span></Button></Link>}
-            </div>
+            </Row>
 
             <Table responsive striped bordered hover className="bg-light w-100 mx-auto">
                 <thead>

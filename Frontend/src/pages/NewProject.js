@@ -7,31 +7,12 @@ import "../components/NewProject/newProject.css";
 import { ContractStatus } from "../components/Projects/Pre-Award/ContractStatus";
 import { Link } from 'react-router-dom';
 
-// function renderInfo(projectName, projectId) {
-//   //console.log("project name: " + projectName);
+function  renderPageLink(contractStatus, projectId, projectName) {
+  console.log("contract status: " + contractStatus);
+  console.log("projectId: " + projectId + ", projectName: " + projectName);
 
-//   // if (projectName === "") {
-//   //   return <></>
-//   // } else {
-//     return <div>
-//      <h2>{projectName} Project Information</h2>
-//       <br />
-//       <br />
-//       <h4>Upload Files:</h4>
-//       <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={projectId}/></div>
-//       <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={projectId}/></div>
-//       <br />
-//       <h4>Dependencies</h4>
-//       <p>What projects does this project depend on?</p>
-//       <div className="project-element">
-//         <Predecessors />
-//       </div>
-//     </div>
-//   //}
-// };
-
-function renderPageLink(contractStatus, projectId, projectName) {
-  if(contractStatus === 2){
+  if (contractStatus === 2){
+    console.log("in awarded contract link");
       return <span>Go to <Link to={{ 
           pathname: "/awardedproject", 
           state: {id:projectId} // your data array of objects
@@ -73,14 +54,6 @@ function NewProject() {
     setContractStatus(status);
   }
 
-  const getShowLink = (show) => {
-    if (show) {
-      console.log("in show, should show link");
-      console.log("contract status is " + contractStatus)
-      setShowLink(true);
-    }
-  }
-
   return (
     <div className="lightBlue">
       <NavB getUserInfo={getUserInfo} />
@@ -95,10 +68,10 @@ function NewProject() {
           {projectId === 0 ? null : <div>
             <h2>{projectName} Contract Information:</h2>
             <div className="project-element">
-              <AddContract data={projectId} getShowLink={getShowLink} getContractStatus={getContractStatus}/>
+              <AddContract data={projectId} getContractStatus={getContractStatus} />
             </div>
           </div>}
-          {showLink && contractStatus !== 0 ? renderPageLink(contractStatus, projectId, projectName) : null}
+          {contractStatus !== 0 ? renderPageLink(contractStatus, projectId, projectName) : null}
         </div>
     }
     </div>
