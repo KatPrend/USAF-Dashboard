@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         "${contractor_name}",
         "${summary}"
         )`;
-    db.query = db.query(sql, (err, results) =>{
+    db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
