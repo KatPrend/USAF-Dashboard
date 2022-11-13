@@ -42,8 +42,8 @@ const ProjectContent = (props) => {
   }
 
   return (
-      <div className="mx-auto w-75">
-          <Table responsive striped bordered hover className="bg-light">
+      <div style={{width:"100%"}}>
+          <Table responsive striped bordered hover className="bg-light" style={{width:"100%"}}>
               <thead>
                   <tr>
                     <th>Predecessor Project</th>
@@ -131,14 +131,19 @@ function GanttChartDataFormat(JsonData) {
   return (data);
 }
 
-const options = {
-  gantt: {
-      criticalPathEnabled: false,
-      criticalPathStyle: {
-          stroke: "#e64a19",
-      },  
-  },
-};
+const getOptions = (cHeight) => {
+    const options = {
+        gantt: {
+            criticalPathEnabled: false,
+            criticalPathStyle: {
+                stroke: "#e64a19",
+            },  
+        },
+        width: 1250,
+        height: cHeight
+      };
+    return options;
+}
 
 const Dependency = (props) => {
 
@@ -146,6 +151,9 @@ const Dependency = (props) => {
     const [userRole, setUserRole] = useState("");
     const [data, setData] = useState(0)
     const [redirect, setRedirect] = useState(0)
+    
+    let chartHeight = 0;
+
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
         setUserRole(urole);
@@ -165,6 +173,10 @@ const Dependency = (props) => {
           }
         }, 10);
       }, []); // <- add empty brackets here
+
+      if (data !== 0 && data.length > 0) {
+        chartHeight = data.length * 100;
+      }
     
       return ( 
         <div className="lightBlue">
@@ -178,23 +190,23 @@ const Dependency = (props) => {
                     </Col>
                     {/*2*/}
                     <Col>
-                        <CardGeneric Header='Dependency Graph' 
+                        {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
                         Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
                             <Chart
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={options}
+                            options={getOptions(chartHeight)}
                             data={GanttChartDataFormat(data)}
                             />
                          }>
-                        </CardGeneric>
+                        </CardGeneric>}
                     </Col>
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
-            {props.firstLoad === 1 && redirect ? <Redirect to="/dependency"/> : <></>}
-            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
+            {props.firstLoad === 1 && redirect ? <Redirect to="/dependency"/> :null}
+            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
 
         </div>
     );
