@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import './page.css';
-import {Link} from 'react-router-dom';
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import { CardGeneric } from '../components/CardGeneric'
 import { NavB } from '../components/NavB';
@@ -42,7 +41,7 @@ const ProjectContent = (props) => {
   }
 
   return (
-      <div className="mx-auto w-75">
+      <div className="lightBlue">
           <Table responsive striped bordered hover className="bg-light">
               <thead>
                   <tr>
@@ -51,7 +50,7 @@ const ProjectContent = (props) => {
                     <th>Predecessor Projected Start Date</th> 
                     <th>Predecessor Projected End Date</th>
                     <th>Predecessor Actual Start Date</th> 
-                    <th>Predecessor End Date</th>
+                    <th>Predecessor Actual End Date</th>
                     <th>Successor Project</th>
                     <th>Successor Milestone</th>
                     <th>Successor Projected Start Date</th>
@@ -170,31 +169,30 @@ const Dependency = (props) => {
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
             <Container className="top-Padding" style={{marginBottom: '3%'}}>
+                {/*1*/}
                 <Row>
-                    {/*1*/}
-                    <Col>
+                    <Col style={{width:"25%"}}></Col>
                     {userid !== 0 && userRole !== "" ? <DepSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
-                    
-                    </Col>
-                    {/*2*/}
-                    <Col>
-                        <CardGeneric Header='Dependency Graph' 
-                        Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
-                            <Chart
-                            chartType='Gantt'
-                            width="100%" 
-                            height="100%"
-                            options={options}
-                            data={GanttChartDataFormat(data)}
-                            />
-                         }>
-                        </CardGeneric>
-                    </Col>
+                    <Col style={{width:"25%"}}></Col>
+                </Row>
+                {/*2*/}
+                <Row>
+                    <CardGeneric Header='Dependency Graph'
+                    Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
+                        <Chart
+                        chartType='Gantt'
+                        width="100%" 
+                        height="100%"
+                        options={options}
+                        data={GanttChartDataFormat(data)}
+                        />
+                        }>
+                    </CardGeneric>
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
             {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
-            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : <></> }
+            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
 
         </div>
     );

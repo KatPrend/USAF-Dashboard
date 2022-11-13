@@ -33,16 +33,12 @@ export const UpdateUsers = () => {
             setTitles(response.data);
             setLoading1(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get('/api/user/').then(response => {
             setUsers(response.data);
             setLoading2(false);
         });
-    }, []);
 
-    useEffect(() => {
         axios.get('/api/contractor/').then(response => {
             setContractors(response.data);
             setLoading3(false);
