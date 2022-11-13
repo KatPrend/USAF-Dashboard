@@ -40,7 +40,7 @@ function AwardedProject() {
     let handelCompleteProject = () => {
         axios.put(`/api/contract/status/${contractId}`, {
             id: contractId,
-            contract_status: 'Completed'
+            contract_status: 'Closed'
         })
     }
 
@@ -58,7 +58,7 @@ function AwardedProject() {
         <Modal show={modalIsOpen} size='xl' autoFocus={true}>
             <ModalHeader>
                 <h4>
-                    Are you sure you want to complete this project, once a project is completed it cannot be edited
+                    Are you sure you want to close this project, once a project is closed it cannot be edited
                 </h4>
             </ModalHeader>
             <ModalBody>
@@ -116,7 +116,7 @@ function AwardedProject() {
                 {userRole !== "Admin" ? null : <div>
                     <Row>
                         <Col>
-                            <Button className='submit-new-project preaward' onClick={()=>setModalIsOpen(true)}>Complete Project</Button>
+                            <Button className='submit-new-project preaward' onClick={()=>setModalIsOpen(true)}>Close Project</Button>
                         </Col>
                     </Row>
                 </div>}

@@ -15,7 +15,7 @@ export function ExpenditureFundingDataTable({data}){
                     <tr>
                         <td> </td>
                         {data.map( (info, index) => (
-                            <td key={index} >{info.date}</td>
+                            <td key={index} >{format(new Date(info.date), 'MM/dd/yyyy')}</td>
                         ))}
                     </tr>
                     <tr>
@@ -69,7 +69,7 @@ export function ObligationFundingDataTable({data}){
                     <tr>
                         <td> </td>
                         {data.map( (info, index) => (
-                            <td key={index} >{info.date}</td>
+                            <td key={index} >{format(new Date(info.date), 'MM/dd/yyyy')}</td>
                         ))}
                     </tr>
                     <tr>
@@ -115,12 +115,13 @@ export function ExpenditureFundingDataTableEditable(props){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(editData);
         
         editData.map((currRow, index) => (
             columsEdited.includes(index) === true ?
                 axios.put('/api/expenditure', {
                     projectID: props.id,
-                    expen_funding_date: format(new Date(currRow.date), 'yyyy-MM-dd'),
+                    expen_funding_date: currRow.date.replace(/T.+/, ''),
                     expen_projected: currRow.Projected,
                     expen_actual: currRow.Actual,
                     expenID: currRow.id
@@ -217,7 +218,7 @@ export function ExpenditureFundingDataTableEditable(props){
             axios.delete(`/api/expenditure/${info.id}`, {
                 expenID: info.id,
                 projectID: props.id,
-                expen_funding_date: format(new Date(info.date), 'yyyy-MM-dd'),
+                expen_funding_date: info.date.replace(/T.+/, ''),
                 expen_projected: info.Projected,
                 expen_actual: info.Actual
             })
@@ -255,7 +256,7 @@ export function ExpenditureFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -327,7 +328,7 @@ export function ObligationFundingDataTableEditable(props){
             axios.put('/api/obligation', {
                 id: currRow.id,
                 project_id: props.id,
-                obli_funding_date: format(new Date(currRow.date.split('-')), 'yyyy-MM-dd'),
+                obli_funding_date: currRow.date.replace(/T.+/, ''),
                 obli_funding_type: currRow.FundingType,
                 obli_fiscal_year: currRow.FiscalYear,
                 obli_projected: currRow.Projected,
@@ -352,7 +353,7 @@ export function ObligationFundingDataTableEditable(props){
             index === row ? temp = currObject : null
         ))
         
-        temp.date = format(new Date(e.target.value.split('-')), 'yyyy-MM-dd');
+        temp.date = e.target.value;
         
         setEditData(editData.map((currObject, index) =>(
             index === row ? {...currObject, temp} : {...currObject}
@@ -498,7 +499,7 @@ export function ObligationFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={format(new Date(info.date), 'yyyy-MM-dd')} 
+                                    defaultValue={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
