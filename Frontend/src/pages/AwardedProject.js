@@ -12,7 +12,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import axios from 'axios';
 
-function AwardedProject(){
+function AwardedProject() {
     const location = useLocation();
     const {id} = location.state;
 

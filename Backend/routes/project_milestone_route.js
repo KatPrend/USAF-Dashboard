@@ -85,7 +85,7 @@ router.post('/', (req, res) => {
 
     });
 });
-
+ 
 
 // Update a project milestone
 router.put('/', (req, res) => {
@@ -94,14 +94,14 @@ router.put('/', (req, res) => {
     UPDATE project_milestones
     SET
         project_id = "${project_id}",
-        task_name =  "${task_name}",
-        start_date = "${projected_start}",
-        end_date =  "${projected_end}"
+        task_name =  "${task_name}"
+        ${projected_start !== null ? ',projected_start = "' + projected_start + '"'  : ""}
+        ${projected_end !== null ? ',projected_end = "' + projected_end + '"'  : ""}
         ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
         ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"
     `
-
+    console.log(sql);
         console.log(sql);
     let query = db.query(sql, (err, results) =>{
         if(err){

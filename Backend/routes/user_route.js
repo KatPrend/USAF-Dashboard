@@ -3,6 +3,18 @@ const router = express.Router();
 
 var db = require('../database');
 
+// Get IPTs and Admins for IPT list
+router.get('/adminsAndIpts', (req, res) => {
+    let sql = 'SELECT * FROM users WHERE user_role = 2 OR user_role = 3'
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    })
+});
+
+
 // Get All users
 router.get('/', (req, res) => {
     let sql = 'SELECT * FROM users'

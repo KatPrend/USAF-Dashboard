@@ -254,17 +254,19 @@ router.put("/updateContractTimeline/:timelineID", (req, res)=>{
     UPDATE contract_award_timeline
     SET 
         contract_award_id = "${contract_award_id}",
-        timeline_status = "${timeline_status}",
-        requirement_plan = "${requirement_plan}",
-        draft_rfp_released = "${draft_rfp_released}",
-        approved_by_acb = "${approved_by_acb}",
-        rfp_released = "${rfp_released}",
-        proposal_received = "${proposal_received}",
-        tech_eval_comp = "${tech_eval_comp}",
-        negotiation_comp = "${negotiation_comp}",
-        awarded = "${awarded}"	
+        timeline_status = "${timeline_status}"
+        
+        ${requirement_plan !== null ? ',requirement_plan = "' + requirement_plan + '"'  : ""}
+        ${draft_rfp_released !== null ? ',draft_rfp_released = "' + draft_rfp_released + '"'  : ""}
+        ${approved_by_acb !== null ? ',approved_by_acb = "' + approved_by_acb + '"'  : ""}
+        ${rfp_released !== null ? ',expen_funding_date = "' + rfp_released + '"'  : ""}
+        ${proposal_received !== null ? ',proposal_received = "' + proposal_received + '"'  : ""}
+        ${tech_eval_comp !== null ? ',tech_eval_comp = "' + tech_eval_comp + '"'  : ""}
+        ${negotiation_comp !== null ? ',negotiation_comp = "' + negotiation_comp + '"'  : ""}
+        ${awarded !== null ? ',awarded = "' + awarded + '"'  : ""}
+
     WHERE id = ${req.params.timelineID}`;
-    
+    console.log(sql);
     db.query(sql, (err, results) =>{
         if(err){
             throw err

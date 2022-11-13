@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     `
     SELECT * 
     FROM view_clin
-    ORDER BY 
+    ORDER BY clin_num
     `
 
     let query = db.query(sql, (err, results) =>{

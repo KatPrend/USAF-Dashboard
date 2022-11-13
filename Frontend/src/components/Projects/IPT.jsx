@@ -38,7 +38,7 @@ export const IPT = (props) => {
             setLoading2(false);
         });
 
-        axios.get(`/api/user/`).then(response =>{
+        axios.get(`/api/user/adminsAndIpts`).then(response =>{
             setUsers(response.data);
             setLoading3(false);
         });

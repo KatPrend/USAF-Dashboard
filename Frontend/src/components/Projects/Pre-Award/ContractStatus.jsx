@@ -46,14 +46,14 @@ export const ContractStatus = (props) => {
                     id: currRow.id,
                     contract_award_id: currRow.contract_award_id,
                     timeline_status: currRow.timeline_status,
-                    requirement_plan: currRow.requirement_plan !== null ? null : currRow.requirement_plan.replace(/T.+/, ''),
-                    draft_rfp_released: currRow.draft_rfp_released !== null ? null : currRow.draft_rfp_released.replace(/T.+/, ''),
-                    approved_by_acb: currRow.approved_by_acb !== null ? null : currRow.approved_by_acb.replace(/T.+/, ''),
-                    rfp_released: currRow.rfp_released !== null ? null : currRow.rfp_released.replace(/T.+/, ''),
-                    proposal_received: currRow.proposal_received !== null ? null : currRow.proposal_received.replace(/T.+/, ''),
-                    tech_eval_comp: currRow.tech_eval_comp !== null ? null : currRow.tech_eval_comp.replace(/T.+/, ''),
-                    negotiation_comp: currRow.negotiation_comp !== null ? null : currRow.negotiation_comp.replace(/T.+/, ''),
-                    awarded: currRow.awarded !== null ? null : currRow.awarded.replace(/T.+/, '')
+                    requirement_plan: currRow.requirement_plan !== null ?  currRow.requirement_plan.replace(/T.+/, '') : null,
+                    draft_rfp_released: currRow.draft_rfp_released !== null ? currRow.draft_rfp_released.replace(/T.+/, ''): null,
+                    approved_by_acb: currRow.approved_by_acb !== null ? currRow.approved_by_acb.replace(/T.+/, ''): null,
+                    rfp_released: currRow.rfp_released !== null ? currRow.rfp_released.replace(/T.+/, ''): null,
+                    proposal_received: currRow.proposal_received !== null ?  currRow.proposal_received.replace(/T.+/, ''): null,
+                    tech_eval_comp: currRow.tech_eval_comp !== null ? currRow.tech_eval_comp.replace(/T.+/, ''): null,
+                    negotiation_comp: currRow.negotiation_comp !== null ? currRow.negotiation_comp.replace(/T.+/, ''): null,
+                    awarded: currRow.awarded !== null ? currRow.awarded.replace(/T.+/, ''): null
                 })
                 .then(function(res){
                     if (currRow.awarded !== null) {
