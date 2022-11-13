@@ -124,7 +124,7 @@ router.put("/updateDaysAdded", (req, res)=>{
         negotiation_comp = ${negotiation_comp},
         awarded = ${awarded} `;
     
-    db.query(sql, (err, results) =>{
+    let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
         }
@@ -238,7 +238,7 @@ router.get('/daysAdded', (req, res) => {
     FROM contract_days_added
     `;
 
-    db.query(sql, (err, results) => {
+    let query = db.query(sql, (err, results) => {
         if(err){
             throw err
         };
