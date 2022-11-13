@@ -17,7 +17,7 @@ router.get('/getObli/:project_id', (req, res) => {
         obli_actual_total as "Actual Total"
     FROM view_obligation 
     WHERE project_id=${req.params.project_id}
-    ORDER BY date`;
+    ORDER BY obli_funding_date`;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
