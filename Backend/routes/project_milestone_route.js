@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
     let sql = `
     INSERT INTO project_milestones(
         project_id,
-        task_name,
+        task_name
         ${projected_start !== null ? ',projected_start' : ""}
         ${projected_end !== null ? ',projected_end' : ""}
         ${actual_start !== null ? ',actual_start' : ""}
