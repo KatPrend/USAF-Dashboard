@@ -88,17 +88,22 @@ export const ProjectSchedule = (props) => {
             })
             : null)
 
-            // (columsEdited.includes(index) === true 
-            // ? 
-            // axios.put('/api/dependency', {
-            //     milestone_id: currRow.ID,
-            //     project_id: currRow.project_id,
-            //     Predecessors: currRow.Name,
 
-            // })
-            // : null)
+            (columsEdited.includes(index) === true 
+            ? 
 
+
+            currRow.Predecessors.split(",").forEach(element => {
+                axios.put('/api/dependency', {
+                    predecessor_project: currRow.project_id, 
+                    predecessor_milestone: element,
+                    successor_project: currRow.project_id,
+                    successor_milestone: currRow.ID
+                })
+            })
             
+            : null)
+
         ))
 
         setColumsEdited([]);
@@ -339,6 +344,7 @@ export const ProjectSchedule = (props) => {
                                                 <td>
                                                     <Form.Group key={ID}>
                                                         <Form.Control 
+                                                        placeholder='1,2,3...'
                                                         defaultValue={Predecessors}
                                                         onChange={(e) => handlePredecessors(e, index)}/>
                                                     </Form.Group>
