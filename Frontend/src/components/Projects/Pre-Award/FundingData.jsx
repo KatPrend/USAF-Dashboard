@@ -16,6 +16,8 @@ export const FundingData = (props) => {
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [est_data, setEstData] = useState();
     const [approved_data, setApprovedData] = useState();
+    const [reload, setReload] = useState(false);
+
 
     const location = useLocation();
     const {id} =location.state;
@@ -55,6 +57,31 @@ export const FundingData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    if(reload){
+
+        axios.get(`/api/obligation/getObli/${props.data}`).then(response =>{
+            setObligationData(response.data);
+            setLoading(false);
+        });
+        
+        axios.get(`/api/approved/${props.data}`).then(response =>{
+            setApprovedData(response.data);
+            setLoading2(false);
+        });
+
+        axios.get(`/api/approved/getEstimates/${props.data}`).then(response =>{
+            setEstData(response.data);
+            setLoading3(false);
+        });
+
+        setReload(false)
+    }
+
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -67,7 +94,7 @@ export const FundingData = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>

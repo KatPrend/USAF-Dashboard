@@ -19,6 +19,13 @@ function renderContent(contractStatus, projectId, projectName) {
         }}
       >{projectName}</Link>
     }
+    else if (contractStatus === "Completed"){
+        return <Link to={{ 
+            pathname: "/completedproject", 
+            state: {id:projectId} // your data array of objects
+        }}
+      >{projectName}</Link>
+    }
 };
 
 
