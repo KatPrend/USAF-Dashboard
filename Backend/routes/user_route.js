@@ -206,7 +206,9 @@ router.get('/getIPTMembersAttached/:projectID', (req, res) => {
 // Grabs all contractors associated to a contract company
 router.get('/contractorUsers/:conID', (req, res) => {
     let sql = `
-    SELECT * FROM users u 
+    SELECT 
+        u.*
+    FROM users u 
     INNER JOIN contractor c on c.id = u.contractor_id
     WHERE u.contractor_id = ${req.params.conID}`;
     let query = db.query(sql, (err, results) =>{
@@ -239,7 +241,7 @@ router.get('/conNotActive', (req, res) => {
 router.get('/conProject/:projectID', (req, res) => {
     let sql = `
     SELECT 
-        u.user_name
+        u.*
     FROM users u
     INNER JOIN user_project_link upl on u.id = upl.user_id
     INNER JOIN view_project vp on vp.id = upl.project_id

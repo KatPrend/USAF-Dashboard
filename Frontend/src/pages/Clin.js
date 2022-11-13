@@ -40,6 +40,8 @@ const ClinData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    console.log(JSON.stringify(data));
+
     // search
     // protects from toStrining null or undefined
     const safeToString = (input) => {
@@ -87,14 +89,14 @@ const ClinData = (props) => {
                 </tr>
 
                 {
-                    data.map(({id, clin_num, project_id, clin_type, clin_scope, proj_clin_value, ind_gov_est}) => (
-                        <tr key={clin_num} style={shouldDisplay(clin_num, clin_type, clin_scope, proj_clin_value, ind_gov_est) ? {} : {display: 'none'}}>
+                    data.map(({id, clin_num, project_id, clin_type, clin_scope, clin_value, ind_gov_est}) => (
+                        <tr key={clin_num} style={shouldDisplay(clin_num, clin_type, clin_scope, clin_value, ind_gov_est) ? {} : {display: 'none'}}>
                             <td><Link to={{pathname: '/wbs', state: {clinNum:clin_num, projectID:project_id}}}>{clin_num}</Link></td>
                             <td>{clin_type}</td>
                             <td>{clin_scope}</td>
-                            <td>${proj_clin_value}</td>
+                            <td>${clin_value}</td>
                             <td>${ind_gov_est}</td>
-                            <td><Button onClick={() => {props.editClinFunc(id, clin_num, clin_type, clin_scope, ind_gov_est)}}>Edit</Button></td>
+                            <td><Button className='submit-new-project' onClick={() => {props.editClinFunc(id, clin_num, clin_type, clin_scope, ind_gov_est)}}>Edit</Button></td>
                         </tr>
                     ))
                 }
@@ -126,7 +128,7 @@ function Clin() {
     const [showModal, setShowModal] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [addClinNum, setAddClinNum] = useState('');
-    const [addClinType, setAddClinType] = useState(1);
+    const [addClinType, setAddClinType] = useState(0);
     const [addClinScope, setAddClinScope] = useState('');
     const [addClinValue, setAddClinValue] = useState('');
     const [addClinEst, setAddClinEst] = useState('');
@@ -260,8 +262,9 @@ function Clin() {
                     setAddClinScope('');
                     setAddClinEst('');
                 }}>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>{ target === 0 ? 'Add CLIN' : 'Edit CLIN'}</Modal.Title>
+                    <Button className='Button' onClick={() => {toggleModal(); setTarget(0);}}>Done</Button>
                 </Modal.Header>
                 <Modal.Body>
 
@@ -274,11 +277,12 @@ function Clin() {
                     <Form>
                         <Form.Group>
                             <Form.Label>CLIN Number</Form.Label>
-                            <Form.Control onChange={function (event) {setAddClinNum(event.target.value)}} value={addClinNum} type="text" placeholder="Enter CLIN Number" />
+                            <Form.Control onChange={function (event) {setAddClinNum(event.target.value)}} value={addClinNum} type="number" placeholder="Enter CLIN Number" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>CLIN Type</Form.Label>
                             <Form.Control as="select" onChange={function (event) {setAddClinType(event.target.value)}} value={addClinType} type="text" placeholder="Enter CLIN Type">
+                                <option value='0'>Choose CLIN Type</option>
                                 <option value='1'>FFP</option>
                                 <option value='2'>FFIF</option>
                                 <option value='3'>FF-EPA</option>
@@ -294,7 +298,7 @@ function Clin() {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Independent Goverment Cost Estamate</Form.Label>
-                            <Form.Control onChange={function (event) {setAddClinEst(event.target.value)}} value={addClinEst} type="text" placeholder="Enter Independent Goverment Cost Estamate" />
+                            <Form.Control onChange={function (event) {setAddClinEst(event.target.value)}} value={addClinEst} type="number" placeholder="Enter Independent Goverment Cost Estamate" />
                         </Form.Group>
                         <div className={target === 0 ? '' : 'd-flex justify-content-between'}>
                             {target === 0 ? <></> : 
@@ -302,21 +306,18 @@ function Clin() {
                                     Delete CLIN
                                 </Button>                    
                             }
-                            <Button style={{marginTop: '2%', marginBottom: '2%'}} onClick={() => {(target === 0 ? addClin() : editClin());}} variant="primary">
+                            <Button className='submit-new-project' style={{marginTop: '2%', marginBottom: '2%'}} onClick={() => {(target === 0 ? addClin() : editClin());}} variant="primary">
                                 Submit
                             </Button>
                         </div>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={() => {toggleModal(); setTarget(0);}}>Close</Button>
-                </Modal.Footer>
             </Modal>
             <div className="lightBlue">
                 <NavB getUserInfo={getUserInfo}/>
                 <div className="d-flex justify-content-between p-2">
                     <h2>CLIN Data:</h2>
-                    <Button onClick={() => {toggleModal(); setTarget(0);}}>Add CLIN</Button>
+                    <Button className='submit-new-project' onClick={() => {toggleModal(); setTarget(0);}}>Add CLIN</Button>
                 </div>
                 <ClinData editClinFunc={getEditClinData} showModal={showModal}/>
             </div>

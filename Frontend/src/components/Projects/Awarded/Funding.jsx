@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import {ObligationFundingDataTable, ExpenditureFundingDataTable, ObligationFundingDataTableEditable, ExpenditureFundingDataTableEditable} from './FundingDataTable';
 import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../../ApprovedFundingTable';
-import { AwardedProjectFundingDataObligation, ApprovedFundingData } from '../../../pages/DummyData';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import '../../../pages/page.css';
 
@@ -20,6 +19,7 @@ export const Funding = (props) => {
     const [approved_data, setApprovedData] = useState();
     const [est_data, setEstData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
+    const [reload, setReload] = useState(false);
 
     const location = useLocation();
     const {id} =location.state;
@@ -74,6 +74,35 @@ export const Funding = (props) => {
 
     // });
 
+    if(reload){
+        axios.get(`/api/expenditure/getExpen/${props.projectId}`).then(response =>{
+            setExpenData(response.data);
+            setLoading1(false);
+        });
+
+        axios.get(`/api/obligation/getObli/${props.projectId}`).then(response =>{
+            setObligationData(response.data);
+            setLoading2(false);
+        });
+        
+        axios.get(`/api/approved/${props.projectId}`).then(response =>{
+            setApprovedData(response.data);
+            setLoading3(false);
+        });
+
+        axios.get(`/api/approved/getEstimates/${props.projectId}`).then(response =>{
+            setEstData(response.data);
+            setLoading4(false);
+        });
+
+        setReload(false)
+    }
+
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -86,7 +115,7 @@ export const Funding = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -115,7 +144,6 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                {/* AwardedProjectFundingDataExpenditure */}
                                 <ExpenditureFundingDataTableEditable data={expen_data} id={props.projectId}/>
                             </Col>
                         </Row>
@@ -142,22 +170,17 @@ export const Funding = (props) => {
                 <Container>
                     <Row>
                         <Col>
-                        
+                        {console.log(obligation_data)}
                         <Tabs className="Tabs">
                             <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
-                                {/* AwardedProjectFundingDataObligation */}
-                                {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
                                 <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
-                            {/* AwardedProjectFundingDataObligation */}
                             <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
                                 <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
-                            {/* AwardedProjectFundingDataExpenditure */}
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
                                 <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
-                            {/* AwardedProjectFundingDataExpenditure */}
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
                                 <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>

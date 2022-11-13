@@ -13,12 +13,7 @@ export const UpdateFinancialBreakpoints = () => {
     const [yellowExpBreak, setYellowExpBreak] = useState();
     const [showAlert, setShowAlert] = useState(false);
     // get breakpoints
-    // TODO: find BE api call
     useEffect(() => {
-        axios.get('/api/fundingType/').then(response => {
-            setData(response.data);
-            setLoading(false);
-        });
         axios.get('/api/finSum/').then(response => {
             setYellowOblBreak(response.data[0].obli_yellow_breakpoint);
             setYellowExpBreak(response.data[0].expen_yellow_breakpoint);
@@ -44,6 +39,8 @@ export const UpdateFinancialBreakpoints = () => {
             expen_yellow_breakpoint: yellowExpBreak,
             expen_red_breakpoint: redExpBreak
         });
+        
+        // TODO: do some axios stuff once endpoint is set up
     }
 
 
