@@ -12,6 +12,7 @@ export const ProjectData = (props) => {
     const [data, setData] = useState();
     const [ModalIsOpen, setModalIsOpen] = useState(false);
     const [openWBS, setOpenWBS] = useState(false);
+    const [reload, setReload] = useState(false);
 
     const [projectNameEdit, setProjectName] = useState("");
     const [contractNumberEdit, setContractNumber] = useState("");
@@ -58,16 +59,15 @@ export const ProjectData = (props) => {
                 ccar_num: (ccarNumEdit === "" ? ccar_num : ccarNumEdit)
             })
             .then(
-                axios.put(`/api/contract/${contract_award_id}`, {
+                axios.put(`/api/contract/contractNum/${contract_award_id}`, {
                     id: id, 
                     contract_num: (contractNumberEdit === "" ? contract_num : contractNumberEdit),
-                    contract_status: contract_status,
-                    contract_value: contract_value
                 })
             )
             
         })
-        
+
+        setReload(true);
         
     }
     const handleName = (e) => {
@@ -95,6 +95,15 @@ export const ProjectData = (props) => {
         setOpenWBS(open);
     }
 
+    if(reload){
+        axios.get(`/api/project/${props.data}`).then(response => {
+            setData(response.data);
+            setLoading(false);
+        });
+        
+        setReload(false);
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -108,7 +117,7 @@ export const ProjectData = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button' type='submit' form='ProjectDataEdit'>Save</Button>
+                                    <Button className='Button' type='submit' form='ProjectDataEdit' onClick={()=>setModalIsOpen(false)}>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>

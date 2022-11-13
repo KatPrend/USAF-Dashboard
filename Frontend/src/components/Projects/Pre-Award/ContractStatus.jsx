@@ -78,8 +78,8 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
         
-        temp.requirement_plan = e.target.value;
-        
+        temp.requirement_plan = new Date(e.target.value.split('-'));
+
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
         )))
@@ -96,7 +96,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.draft_rfp_released = e.target.value;
+        temp.draft_rfp_released = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -114,7 +114,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.approved_by_acb = e.target.value;
+        temp.approved_by_acb = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -132,7 +132,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.rfp_released = e.target.value;
+        temp.rfp_released = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -150,7 +150,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.proposal_received = e.target.value;
+        temp.proposal_received = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -168,7 +168,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.tech_eval_comp = e.target.value;
+        temp.tech_eval_comp = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -186,7 +186,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.negotiation_comp = e.target.value;
+        temp.negotiation_comp = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}
@@ -204,7 +204,7 @@ export const ContractStatus = (props) => {
             currObject.id === ID ? temp = currObject : null
         ))
 
-        temp.awarded = e.target.value;
+        temp.awarded = new Date(e.target.value.split('-'));
         
         setEditData(editData.map((currObject) =>(
             currObject.id === ID ? {...currObject, temp} : {...currObject}

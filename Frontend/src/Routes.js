@@ -6,6 +6,7 @@ import GetExample from './pages/GetExample';
 import NewProject from './pages/NewProject';
 import PreAwardProject from './pages/PreAwardProject';
 import AwardedProject from './pages/AwardedProject';
+import CompletedProject from './pages/CompletedProject';
 import Dependency from './pages/Dependency';
 import WBS from './pages/WBS'
 import Admin from './pages/Admin';
@@ -32,6 +33,9 @@ function Routes() {
             </Route>
             <Route exact path="/awardedproject">
                 <AwardedProject />
+            </Route>
+            <Route exact path="/completedproject">
+                <CompletedProject />
             </Route>
             <Route exact path="/projects">
                 <GetExample />

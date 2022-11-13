@@ -150,6 +150,25 @@ router.put("/status/:contractid", (req, res)=>{
     });
 });
 
+//update a contract number
+router.put("/contractNum/:contractid", (req, res)=>{
+    
+    const {contract_num} = req.body;
+
+    let sql = `
+    UPDATE contract_award 
+    SET 
+        contract_num = "${contract_num}"
+    WHERE id = ${req.params.contractid}`;
+    
+    db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
 // Updating a Contract Status
 router.put("/:contractid", (req, res)=>{
     
