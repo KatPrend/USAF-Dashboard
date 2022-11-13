@@ -129,7 +129,7 @@ router.put('/', (req, res) => {
     UPDATE obligation_funding_data
     SET
         project_id = "${project_id}",
-        obli_funding_date = "${obli_funding_date}",
+        ${obli_funding_date !== null ? 'obli_funding_date = "' + obli_funding_date + '",'  : ""}
         obli_funding_type = ${obli_funding_type},
         obli_fiscal_year = "${obli_fiscal_year}",
         obli_projected = "${obli_projected}",

@@ -25,14 +25,14 @@ router.get('/getExpen/:project_id', (req, res) => {
     });
 });
 
-// Update Expenditure
+// Update Expenditure 
 router.put('/', (req, res) => {
     const {expenID, projectID, expen_funding_date, expen_projected, expen_actual} = req.body;
     let sql = `
     UPDATE expenditure_funding_data
     SET
         project_id = ${projectID},
-        expen_funding_date = "${expen_funding_date}",
+        ${expen_funding_date !== null ? 'expen_funding_date = "' + expen_funding_date + '",'  : ""}
         expen_projected = ${expen_projected},
         expen_actual = ${expen_actual}
     WHERE id = ${expenID}`;
