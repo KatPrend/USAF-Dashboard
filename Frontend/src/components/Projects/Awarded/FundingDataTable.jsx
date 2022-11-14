@@ -195,11 +195,13 @@ export function ExpenditureFundingDataTableEditable(props){
     const handleAddCol = async (e) => {
         e.preventDefault();
 
+        handleSubmit(e);
+
         axios.post('/api/expenditure', {
             project_id: props.id,
-            expen_funding_date: format(new Date(null), 'yyyy-MM-dd'),
+            expen_funding_date: format(new Date(Date.now()), 'yyyy-MM-dd'),
             expen_projected: 0,
-            expen_actual: 0
+            expen_actual: null
         })
 
         setReload(true);
@@ -212,6 +214,8 @@ export function ExpenditureFundingDataTableEditable(props){
 
     const DeleteCol = async (e, row) => {
         e.preventDefault();
+
+        handleSubmit(e);
 
         editData.map((info, index) => (
             index === columnToDelete ? 
@@ -312,7 +316,7 @@ export function ObligationFundingDataTableEditable(props){
     const [reload, setReload] = useState(false);
     const [allFundingTypes, setAllFundingTypes] = useState();
     const [isLoading, setLoading] = useState(true);
-
+    
     useEffect(() => {
         axios.get('/api/fundingType/').then(response => {
             setAllFundingTypes(response.data);
@@ -440,15 +444,17 @@ export function ObligationFundingDataTableEditable(props){
     const handleAddCol = async (e) => {
         e.preventDefault();
 
+        handleSubmit(e);
+
         axios.post('/api/obligation', {
             project_id: props.id,
-            obli_funding_date: format(new Date(null), 'yyyy-MM-dd'),
+            obli_funding_date: format(new Date(Date.now()), 'yyyy-MM-dd'),
             obli_funding_type: 0,
             obli_fiscal_year: 0,
             obli_projected: 0,
-            obli_actual: 0
+            obli_actual: null
         })
-
+        
         setReload(true);
     }
 
@@ -459,6 +465,8 @@ export function ObligationFundingDataTableEditable(props){
 
     const DeleteCol = async (e) => {
         e.preventDefault();
+
+        handleSubmit(e);
 
         editData.map((info, index) => (
             index === columnToDelete ? 

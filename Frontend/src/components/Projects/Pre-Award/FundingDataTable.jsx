@@ -185,15 +185,15 @@ export function FundingDataTableEditable(props){
     const handleAddCol = async (e) => {
         e.preventDefault();
 
-        
+        handleSubmit(e);
 
         axios.post('/api/obligation', {
             project_id: props.id,
-            obli_funding_date: format(new Date(null), 'yyyy-MM-dd'),
+            obli_funding_date: format(new Date(Date.now()), 'yyyy-MM-dd'),
             obli_funding_type: 0,
             obli_fiscal_year: 0,
             obli_projected: 0,
-            obli_actual: 0
+            obli_actual: null
         })
 
         setReload(true);
@@ -206,6 +206,8 @@ export function FundingDataTableEditable(props){
 
     const DeleteCol = async (e) => {
         e.preventDefault();
+
+        handleSubmit(e);
 
         editData.map((info, index) => (
             index === columnToDelete ? 

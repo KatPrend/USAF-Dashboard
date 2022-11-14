@@ -58,13 +58,13 @@ router.post('/', (req, res) => {
     INSERT INTO expenditure_funding_data(
         project_id,
         expen_funding_date,
-        expen_projected,
-        expen_actual
+        expen_projected
+        ${expen_actual !== null ? ',expen_actual ' : ""}
     ) VALUES(
         "${project_id}",
         "${expen_funding_date}",
-        "${expen_projected}",
-        "${expen_actual}"
+        "${expen_projected}"
+        ${expen_actual !== null ? ',"' + expen_actual + '"'  : ""}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){

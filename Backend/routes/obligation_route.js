@@ -98,15 +98,15 @@ router.post('/', (req, res) => {
         obli_funding_date,
         obli_funding_type,
         obli_fiscal_year,
-        obli_projected,
-        obli_actual
+        obli_projected
+        ${obli_actual !== null ? ',obli_actual ' : ""}
     ) VALUES (
         "${project_id}",
         "${obli_funding_date}",
         "${obli_funding_type}",
         "${obli_fiscal_year}",
-        "${obli_projected}",
-        "${obli_actual}"
+        "${obli_projected}"
+        ${obli_actual !== null ? ',"' + obli_actual + '"'  : ""}
     )`;
     let query = db.query(sql, (err, results)=>{
         if(err){
