@@ -32,7 +32,8 @@ export const UpdateBranches = () => {
     let handleAdd = async (e) => {
         e.preventDefault();
 
-        axios.post(`/api/branch/${addBranch}`, {
+        axios.post(`/api/branch/`, {
+            branch_name: addBranch
         })
         .then(function(res){
             // res.data.insertId

@@ -56,7 +56,7 @@ export const ContractStatus = (props) => {
                     awarded: currRow.awarded !== null ? currRow.awarded.replace(/T.+/, ''): null
                 })
                 .then(function(res){
-                    if (currRow.awarded !== null) {
+                    if (currRow.timeline_status === "Actual" && currRow.awarded !== null) {
                         setAwarded(true);
                     }
                 })

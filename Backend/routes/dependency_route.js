@@ -45,13 +45,14 @@ router.post('/', (req, res) => {
 router.put("/", (req, res)=>{
     const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
-    UPDATE project_milestones
+    UPDATE project_milestone_dependency
     SET
         predecessor_project = "${predecessor_project}",
         predecessor_milestone =  "${predecessor_milestone}",
         successor_project = "${successor_project}",
         successor_milestone =  "${successor_milestone}"
      `;
+     console.log(sql);
      let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -60,6 +61,27 @@ router.put("/", (req, res)=>{
 
     });
 });
+
+//Remove a Milestone Dependency
+router.delete('/removeAllAssociated', (req, res) => {
+    const {successor_milestone} = req.body;
+    
+    let sql = `
+    DELETE FROM project_milestone_dependency
+    WHERE 
+        predecessor_project = successor_project AND 
+        successor_milestone = '${successor_milestone}'`
+
+        console.log(sql);
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
 
 //Remove a Milestone Dependency
 router.delete('/removeDependency', (req, res) => {
