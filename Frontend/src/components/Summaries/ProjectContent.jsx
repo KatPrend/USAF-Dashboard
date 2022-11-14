@@ -147,9 +147,9 @@ export const ProjectContent = (props) => {
                     {props.userRole === "Contractor" ? null :   <td>
                                                                     <Form.Control as='select' style={searchStyle} onChange={function (event) {set_financial_status_search(event.target.value)}}>
                                                                         <option value="">No Filter</option>
-                                                                        <option value="ON-BUDGET">On-Budget</option>
-                                                                        <option value="UNDER">Under-Budget</option>
-                                                                        <option value="OVER">Over-Budget</option>
+                                                                        <option value="green">On-Budget</option>
+                                                                        <option value="yellow">Under-Budget</option>
+                                                                        <option value="red">Over-Budget</option>
                                                                     </Form.Control>
                                                                 </td>}
                     <td>
