@@ -14,11 +14,11 @@ const dataPie = (spent, planned) => {
         ]
     )
 }
-  
-const getPieColor = (actual, planned) => {
-    // TODO: set up backend modifiability for these coefficents
-    var red_coefficent = .2;
-    var yellow_coefficent = .1;
+
+//Add red AND yellow coeff to parameters 
+const getPieColor = (actual, planned, rCoefficent, yCoefficent) => {
+    var red_coefficent = rCoefficent;
+    var yellow_coefficent = yCoefficent;
     if (actual >= planned * (1 + red_coefficent) || actual <= planned * (1 - red_coefficent))
     {
         return 'red';
@@ -30,8 +30,8 @@ const getPieColor = (actual, planned) => {
     return 'green';
 }
 
-const expendOptionsPie = (actual, planned) => {
-    var color = getPieColor(actual, planned)
+const expendOptionsPie = (actual, planned, rCoefficent, yCoefficent) => {
+    var color = getPieColor(actual, planned, rCoefficent, yCoefficent)
     return(
         {
             tooltip: {text: 'value'},
@@ -58,6 +58,10 @@ export const FinSum = (props) => {
     const [expenditureActual, setExpenditureActual] = useState(80);
     const [obligationPlanned, setObligationPlanned] = useState(200);
     const [obligationActual, setObligationActual] = useState(210);
+    const [obli_red_coefficent, setObliRedCoefficent] = useState();
+    const [obli_yellow_coefficent, setObliYellowCoefficent] = useState();
+    const [expen_red_coefficent, setExpenRedCoefficent] = useState();
+    const [expen_yellow_coefficent, setExpenYellowCoefficent] = useState();
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -73,13 +77,25 @@ export const FinSum = (props) => {
                 setLoading(false);
             });
         } else {
-            axios.get(`/api/project/userId/${props.userid}`).then(response => {
-                // setData(response.data);
-                console.log("NOOOOOOo");
-                console.log(JSON.stringify(response.data));
+            axios.get(`/api/expenditure/getTotalExpenditure/${props.userid}`).then(response => {
+                setExpenditurePlanned(response.data[0].expen_projected);
+                setExpenditureActual(response.data[0].expen_actual);
+                setLoading(false);
+            });
+            axios.get(`/api/obligation/getTotalObligation/${props.userid}`).then(response => {
+                setObligationActual(response.data[0].obli_actual);
+                setObligationPlanned(response.data[0].obli_projected);
                 setLoading(false);
             });
         }
+        axios.get(`/api/finSum/`).then(response => {
+            console.log(response.data[0]);
+            setObliRedCoefficent(response.data[0].obli_red_breakpoint);
+            setObliYellowCoefficent(response.data[0].obli_yellow_breakpoint);
+            setExpenRedCoefficent(response.data[0].expen_red_breakpoint);
+            setExpenYellowCoefficent(response.data[0].expen_yellow_breakpoint);
+            setLoading(false);
+        });
     }, []);
 
     if (isLoading) {
@@ -101,7 +117,7 @@ export const FinSum = (props) => {
                                         width="168px"
                                         height="168px"
                                         data={dataPie(obligationActual, obligationPlanned)}
-                                        options={expendOptionsPie(obligationActual, obligationPlanned)}
+                                        options={expendOptionsPie(obligationActual, obligationPlanned, obli_red_coefficent, obli_yellow_coefficent)}
                                         />
                                     <div>Obligation %:</div>
                                     <div>{((obligationActual / obligationPlanned) * 100).toFixed(2)}%</div>
@@ -118,7 +134,7 @@ export const FinSum = (props) => {
                                     width="168px"
                                     height="168px"
                                     data={dataPie(expenditureActual, expenditurePlanned)}
-                                    options={expendOptionsPie(expenditureActual, expenditurePlanned)}
+                                    options={expendOptionsPie(expenditureActual, expenditurePlanned, expen_red_coefficent, expen_yellow_coefficent)}
                                     />
                                     <div>Expenditure %:</div>
                                     <div>{((expenditureActual / expenditurePlanned) * 100).toFixed(2)}%</div>
