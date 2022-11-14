@@ -51,7 +51,7 @@ export function FundingDataTable({data}){
                     <tr>
                         <td>Fiscal Year</td>
                         {data.map( (info, index) => (
-                            <td key={index}>{info.FiscalYear}</td>
+                            <td key={index}>FY'{info.FiscalYear}</td>
                         ))}
                     </tr>
                     <tr  >
