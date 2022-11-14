@@ -13,35 +13,23 @@ export const SchedSum = (props) => {
 
     useEffect(() => {
         if(props.userRole === "Admin"){
-            axios.get(`/api/milestone/redAdmin`).then(response => {
-                setRed(response.data);
-                setLoadingRed(false);
-            });
-
-            axios.get(`/api/milestone/yellowAdmin`).then(response => {
-                setYellow(response.data);
-                setLoadingYellow(false);
-            });
-
-            axios.get(`/api/milestone/greenAdmin`).then(response => {
-                setGreen(response.data);
+            axios.get(`/api/milestone/adminSchSum`).then(response => {
+                setGreen(response.data[0].green_sch);
+                setYellow(response.data[0].yellow_sch);
+                setRed(response.data[0].red_sch);
                 setLoadingGreen(false);
+                setLoadingRed(false);
+                setLoadingYellow(false);
             });
         } 
         else {
-            axios.get(`/api/milestone/redUserSchedules/${props.userid}`).then(response => {
-                setRed(response.data);
-                setLoadingRed(false);
-            });
-
-            axios.get(`/api/milestone/yellowUserSchedules/${props.userid}`).then(response => {
-                setYellow(response.data);
-                setLoadingYellow(false);
-            });
-
-            axios.get(`/api/milestone/greenUserSchedules/${props.userid}`).then(response => {
-                setGreen(response.data);
+            axios.get(`/api/milestone/userSchSum/${props.userid}`).then(response => {
+                setGreen(response.data[0].green_sch);
+                setYellow(response.data[0].yellow_sch);
+                setRed(response.data[0].red_sch);
                 setLoadingGreen(false);
+                setLoadingRed(false);
+                setLoadingYellow(false);
             });
         }
     }, []);
@@ -60,19 +48,19 @@ export const SchedSum = (props) => {
                         <Col>
                             <div className="box green">
                                 <p className="category">Tracked Milestones on Schedule</p>
-                                <p className="value">{green[0].count}</p>
+                                <p className="value">{green}</p>
                             </div>
                         </Col>
                         <Col>
                             <div className="box yellow">
                                 <p className="category">Tracked Milestones Within 5 Days</p>
-                                <p className="value">{yellow[0].count}</p>
+                                <p className="value">{yellow}</p>
                             </div>
                         </Col>
                         <Col>
                             <div className="box red">
                                 <p className="category">Tracked Milestones Behind Schedule</p>
-                                <p className="value">{red[0].count}</p>
+                                <p className="value">{red}</p>
                             </div>
                         </Col>
                     </Row>

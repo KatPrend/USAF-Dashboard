@@ -63,18 +63,22 @@ router.get('/schedule/:projectId', (req, res) => {
 
 //Make a new Project Milestone
 router.post('/', (req, res) => {
-    const {project_id, task_name, start_date, end_date} = req.body;
+    const {project_id, task_name, projected_start, projected_end, actual_start, actual_end } = req.body;
     let sql = `
     INSERT INTO project_milestones(
         project_id,
-        task_name,
-        start_date,
-        end_date
+        task_name
+        ${projected_start !== null ? ',projected_start' : ""}
+        ${projected_end !== null ? ',projected_end' : ""}
+        ${actual_start !== null ? ',actual_start' : ""}
+        ${actual_end !== null ? ',actual_end ' : ""}
     ) VALUES (
         ${project_id}, 
-        "${task_name}",
-        "${start_date}",
-        "${end_date}"
+        "${task_name}"
+        ${projected_start !== null ? ',"' + projected_start + '"'  : ""}
+        ${projected_end !== null ? ',"' + projected_end + '"'  : ""}
+        ${actual_start !== null ? ',"' + actual_start + '"'  : ""}
+        ${actual_end !== null ? ',"' + actual_end + '"'  : ""}
     )`
 
     let query = db.query(sql, (err, results) =>{
@@ -85,7 +89,7 @@ router.post('/', (req, res) => {
 
     });
 });
-
+ 
 
 // Update a project milestone
 router.put('/', (req, res) => {
@@ -94,14 +98,14 @@ router.put('/', (req, res) => {
     UPDATE project_milestones
     SET
         project_id = "${project_id}",
-        task_name =  "${task_name}",
-        start_date = "${projected_start}",
-        end_date =  "${projected_end}"
+        task_name =  "${task_name}"
+        ${projected_start !== null ? ',projected_start = "' + projected_start + '"'  : ""}
+        ${projected_end !== null ? ',projected_end = "' + projected_end + '"'  : ""}
         ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
         ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"
     `
-
+    console.log(sql);
         console.log(sql);
     let query = db.query(sql, (err, results) =>{
         if(err){
@@ -306,6 +310,55 @@ router.get('/greenAdmin', (req, res) => {
         //console.log(res);
     });
 
+});
+
+//Get all Sch Sum Data for Admins
+router.get('/adminSchSum', (req, res) => {
+
+    let sql = `
+	SELECT
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'ONTRACK') as green_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'BEHIND') as yellow_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project
+            WHERE schedule_status= 'REALLY-BEHIND') as red_sch`;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
+});
+
+//Get all Sch Sum for users
+router.get('/userSchSum/:userID', (req, res) => {
+
+    let sql = `
+	SELECT
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'ONTRACK' AND upl.user_id = ${req.params.userID}) as green_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'BEHIND' AND upl.user_id = ${req.params.userID}) as yellow_sch,
+        (SELECT COUNT(schedule_status) 
+            FROM view_project vp
+            INNER JOIN user_project_link upl on vp.id = upl.project_id
+            WHERE schedule_status= 'REALLY-BEHIND' AND upl.user_id = ${req.params.userID}) as red_sch`;
+
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+    });
 });
 
 module.exports = router;
