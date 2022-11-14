@@ -31,7 +31,6 @@ const ClinData = (props) => {
         // id.project_id
         axios.get(`/api/clin/${id}`).then(response =>{
             setData(response.data);
-            console.log(response.data)
             setLoading(false);
         });
     }, [props.showModal]);
@@ -39,8 +38,6 @@ const ClinData = (props) => {
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
     }
-
-    console.log(JSON.stringify(data));
 
     // search
     // protects from toStrining null or undefined
@@ -163,19 +160,19 @@ function Clin() {
 
     const clinTypeToNum = (type) =>
     {
-        if (type === "FFP")
+        if (type === "FFP" || type === 1)
             return 1;
-        if (type === "FIFF")
+        if (type === "FIFF" || type === 2)
             return 2;
-        if (type === "FF-EPA")
+        if (type === "FF-EPA" || type === 3)
             return 3;
-        if (type === "CPFF")
+        if (type === "CPFF" || type === 4)
             return 4;
-        if (type === "CPIF")
+        if (type === "CPIF" || type === 5)
             return 5;
-        if (type === "CPAF")
+        if (type === "CPAF" || type === 6)
             return 6;
-        if (type === "T&M")
+        if (type === "T&M" || type === 7)
             return 7;
         // default to FFP
         return 1;
@@ -194,15 +191,16 @@ function Clin() {
         axios.post('/api/clin/', {
             clin_num: addClinNum,
             project_id: proj_id_global,
-            clin_type: clinTypeToNum(addClinType),
+            clin_type: addClinType,
             clin_scope: addClinScope,
             ind_gov_est: addClinEst
         })
         setAddClinNum('');
-        setAddClinType(1);
+        setAddClinType(0);
         setAddClinScope('');
         setAddClinEst('');
         toggleModal();
+        setShowAlert(false)
         setTarget(0);
     }
 
@@ -228,6 +226,7 @@ function Clin() {
         setAddClinScope('');
         setAddClinEst('');
         toggleModal();
+        setShowAlert(false)
         setTarget(0);
     }
 
@@ -240,6 +239,7 @@ function Clin() {
         setAddClinScope('');
         setAddClinEst('');
         toggleModal();
+        setShowAlert(false)
         setTarget(0);
     }
 
@@ -258,7 +258,7 @@ function Clin() {
             <Modal show={showModal} onHide={() => {
                     toggleModal();
                     setAddClinNum('');
-                    setAddClinType(1);
+                    setAddClinType(0);
                     setAddClinScope('');
                     setAddClinEst('');
                 }}>
