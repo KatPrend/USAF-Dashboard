@@ -52,8 +52,8 @@ router.get('/obligation_table/:project_id', (req, res) => {
 router.get('/getTotalObligation/:userid', (req, res) => {
     let sql = `
     SELECT 
-	    SUM(obli_projected) as "Planned Obligation",
-        SUM(obli_actual) as "Actual Obligation"
+	    SUM(obli_projected) as obli_projected,
+        SUM(obli_actual) as obli_actual
     FROM view_obligation vo
     JOIN user_project_link upl on vo.project_id = upl.project_id
     JOIN contract_award ca on upl.project_id = ca.project_id
