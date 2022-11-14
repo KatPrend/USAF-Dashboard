@@ -68,7 +68,7 @@ function AwardedProject() {
                             <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
                         </Col>
                         <Col>
-                            <Link to={{pathname: "/completedproject", state: {id:id}}} onClick={handelCompleteProject}><Button className='Button'>Complete Project</Button></Link>
+                            <Link to={{pathname: "/completedproject", state: {id:id}}} onClick={handelCompleteProject}><Button className='Button'>Close Project</Button></Link>
                             
                         </Col>
                     </Row>

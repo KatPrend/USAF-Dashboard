@@ -39,7 +39,7 @@ export function FundingDataTable({data}){
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
-                            <td key={index}>{info.date}</td>
+                            <td key={index}>{format(new Date(info.date), 'MM/dd/yyyy')}</td>
                         ))}
                     </tr>
                     <tr>
@@ -185,6 +185,8 @@ export function FundingDataTableEditable(props){
     const handleAddCol = async (e) => {
         e.preventDefault();
 
+        
+
         axios.post('/api/obligation', {
             project_id: props.id,
             obli_funding_date: format(new Date(null), 'yyyy-MM-dd'),
@@ -202,7 +204,7 @@ export function FundingDataTableEditable(props){
         setShowAlert(true);
     }
 
-    const DeleteCol = async (e, row) => {
+    const DeleteCol = async (e) => {
         e.preventDefault();
 
         editData.map((info, index) => (
@@ -211,7 +213,7 @@ export function FundingDataTableEditable(props){
             :
             null
         ))
-        setShowAlert(false)
+        setShowAlert(false);
         setReload(true);
     }
 
@@ -306,7 +308,7 @@ export function FundingDataTableEditable(props){
             <Alert show={showAlert} variant="danger">
                 <Alert.Heading>Are You Sure you want to delete column {columnToDelete+1}</Alert.Heading>
                 <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
-                <Button variant="outline-danger" onclick={DeleteCol}>Delete</Button>
+                <Button variant="outline-danger" onClick={DeleteCol}>Delete</Button>
             </Alert>
             <Button className='Button' type="submit">Save Obligation Data</Button>
         </Form>

@@ -81,8 +81,8 @@ export const ProjectSchedule = (props) => {
                 milestone_id: currRow.ID,
                 project_id: currRow.project_id,
                 task_name: currRow.Name,
-                projected_start: currRow.ProjectedStart !== null ? null : currRow.ProjectedStart.replace(/T.+/, ''),
-                projected_end: currRow.ProjectedEnd !== null ? null : currRow.ProjectedEnd.replace(/T.+/, ''),
+                projected_start: currRow.ProjectedStart !== null ? currRow.ProjectedStart.replace(/T.+/, '') : null,
+                projected_end: currRow.ProjectedEnd !== null ? currRow.ProjectedEnd.replace(/T.+/, '') : null,
                 actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
                 actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
             })
@@ -226,6 +226,17 @@ export const ProjectSchedule = (props) => {
 
     const handleAddRow = async (e) => {
         e.preventDefault();
+
+        axios.post(`/api/milestone`, {
+            project_id: props.data,
+            task_name: "",
+            projected_start: null,
+            projected_end: null,
+            actual_start: null,
+            actual_end: null
+        })
+
+        setReload(true);
     }
 
     const handleRowAlert = (row) => {
@@ -233,8 +244,13 @@ export const ProjectSchedule = (props) => {
         setShowRowAlert(true);
     }
 
-    const DeleteRow = async (e, row) => {
+    const DeleteRow = async (e) => {
         e.preventDefault();
+
+        axios.delete(`/api/milestone/${rowToDelete}`)
+
+        setShowRowAlert(false);
+        setReload(true);
     }
 
     const getOpenUploadModal = (open) => {
@@ -255,6 +271,11 @@ export const ProjectSchedule = (props) => {
         setReload(false);
     }
 
+    const handleCloseModel = (e) => {
+        setReload(true);
+        setModalIsOpen(false);
+    }
+
     if(isLoading){
         return <div className="mx-auto w-75">Loading...</div>;
     }
@@ -271,8 +292,8 @@ export const ProjectSchedule = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={()=>setModalIsOpen(false)}>Cancel</Button>
-                                    <Button className='Button' type='submit' form='ProjectSchedule'>Save</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
+                                    <Button className='Button' type='submit' form='ProjectSchedule' onClick={()=>setReload(true)}>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
@@ -311,7 +332,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={ProjectedStart.replace(/T.+/, '')} 
+                                                    defaultValue={ProjectedStart !== null ? ProjectedStart.replace(/T.+/, '') : "N/A"} 
                                                     type='date'
                                                     onChange={(e) => handleProjectedStart(e, index)}/>
                                                 </Form.Group>
@@ -319,7 +340,7 @@ export const ProjectSchedule = (props) => {
                                             <td>
                                                 <Form.Group key={ID}>
                                                     <Form.Control 
-                                                    defaultValue={ProjectedEnd.replace(/T.+/, '')} 
+                                                    defaultValue={ProjectedEnd !== null ? ProjectedEnd.replace(/T.+/, '') : "N/A"} 
                                                     type='date'
                                                     onChange={(e) => handleProjectedEnd(e, index)}/>
                                                 </Form.Group>
@@ -357,7 +378,7 @@ export const ProjectSchedule = (props) => {
                         <Alert show={showRowAlert} variant="danger">
                             <Alert.Heading>Are You Sure you want to delete Milestone {rowToDelete}</Alert.Heading>
                             <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
-                            <Button variant="outline-danger">Delete</Button>
+                            <Button variant="outline-danger" onClick={DeleteRow}>Delete</Button>
                         </Alert>
                     </Form>
                     
