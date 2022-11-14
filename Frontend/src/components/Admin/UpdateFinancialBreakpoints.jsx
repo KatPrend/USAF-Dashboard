@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Dropdown, DropdownButton, Form, Row, Alert} from 'react-bootstrap';
+import { Button, Form, Alert} from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateFinancialBreakpoints = () => {
 
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState();
     const [redOblBreak, setRedOblBreak] = useState();
     const [yellowOblBreak, setYellowOblBreak] = useState();
     const [redExpBreak, setRedExpBreak] = useState();

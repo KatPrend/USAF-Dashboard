@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateUsers = () => {
 
-    const [isLoading1, setLoading1] = useState(true);
     const [isLoading2, setLoading2] = useState(true);
     const [isLoading3, setLoading3] = useState(true);
-    const [titles, setTitles] = useState();
     const [users, setUsers] = useState();
     const [contractors, setContractors] = useState();
-    const [removeUser, setRemoveUser] = useState(1);
+    const [removeUser, setRemoveUser] = useState(0);
 
     const [adminName, setAdminName] = useState("");
     const [adminEmail, setAdminEmail] = useState("");
@@ -29,11 +27,6 @@ export const UpdateUsers = () => {
     const [removed, setRemoved] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/mjt/milJobs/').then(response => {
-            setTitles(response.data);
-            setLoading1(false);
-        });
-
         axios.get('/api/user/').then(response => {
             setUsers(response.data);
             setLoading2(false);
@@ -45,7 +38,7 @@ export const UpdateUsers = () => {
         });
     }, []);
 
-    if (isLoading1 || isLoading2 || isLoading3) {
+    if (isLoading2 || isLoading3) {
         return <div className="mx-auto w-100">Loading...</div>;
     }
 
@@ -177,12 +170,12 @@ export const UpdateUsers = () => {
     }
 
     let handleDropdownSelect = (e) => {
-        setRemoveUser(e);
+        setRemoveUser(e.target.value);
         setAddedAdmin(false);
         setAddedIPT(false);
         setAddedContractor(false);
         setRemoved(false);
-        console.log(e);
+        console.log(e.target.value);
     }
     let handleRemove = async () => {
 
@@ -191,6 +184,7 @@ export const UpdateUsers = () => {
         .then(function(res){
 
             setRemoved(true);
+            setRemoveUser(0);
 
             axios.get('/api/user/').then(response => {
                 setUsers(response.data);
@@ -270,9 +264,9 @@ export const UpdateUsers = () => {
                         <Form.Group as={Row}>
                             <Form.Label column sm={3}>Contractor:</Form.Label>
                             <Col sm={7}>
-                                <Form.Control as="select" show={true} type="contractor" placeholder='Contractor' onChange={handleContractor}>
-                                    {contractors.map(({id, contractor_name, summary}) => (
-                                        <option value={id} key={id} eventKey={id}>{contractor_name}</option>
+                                <Form.Control as="select" type="contractor" placeholder='Contractor' onChange={handleContractor}>
+                                    {contractors.map((element, index) => (
+                                        <option value={element.id} key={index}>{element.contractor_name}</option>
                                     ))}
                                 </Form.Control>
                             </Col>
@@ -288,16 +282,22 @@ export const UpdateUsers = () => {
                 <Row>
                     <h5>Remove User</h5>
                     <Col>
-                        <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Users">
-                            {users.map(({id, contractor_id, user_name, user_role, user_email, mil_job_title_id}) => (
-                                <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {user_name}
-                                </Dropdown.Item>
-                            ))}
-                        </DropdownButton> 
-                    </Col>
-                    <Col>
-                        <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                        <Form.Group as={Row} style={{marginTop:"2%"}}>
+                            <Form.Label column sm={3}></Form.Label>
+                            <Col sm={4}>
+                                <Form.Control as="select" onChange={handleDropdownSelect}>
+                                    <option key={0} value={0}>Select User</option>
+                                    {users.map((element, index) => (
+                                        <option key={index} value={element.id}>
+                                            {element.user_name}
+                                        </option>
+                                    ))}
+                                </Form.Control>
+                            </Col>
+                            <Col sm={4}>
+                                <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                            </Col>
+                        </Form.Group>
                     </Col>
                 </Row>
                 <Row>

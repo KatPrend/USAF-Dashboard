@@ -99,13 +99,13 @@ const WbsData = (props) => {
                     <th>Resource</th>
                     <th>Resource Description</th>
                     <th>Resource Type</th>
-                    <th>Rate</th>
+                    { props.userRole === "Contractor" ? null : <th>Rate</th> }
                     <th>Hours</th>
                     <th>Units</th>
-                    <th>Cost</th>
-                    <th>Base Cost</th>
-                    <th>Direct Cost</th>
-                    <th>Total Price</th>
+                    { props.userRole === "Contractor" ? null : <th>Cost</th> }
+                    { props.userRole === "Contractor" ? null : <th>Base Cost</th> }
+                    { props.userRole === "Contractor" ? null : <th>Direct Cost</th> }
+                    { props.userRole === "Contractor" ? null : <th>Total Price</th> }
                 </tr>
             </thead>
             <tbody>
@@ -118,13 +118,13 @@ const WbsData = (props) => {
                     <td><input placeholder="Filter by Code" style={searchStyle} type='text' name='textField' onChange={function (event) {set_resource_search(event.target.value)}} value={resource_search}></input></td>
                     <td><input placeholder="Filter by description" style={searchStyle} type='text' name='textField' onChange={function (event) {set_resource_description_search(event.target.value)}} value={resource_description_search}></input></td>
                     <td><input placeholder="Filter by Type" style={searchStyle} type='text' name='textField' onChange={function (event) {set_resource_type_search(event.target.value)}} value={resource_type_search}></input></td>
-                    <td><input placeholder="Filter by Rate" style={searchStyle} type='text' name='textField' onChange={function (event) {set_rate_search(event.target.value)}} value={rate_search}></input></td>
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Rate" style={searchStyle} type='text' name='textField' onChange={function (event) {set_rate_search(event.target.value)}} value={rate_search}></input></td> }
                     <td><input placeholder="Filter by Hours" style={searchStyle} type='text' name='textField' onChange={function (event) {set_hours_search(event.target.value)}} value={hours_search}></input></td>
                     <td><input placeholder="Filter by Units" style={searchStyle} type='text' name='textField' onChange={function (event) {set_units_search(event.target.value)}} value={units_search}></input></td>
-                    <td><input placeholder="Filter by Cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_cost_search(event.target.value)}} value={cost_search}></input></td>
-                    <td><input placeholder="Filter by Base cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_base_cost_search(event.target.value)}} value={base_cost_search}></input></td>
-                    <td><input placeholder="Filter by Direct cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_direct_cost_search(event.target.value)}} value={direct_cost_search}></input></td>
-                    <td><input placeholder="Filter by Total price" style={searchStyle} type='text' name='textField' onChange={function (event) {set_total_price_search(event.target.value)}} value={total_price_search}></input></td>
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_cost_search(event.target.value)}} value={cost_search}></input></td> }
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Base cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_base_cost_search(event.target.value)}} value={base_cost_search}></input></td> }
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Direct cost" style={searchStyle} type='text' name='textField' onChange={function (event) {set_direct_cost_search(event.target.value)}} value={direct_cost_search}></input></td> }
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Total price" style={searchStyle} type='text' name='textField' onChange={function (event) {set_total_price_search(event.target.value)}} value={total_price_search}></input></td> }
                 </tr>
                 {
                     data.map(({id, task_id, task_description, month, wbs, clin_num, source_type, resource_code, resource_type, resource_description, rate, hours_worked, units, cost, base_cost, direct_cost, total_price}) => (
@@ -137,13 +137,13 @@ const WbsData = (props) => {
                             <td>{resource_code}</td>
                             <td>{resource_description}</td>
                             <td>{resource_type}</td>
-                            <td>{rate}</td>
+                            { props.userRole === "Contractor" ? null : <td>${rate}</td> }
                             <td>{hours_worked}</td>
                             <td>{units}</td>
-                            <td>{cost}</td>
-                            <td>{base_cost}</td>
-                            <td>{direct_cost}</td>
-                            <td>{total_price}</td>
+                            { props.userRole === "Contractor" ? null : <td>${cost}</td> }
+                            { props.userRole === "Contractor" ? null : <td>${base_cost}</td> }
+                            { props.userRole === "Contractor" ? null : <td>${direct_cost}</td> }
+                            { props.userRole === "Contractor" ? null : <td>${total_price}</td> }
                         </tr>
                     ))
                 }
@@ -165,12 +165,7 @@ function WBS() {
     return (
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo} />
-            <div className="d-flex justify-content-between p-2">
-                <h2>Projects:</h2>
-                <Button>Edit</Button>
-                <Button>Back</Button>
-            </div>
-            <WbsData/>
+            {userRole === "" ? null : <WbsData userRole={userRole} />}
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateBranches = () => {
@@ -8,7 +8,7 @@ export const UpdateBranches = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [addBranch, setAddBranch] = useState("");
-    const [removeBranch, setRemoveBranch] = useState();
+    const [removeBranch, setRemoveBranch] = useState(0);
     const [added, setAdded] = useState(false);
     const [removed, setRemoved] = useState(false);
 
@@ -51,10 +51,10 @@ export const UpdateBranches = () => {
     }
 
     let handleDropdownSelect = (e) => {
-        setRemoveBranch(e);
+        setRemoveBranch(e.target.value);
         setAdded(false);
         setRemoved(false);
-        console.log(e);
+        console.log(e.target.value);
     }
 
     let handleRemove = async () => {
@@ -97,18 +97,22 @@ export const UpdateBranches = () => {
                 </Row>
                 <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Branch:</h5>
-                    <Col>
-                        <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Branches">
-                            {data.map(({id, branch_name}) => (
-                                <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {branch_name}
-                                </Dropdown.Item>
-                            ))}
-                        </DropdownButton> 
-                    </Col>
-                    <Col>
-                        <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
-                    </Col>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}></Form.Label>
+                        <Col sm={4}>
+                            <Form.Control as="select" onChange={handleDropdownSelect}>
+                                <option key={0} value={0}>Select Branch</option>
+                                {data.map((element, index) => (
+                                    <option key={index} value={element.id}>
+                                        {element.branch_name}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                        <Col sm={4}>
+                            <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                        </Col>
+                    </Form.Group>
                 </Row>
                 <Row>
                     <Col>

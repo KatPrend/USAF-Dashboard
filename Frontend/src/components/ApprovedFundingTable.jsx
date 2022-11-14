@@ -271,44 +271,37 @@ export function ApprovedFundingTableEditable(props){
 
     if(editData.length === 0){
         return(
-            <Container>
+            <Container style={{marginBottom:"3%"}}>
                 <Row>
-                    <Col>Enter Fiscal Year and Funding Type</Col>
-                </Row>
-                <Row>
-                    <Col>
                     <Form>
                         <Form.Group as={Row}>
-                            <Form.Label column sm={2}>FY'</Form.Label>
-                            <Col sm={2}>
-                                <Form.Control type="number" onChange={handleFisscalYearSelect} />
+                            <Form.Label column sm={3}>Enter Fiscal Year: FY'</Form.Label>
+                            <Col sm={7}>
+                                <Form.Control type="number" onChange={handleFisscalYearSelect} placeholder={String(new Date().getFullYear()).substring(2,4)} />
                             </Col>
                         </Form.Group>
                     </Form>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form>
-                            <Form.Label column sm={3}>Funding Types</Form.Label>
-                            <Col sm={3}>
-                            <Form.Control 
-                                as="select"
-                                onChange={handleFundingTypeSelect}>
+                    <Form>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}>Enter Funding Type:</Form.Label>
+                            <Col sm={7}>
+                                <Form.Control 
+                                    as="select"
+                                    onChange={handleFundingTypeSelect}>
 
-                                <option value={0}>Select</option>
-                                {allFundingTypes.map(({id, funding_type}) => (
-                                    (fundingTypes.includes(id) === true ? null :
-                                        <option key={id} value={id}>{funding_type}</option>
-                                    )
-                                ))}
-                            </Form.Control>
+                                    <option key={0} value={0}>Select Type</option>
+                                    {allFundingTypes.map(({id, funding_type}) => (
+                                        (fundingTypes.includes(id) === true ? null :
+                                            <option key={id} value={id}>{funding_type}</option>
+                                        )
+                                    ))}
+                                </Form.Control>
                             </Col>
-                        </Form>
-                    </Col>
+                        </Form.Group>
+                    </Form>
                 </Row>
                 <Row>
-                    <Col><Button onClick={handleFirstApproved}>Submit</Button></Col>
+                    <Col><Button className='Button' onClick={handleFirstApproved}>Submit</Button></Col>
                 </Row>
 
             </Container>
