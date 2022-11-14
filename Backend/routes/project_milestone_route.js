@@ -99,8 +99,8 @@ router.put('/', (req, res) => {
     SET
         project_id = "${project_id}",
         task_name =  "${task_name}"
-        ${projected_start !== null ? ',projected_start = "' + projected_start + '"'  : ""}
-        ${projected_end !== null ? ',projected_end = "' + projected_end + '"'  : ""}
+        ${projected_start !== null ? ',start_date = "' + projected_start + '"'  : ""}
+        ${projected_end !== null ? ',end_date = "' + projected_end + '"'  : ""}
         ${actual_start !== null ? ',actual_start = "' + actual_start + '"'  : ""}
         ${actual_end !== null ? ',actual_end = "' + actual_end + '"'  : ""}
     WHERE id = "${milestone_id}"

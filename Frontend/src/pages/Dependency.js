@@ -110,9 +110,9 @@ const ProjectContent = (props) => {
                     <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setSuccEnd(event.target.value)}} value={succEnd}></input></td>
                   </tr>
               {
-                  data.map(({ pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end }, index) => (
-                      <tr style={shouldDisplay(pred_proj_name, pred_name, format(new Date(pred_start), 'MM/dd/yyyy'), format(new Date(pred_end), 'MM/dd/yyyy'),
-                                               succ_proj_name, succ_name, format(new Date(succ_start), 'MM/dd/yyyy'), format(new Date(succ_end), 'MM/dd/yyyy')) ? {} : {}} key={index}>
+                  data.map(({ pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_start, succ_end, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end }, index) => (
+                      <tr style={shouldDisplay(pred_proj_name, pred_name, format(new Date(pred_proj_start), 'MM/dd/yyyy'), format(new Date(pred_proj_end), 'MM/dd/yyyy'),
+                                               succ_proj_name, succ_name, format(new Date(succ_proj_start), 'MM/dd/yyyy'), format(new Date(succ_proj_end), 'MM/dd/yyyy')) ? {} : {}} key={index}>
                           <td>{pred_proj_name}</td>
                           <td>{pred_name}</td>
                           <td>{format(new Date(pred_proj_start), 'MM/dd/yyyy')}</td>
