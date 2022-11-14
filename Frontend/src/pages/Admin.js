@@ -39,7 +39,7 @@ function Admin() {
             return <DeleteProjects />;
         }
         // default msg
-        return <></>
+        return <div>Select a setting to edit</div>
     }
     
     return (

@@ -64,7 +64,7 @@ const ProjectContent = (props) => {
 
   const shouldDisplay = (pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end) => {
     // if x does not contain the xSearch and xSearch is not empty
-    console.log(pred_proj_start)
+    console.log(    )
     if (!(safeToString(pred_proj_name).toLowerCase().includes(predProj.toLowerCase())) && predProj !== '')
         return false;
     if (!(safeToString(pred_name).toLowerCase().includes(predMil.toLowerCase())) && predMil !== '')
@@ -173,7 +173,7 @@ function GanttChartDataFormat(JsonData) {
         pred_actual_start !== null ? new Date(pred_actual_start) : new Date(pred_proj_start),
         pred_actual_end !== null ? new Date(pred_actual_end) : new Date(pred_proj_end),
         null,
-        null,
+        "undefined",
         null
       ])
       Rows.push([
@@ -182,7 +182,7 @@ function GanttChartDataFormat(JsonData) {
         succ_actual_start !== null ? new Date(succ_actual_start) : new Date(succ_proj_start),
         succ_actual_end !== null ? new Date(succ_actual_end) : new Date(succ_proj_end),
         null,
-        null,
+        "undefined",
         pred_name
       ])
       return 0;
@@ -251,7 +251,7 @@ const Dependency = (props) => {
                 <Row>
                     {/*1*/}
                     <Col>
-                    {userid !== 0 && userRole !== "" ? <DepSum userid={userid} userRole={userRole}/> : <div className="mx-auto"> Loading...</div>}
+                    {userid !== 0 && userRole !== "" ? <div className="mx-auto" style={{width: '50%', marginBottom: '3%'}}><DepSum  userid={userid} userRole={userRole}/></div> : <div className="mx-auto"> Loading...</div>}
                     
                     </Col>
                     {/*2*/}
