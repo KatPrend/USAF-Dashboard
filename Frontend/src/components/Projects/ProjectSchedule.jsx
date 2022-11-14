@@ -92,24 +92,26 @@ export const ProjectSchedule = (props) => {
                     actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
                     actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
                 })
-            
-                console.log(currRow.Predecessors.split(","))
+                
+                if(currRow.Predecessors !== null){
+                    console.log(currRow.Predecessors.split(","))
 
 
-                axios.delete('api/dependency/removeAllAssociated', {
-                    data:{successor_milestone: currRow.ID}
-                })
-
-                currRow.Predecessors.split(",").forEach(element => {
-                    axios.post('/api/dependency', {
-                        predecessor_project: currRow.project_id, 
-                        predecessor_milestone: element,
-                        successor_project: currRow.project_id,
-                        successor_milestone: currRow.ID
+                    axios.delete('api/dependency/removeAllAssociated', {
+                        data:{successor_milestone: currRow.ID}
                     })
-                    })
+
+                    currRow.Predecessors.split(",").forEach(element => {
+                        element = element.trim();
+                        axios.post('/api/dependency', {
+                            predecessor_project: currRow.project_id, 
+                            predecessor_milestone: element,
+                            successor_project: currRow.project_id,
+                            successor_milestone: currRow.ID
+                        })
+                        })
+                    }
                 }
-            // : null
         });
 
         // editData.map((currRow, index) => (
