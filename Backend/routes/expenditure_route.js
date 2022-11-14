@@ -25,17 +25,19 @@ router.get('/getExpen/:project_id', (req, res) => {
     });
 });
 
-// Update Expenditure
+// Update Expenditure 
 router.put('/', (req, res) => {
     const {expenID, projectID, expen_funding_date, expen_projected, expen_actual} = req.body;
     let sql = `
     UPDATE expenditure_funding_data
     SET
         project_id = ${projectID},
-        expen_funding_date = "${expen_funding_date}",
+        ${expen_funding_date !== null ? 'expen_funding_date = "' + expen_funding_date + '",'  : ""}
         expen_projected = ${expen_projected},
         expen_actual = ${expen_actual}
     WHERE id = ${expenID}`;
+
+    console.log(sql);
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -89,8 +91,8 @@ router.delete('/:expenID', (req, res) => {
 router.get('/getTotalExpenditure/:userid', (req, res) => {
     let sql = `
     SELECT 
-        SUM(expen_projected) as "Planned Expenditure",
-        SUM(expen_actual) as "Actual Expenditure"
+        SUM(expen_projected) as expen_projected,
+        SUM(expen_actual) as expen_actual
     FROM view_expenditure ve
     JOIN user_project_link upl on ve.project_id = upl.project_id
     JOIN contract_award ca on upl.project_id = ca.project_id

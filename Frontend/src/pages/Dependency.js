@@ -166,7 +166,7 @@ const Dependency = (props) => {
         setTimeout(() => {
             console.log("in useeffect")
             console.log(props.firstLoad)
-          if(props.firstLoad == 1)
+          if(props.firstLoad === 1)
           {
             refreshPage();
           }
@@ -202,8 +202,9 @@ const Dependency = (props) => {
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
-            {props.firstLoad == 1 && redirect ? <Redirect to="/dependency"/> : <></>}
+            {props.firstLoad === 1 && redirect ? <Redirect to="/dependency"/> :null}
             {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
+
         </div>
     );
 }

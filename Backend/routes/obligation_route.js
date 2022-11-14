@@ -52,8 +52,8 @@ router.get('/obligation_table/:project_id', (req, res) => {
 router.get('/getTotalObligation/:userid', (req, res) => {
     let sql = `
     SELECT 
-	    SUM(obli_projected) as "Planned Obligation",
-        SUM(obli_actual) as "Actual Obligation"
+	    SUM(obli_projected) as obli_projected,
+        SUM(obli_actual) as obli_actual
     FROM view_obligation vo
     JOIN user_project_link upl on vo.project_id = upl.project_id
     JOIN contract_award ca on upl.project_id = ca.project_id
@@ -129,12 +129,13 @@ router.put('/', (req, res) => {
     UPDATE obligation_funding_data
     SET
         project_id = "${project_id}",
-        obli_funding_date = "${obli_funding_date}",
+        ${obli_funding_date !== null ? 'obli_funding_date = "' + obli_funding_date + '",'  : ""}
         obli_funding_type = ${obli_funding_type},
         obli_fiscal_year = "${obli_fiscal_year}",
         obli_projected = "${obli_projected}",
         obli_actual = "${obli_actual}"
     WHERE id = "${id}"`;
+    console.log(sql);
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err
@@ -146,7 +147,8 @@ router.put('/', (req, res) => {
 router.delete('/:obliID', (req, res) => {
     let sql = `
     DELETE FROM obligation_funding_data
-    WHERE id = ${req.params.obliID}`;
+    WHERE id = "${req.params.obliID}"
+    `;
     let query = db.query(sql, (err, results)=>{
         if(err){
             throw err

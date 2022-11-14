@@ -45,13 +45,14 @@ router.post('/', (req, res) => {
 router.put("/", (req, res)=>{
     const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
     let sql = `
-    UPDATE project_milestones
+    UPDATE project_milestone_dependency
     SET
         predecessor_project = "${predecessor_project}",
         predecessor_milestone =  "${predecessor_milestone}",
         successor_project = "${successor_project}",
         successor_milestone =  "${successor_milestone}"
      `;
+     console.log(sql);
      let query = db.query(sql, (err, results) =>{
         if(err){
             throw err
@@ -60,6 +61,27 @@ router.put("/", (req, res)=>{
 
     });
 });
+
+//Remove a Milestone Dependency
+router.delete('/removeAllAssociated', (req, res) => {
+    const {successor_milestone} = req.body;
+    
+    let sql = `
+    DELETE FROM project_milestone_dependency
+    WHERE 
+        predecessor_project = successor_project AND 
+        successor_milestone = '${successor_milestone}'`
+
+        console.log(sql);
+    let query = db.query(sql, (err, results) =>{
+        if(err){
+            throw err
+        }
+        res.send(results)
+
+    });
+});
+
 
 //Remove a Milestone Dependency
 router.delete('/removeDependency', (req, res) => {
@@ -496,58 +518,6 @@ router.get('/internalDependencies/:projectId', (req, res) => {
         res.send(results)
 
     });
-});
-
-
-router.get('/successorDateDifference/:projectId', (req, res) => {
-    // let sql = `
-    // SELECT
-    //     p.project_name as predescessor_name,
-    //     p.end_date,
-    //     DATEDIFF((SELECT start_date FROM project where id = ${req.params.projectId}),p.end_date) as date_difference
-    // FROM dependency_table d
-    // INNER JOIN project p  ON p.id =  d.successor
-    // WHERE d.dependency = ${req.params.projectId} `;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
-});
-
-router.get('/dependencyDateDifference/:projectId', (req, res) => {
-    // let sql = `
-    // SELECT
-    //     p.project_name as predescessor_name,
-    //     p.start_date,
-    //     DATEDIFF(p.start_date, (SELECT start_date FROM project where id = ${req.params.projectId})) as date_difference
-    // FROM dependency_table d
-    // INNER JOIN project p  ON p.id =  d.dependency
-    // WHERE d.successor = ${req.params.projectId} `;
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });
-});
-
-// Update Milestones
-router.put("/updateMilestone/", (req, res)=>{
-    const {predecessor_project, predecessor_milestone, successor_project, successor_milestone} = req.body;
-    let sql = `
-    `;
-
-    let query = db.query(sql, (err, results) =>{
-        if(err){
-            throw err
-        }
-        res.send(results)
-
-    });    
 });
 
 module.exports = router;
