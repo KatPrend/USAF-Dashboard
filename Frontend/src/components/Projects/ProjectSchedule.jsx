@@ -47,7 +47,6 @@ const getOptions = (cHeight) => {
                 stroke: "#e64a19",
             },
         },
-        width: 1250,
         height: cHeight
     };
 
