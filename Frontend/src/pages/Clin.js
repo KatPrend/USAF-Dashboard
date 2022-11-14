@@ -39,8 +39,6 @@ const ClinData = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
-    console.log(JSON.stringify(data));
-
     // search
     // protects from toStrining null or undefined
     const safeToString = (input) => {

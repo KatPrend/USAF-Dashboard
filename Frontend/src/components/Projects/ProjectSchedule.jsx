@@ -39,14 +39,19 @@ function GanttChartDataFormat(JsonData){
     return (data);
 }
 
-const options = {
-    gantt: {
-        criticalPathEnabled: true,
-        criticalPathStyle: {
-            stroke: "#e64a19",
+const getOptions = (cHeight) => {
+    const options = {
+        gantt: {
+            criticalPathEnabled: true,
+            criticalPathStyle: {
+                stroke: "#e64a19",
+            },
         },
-    },
-};
+        height: cHeight
+    };
+
+    return options;
+}
 
   
 export const ProjectSchedule = (props) => {
@@ -60,6 +65,8 @@ export const ProjectSchedule = (props) => {
     const [uploadModal, setUploadModal] = useState(false);
     const [reload, setReload] = useState(false);
 
+    let chartHeight = 0;
+
     useEffect(() => {
         axios.get(`/api/milestone/schedule/${props.data}`).then(response =>{
             setInfoData(response.data);
@@ -71,40 +78,55 @@ export const ProjectSchedule = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        editData.map((currRow, index) => (
-            //columsEdited.includes(index) === true ? console.log(currRow) : null
-            // Update that sends these Json objects to the database
-            
-            (columsEdited.includes(index) === true 
-            ? 
-            axios.put('/api/milestone', {
-                milestone_id: currRow.ID,
-                project_id: currRow.project_id,
-                task_name: currRow.Name,
-                projected_start: currRow.ProjectedStart !== null ? currRow.ProjectedStart.replace(/T.+/, '') : null,
-                projected_end: currRow.ProjectedEnd !== null ? currRow.ProjectedEnd.replace(/T.+/, '') : null,
-                actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
-                actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
-            })
-            : null)
+        editData.forEach((currRow, index) => {
 
-
-            (columsEdited.includes(index) === true 
-            ? 
-
-
-            currRow.Predecessors.split(",").forEach(element => {
-                axios.put('/api/dependency', {
-                    predecessor_project: currRow.project_id, 
-                    predecessor_milestone: element,
-                    successor_project: currRow.project_id,
-                    successor_milestone: currRow.ID
+                console.log(editData);
+            if(columsEdited.includes(index) === true ){
+                axios.put('/api/milestone', {
+                    milestone_id: currRow.ID,
+                    project_id: currRow.project_id,
+                    task_name: currRow.Name,
+                    projected_start: currRow.ProjectedStart !== null ? currRow.ProjectedStart.replace(/T.+/, ''): null,
+                    projected_end: currRow.ProjectedEnd !== null ? currRow.ProjectedEnd.replace(/T.+/, ''): null,
+                    actual_start: currRow.ActualStart !== null ? currRow.ActualStart.replace(/T.+/, '') : null ,
+                    actual_end: currRow.ActualEnd !== null ? currRow.ActualEnd.replace(/T.+/, '') : null ,
                 })
-            })
-            
-            : null)
+                
+                if(currRow.Predecessors !== null){
+                    console.log(currRow.Predecessors.split(","))
 
-        ))
+
+                    axios.delete('api/dependency/removeAllAssociated', {
+                        data:{successor_milestone: currRow.ID}
+                    })
+
+                    currRow.Predecessors.split(",").forEach(element => {
+                        element = element.trim();
+                        axios.post('/api/dependency', {
+                            predecessor_project: currRow.project_id, 
+                            predecessor_milestone: element,
+                            successor_project: currRow.project_id,
+                            successor_milestone: currRow.ID
+                        })
+                        })
+                    }
+                }
+        });
+
+        // editData.map((currRow, index) => (
+        //     //columsEdited.includes(index) === true ? console.log(currRow) : null
+        //     // Update that sends these Json objects to the database
+            
+            
+
+
+        //     // (columsEdited.includes(index) === true 
+        //     // ? 
+ 
+            
+        //     // : null)
+
+        // ))
 
         setColumsEdited([]);
     }
@@ -438,13 +460,13 @@ export const ProjectSchedule = (props) => {
                     </Row>
                     <Row>
                         <Col>
-                            <Chart
+                            {infoData.length === 0 ? null : <Chart
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={options}
+                            options={getOptions(infoData.length * 55)}
                             data={GanttChartDataFormat(infoData)}
-                            />
+                            />}
                         </Col>
                     </Row>
                 </Container>}

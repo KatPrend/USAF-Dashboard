@@ -25,7 +25,8 @@ const uploadFile = multer({ storage: storage })
 router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'), async (req, res) => {
 
   console.log("Delete Previous Entries")
-  await deletePreviousEntries();
+  await deletePreviousEntries(req.params.projectId);
+  await deleteExpen(req.params.projectId);
 
   console.log("Create the Temp Table")
   await createTempTable();
@@ -65,11 +66,23 @@ router.post('/propricerUpload/:projectId', uploadFile.single('propricerUpload'),
 function deletePreviousEntries(projectId){
   let deleteEntries = `
   DELETE FROM task_resource_table
-  WHERE project_id = ${projectId};
-  DELETE FROM expenditure_funding_data
-  WHERE project_id = ${projectId};
+  WHERE project_id = ${projectId}
   `
+  console.log(deleteEntries)
+  return new Promise((resolve) => {
+    db.query(deleteEntries, function(error, response){
+      console.log(error || response);
+      resolve();
+    });
+  });
 
+}
+function deleteExpen(projectId){
+  let deleteEntries = `
+  DELETE FROM expenditure_funding_data
+  WHERE project_id = ${projectId}
+  `
+  console.log(deleteEntries)
   return new Promise((resolve) => {
     db.query(deleteEntries, function(error, response){
       console.log(error || response);

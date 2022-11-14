@@ -6,7 +6,12 @@ var db = require('../database');
 //GET Financial SUmmary Breakpoints
 router.get('/', (req, res) => {
     let sql = `
-    SELECT * FROM financial_summary_breakpoints`;
+    SELECT 
+        obli_yellow_breakpoint,
+        obli_red_breakpoint,
+        expen_yellow_breakpoint,
+        expen_red_breakpoint
+    FROM financial_summary_breakpoints`;
 
     let query = db.query(sql, (err, results) =>{
         if(err){

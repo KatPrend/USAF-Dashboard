@@ -36,7 +36,6 @@ function NewProject() {
   const [userRole, setUserRole] = useState("");
 
   const [contractStatus, setContractStatus] = useState(0);
-  const [showLink, setShowLink] = useState(false);
 
   const getUserInfo = (uid, urole) => {
       setUserid(uid);

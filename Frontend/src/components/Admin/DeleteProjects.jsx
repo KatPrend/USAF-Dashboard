@@ -22,6 +22,8 @@ export const DeleteProjects = () => {
         let projectInfo = e.target.value.split(',');
         setProjectName(projectInfo[0]);
         setProject(projectInfo[1]);
+
+        console.log(projectInfo);
     }
 
     if (isLoading) {
