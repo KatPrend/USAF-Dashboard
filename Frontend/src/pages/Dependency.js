@@ -112,7 +112,7 @@ const ProjectContent = (props) => {
               {
                   data.map(({ pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_start, succ_end, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end }, index) => (
                       <tr style={shouldDisplay(pred_proj_name, pred_name, format(new Date(pred_proj_start), 'MM/dd/yyyy'), format(new Date(pred_proj_end), 'MM/dd/yyyy'),
-                                               succ_proj_name, succ_name, format(new Date(succ_proj_start), 'MM/dd/yyyy'), format(new Date(succ_proj_end), 'MM/dd/yyyy')) ? {} : {}} key={index}>
+                                               succ_proj_name, succ_name, format(new Date(succ_proj_start), 'MM/dd/yyyy'), format(new Date(succ_proj_end), 'MM/dd/yyyy')) ? {} : {display : "none"}} key={index}>
                           <td>{pred_proj_name}</td>
                           <td>{pred_name}</td>
                           <td>{format(new Date(pred_proj_start), 'MM/dd/yyyy')}</td>

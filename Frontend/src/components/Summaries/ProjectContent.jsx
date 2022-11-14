@@ -139,15 +139,15 @@ export const ProjectContent = (props) => {
                     <td>
                         <Form.Control as='select' style={searchStyle} onChange={function (event) {set_dependency_status_search(event.target.value)}}>
                             <option value="">No Filter</option>
-                            <option value="green">On-Track</option>
-                            <option value="yellow">Behind</option>
-                            <option value="red">Really-Behind</option>
+                            <option value="ONTRACK">On-Track</option>
+                            <option value="BEHIND">Behind</option>
+                            <option value="REALLY-BEHIND">Really-Behind</option>
                         </Form.Control>
                     </td>
                     {props.userRole === "Contractor" ? null :   <td>
                                                                     <Form.Control as='select' style={searchStyle} onChange={function (event) {set_financial_status_search(event.target.value)}}>
                                                                         <option value="">No Filter</option>
-                                                                        <option value="red">On-Budget</option>
+                                                                        <option value="green">On-Budget</option>
                                                                         <option value="yellow">Under-Budget</option>
                                                                         <option value="red">Over-Budget</option>
                                                                     </Form.Control>
@@ -155,9 +155,9 @@ export const ProjectContent = (props) => {
                     <td>
                         <Form.Control as='select' style={searchStyle} onChange={function (event) {set_schedule_status_search(event.target.value)}}>
                             <option value="">No Filter</option>
-                            <option value="green">On-Track</option>
-                            <option value="yellow">Behind</option>
-                            <option value="red">Really-Behind</option>
+                            <option value="ONTRACK">On-Track</option>
+                            <option value="BEHIND">Behind</option>
+                            <option value="REALLY-BEHIND">Really-Behind</option>
                         </Form.Control>
                     </td>
                 </tr>
