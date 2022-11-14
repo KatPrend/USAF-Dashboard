@@ -18,12 +18,16 @@ const ProjectContent = (props) => {
   const [data, setData] = useState();
   const [predProj, setPredProj] = useState('');
   const [predMil, setPredMil] = useState('');
-  const [predStart, setPredStart] = useState('');
-  const [predEnd, setPredEnd] = useState('');
+  const [predStartProj, setPredStartProj] = useState('');
+  const [predEndProj, setPredEndProj] = useState('');
+  const [predStartAct, setPredStartAct] = useState('');
+  const [predEndAct, setPredEndAct] = useState('');
   const [succProj, setSuccProj] = useState('');
   const [succMil, setSuccMil] = useState('');
-  const [succStart, setSuccStart] = useState('');
-  const [succEnd, setSuccEnd] = useState('');
+  const [succStartProj, setSuccStartProj] = useState('');
+  const [succEndProj, setSuccEndProj] = useState('');
+  const [succStartAct, setSuccStartAct] = useState('');
+  const [succEndAct, setSuccEndAct] = useState('');
 
   console.log(props.userid);
   console.log(props.userRole);
@@ -58,23 +62,32 @@ const ProjectContent = (props) => {
     return input.toString();
   }
 
-  const shouldDisplay = (pred_proj_name, pred_name, pred_start, pred_end, succ_proj_name, succ_name, succ_start, succ_end) => {
+  const shouldDisplay = (pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end) => {
     // if x does not contain the xSearch and xSearch is not empty
+    console.log(pred_proj_start)
     if (!(safeToString(pred_proj_name).toLowerCase().includes(predProj.toLowerCase())) && predProj !== '')
         return false;
     if (!(safeToString(pred_name).toLowerCase().includes(predMil.toLowerCase())) && predMil !== '')
         return false;
-    if (!(safeToString(pred_start).toLowerCase().includes(predStart.toLowerCase())) && predStart !== '')
+    if (!(safeToString(pred_proj_start).toLowerCase().includes(predStartProj.toLowerCase())) && predStartProj !== '')
         return false;
-    if (!(safeToString(pred_end).toLowerCase().includes(predEnd.toLowerCase())) && predEnd !== '')
+    if (!(safeToString(pred_proj_end).toLowerCase().includes(predEndProj.toLowerCase())) && predEndProj !== '')
+        return false;
+    if (!(safeToString(pred_actual_start).toLowerCase().includes(predStartAct.toLowerCase())) && predStartAct !== '')
+        return false;
+    if (!(safeToString(pred_actual_end).toLowerCase().includes(predEndAct.toLowerCase())) && predEndAct !== '')
         return false;
     if (!(safeToString(succ_proj_name).toLowerCase().includes(succProj.toLowerCase())) && succProj !== '')
         return false;
     if (!(safeToString(succ_name).toLowerCase().includes(succMil.toLowerCase())) && succMil !== '')
         return false;
-    if (!(safeToString(succ_start).toLowerCase().includes(succStart.toLowerCase())) && succStart !== '')
+    if (!(safeToString(succ_proj_start).toLowerCase().includes(succStartProj.toLowerCase())) && succStartProj !== '')
         return false;
-    if (!(safeToString(succ_end).toLowerCase().includes(succEnd.toLowerCase())) && succEnd !== '')
+    if (!(safeToString(succ_proj_end).toLowerCase().includes(succEndProj.toLowerCase())) && succEndProj !== '')
+        return false;
+    if (!(safeToString(succ_actual_start).toLowerCase().includes(succStartAct.toLowerCase())) && succStartAct !== '')
+        return false;
+    if (!(safeToString(succ_actual_end).toLowerCase().includes(succEndAct.toLowerCase())) && succEndAct !== '')
         return false;
     return true;
   }
@@ -102,17 +115,21 @@ const ProjectContent = (props) => {
                   <tr>
                     <td><input placeholder="Filter by Project" style={{width: '100%'}} type='text' onChange={function (event) {setPredProj(event.target.value)}} value={predProj}></input></td>
                     <td><input placeholder="Filter by Milestone" style={{width: '100%'}} type='text' onChange={function (event) {setPredMil(event.target.value)}} value={predMil}></input></td>
-                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setPredStart(event.target.value)}} value={predStart}></input></td>
-                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setPredEnd(event.target.value)}} value={predEnd}></input></td>
+                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setPredStartProj(event.target.value)}} value={predStartProj}></input></td>
+                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setPredEndProj(event.target.value)}} value={predEndProj}></input></td>
+                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setPredStartAct(event.target.value)}} value={predStartAct}></input></td>
+                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setPredEndAct(event.target.value)}} value={predEndAct}></input></td>
                     <td><input placeholder="Filter by Project" style={{width: '100%'}} type='text' onChange={function (event) {setSuccProj(event.target.value)}} value={succProj}></input></td>
                     <td><input placeholder="Filter by Milestone" style={{width: '100%'}} type='text' onChange={function (event) {setSuccMil(event.target.value)}} value={succMil}></input></td>
-                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setSuccStart(event.target.value)}} value={succStart}></input></td>
-                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setSuccEnd(event.target.value)}} value={succEnd}></input></td>
+                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setSuccStartProj(event.target.value)}} value={succStartProj}></input></td>
+                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setSuccEndProj(event.target.value)}} value={succEndProj}></input></td>
+                    <td><input placeholder="Filter by Start" style={{width: '100%'}} type='text' onChange={function (event) {setSuccStartAct(event.target.value)}} value={succStartAct}></input></td>
+                    <td><input placeholder="Filter by End" style={{width: '100%'}} type='text' onChange={function (event) {setSuccEndAct(event.target.value)}} value={succEndAct}></input></td>
                   </tr>
               {
-                  data.map(({ pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_start, succ_end, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end }, index) => (
-                      <tr style={shouldDisplay(pred_proj_name, pred_name, format(new Date(pred_proj_start), 'MM/dd/yyyy'), format(new Date(pred_proj_end), 'MM/dd/yyyy'),
-                                               succ_proj_name, succ_name, format(new Date(succ_proj_start), 'MM/dd/yyyy'), format(new Date(succ_proj_end), 'MM/dd/yyyy')) ? {} : {display : "none"}} key={index}>
+                  data.map(({ pred_proj_name, pred_name,  pred_proj_start, pred_proj_end, pred_actual_start, pred_actual_end, succ_proj_name, succ_name, succ_proj_start, succ_proj_end, succ_actual_start,  succ_actual_end }, index) => (
+                      <tr style={shouldDisplay(pred_proj_name, pred_name, format(new Date(pred_proj_start), 'MM/dd/yyyy'), format(new Date(pred_proj_end), 'MM/dd/yyyy'), format(new Date(pred_actual_start), 'MM/dd/yyyy'), format(new Date(pred_actual_end), 'MM/dd/yyyy'),
+                                               succ_proj_name, succ_name, format(new Date(succ_proj_start), 'MM/dd/yyyy'), format(new Date(succ_proj_end), 'MM/dd/yyyy'), format(new Date(succ_actual_start), 'MM/dd/yyyy'), format(new Date(succ_actual_end), 'MM/dd/yyyy')) ? {} : {display : "none"}} key={index}>
                           <td>{pred_proj_name}</td>
                           <td>{pred_name}</td>
                           <td>{format(new Date(pred_proj_start), 'MM/dd/yyyy')}</td>
