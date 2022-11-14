@@ -10,6 +10,7 @@ import { UpdateBranches } from '../components/Admin/UpdateBranches';
 import { UpdateTitles } from '../components/Admin/UpdateTitles';
 import { UpdateUsers } from '../components/Admin/UpdateUsers';
 import { DeleteProjects } from '../components/Admin/DeleteProjects';
+import { UpdateContractAwardDays } from '../components/Admin/UpdateContractAwardDays';
 
 function Admin() {
     const [userid, setUserid] = useState(0);
@@ -37,6 +38,8 @@ function Admin() {
             return <UpdateUsers />;
         } else if (selectedOption === "Project") {
             return <DeleteProjects />;
+        } else if (selectedOption === "Days") {
+            return <UpdateContractAwardDays />;
         }
         // default msg
         return <></>
@@ -51,9 +54,10 @@ function Admin() {
                         <Col xs={3} className="options">
                             <Row><span>Settings</span></Row>
                             <Row><ButtonGroup vertical>
+                                <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Financial Breakpoints")}}>Financial Summary Breakpoints</Button>
+                                <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Days")}}>Contract Award Days</Button>
                                 <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Contractor")}}>Contractors</Button>
                                 <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Funding")}}>Funding Types</Button>
-                                <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Financial Breakpoints")}}>Financial Summary Breakpoints</Button>
                                 <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Branch")}}>Branches</Button>
                                 <Button className="submit-new-project settings" onClick={() => {setSelectedOption("Title")}}>Military Job Titles</Button>
                                 <Button className="submit-new-project settings" onClick={() => {setSelectedOption("User")}}>Users</Button>

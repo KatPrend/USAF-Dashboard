@@ -58,12 +58,12 @@ export const UpdateFinancialBreakpoints = () => {
                     <Form.Group className='d-flex justify-content-between'>
                         <div>
                             <Form.Label>"Red" Percentage</Form.Label>
-                            <Form.Control type="text" min='0' max='100' value={redOblBreak} onChange={(event) => {setRedOblBreak(event.target.value)}} />
+                            <Form.Control type="number" min='0' max='100' value={redOblBreak} onChange={(event) => {setRedOblBreak(event.target.value)}} />
                             <Form.Control min='0' max='100' step='.5' value={redOblBreak} onChange={(event) => {setRedOblBreak(event.target.value)}} type="range" />
                         </div>  
                         <div>
                             <Form.Label>"Yellow" Percentage</Form.Label>
-                            <Form.Control type="text" min='0' max='100' value={yellowOblBreak} onChange={(event) => {setYellowOblBreak(event.target.value)}} />
+                            <Form.Control type="number" min='0' max='100' value={yellowOblBreak} onChange={(event) => {setYellowOblBreak(event.target.value)}} />
                             <Form.Control min='0' max='100' step='.5' value={yellowOblBreak} onChange={(event) => {setYellowOblBreak(event.target.value)}} type="range" />
                         </div>
                     </Form.Group>
@@ -73,12 +73,12 @@ export const UpdateFinancialBreakpoints = () => {
                     <Form.Group className='d-flex justify-content-between'>
                         <div>
                             <Form.Label>"Red" Percentage</Form.Label>
-                            <Form.Control type="text" min='0' max='100' value={redExpBreak} onChange={(event) => {setRedExpBreak(event.target.value)}} />
+                            <Form.Control type="number" min='0' max='100' value={redExpBreak} onChange={(event) => {setRedExpBreak(event.target.value)}} />
                             <Form.Control min='0' max='100' step='.5' value={redExpBreak} onChange={(event) => {setRedExpBreak(event.target.value)}} type="range" />
                         </div>  
                         <div>
                             <Form.Label>"Yellow" Percentage</Form.Label>
-                            <Form.Control type="text" min='0' max='100' value={yellowExpBreak} onChange={(event) => {setYellowExpBreak(event.target.value)}} />
+                            <Form.Control type="number" min='0' max='100' value={yellowExpBreak} onChange={(event) => {setYellowExpBreak(event.target.value)}} />
                             <Form.Control min='0' max='100' step='.5' value={yellowExpBreak} onChange={(event) => {setYellowExpBreak(event.target.value)}} type="range" />
                         </div>
                     </Form.Group>
