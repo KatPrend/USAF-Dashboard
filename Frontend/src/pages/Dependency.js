@@ -206,7 +206,7 @@ const Dependency = (props) => {
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
             {props.firstLoad === 1 && redirect ? <Redirect to="/dependency"/> : null}
-            {userid !== 0 ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
+            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
 
         </div>
     );
