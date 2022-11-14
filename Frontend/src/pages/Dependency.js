@@ -26,7 +26,7 @@ const ProjectContent = (props) => {
   const [succEnd, setSuccEnd] = useState('');
 
   console.log(props.userid);
-  console.log(props.userRole);
+  console.log("userRole" + props.userRole);
 
     if(props.userRole === "Admin"){
         useEffect(() => {
@@ -255,7 +255,7 @@ const Dependency = (props) => {
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}
             {props.firstLoad === 1 && redirect ? <Redirect to="/dependency"/> : null}
-            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} dataSetter={setData}/> : null }
+            {userid !== 0 && userRole !== "" ? <ProjectContent userid={userid} userRole={userRole} dataSetter={setData}/> : null }
 
         </div>
     );
