@@ -8,7 +8,7 @@ router.get('/getExpen/:project_id', (req, res) => {
     let sql = `
     SELECT 
         id,
-        expen_funding_date as date,
+        DATE_FORMAT(expen_funding_date, "%c/%d/%Y") as date,
         expen_projected as Projected, 
         expen_projected_total as "Projected Total",
         expen_actual as Actual,
