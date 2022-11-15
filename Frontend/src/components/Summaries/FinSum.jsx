@@ -3,20 +3,31 @@ import axios from "axios";
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Chart } from 'react-google-charts';
 
-const dataPie = (spent, planned) => {
-    var unspent = planned - spent
+const dataPie = (actual, planned) => {
+    var unspent = planned - actual
+    if (actual / planned > 2)
+        return (
+            [
+                ["funding", "amount"]
+                ["Grossly Overbudget", actual / planned]
+            ]
+        )
+
     return (
         [
             ["funding", "amount"],
-            ["Actual", spent],
+            ["Actual", actual],
             ["difference", (unspent < 0) ? 0 : unspent],
-            ["Buffer", (spent > planned) ? planned - (spent - planned) : planned]
+            ["Buffer", (actual > planned) ? planned - (actual - planned) : planned]
         ]
     )
 }
 
 //Add red AND yellow coeff to parameters 
 const getPieColor = (actual, planned, rCoefficent, yCoefficent) => {
+    if (actual / planned > 2)
+        return 'black';
+
     var red_coefficent = rCoefficent;
     var yellow_coefficent = yCoefficent;
     if (actual >= planned * (1 + red_coefficent) || actual <= planned * (1 - red_coefficent))
