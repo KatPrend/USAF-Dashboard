@@ -250,7 +250,8 @@ const Dependency = (props) => {
                 {/*1*/}
                 <Row>
                     <Col>
-                    {userid !== 0 && userRole !== "" ? <div className="mx-auto" style={{width: '50%', marginBottom: '3%'}}><DepSum  userid={userid} userRole={userRole}/></div> : <div className="mx-auto"> Loading...</div>}
+                        {userid !== 0 && userRole !== "" ? <div className="mx-auto" style={{width: '50%', marginBottom: '3%'}}><DepSum  userid={userid} userRole={userRole}/></div> : <div className="mx-auto"> Loading...</div>}
+                    </Col>
                 </Row>
                 {/*2*/}
                 <Row>

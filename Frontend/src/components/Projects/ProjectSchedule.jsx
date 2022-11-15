@@ -288,9 +288,9 @@ export const ProjectSchedule = (props) => {
             setInfoData(response.data);
             setEditData(response.data);
             setLoading(false);
+        }).then(function (res) {
+            setReload(false);
         });
-
-        setReload(false);
     }
 
     const handleCloseModel = (e) => {

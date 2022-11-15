@@ -10,12 +10,6 @@ var proj_id_global = -1;
 
 const ClinData = (props) => {
 
-    // const history = useHistory();
-
-    // const routeChange = () => {
-    //     history.push('/wbs');
-    // };
-
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [clin_num_search, set_clin_num_search] = useState('');
@@ -70,9 +64,9 @@ const ClinData = (props) => {
                     <th>CLIN Number</th>
                     <th>CLIN Type</th>
                     <th>CLIN Scope</th>
-                    <th>Projected CLIN Value</th>
-                    <th>Independent Goverment Cost Estamate</th>
-                    <th>Edit Clin</th>
+                    { props.userRole === "Contractor" ? null : <th>Projected CLIN Value</th> }
+                    { props.userRole === "Contractor" ? null : <th>Independent Goverment Cost Estamate</th> }
+                    { props.userRole === "Contractor" ? null : <th>Edit Clin</th> }
                 </tr>
             </thead>
             <tbody>
@@ -80,9 +74,9 @@ const ClinData = (props) => {
                     <td><input placeholder="Filter by #" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_num_search(event.target.value)}} value={clin_num_search}></input></td>
                     <td><input placeholder="Filter by Type" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_type_search(event.target.value)}} value={clin_type_search}></input></td>
                     <td><input placeholder="Filter by Scope" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {set_clin_scope_search(event.target.value)}} value={clin_scope_search}></input></td>
-                    <td><input placeholder="Filter by Value" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {projected_clin_value_search(event.target.value)}} value={projected_clin_value}></input></td>
-                    <td><input placeholder="Filter by Estamate" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {gov_est_search(event.target.value)}} value={gov_est_value}></input></td>
-                    <td></td>
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Value" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {projected_clin_value_search(event.target.value)}} value={projected_clin_value}></input></td> }
+                    { props.userRole === "Contractor" ? null : <td><input placeholder="Filter by Estamate" style={{width: '75%'}} type='text' name='textField' onChange={function (event) {gov_est_search(event.target.value)}} value={gov_est_value}></input></td> }
+                    { props.userRole === "Contractor" ? null : <td></td> }
                 </tr>
 
                 {
@@ -91,9 +85,9 @@ const ClinData = (props) => {
                             <td><Link to={{pathname: '/wbs', state: {clinNum:clin_num, projectID:project_id}}}>{clin_num}</Link></td>
                             <td>{clin_type}</td>
                             <td>{clin_scope}</td>
-                            <td>${clin_value}</td>
-                            <td>${ind_gov_est}</td>
-                            <td><Button className='submit-new-project' onClick={() => {props.editClinFunc(id, clin_num, clin_type, clin_scope, ind_gov_est)}}>Edit</Button></td>
+                            { props.userRole === "Contractor" ? null : <td>${clin_value}</td> }
+                            { props.userRole === "Contractor" ? null : <td>${ind_gov_est}</td> }
+                            { props.userRole === "Contractor" ? null : <td><Button className='submit-new-project' onClick={() => {props.editClinFunc(id, clin_num, clin_type, clin_scope, ind_gov_est)}}>Edit</Button></td> }
                         </tr>
                     ))
                 }
@@ -319,7 +313,7 @@ function Clin() {
                     <h2>CLIN Data:</h2>
                     <Button className='submit-new-project' onClick={() => {toggleModal(); setTarget(0);}}>Add CLIN</Button>
                 </div>
-                <ClinData editClinFunc={getEditClinData} showModal={showModal}/>
+                { userRole === "" ? null : <ClinData editClinFunc={getEditClinData} showModal={showModal} userRole={userRole} /> }
             </div>
         </>
     );

@@ -33,8 +33,8 @@ router.put('/', (req, res) => {
     SET
         project_id = ${projectID},
         ${expen_funding_date !== null ? 'expen_funding_date = "' + expen_funding_date + '",'  : ""}
-        expen_projected = ${expen_projected},
-        expen_actual = ${expen_actual}
+        expen_projected = ${expen_projected}
+        ${expen_actual !== null ? ',expen_actual = "' + expen_actual + '"'  : ""}
     WHERE id = ${expenID}`;
 
     console.log(sql);

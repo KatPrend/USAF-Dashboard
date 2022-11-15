@@ -103,6 +103,10 @@ export const Funding = (props) => {
         setModalIsOpen(false);
     }
 
+    const getReload = (rel) => {
+        setReload(rel);
+    }
+
     return (
         <>
         <ModalDialog scrollable>
@@ -128,7 +132,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ApprovedFundingTableEditable data={approved_data} id={props.projectId}/>
+                                <ApprovedFundingTableEditable data={approved_data} id={props.projectId} getReload={getReload}/>
                             </Col>
                         </Row>
                         <Row>
@@ -136,7 +140,7 @@ export const Funding = (props) => {
                         </Row>
                         <Row>
                             <Col>
-                                <ObligationFundingDataTableEditable data={obligation_data} id={props.projectId}/>
+                                <ObligationFundingDataTableEditable data={obligation_data} id={props.projectId} getReload={getReload}/>
                             </Col>
                         </Row>
                         <Row>

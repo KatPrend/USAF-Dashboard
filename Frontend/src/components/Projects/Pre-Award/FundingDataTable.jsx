@@ -194,9 +194,9 @@ export function FundingDataTableEditable(props){
             obli_fiscal_year: 0,
             obli_projected: 0,
             obli_actual: null
-        })
-
-        setReload(true);
+        }).then(function (res) {
+            setReload(true);
+        });
     }
 
     const handleDeletCol = (row) => {
@@ -222,9 +222,9 @@ export function FundingDataTableEditable(props){
     if(reload){
         axios.get(`/api/obligation/getObli/${props.id}`).then(response =>{
             setEditData(response.data);
+        }).then(function (res) {
+            setReload(false);
         });
-
-        setReload(false);
     }
 
     if (isLoading) {

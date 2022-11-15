@@ -132,8 +132,8 @@ router.put('/', (req, res) => {
         ${obli_funding_date !== null ? 'obli_funding_date = "' + obli_funding_date + '",'  : ""}
         obli_funding_type = ${obli_funding_type},
         obli_fiscal_year = "${obli_fiscal_year}",
-        obli_projected = "${obli_projected}",
-        obli_actual = "${obli_actual}"
+        obli_projected = "${obli_projected}"
+        ${obli_actual !== null ? ',obli_actual = "' + obli_actual + '"'  : ""}
     WHERE id = "${id}"`;
     console.log(sql);
     let query = db.query(sql, (err, results)=>{

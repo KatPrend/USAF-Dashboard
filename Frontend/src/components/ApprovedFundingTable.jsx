@@ -270,9 +270,9 @@ export function ApprovedFundingTableEditable(props){
 
         axios.get(`/api/approved/${props.id}`).then(response =>{
             setEditData(response.data);
+        }).then(function (res) {
+            setReload(false);
         });
-
-        setReload(false);
     }
 
     if(editData.length === 0){

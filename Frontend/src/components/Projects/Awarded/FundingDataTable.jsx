@@ -202,9 +202,9 @@ export function ExpenditureFundingDataTableEditable(props){
             expen_funding_date: format(new Date(Date.now()), 'yyyy-MM-dd'),
             expen_projected: 0,
             expen_actual: null
-        })
-
-        setReload(true);
+        }).then(function (res) {
+            setReload(true);
+        });
     }
 
     const handleDeletCol = (row) => {
@@ -236,9 +236,9 @@ export function ExpenditureFundingDataTableEditable(props){
     if(reload){
         axios.get(`/api/expenditure/getExpen/${props.id}`).then(response =>{
             setEditData(response.data);
+        }).then(function (res) {
+            setReload(false);
         });
-
-        setReload(false);
     }
 
 
@@ -453,9 +453,9 @@ export function ObligationFundingDataTableEditable(props){
             obli_fiscal_year: 0,
             obli_projected: 0,
             obli_actual: null
-        })
-        
-        setReload(true);
+        }).then(function (res) {
+            setReload(true);
+        });
     }
 
     const handleDeletCol = (row) => {
@@ -485,9 +485,9 @@ export function ObligationFundingDataTableEditable(props){
     if(reload){
         axios.get(`/api/obligation/getObli/${props.id}`).then(response =>{
             setEditData(response.data);
+        }).then(function (res) {
+            setReload(false);
         });
-
-        setReload(false);
     }
 
     return(
