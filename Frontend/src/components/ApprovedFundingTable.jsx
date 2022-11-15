@@ -356,7 +356,7 @@ export function ApprovedFundingTableEditable(props){
                                             <Form.Group>
                                                 <Form.Control 
                                                 type="number"
-                                                defaultValue={info.approved_amount} 
+                                                value={info.approved_amount} 
                                                 onChange={(e) => handleFundingType(e, info.id)}/>
                                             </Form.Group>
                                         </td>

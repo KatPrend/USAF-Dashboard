@@ -235,6 +235,7 @@ export function ExpenditureFundingDataTableEditable(props){
 
     if(reload){
         axios.get(`/api/expenditure/getExpen/${props.id}`).then(response =>{
+            console.log(response.data)
             setEditData(response.data);
         }).then(function (res) {
             setReload(false);
@@ -249,7 +250,7 @@ export function ExpenditureFundingDataTableEditable(props){
                 <tbody>
                     <tr>
                         <td> </td>
-                        {editData.map( (info, index) => (
+                        {editData.map((info, index) => (
                             <td><Button className="Button" onClick={() => handleDeletCol(index)}>Delete Column {index+1}</Button></td>
                         ))}
                         <td><Button className="Button" onClick={handleAddCol}>Add Column</Button></td>
@@ -260,7 +261,7 @@ export function ExpenditureFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={info.date.replace(/T.+/, '')} 
+                                    value={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -274,7 +275,7 @@ export function ExpenditureFundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     type="number"
-                                    defaultValue={info.Projected}
+                                    value={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>
                             </td>
@@ -287,7 +288,7 @@ export function ExpenditureFundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     type="number"
-                                    defaultValue={info.Actual}
+                                    value={info.Actual === null ? 0 : info.Actual}
                                     onChange={(e) => handleActual(e, index)}/>
                                 </Form.Group>
                             </td>
@@ -507,7 +508,7 @@ export function ObligationFundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={info.date.replace(/T.+/, '')} 
+                                    value={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -521,7 +522,7 @@ export function ObligationFundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     as="select"
-                                    defaultValue={info.FundingType}
+                                    value={info.FundingType}
                                     onChange={(e) => handleFundingType(e, index)}>
 
                                     <option value={0}>Select</option>
@@ -544,7 +545,7 @@ export function ObligationFundingDataTableEditable(props){
                                     <Col sm={10}>
                                         <Form.Control 
                                         type="number"
-                                        defaultValue={info.FiscalYear}
+                                        value={info.FiscalYear}
                                         onChange={(e) => handleFiscalYear(e, index)}/>
                                     </Col>
                                 </Form.Group>
@@ -558,7 +559,7 @@ export function ObligationFundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     type="number"
-                                    defaultValue={info.Projected}
+                                    value={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>
                             </td>
@@ -571,7 +572,7 @@ export function ObligationFundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     type="number"
-                                    defaultValue={info.Actual}
+                                    value={info.Actual === null ? 0 : info.Actual}
                                     onChange={(e) => handleActual(e, index)}/>
                                 </Form.Group>
                             </td>

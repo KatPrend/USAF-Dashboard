@@ -248,7 +248,7 @@ export function FundingDataTableEditable(props){
                             <td key={index}>
                                 <Form.Group key={index}>
                                     <Form.Control 
-                                    defaultValue={info.date.replace(/T.+/, '')} 
+                                    value={info.date.replace(/T.+/, '')} 
                                     type='date'
                                     onChange={(e) => handleDate(e, index)}/>
                                 </Form.Group>
@@ -262,7 +262,7 @@ export function FundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     as="select"
-                                    defaultValue={info.FundingType}
+                                    value={info.FundingType}
                                     onChange={(e) => handleFundingType(e, index)}>
 
                                     <option value={0}>Select</option>
@@ -285,7 +285,7 @@ export function FundingDataTableEditable(props){
                                     <Col sm={10}>
                                         <Form.Control 
                                         type="number"
-                                        defaultValue={info.FiscalYear}
+                                        value={info.FiscalYear}
                                         onChange={(e) => handleFiscalYear(e, index)}/>
                                     </Col>
                                 </Form.Group>
@@ -299,7 +299,7 @@ export function FundingDataTableEditable(props){
                                 <Form.Group key={index}>
                                     <Form.Control 
                                     type="number"
-                                    defaultValue={info.Projected}
+                                    value={info.Projected}
                                     onChange={(e) => handleProjected(e, index)}/>
                                 </Form.Group>
                             </td>
