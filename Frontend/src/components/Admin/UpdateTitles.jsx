@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateTitles = () => {
@@ -8,7 +8,7 @@ export const UpdateTitles = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [addTitle, setAddTitle] = useState("");
-    const [removeTitle, setRemoveTitle] = useState();
+    const [removeTitle, setRemoveTitle] = useState(0);
     const [added, setAdded] = useState(false);
     const [removed, setRemoved] = useState(false);
 
@@ -50,10 +50,10 @@ export const UpdateTitles = () => {
     }
 
     let handleDropdownSelect = (e) => {
-        setRemoveTitle(e);
+        setRemoveTitle(e.target.value);
         setAdded(false);
         setRemoved(false);
-        console.log(e);
+        console.log(e.target.value);
     }
 
     let handleRemove = async () => {
@@ -62,6 +62,7 @@ export const UpdateTitles = () => {
         .then(function(res){
 
             setRemoved(true);
+            setRemoveTitle(0);
 
             axios.get('/api/mjt/milJobs/notInUse/').then(response => {
                 setData(response.data);
@@ -96,18 +97,22 @@ export const UpdateTitles = () => {
                 </Row>
                 <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Military Job Title:</h5>
-                    <Col>
-                        <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Job Titles">
-                            {data.map(({id, mil_job_title}) => (
-                                <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {mil_job_title}
-                                </Dropdown.Item>
-                            ))}
-                        </DropdownButton> 
-                    </Col>
-                    <Col>
-                        <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
-                    </Col>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}></Form.Label>
+                        <Col sm={4}>
+                            <Form.Control as="select" onChange={handleDropdownSelect}>
+                                <option key={0} value={0}>Select Job Title</option>
+                                {data.map((element, index) => (
+                                    <option key={index} value={element.id}>
+                                        {element.mil_job_title}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                        <Col sm={4}>
+                            <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                        </Col>
+                    </Form.Group>
                 </Row>
                 <Row>
                     <Col>

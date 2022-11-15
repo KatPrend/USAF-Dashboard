@@ -205,7 +205,6 @@ const getOptions = (cHeight) => {
                 stroke: "#e64a19",
             },  
         },
-        width: 1250,
         height: cHeight
       };
     return options;
@@ -248,26 +247,24 @@ const Dependency = (props) => {
         <div className="lightBlue">
             <NavB getUserInfo={getUserInfo}/>
             <Container className="top-Padding" style={{marginBottom: '3%'}}>
+                {/*1*/}
                 <Row>
-                    {/*1*/}
                     <Col>
                     {userid !== 0 && userRole !== "" ? <div className="mx-auto" style={{width: '50%', marginBottom: '3%'}}><DepSum  userid={userid} userRole={userRole}/></div> : <div className="mx-auto"> Loading...</div>}
-                    
-                    </Col>
-                    {/*2*/}
-                    <Col>
-                        {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
-                        Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
-                            <Chart
-                            chartType='Gantt'
-                            width="100%" 
-                            height="100%"
-                            options={getOptions(chartHeight)}
-                            data={GanttChartDataFormat(data)}
-                            />
-                         }>
-                        </CardGeneric>}
-                    </Col>
+                </Row>
+                {/*2*/}
+                <Row>
+                    {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
+                    Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
+                        <Chart
+                        chartType='Gantt'
+                        width="100%" 
+                        height="100%"
+                        options={getOptions(chartHeight)}
+                        data={GanttChartDataFormat(data)}
+                        />
+                        }>
+                    </CardGeneric>}
                 </Row>
             </Container>
             {console.log("FirstLoad: " + props.firstLoad)}

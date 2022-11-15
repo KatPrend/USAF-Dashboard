@@ -113,16 +113,17 @@ router.post('/contractTimeline', (req, res) => {
 router.put("/updateDaysAdded", (req, res)=>{
     const {draft_rfp_released, approved_by_acb,
         rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded} = req.body;
+
     let sql = `
     UPDATE contract_days_added
     SET
-        draft_rfp_released = ${draft_rfp_released},
-        approved_by_acb = ${approved_by_acb},
-        rfp_released = ${rfp_released},
-        proposal_received = ${proposal_received},
-        tech_eval_comp = ${tech_eval_comp},
-        negotiation_comp = ${negotiation_comp},
-        awarded = ${awarded} `;
+        draft_rfp_released = '${draft_rfp_released}',
+        approved_by_acb = '${approved_by_acb}',
+        rfp_released = '${rfp_released}',
+        proposal_received = '${proposal_received}',
+        tech_eval_comp = '${tech_eval_comp}',
+        negotiation_comp = '${negotiation_comp}',
+        awarded = '${awarded}' `;
     
     let query = db.query(sql, (err, results) =>{
         if(err){

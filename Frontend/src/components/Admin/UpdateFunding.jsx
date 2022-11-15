@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Button, Col, Container, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import "./admin.css";
 
 export const UpdateFunding = () => {
@@ -8,7 +8,7 @@ export const UpdateFunding = () => {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState();
     const [addFunding, setAddFunding] = useState("");
-    const [removeFunding, setRemoveFunding] = useState();
+    const [removeFunding, setRemoveFunding] = useState(0);
     const [added, setAdded] = useState(false);
     const [removed, setRemoved] = useState(false);
 
@@ -52,10 +52,10 @@ export const UpdateFunding = () => {
     }
 
     let handleDropdownSelect = (e) => {
-        setRemoveFunding(e);
+        setRemoveFunding(e.target.value);
         setAdded(false);
         setRemoved(false);
-        console.log(e);
+        console.log(e.target.value);
     }
 
     let handleRemove = async () => {
@@ -64,6 +64,7 @@ export const UpdateFunding = () => {
         .then(function(res){
 
             setRemoved(true);
+            setRemoveFunding(0);
 
             axios.get('/api/fundingType/').then(response => {
                 setData(response.data);
@@ -98,18 +99,22 @@ export const UpdateFunding = () => {
                 </Row>
                 <Row>
                     <h5 style={{marginBottom:"3%"}}>Remove Funding Type:</h5>
-                    <Col>
-                        <DropdownButton style={{marginTop:"2%"}} className='dropdown' title="Funding Types">
-                            {data.map(({id, funding_type}) => (
-                                <Dropdown.Item key={id} eventKey={id} onSelect={handleDropdownSelect}>
-                                    {funding_type}
-                                </Dropdown.Item>
-                            ))}
-                        </DropdownButton> 
-                    </Col>
-                    <Col>
-                        <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
-                    </Col>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={3}></Form.Label>
+                        <Col sm={4}>
+                            <Form.Control as="select" onChange={handleDropdownSelect}>
+                                <option key={0} value={0}>Select Funding Type</option>
+                                {data.map((element, index) => (
+                                    <option key={index} value={element.id}>
+                                        {element.funding_type}
+                                    </option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                        <Col sm={4}>
+                            <Button className='submit-new-project admin remove' onClick={handleRemove}>Remove</Button>
+                        </Col>
+                    </Form.Group>
                 </Row>
                 <Row>
                     <Col>
