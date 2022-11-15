@@ -93,6 +93,7 @@ export function ApprovedFundingTableEditable(props){
     const [columnToDelete, setColumnToDelete] = useState();
     const [rowToDelete, setRowToDelete] = useState();
     const [reload, setReload] = useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
 
     let fiscalYears = [];
@@ -317,6 +318,12 @@ export function ApprovedFundingTableEditable(props){
     return(
         <div>
             <Form onSubmit={handleSubmit}>
+            <Alert show={showSuccessAlert} variant="success" onClose={() => setShowSuccessAlert(false)} dismissible>
+                <Alert.Heading>Saved Approved Funding Data</Alert.Heading>
+                <p>
+                    Successfully saved approved funding data.
+                </p>
+            </Alert>
                 <Table responsive striped bordered hover className="bg-light">
                     {getRowsAndCol(editData)}
                     <tbody>
@@ -402,7 +409,7 @@ export function ApprovedFundingTableEditable(props){
                     <Button variant="outline-danger" onClick={() => setShowRowAlert(false)}>Cancel</Button>
                     <Button variant="outline-danger" onClick={DeleteRow}>Delete</Button>
                 </Alert>
-                <Button className='Button' type="submit">Save Approved Funding Data</Button> 
+                <Button className='Button' onClick={() => {setShowSuccessAlert(true)}} type="submit">Save Approved Funding Data</Button> 
             </Form>       
         </div>
     )
