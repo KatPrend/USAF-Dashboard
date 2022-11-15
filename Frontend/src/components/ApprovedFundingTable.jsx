@@ -131,8 +131,6 @@ export function ApprovedFundingTableEditable(props){
                     appro_fiscal_year: currElement.appro_fiscal_year,
                     approved_amount: parseInt(currElement.approved_amount)
                 })
-                
-
              : null)
         ))
         
@@ -189,6 +187,8 @@ export function ApprovedFundingTableEditable(props){
     const handleAddCol = async (e) => {
         e.preventDefault();
 
+        handleSubmit(e);
+
         if(addedColSelected === true && fiscalYears.includes(parseInt(fiscalYearToAdd)) === false){
             fundingTypes.map((funding) => (
                 axios.post('/api/approved', {
@@ -212,6 +212,8 @@ export function ApprovedFundingTableEditable(props){
     const DeleteCol = async (e) => {
         e.preventDefault();
 
+        handleSubmit(e);
+
         editData.map((currElement) => {
             if(currElement.appro_fiscal_year === columnToDelete){
                 axios.delete(`/api/approved/${currElement.id}`, )
@@ -224,6 +226,8 @@ export function ApprovedFundingTableEditable(props){
 
     const handleAddRow = async (e) => {
         e.preventDefault();
+
+        handleSubmit(e);
 
         if(addedRowSelected === true){
             fiscalYears.map((year) =>(
@@ -246,6 +250,8 @@ export function ApprovedFundingTableEditable(props){
 
     const DeleteRow = async (e) => {
         e.preventDefault();
+
+        handleSubmit(e);
         
         editData.map((currElement) => {
             if(currElement.appro_funding_type === rowToDelete){

@@ -315,7 +315,7 @@ export const ProjectSchedule = (props) => {
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
                                     <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
-                                    <Button className='Button' type='submit' form='ProjectSchedule' onClick={()=>setReload(true)}>Save</Button>
+                                    <Button className='Button' type='submit' form='ProjectSchedule' onClick={handleCloseModel}>Save</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>
