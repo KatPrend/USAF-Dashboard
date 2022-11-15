@@ -5,14 +5,6 @@ import { Chart } from 'react-google-charts';
 
 const dataPie = (actual, planned) => {
     var unspent = planned - actual
-    if (actual / planned > 2)
-        return (
-            [
-                ["funding", "amount"]
-                ["Grossly Overbudget", actual / planned]
-            ]
-        )
-
     return (
         [
             ["funding", "amount"],
@@ -27,9 +19,9 @@ const dataPie = (actual, planned) => {
 const getPieColor = (actual, planned, rCoefficent, yCoefficent) => {
     if (actual / planned > 2)
         return 'black';
-
-    var red_coefficent = rCoefficent;
-    var yellow_coefficent = yCoefficent;
+    var red_coefficent = rCoefficent / 100;
+    var yellow_coefficent = yCoefficent / 100;
+    console.log((planned * (1 - red_coefficent)))
     if (actual >= planned * (1 + red_coefficent) || actual <= planned * (1 - red_coefficent))
     {
         return 'red';
@@ -122,6 +114,34 @@ export const FinSum = (props) => {
                             <Col>
                                 <div className="obligation">
                                     <p className="finTitle">Obligation Status to Date</p>
+                                        {obligationActual / obligationPlanned > 2 ? 
+                                        <Chart
+                                        style={{margin: 'auto'}}
+                                        chartType="PieChart"
+                                        width="168px"
+                                        height="168px"
+                                        data={[
+                                            ["funding", "amount"],
+                                            ["Actual Obligations", obligationActual],
+                                        ]}
+                                        options={
+                                            {
+                                                tooltip: {text: 'value'},
+                                                chartArea:{left:'5%', top:'5%   ',width:'90%',height:'90%'},
+                                                backgroundColor: "whitesmoke",
+                                                pieSliceBorderColor: 'transparent',
+                                                pieSliceText: 'label',
+                                                pieSliceTextStyle: {fontSize: 15},
+                                                legend: "none",
+                                                pieStartAngle: -90,
+                                                is3D: false,
+                                                slices: {
+                                                    0: { color: 'black' },
+                                                },
+                                            }
+                                        }
+                                        />
+                                        :
                                         <Chart
                                         style={{margin: 'auto'}}
                                         chartType="PieChart"
@@ -130,6 +150,7 @@ export const FinSum = (props) => {
                                         data={dataPie(obligationActual, obligationPlanned)}
                                         options={expendOptionsPie(obligationActual, obligationPlanned, obli_red_coefficent, obli_yellow_coefficent)}
                                         />
+                                        }
                                     <div>Obligation %:</div>
                                     <div>{((obligationActual / obligationPlanned) * 100).toFixed(2)}%</div>
                                     <p className="finInfo">Actual Obligation: {obligationActual}</p>
@@ -139,6 +160,34 @@ export const FinSum = (props) => {
                             <Col>
                                 <div className="expenditure">
                                     <p className="finTitle">Expenditure Status to Date</p>
+                                    {expenditureActual / expenditurePlanned > 2 ? 
+                                        <Chart
+                                        style={{margin: 'auto'}}
+                                        chartType="PieChart"
+                                        width="168px"
+                                        height="168px"
+                                        data={[
+                                            ["funding", "amount"],
+                                            ["Actual Obligations", expenditureActual],
+                                        ]}
+                                        options={
+                                            {
+                                                tooltip: {text: 'value'},
+                                                chartArea:{left:'5%', top:'5%   ',width:'90%',height:'90%'},
+                                                backgroundColor: "whitesmoke",
+                                                pieSliceBorderColor: 'transparent',
+                                                pieSliceText: 'label',
+                                                pieSliceTextStyle: {fontSize: 15},
+                                                legend: "none",
+                                                pieStartAngle: -90,
+                                                is3D: false,
+                                                slices: {
+                                                    0: { color: 'black' },
+                                                },
+                                            }
+                                        }
+                                        />
+                                    :
                                     <Chart
                                     style={{margin: 'auto'}}
                                     chartType="PieChart"    
@@ -147,6 +196,7 @@ export const FinSum = (props) => {
                                     data={dataPie(expenditureActual, expenditurePlanned)}
                                     options={expendOptionsPie(expenditureActual, expenditurePlanned, expen_red_coefficent, expen_yellow_coefficent)}
                                     />
+                                    }
                                     <div>Expenditure %:</div>
                                     <div>{((expenditureActual / expenditurePlanned) * 100).toFixed(2)}%</div>
                                     <p className="finInfo">Actual Expenditure: {expenditureActual}</p>
