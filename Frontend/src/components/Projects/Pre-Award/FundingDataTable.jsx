@@ -76,6 +76,7 @@ export function FundingDataTableEditable(props){
     const [reload, setReload] = useState(false);
     const [allFundingTypes, setAllFundingTypes] = useState();
     const [isLoading, setLoading] = useState(true);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
     useEffect(() => {
         axios.get('/api/fundingType/').then(response => {
@@ -233,6 +234,12 @@ export function FundingDataTableEditable(props){
 
     return(
         <Form onSubmit={handleSubmit}>
+            <Alert show={showSuccessAlert} variant="success" onClose={() => setShowSuccessAlert(false)} dismissible>
+                <Alert.Heading>Saved Obligation Data</Alert.Heading>
+                <p>
+                    Successfully saved obligation data.
+                </p>
+            </Alert>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
@@ -312,7 +319,7 @@ export function FundingDataTableEditable(props){
                 <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
                 <Button variant="outline-danger" onClick={DeleteCol}>Delete</Button>
             </Alert>
-            <Button className='Button' type="submit">Save Obligation Data</Button>
+            <Button className='Button' onClick={() => setShowSuccessAlert(true)} type="submit">Save Obligation Data</Button>
         </Form>
     )
 }

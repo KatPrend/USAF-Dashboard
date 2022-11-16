@@ -108,6 +108,7 @@ export function ExpenditureFundingDataTableEditable(props){
     const [editData, setEditData] = useState(props.data);
     const [columsEdited, setColumsEdited] = useState([]);
     const [showAlert, setShowAlert] = useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [columnToDelete, setColumnToDelete] = useState();
     const [reload, setReload] = useState(false);
 
@@ -246,6 +247,12 @@ export function ExpenditureFundingDataTableEditable(props){
     return(
         <>
         <Form onSubmit={handleSubmit}>
+            <Alert show={showSuccessAlert} variant="success" onClose={() => setShowSuccessAlert(false)} dismissible>
+                    <Alert.Heading>Saved Expenditure Data</Alert.Heading>
+                        <p>
+                            Successfully saved expenditure data.
+                        </p>
+            </Alert>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
@@ -301,7 +308,7 @@ export function ExpenditureFundingDataTableEditable(props){
                 <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
                 <Button variant="outline-danger" onClick={DeleteCol}>Delete</Button>
             </Alert>
-            <Button className='Button' type="submit">Save Expenditure Data</Button>
+            <Button className='Button' onClick={() => {setShowSuccessAlert(true)}} type="submit">Save Expenditure Data</Button>
         </Form>
         </>
         
@@ -317,7 +324,7 @@ export function ObligationFundingDataTableEditable(props){
     const [reload, setReload] = useState(false);
     const [allFundingTypes, setAllFundingTypes] = useState();
     const [isLoading, setLoading] = useState(true);
-    
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     useEffect(() => {
         axios.get('/api/fundingType/').then(response => {
             setAllFundingTypes(response.data);
@@ -493,6 +500,12 @@ export function ObligationFundingDataTableEditable(props){
 
     return(
         <Form  onSubmit={handleSubmit}>
+            <Alert show={showSuccessAlert} variant="success" onClose={() => setShowSuccessAlert(false)} dismissible>
+                <Alert.Heading>Saved Expenditure Data</Alert.Heading>
+                <p>
+                    Successfully saved expenditure data.
+                </p>
+            </Alert>
             <Table responsive striped bordered hover className="bg-light">
                 <tbody>
                     <tr>
@@ -585,7 +598,7 @@ export function ObligationFundingDataTableEditable(props){
                 <Button variant="outline-danger" onClick={() => setShowAlert(false)}>Cancel</Button>
                 <Button variant="outline-danger" onClick={DeleteCol}>Delete</Button>
             </Alert>
-            <Button className='Button' type="submit">Save Obligation Data</Button>
+            <Button className='Button' onClick={() => {setShowSuccessAlert(true)}} type="submit">Save Obligation Data</Button>
         </Form>
     )
 }
