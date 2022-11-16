@@ -39,7 +39,7 @@ export function FundingDataTable({data}){
                     <tr>
                         <td key="top"> </td>
                         {data.map( (info, index) => (
-                            <td key={index}>{format(new Date(info.date), 'MM/dd/yyyy')}</td>
+                            <td key={index}>{info.date.replace(/-/g, '\/').replace(/T.+/, '')}</td>
                         ))}
                     </tr>
                     <tr>
