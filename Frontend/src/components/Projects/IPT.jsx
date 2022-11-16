@@ -16,6 +16,8 @@ export const IPT = (props) => {
     const [addUsername, setAddUsername] = useState(1);
     const [addUsertitle, setAddUsertitle] = useState(1);
     const [removeUser, setRemoveUser] = useState(0);
+    const [addedIPT, setAddedIPT] = useState(false);
+    const [removedIPT, setRemovedIPT] = useState(false);
     // Contractors
     const [allContractors, setAllContractors] = useState();
     const [isLoading4, setLoading4] = useState(true);
@@ -60,12 +62,18 @@ export const IPT = (props) => {
 
     let handleUsername = (e) => {
         setAddUsername(e.target.value);
+        setAddedIPT(false);
+        setRemovedIPT(false);
     }
     let handleUserTitle = (e) => {
         setAddUsertitle(e.target.value);
+        setAddedIPT(false);
+        setRemovedIPT(false);
     }
     let handleRemoveUser = (e) => {
         setRemoveUser(e.target.value);
+        setAddedIPT(false);
+        setRemovedIPT(false);
     }
 
     let handleAdd = async (e) => {
@@ -82,6 +90,7 @@ export const IPT = (props) => {
         })
         .then(function(res){
             //console.log(res);
+            setAddedIPT(true);
 
             axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
                 setIpt(response.data);
@@ -101,6 +110,8 @@ export const IPT = (props) => {
             axios.delete(`/api/user/removeUPL/${removeUser}/${props.data}`, {
             })
             .then(function(res){
+                setRemovedIPT(true);
+
                 axios.get(`/api/user/iptmembers/${props.data}`).then(response =>{
                     setIpt(response.data);
                     setLoading1(false);
@@ -213,6 +224,7 @@ export const IPT = (props) => {
                                     </Col>
                                 </Form.Group>
                                 <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleAdd}>Add</Button>
+                                { addedIPT ? <div>Successfully Added!</div> : null }
                             </Col>
                             <Col>
                                 <h4 style={{marginBottom:"4%"}}>Remove IPT Member</h4>
@@ -230,6 +242,7 @@ export const IPT = (props) => {
                                     </Col>
                                 </Form.Group>
                                 <Button style={{marginTop:"4%"}} className='submit-new-project' onClick={handleRemove}>Remove</Button>
+                                { removedIPT ? <div>Successfully Removed!</div> : null }
                             </Col>
                         </Row>
                         <Row>

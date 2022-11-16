@@ -5,6 +5,12 @@ import { FileUpload } from "../NewProject/FileUpload";
 
 export const NewWBSModal = (props) => {
 
+    const getDone = (done) => {
+        if (done) {
+            props.getOpenWBSModal(false)
+        }
+    }
+
     return (
         <ModalDialog scrollable>
             <Modal show={props.open} size='xl' autoFocus={true}>
@@ -23,7 +29,7 @@ export const NewWBSModal = (props) => {
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.projectId}/></div>
+                    <div className='upload mx-auto'><FileUpload label={'WBS ProPricer table'} name={'propricerUpload'} projectId={props.projectId} getDone={getDone} /></div>
                 </ModalBody>
             </Modal>
         </ModalDialog>

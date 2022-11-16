@@ -13,6 +13,8 @@ export const FileUpload = (props) => {
 
     const handleSubmission = async (e) => {
         e.preventDefault();
+        props.getDone(true);
+
         const formData = new FormData();
         formData.append(props.name, selectedFile);
         
@@ -22,7 +24,7 @@ export const FileUpload = (props) => {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        })
+        });
     }
 
     return (

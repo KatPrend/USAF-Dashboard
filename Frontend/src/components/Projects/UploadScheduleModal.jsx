@@ -5,6 +5,12 @@ import { FileUpload } from "../NewProject/FileUpload";
 
 export const UploadScheduleModal = (props) => {
 
+    const getDone = (done) => {
+        if (done) {
+            props.getOpenUploadModal(false)
+        }
+    }
+
     return (
         <ModalDialog scrollable>
             <Modal show={props.open} size='xl' autoFocus={true}>
@@ -23,7 +29,7 @@ export const UploadScheduleModal = (props) => {
                     </Container>
                 </ModalHeader>
                 <ModalBody>
-                    <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={props.projectId}/></div>
+                    <div className='upload mx-auto'><FileUpload label={'Milestones Import'} name={'milestonesUpload'} projectId={props.projectId} getDone={getDone}/></div>
                 </ModalBody>
             </Modal>
         </ModalDialog>
