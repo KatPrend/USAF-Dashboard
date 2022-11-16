@@ -8,6 +8,7 @@ import {ObligationFundingDataTable, ExpenditureFundingDataTable, ObligationFundi
 import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../ApprovedFundingTable';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import '../../../pages/page.css';
+import { format } from 'date-fns';
 
 export const Funding = (props) => {
     const [isLoading1, setLoading1] = useState(true);
@@ -98,6 +99,24 @@ export const Funding = (props) => {
         setReload(false)
     }
 
+    function formatDataForCharts(data){
+        var retVal = [];
+        var temp = {};
+
+        data.forEach((info) => {
+            temp.id = info.id;
+            temp.Actual = info.Actual;
+            temp["Actual Total"] = info["Actual Total"];
+            temp.Projected = info.Projected;
+            temp["Projected Total"] = info["Projected Total"];
+            temp.date = format(new Date(info.date), 'MM/dd/yyyy');
+            retVal.push(temp);
+            temp = {};
+        })
+            
+        return retVal;
+    }
+
     const handleCloseModel = (e) => {
         setReload(true);
         setModalIsOpen(false);
@@ -176,16 +195,16 @@ export const Funding = (props) => {
                         <Col>
                         <Tabs className="Tabs">
                             <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
-                                <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
+                                <BarGraph data={formatDataForCharts(obligation_data)} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
                             <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
-                                <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                                <LineGraph data={formatDataForCharts(obligation_data)} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
-                                <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
+                                <BarGraph data={formatDataForCharts(expen_data)} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
-                                <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                                <LineGraph data={formatDataForCharts(expen_data)} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
                         </Tabs>
                         </Col>
