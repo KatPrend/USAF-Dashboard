@@ -67,9 +67,9 @@ app.use('/api/mjt', mjtRoute);
 app.use('/api/upl', uplRoute);
 
 // All other GET requests not handled before will return our React app
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
+});
 
 let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port

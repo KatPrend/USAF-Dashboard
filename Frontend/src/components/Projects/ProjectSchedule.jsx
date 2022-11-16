@@ -444,10 +444,10 @@ export const ProjectSchedule = (props) => {
                                         infoData.map(({ID, Name, ProjectedStart, ProjectedEnd, ActualStart, ActualEnd, Predecessors_Name}) => (
                                             <tr key={ID}>
                                                 <td>{Name}</td>
-                                                <td>{format(new Date(ProjectedStart), 'MM/dd/yyyy')}</td>
-                                                <td>{format(new Date(ProjectedEnd), 'MM/dd/yyyy')}</td>
-                                                <td>{ActualStart !== null ? format(new Date(ActualStart), 'MM/dd/yyyy') : "No Date" }</td>
-                                                <td>{ActualEnd !== null ? format(new Date(ActualEnd), 'MM/dd/yyyy') : "No Date" }</td>
+                                                <td>{ProjectedStart.replace(/-/g, '\/').replace(/T.+/, '')}</td>
+                                                <td>{ProjectedEnd.replace(/-/g, '\/').replace(/T.+/, '')}</td>
+                                                <td>{ActualStart !== null ? ActualStart.replace(/-/g, '\/').replace(/T.+/, '') : "No Date" }</td>
+                                                <td>{ActualEnd !== null ? ActualEnd.replace(/-/g, '\/').replace(/T.+/, '') : "No Date" }</td>
                                                 <td>{Predecessors_Name}</td>
                                             </tr>
                                         ))

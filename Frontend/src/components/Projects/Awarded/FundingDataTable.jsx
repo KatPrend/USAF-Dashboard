@@ -15,7 +15,7 @@ export function ExpenditureFundingDataTable({data}){
                     <tr>
                         <td> </td>
                         {data.map( (info, index) => (
-                            <td key={index} >{format(new Date(info.date), 'MM/dd/yyyy')}</td>
+                            <td key={index} >{info.date.replace(/-/g, '\/').replace(/T.+/, '')}</td>
                         ))}
                     </tr>
                     <tr>
@@ -69,7 +69,7 @@ export function ObligationFundingDataTable({data}){
                     <tr>
                         <td> </td>
                         {data.map( (info, index) => (
-                            <td key={index} >{format(new Date(info.date), 'MM/dd/yyyy')}</td>
+                            <td key={index} >{info.date.replace(/-/g, '\/').replace(/T.+/, '')}</td>
                         ))}
                     </tr>
                     <tr>
