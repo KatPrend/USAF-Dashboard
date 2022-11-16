@@ -5,7 +5,7 @@ import LineGraph from '../../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import {ObligationFundingDataTable, ExpenditureFundingDataTable} from '../Awarded/FundingDataTable';
-import {ApprovedFundingTable} from '../../ApprovedFundingTable';
+import {ApprovedFundingTable} from '../ApprovedFundingTable';
 import '../../../pages/page.css';
 
 export const Funding = (props) => {

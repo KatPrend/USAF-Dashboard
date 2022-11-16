@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Row, Modal, ModalBody, ButtonGroup, Modal
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { ApprovedFundingData } from "../../../pages/DummyData";
-import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../../ApprovedFundingTable";
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from "../ApprovedFundingTable";
 import {FundingDataTable, FundingDataTableEditable} from "./FundingDataTable";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 
@@ -94,7 +94,7 @@ export const FundingData = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Done</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>

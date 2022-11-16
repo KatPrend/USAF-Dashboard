@@ -5,7 +5,7 @@ import LineGraph from '../../LineGraph';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import {ObligationFundingDataTable, ExpenditureFundingDataTable, ObligationFundingDataTableEditable, ExpenditureFundingDataTableEditable} from './FundingDataTable';
-import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../../ApprovedFundingTable';
+import {ApprovedFundingTable, ApprovedFundingTableEditable} from '../ApprovedFundingTable';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import '../../../pages/page.css';
 
@@ -119,7 +119,7 @@ export const Funding = (props) => {
                             </Col>
                             <Col style={{textAlign: 'right'}}>
                                 <ButtonGroup className='CLIN-and-File-buttongroup'>
-                                    <Button className='Button' onClick={handleCloseModel}>Cancel</Button>
+                                    <Button className='Button' onClick={handleCloseModel}>Done</Button>
                                 </ButtonGroup>
                             </Col>
                         </Row>

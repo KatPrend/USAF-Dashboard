@@ -23,6 +23,7 @@ function AwardedProject() {
     const [loading, setLoading] = useState(true);
     const [contractor, setContractor] = useState(0);
     const [contractorName, setContractorName] = useState("");
+    const [reload, setReload] = useState(false);
 
     const getUserInfo = (uid, urole) => {
         setUserid(uid);
@@ -51,6 +52,11 @@ function AwardedProject() {
     const getContractor = (cont, name) => {
         setContractor(cont);
         setContractorName(name);
+    }
+
+    const getReload = (rel) => {
+        console.log("reload " + rel);
+        setReload(rel);
     }
 
     return(
@@ -95,7 +101,7 @@ function AwardedProject() {
                 <br />
                 <Row>
                     <Col>
-                        <Dependencies userRole={userRole} projectId={id}/>
+                        <Dependencies userRole={userRole} projectId={id} rel={reload} getReload={getReload} />
                     </Col>
                 </Row>
                 {userRole === "Contractor" ? null : <div>
@@ -110,7 +116,7 @@ function AwardedProject() {
                 <br/>
                 <Row>
                     <Col>
-                        <ProjectSchedule data={id} userRole={userRole}/>
+                        <ProjectSchedule data={id} userRole={userRole} getReload={getReload} />
                     </Col>
                 </Row>
                 {userRole !== "Admin" ? null : <div>

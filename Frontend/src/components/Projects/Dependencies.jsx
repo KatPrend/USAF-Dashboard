@@ -65,6 +65,16 @@ export const Dependencies = (props) => {
         return <div className="mx-auto w-75">Loading...</div>;
     }
 
+    if (props.rel) {
+        axios.get(`/api/milestone/schedule/${props.projectId}`).then(response =>{
+            setMilestones(response.data);
+            setLoading3(false);
+        })
+        .then(function(res) {
+            props.getReload(false);
+        });
+    }
+
     // Add Predecessor functions:
     let handleSelectAddPredProject = (e) => {
         setPredProject(e.target.value);

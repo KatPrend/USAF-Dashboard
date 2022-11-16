@@ -277,10 +277,7 @@ export const ProjectSchedule = (props) => {
 
     const getOpenUploadModal = (open) => {
         setUploadModal(open);
-
-        if (!open) {
-            setReload(true);
-        }
+        handleCloseModel();
     }
 
     if (reload) {
@@ -295,6 +292,7 @@ export const ProjectSchedule = (props) => {
 
     const handleCloseModel = (e) => {
         setReload(true);
+        props.getReload(true);
         setModalIsOpen(false);
     }
 
@@ -464,7 +462,7 @@ export const ProjectSchedule = (props) => {
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={getOptions(infoData.length * 55)}
+                            options={getOptions(infoData.length * 40 + 50)}
                             data={GanttChartDataFormat(infoData)}
                             />}
                         </Col>
