@@ -449,14 +449,14 @@ export const ContractStatus = (props) => {
                         data.map(({id, timeline_status, requirement_plan, draft_rfp_released, approved_by_acb, rfp_released, proposal_received, tech_eval_comp, negotiation_comp, awarded})=> (
                             <tr key = {id}>
                                 <td>{timeline_status}</td>
-                                {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(requirement_plan), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(draft_rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(approved_by_acb), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(rfp_released), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(proposal_received), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(tech_eval_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(negotiation_comp), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
-                                {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z" ? <td>{format(new Date(awarded), 'yyyy/MM/dd')}</td>: <td>No Date</td>}
+                                {requirement_plan !== null && requirement_plan !== "1969-12-31T05:00:00.000Z" ? <td>{requirement_plan.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {draft_rfp_released !== null && draft_rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{draft_rfp_released.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {approved_by_acb !== null && approved_by_acb !== "1969-12-31T05:00:00.000Z" ? <td>{approved_by_acb.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {rfp_released !== null && rfp_released !== "1969-12-31T05:00:00.000Z" ? <td>{rfp_released.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {proposal_received !== null && proposal_received !== "1969-12-31T05:00:00.000Z" ? <td>{proposal_received.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {tech_eval_comp !== null && tech_eval_comp !== "1969-12-31T05:00:00.000Z" ? <td>{tech_eval_comp.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {negotiation_comp !== null && negotiation_comp !== "1969-12-31T05:00:00.000Z" ? <td>{negotiation_comp.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
+                                {awarded !== null && awarded !== "1969-12-31T05:00:00.000Z" ? <td>{awarded.replace(/-/g, '\/').replace(/T.+/, '')}</td>: <td>No Date</td>}
                             </tr>
                         ))
                     }
