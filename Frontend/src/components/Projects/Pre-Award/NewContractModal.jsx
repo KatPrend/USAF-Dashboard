@@ -221,7 +221,7 @@ export const NewContractModal = (props) => {
                             </Col>
                         </Form.Group>
                         <br />
-                        <Button type="submit" className="submit-new-project">
+                        <Button type="submit" onClick={()=>props.getOpenTimelineModal(false)} className="submit-new-project">
                             Submit New Contract
                         </Button>
                     </Form>
