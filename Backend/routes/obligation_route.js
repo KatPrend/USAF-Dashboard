@@ -8,7 +8,7 @@ router.get('/getObli/:project_id', (req, res) => {
     let sql = `
     SELECT
         id,
-        DATE_FORMAT(obli_funding_date, "%c/%d/%Y") as date, 
+        obli_funding_date as date, 
         obli_funding_type as FundingType, 
         obli_fiscal_year as "FiscalYear", 
         obli_projected as Projected,
