@@ -462,7 +462,7 @@ export const ProjectSchedule = (props) => {
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={getOptions(infoData.length * 40 + 50)}
+                            options={getOptions(infoData.length * 42 + 55)}
                             data={GanttChartDataFormat(infoData)}
                             />}
                         </Col>

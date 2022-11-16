@@ -37,14 +37,20 @@ function GanttChartDataFormat(JsonData){
     return (data);
 }
 
-const options = {
-    gantt: {
-        criticalPathEnabled: true,
-        criticalPathStyle: {
-            stroke: "#e64a19",
+const getOptions = (cHeight) => {
+    const options = {
+        gantt: {
+            criticalPathEnabled: true,
+            criticalPathStyle: {
+                stroke: "#e64a19",
+            },
         },
-    },
-};
+        height: cHeight
+    };
+
+    return options;
+}
+
 
   
 export const ProjectSchedule = (props) => {
@@ -70,7 +76,7 @@ export const ProjectSchedule = (props) => {
                 <Container>
                     <Row>
                         <Col style={{textAlign: 'left'}}>
-                            <span>Project Schedule</span>
+                            <span>Prfoject Schedule</span>
                         </Col>
                     </Row>
                 </Container>
@@ -113,7 +119,7 @@ export const ProjectSchedule = (props) => {
                             chartType='Gantt'
                             width="100%" 
                             height="100%"
-                            options={options}
+                            options={getOptions(infoData.length * 42 + 55)}
                             data={GanttChartDataFormat(infoData)}
                             />
                         </Col>

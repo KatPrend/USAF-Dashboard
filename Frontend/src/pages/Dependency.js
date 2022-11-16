@@ -205,7 +205,6 @@ const getOptions = (cHeight) => {
                 stroke: "#e64a19",
             },  
         },
-        height: cHeight
       };
     return options;
 }
@@ -240,7 +239,7 @@ const Dependency = (props) => {
       }, []); // <- add empty brackets here
 
       if (data !== 0 && data.length > 0) {
-        chartHeight = data.length * 100;
+        chartHeight = data.length * 42;
       }
     
       return ( 
@@ -257,6 +256,7 @@ const Dependency = (props) => {
                 <Row>
                     {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
                     Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
+                    <div style={{height: 'auto'}}>
                         <Chart
                         chartType='Gantt'
                         width="100%" 
@@ -264,7 +264,9 @@ const Dependency = (props) => {
                         options={getOptions(chartHeight)}
                         data={GanttChartDataFormat(data)}
                         />
-                        }>
+                    </div>
+                    }
+                        >
                     </CardGeneric>}
                 </Row>
             </Container>
