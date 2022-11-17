@@ -61,6 +61,24 @@ export const Funding = (props) => {
             setObligationData({}); // This worked for me
           };
     }, []);
+
+    function formatDataForCharts(data){
+        var retVal = [];
+        var temp = {};
+
+        data.forEach((info) => {
+            temp.id = info.id;
+            temp.Actual = info.Actual;
+            temp["Actual Total"] = info["Actual Total"];
+            temp.Projected = info.Projected;
+            temp["Projected Total"] = info["Projected Total"];
+            temp.date = format(new Date(info.date), 'MM/dd/yyyy');
+            retVal.push(temp);
+            temp = {};
+        })
+            
+        return retVal;
+    }
     
     if(isLoading1 || isLoading2 || isLoading3 || isLoading4){
         return <div className="mx-auto w-75">Loading...</div>;
@@ -92,19 +110,19 @@ export const Funding = (props) => {
                             <Tab tabClassName={"Tab"} eventKey="obligationBar" title="Obligation Bar Chart">
                                 {/* AwardedProjectFundingDataObligation */}
                                 {/* expen_funding_date, expen_funding_type, epen_fiscal_year, expen_projected, expen_proj_total, expen_actual, expen_actual_total) */}
-                                <BarGraph data={obligation_data} dataKey1="Projected" dataKey2="Actual"/>
+                                <BarGraph data={formatDataForCharts(obligation_data)} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
                             {/* AwardedProjectFundingDataObligation */}
                             <Tab tabClassName={"Tab"} eventKey="obligationLine" title="Obligation Line Chart">
-                                <LineGraph data={obligation_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                                <LineGraph data={formatDataForCharts(obligation_data)} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
                             {/* AwardedProjectFundingDataExpenditure */}
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureBar" title="Expenditure Bar Chart">
-                                <BarGraph data={expen_data} dataKey1="Projected" dataKey2="Actual"/>
+                                <BarGraph data={formatDataForCharts(expen_data)} dataKey1="Projected" dataKey2="Actual"/>
                             </Tab>
                             {/* AwardedProjectFundingDataExpenditure */}
                             <Tab tabClassName={"Tab"} eventKey="ExpenditureLine" title="Expenditure Line Chart">
-                                <LineGraph data={expen_data} dataKey1="Projected Total" dataKey2="Actual Total"/>
+                                <LineGraph data={formatDataForCharts(expen_data)} dataKey1="Projected Total" dataKey2="Actual Total"/>
                             </Tab>
                         </Tabs>
                         
