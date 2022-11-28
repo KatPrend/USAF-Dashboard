@@ -5,6 +5,11 @@ const path = require('path');
 const bodyparser = require('body-parser');
 const app = express();
 const dataSql = fs.readFileSync('./Backend/sql_scripts/newDB.sql').toString();
+const helmet = require('helmet')
+
+app.use(helmet())
+
+app.disable('x-powered-by')
 
 // Possibly remove
 const PORT = process.env.PORT || 4000;
@@ -47,7 +52,6 @@ const wbsRoute = require('./routes/wbs_route');
 const mjtRoute = require('./routes/mjt_route');
 const uplRoute = require('./routes/upl_route');
 
-
 app.use('/api/approved', approvedFundingRoute);
 app.use('/api/branch', branchRoute);
 app.use('/api/clin', clinRoute);
@@ -66,10 +70,28 @@ app.use('/api/wbs', wbsRoute);
 app.use('/api/mjt', mjtRoute);
 app.use('/api/upl', uplRoute);
 
+
+
+
+
 // All other GET requests not handled before will return our React app
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
 // });
+
+
+// last app.use calls right before app.listen():
+
+// custom 404
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!")
+})
+
+// custom error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
 
 let nodeServer = app.listen(PORT, function () {
   let port = nodeServer.address().port
