@@ -215,6 +215,7 @@ const getOptions = (cHeight) => {
                 stroke: "#e64a19",
             },  
         },
+        height: cHeight
       };
     return options;
 }
@@ -249,7 +250,7 @@ const Dependency = (props) => {
       }, []); // <- add empty brackets here
 
       if (data !== 0 && data.length > 0) {
-        chartHeight = data.length * 42 + 100;
+        chartHeight = data.length * 50 + 100;
       }
     
       return ( 
