@@ -176,19 +176,29 @@ function GanttChartDataFormat(JsonData) {
         "undefined",
         null
       ])
-      Rows.push([
-        succ_name,
-        succ_name,
-        succ_actual_start !== null ? new Date(succ_actual_start) : new Date(succ_proj_start),
-        succ_actual_end !== null ? new Date(succ_actual_end) : new Date(succ_proj_end),
-        null,
-        "undefined",
-        pred_name
-      ])
+      const find = (element) => element[0] === succ_name;
+      var index = Rows.findIndex(find)
+      if (index === -1) {
+        Rows.push([
+            succ_name,
+            succ_name,
+            succ_actual_start !== null ? new Date(succ_actual_start) : new Date(succ_proj_start),
+            succ_actual_end !== null ? new Date(succ_actual_end) : new Date(succ_proj_end),
+            null,
+            "undefined",
+            pred_name
+        ])
+      }
+      else {
+        if (Rows[index][6] === null)
+            Rows[index][6] = pred_name;
+        else
+            Rows[index][6] = Rows[index][6] + ', ' + pred_name;
+      }
       return 0;
   })
-  //console.log("Rows")
-  //console.log(Rows)
+  console.log("Rows")
+  console.log(Rows)
 
   const data = [columns, ...Rows];
   //console.log("final DATA for ganttyytrtt")
@@ -239,7 +249,7 @@ const Dependency = (props) => {
       }, []); // <- add empty brackets here
 
       if (data !== 0 && data.length > 0) {
-        chartHeight = data.length * 42;
+        chartHeight = data.length * 42 + 100;
       }
     
       return ( 
@@ -256,7 +266,6 @@ const Dependency = (props) => {
                 <Row>
                     {chartHeight === 0 ? null : <CardGeneric Header='Dependency Graph' 
                     Body={ data === 0 || data.length === 0 ? <div>No Dependency Data, make sure you are assigned to projects</div> :
-                    <div style={{height: 'auto'}}>
                         <Chart
                         chartType='Gantt'
                         width="100%" 
@@ -264,7 +273,6 @@ const Dependency = (props) => {
                         options={getOptions(chartHeight)}
                         data={GanttChartDataFormat(data)}
                         />
-                    </div>
                     }
                         >
                     </CardGeneric>}
